@@ -6,8 +6,8 @@
       "date": "25.04.25",
       "time": "18:00h",
       "location": "Central Park, NY",
-      "type": "outdoors",
-      "rating": 4
+      "type": "Outdoors",
+      "rating": 1
     },
     {
       "id": 195749,
@@ -15,7 +15,7 @@
       "date": "10.05.25",
       "time": "15:00h",
       "location": "Prospect Park, NY",
-      "type": "sports",
+      "type": "Sports",
       "rating": 5
     },
     {
@@ -25,7 +25,7 @@
       "time": "11:00h",
       "location": "Brooklyn Pet Shelter, NY",
       "type": "community",
-      "rating": 5
+      "rating": 2
     },
     {
       "id": 195751,
@@ -70,7 +70,7 @@
       "time": "09:00h",
       "location": "Hudson River Park, NY",
       "type": "outdoors",
-      "rating": 5
+      "rating": 3
     },
     {
       "id": 195756,
@@ -88,7 +88,7 @@
       "time": "11:00h",
       "location": "Bark & Bite Café, NY",
       "type": "social",
-      "rating": 4
+      "rating": 2
     }
   ]
 }

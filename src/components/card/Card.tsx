@@ -1,19 +1,20 @@
-//import { Rating } from "../rating/Rating";
+import { Rating } from "../rating/Rating";
 import "../../index.css";
 import "./card.css";
 
-interface CardProps {
-  // id: number;
+export interface CardData {
+  id?: number;
   name: string;
   date: string;
   time: string;
   location: string;
   type: string;
-  // rating: number;
+  rating: number;
 }
 
-export const Card = (props: CardProps) => {
-  const { name, date, time, location, type } = props;
+export const Card = (props: { event: CardData }) => {
+  const { event } = props;
+  const { name, date, time, location, type, rating } = event;
 
   return (
     <div className="event-card grid-cell margin--bt__24">
@@ -37,7 +38,7 @@ export const Card = (props: CardProps) => {
         <p className="event-card--text__p">{location}</p>
         <p className="event-card--text__p">{type}</p>
       </div>
-      {/* <Rating keys={id + 1} rating={rating} /> */}
+      {<Rating rating={rating} />}
     </div>
   );
 };
