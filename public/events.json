@@ -1,0 +1,94 @@
+{
+  "events": [
+    {
+      "id": 195748,
+      "name": "Park meeting",
+      "date": "25.04.25",
+      "time": "18:00h",
+      "location": "Central Park, NY",
+      "type": "outdoors",
+      "rating": 4
+    },
+    {
+      "id": 195749,
+      "name": "Dog Agility Competition",
+      "date": "10.05.25",
+      "time": "15:00h",
+      "location": "Prospect Park, NY",
+      "type": "sports",
+      "rating": 5
+    },
+    {
+      "id": 195750,
+      "name": "Adoption Fair",
+      "date": "20.05.25",
+      "time": "11:00h",
+      "location": "Brooklyn Pet Shelter, NY",
+      "type": "community",
+      "rating": 5
+    },
+    {
+      "id": 195751,
+      "name": "Puppy Social Hour",
+      "date": "05.06.25",
+      "time": "17:30h",
+      "location": "Dog Café Manhattan, NY",
+      "type": "social",
+      "rating": 4
+    },
+    {
+      "id": 195752,
+      "name": "Beach Day for Dogs",
+      "date": "15.07.25",
+      "time": "10:00h",
+      "location": "Rockaway Beach, NY",
+      "type": "outdoors",
+      "rating": 5
+    },
+    {
+      "id": 195753,
+      "name": "Training Workshop",
+      "date": "22.08.25",
+      "time": "14:00h",
+      "location": "Downtown Training Center, NY",
+      "type": "education",
+      "rating": 4
+    },
+    {
+      "id": 195754,
+      "name": "Dog Costume Parade",
+      "date": "31.10.25",
+      "time": "18:00h",
+      "location": "Times Square, NY",
+      "type": "festival",
+      "rating": 5
+    },
+    {
+      "id": 195755,
+      "name": "Hiking with Dogs",
+      "date": "12.11.25",
+      "time": "09:00h",
+      "location": "Hudson River Park, NY",
+      "type": "outdoors",
+      "rating": 5
+    },
+    {
+      "id": 195756,
+      "name": "Christmas Pet Photoshoot",
+      "date": "20.12.25",
+      "time": "16:00h",
+      "location": "Santa’s Village, NY",
+      "type": "community",
+      "rating": 4
+    },
+    {
+      "id": 195757,
+      "name": "Dog-Friendly Brunch",
+      "date": "14.01.26",
+      "time": "11:00h",
+      "location": "Bark & Bite Café, NY",
+      "type": "social",
+      "rating": 4
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+@import url(https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+
+:root {
+  /* -----> Colors */
+  /* Yellow */
+  --color-yellow: hsl(50, 100%, 55%);
+  --color-yellow-hover: hsl(48, 100%, 63%);
+  --color-yellow-active: hsl(48, 100%, 47%);
+  --color-yellow-disabled: hsl(50, 100%, 55%, 0.5);
+
+  /* Pink */
+  --color-pink: hsl(355, 100%, 80%);
+  --color-pink-hover: hsl(355, 100%, 85%);
+  --color-pink-active: hsl(355, 100%, 77%);
+  --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
+
+  --color-light-blue: hsl(213, 100%, 93%);
+  --color-black: hsl(0, 0, 0);
+  --color-white: hsl(0, 0, 100%);
+  --color-gray: hsl(0, 0%, 47%, 1);
+
+  /* -----> Spacing */
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-50: 50px;
+  --space-268: 268px;
+
+  /* -----> Fonts */
+
+  /* Font-Family */
+  --font-family: "Atkinson Hyperlegible", sans-serif;
+
+  /* Font-size */
+  --font-12: var(--space-12);
+  --font-14: var(--space-14);
+  --font-16: var(--space-16);
+  --font-18: var(--space-18);
+  --font-20: var(--space-20);
+  --font-24: var(--space-24);
+
+  /* Font-weight */
+  --font-extra-light: 200;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* -----> Buttons */
+  /* Main */
+  --button-color-main: var(--color-yellow);
+  --button-color-main-hover: var(--color-yellow-hover);
+  --button-color-main-active: var(--color-yellow-active);
+  --button-color-main-disabled: var(--color-yellow-disabled);
+
+  /* Hover */
+  --button-color-secondary: var(--color-pink);
+  --button-color-secondary-hover: var(--color-pink-hover);
+  --button-color-secondary-active: var(--color-pink-active);
+  --button-color-secondary-disabled: var(--color-pink-disabled);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
+}
+
+/* Width */
+.width-100 {
+  width: 100%;
+}
+
+/* Position */
+.position-relative {
+  position: relative;
+}
+
+/* -----> Displays */
+.inline-block {
+  display: inline-block;
+}
+
+/* Display-Flex */
+.display--flex {
+  display: flex;
+}
+
+.align-itmes__center {
+  align-items: center;
+}
+
+.space--between {
+  justify-content: space-between;
+}
+
+.space--around {
+  justify-content: space-around;
+}
+
+/* Gaps */
+.gap__4 {
+  gap: var(--space-4);
+}
+
+/* Grid Display */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.grid-cell {
+  flex: 0 0 100%;
+}
+
+.grid-row {
+  display: flex;
+  gap: 5px;
+}
+
+.item__100 {
+  flex: 0 0 1;
+}
+
+.item__50 {
+  flex: 0 0 50%;
+}
+
+.item__33 {
+  flex: 0 0 33.333%;
+}
+
+.item__25 {
+  flex: 0 0 25%;
+}
+
+.item__20 {
+  flex: 0 0 20%;
+}
+
+.scroll-grid {
+  display: grid;
+  grid-auto-columns: 25%;
+  grid-auto-flow: column;
+  grid-gap: 12px;
+  overflow-x: auto;
+}
+
+.scroll-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----> Padding */
+.padding__6 {
+  padding: 6px;
+}
+
+.padding--lateral__24 {
+  padding: 0 24px;
+}
+
+/* -----> Margins */
+.margin--left__4 {
+  margin-left: var(--space-4);
+}
+
+.margin--bt__24 {
+  margin-bottom: var(--space-24);
+}
+
+/* -----> Border-radius */
+.border-radius__12 {
+  border-radius: var(--space-12);
+}
