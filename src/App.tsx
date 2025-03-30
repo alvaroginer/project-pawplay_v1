@@ -26,9 +26,11 @@ function App() {
 
   return (
     <>
-      {eventsList.map((event: CardData) => {
-        return <Card key={event.id} event={event} />;
-      })}
+      <section className="grid">
+        {eventsList.map((event: CardData) => {
+          return <Card key={event.id} event={event} />;
+        })}
+      </section>
     </>
   );
 }

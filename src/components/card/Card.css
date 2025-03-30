@@ -1,5 +1,5 @@
 .event-card {
-  max-width: 292px;
+  min-width: 292px;
   padding: var(--space-12);
   background-color: var(--color-white);
   border-radius: var(--space-12);
