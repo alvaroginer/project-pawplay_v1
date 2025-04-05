@@ -1,7 +1,9 @@
+import { Card } from "./components/card/card";
+import { CardData } from "./components/card/card";
+import { useEffect, useState } from "react";
+import { Button } from "./components/button/Button";
 import "./App.css";
 import "./index.css";
-import { Card, CardData } from "./components/card/card";
-import { useEffect, useState } from "react";
 
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
@@ -26,6 +28,21 @@ function App() {
 
   return (
     <>
+      <div className="filter-container">
+        <input
+          type="text"
+          className="searchbar"
+          placeholder="Search the event you want to go"
+        />
+        <div className="filter-button--container">
+          <Button className="btn btn--terciary" text="Social Event" />
+          <Button className="btn btn--terciary" text="Outdoors" />
+          <Button className="btn btn--terciary" text="Walks" />
+          <Button className="btn btn--terciary" text="Small Dogs" />
+          <Button className="btn btn--terciary" text="Social Event" />
+          <Button className="btn btn--terciary" text="Social Event" />
+        </div>
+      </div>
       <section className="grid">
         {eventsList.map((event: CardData) => {
           return <Card key={event.id} event={event} />;

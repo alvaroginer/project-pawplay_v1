@@ -1,5 +1,5 @@
-import "./index.css";
-import "./buttons.css";
+import "../../index.css";
+import "./Button.css";
 
 interface ButtonProps {
   className: string;
