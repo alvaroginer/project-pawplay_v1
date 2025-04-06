@@ -1,0 +1,15 @@
+.filter-category {
+  padding-bottom: var(--space-20);
+  border-bottom: var(--space-1) solid var(--color-gray-300);
+  margin-bottom: var(--space-20);
+}
+
+.filter-category--title {
+  font-size: var(--font--16);
+}
+
+.filter-category--container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-8);
+}

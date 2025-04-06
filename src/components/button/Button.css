@@ -9,6 +9,7 @@
   border-radius: var(--space-50);
   font-size: var(--font-20);
   font-weight: var(--font-regular);
+  transition: all ease-in 0.15s;
 
   &:hover {
     background-color: var(--button-color-main-hover);
@@ -80,17 +81,22 @@
 }
 
 .btn--terciary {
+  padding: var(--space-8) var(--space-22);
   background-color: var(--color-white);
   border-color: var(--button-color-terciary);
+  font-size: var(--font-14);
 
   &:hover {
-    border: none;
-    box-shadow: inset 0 0 0 4px var(--button-color-terciary);
+    border-color: transparent;
+    box-shadow: inset 0 0 0 4px black;
     background-color: var(--color-white);
+    font-size: var(--font-14);
   }
 
   &:active {
+    border-color: transparent;
     color: var(--color-white);
     background-color: var(--button-color-terciary-active);
+    font-size: var(--font-14);
   }
 }

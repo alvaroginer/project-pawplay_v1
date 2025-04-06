@@ -2,8 +2,21 @@ import { Card } from "./components/card/card";
 import { CardData } from "./components/card/card";
 import { useEffect, useState } from "react";
 import { Button } from "./components/button/Button";
+import { Sidebar } from "./components/sidebar/Sidebar";
 import "./App.css";
 import "./index.css";
+
+export interface FilterProps {
+  activities: Record<string, boolean>;
+  breed: Record<string, boolean>;
+  size: Record<string, boolean>;
+  date: Record<number, boolean>;
+}
+
+//El filtro se creará dinamicamente a partir de los datos que proprcionen las cards
+//Existirá un único useState para el filtro que tendrá la estructura de FilterProps
+// cada propiedad de Filter prop tendrá un objeto con el nombre de la categoria y un estado de verdadero falso que marcará si es un requisito de filtro
+// el componente sidebar recibirá la estructura de filterprops
 
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
@@ -42,12 +55,17 @@ function App() {
           <Button className="btn btn--terciary" text="Social Event" />
           <Button className="btn btn--terciary" text="Social Event" />
         </div>
+        <div className="filter-button display--flex">
+          <p>Filters</p>
+          <img src="imgs/filter.svg" alt="Filter Icon" />
+        </div>
       </div>
       <section className="grid">
         {eventsList.map((event: CardData) => {
           return <Card key={event.id} event={event} />;
         })}
       </section>
+      <Sidebar filterData={} />
     </>
   );
 }
