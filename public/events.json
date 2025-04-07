@@ -6,8 +6,10 @@
       "date": "25.04.25",
       "time": "18:00h",
       "location": "Central Park, NY",
-      "type": "Outdoors",
-      "rating": 1
+      "activity": "Outdoors",
+      "rating": 1,
+      "breed": "affenpischer",
+      "size": "small"
     },
     {
       "id": 195749,
@@ -15,8 +17,10 @@
       "date": "10.05.25",
       "time": "15:00h",
       "location": "Prospect Park, NY",
-      "type": "Sports",
-      "rating": 5
+      "activity": "Sports",
+      "rating": 5,
+      "breed": "affenpischer",
+      "size": "medium"
     },
     {
       "id": 195750,
@@ -24,8 +28,10 @@
       "date": "20.05.25",
       "time": "11:00h",
       "location": "Brooklyn Pet Shelter, NY",
-      "type": "community",
-      "rating": 2
+      "activity": "community",
+      "rating": 2,
+      "breed": "affenpischer",
+      "size": "big"
     },
     {
       "id": 195751,
@@ -33,8 +39,10 @@
       "date": "05.06.25",
       "time": "17:30h",
       "location": "Dog Café Manhattan, NY",
-      "type": "social",
-      "rating": 4
+      "activity": "social",
+      "rating": 4,
+      "breed": "affenpischer",
+      "size": ""
     },
     {
       "id": 195752,
@@ -42,8 +50,10 @@
       "date": "15.07.25",
       "time": "10:00h",
       "location": "Rockaway Beach, NY",
-      "type": "outdoors",
-      "rating": 5
+      "activity": "outdoors",
+      "rating": 5,
+      "breed": "affenpischer",
+      "size": "small"
     },
     {
       "id": 195753,
@@ -51,8 +61,10 @@
       "date": "22.08.25",
       "time": "14:00h",
       "location": "Downtown Training Center, NY",
-      "type": "education",
-      "rating": 4
+      "activity": "education",
+      "rating": 4,
+      "breed": "affenpischer",
+      "size": "medium"
     },
     {
       "id": 195754,
@@ -60,8 +72,10 @@
       "date": "31.10.25",
       "time": "18:00h",
       "location": "Times Square, NY",
-      "type": "festival",
-      "rating": 5
+      "activity": "festival",
+      "rating": 5,
+      "breed": "affenpischer",
+      "size": "big"
     },
     {
       "id": 195755,
@@ -69,8 +83,10 @@
       "date": "12.11.25",
       "time": "09:00h",
       "location": "Hudson River Park, NY",
-      "type": "outdoors",
-      "rating": 3
+      "activity": "outdoors",
+      "rating": 3,
+      "breed": "affenpischer",
+      "size": ""
     },
     {
       "id": 195756,
@@ -78,8 +94,10 @@
       "date": "20.12.25",
       "time": "16:00h",
       "location": "Santa’s Village, NY",
-      "type": "community",
-      "rating": 4
+      "activity": "community",
+      "rating": 4,
+      "breed": "affenpischer",
+      "size": "small"
     },
     {
       "id": 195757,
@@ -87,8 +105,10 @@
       "date": "14.01.26",
       "time": "11:00h",
       "location": "Bark & Bite Café, NY",
-      "type": "social",
-      "rating": 2
+      "activity": "social",
+      "rating": 2,
+      "breed": "affenpischer",
+      "size": ""
     }
   ]
 }

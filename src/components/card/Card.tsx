@@ -8,13 +8,15 @@ export interface CardData {
   date: string;
   time: string;
   location: string;
-  type: string;
+  activity: string;
   rating: number;
+  breed: string;
+  size: string;
 }
 
 export const Card = (props: { event: CardData }) => {
   const { event } = props;
-  const { name, date, time, location, type, rating } = event;
+  const { name, date, time, location, activity, rating } = event;
 
   return (
     <div className="event-card grid-cell margin--bt__24">
@@ -36,7 +38,7 @@ export const Card = (props: { event: CardData }) => {
           <p className="event-card--text__p">{time}</p>
         </div>
         <p className="event-card--text__p">{location}</p>
-        <p className="event-card--text__p">{type}</p>
+        <p className="event-card--text__p">{activity}</p>
       </div>
       {<Rating rating={rating} />}
     </div>

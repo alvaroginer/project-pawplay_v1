@@ -20,4 +20,19 @@
 }
 
 .filter-category--checkbox {
+  -webkit-appearance: none; /* Eliminar el estilo predeterminado */
+  -moz-appearance: none; /* Eliminar el estilo predeterminado en Firefox */
+  appearance: none; /* Eliminar el estilo predeterminado en navegadores modernos */
+  width: 15px; /* Tamaño del checkbox */
+  height: 15px; /* Tamaño del checkbox */
+  border-radius: 50%; /* Hace el checkbox circular */
+  border: 2px solid var(--color-black); /* Borde negro */
+  background-color: white; /* Fondo blanco */
+  cursor: pointer; /* Cambia el cursor cuando pasas por encima */
+  transition: all 0.3s ease;
+}
+
+.filter-category--checkbox:checked {
+  background-color: var(--color-black); /* Fondo negro cuando está marcado */
+  border-color: var(--color-black); /* Borde negro cuando está marcado */
 }

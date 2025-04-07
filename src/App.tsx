@@ -8,7 +8,7 @@ import "./index.css";
 
 export interface FilterProps {
   activities: Record<string, boolean>;
-  breed: Record<string, boolean>;
+  breeds: Record<string, boolean>;
   size: Record<string, boolean>;
   date: Record<number, boolean>;
 }
@@ -20,6 +20,7 @@ export interface FilterProps {
 
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
+  const [filterParams, setFilterParams] = useState<FilterProps>({});
 
   useEffect(() => {
     async function fetchData() {
@@ -40,9 +41,35 @@ function App() {
   }, []);
 
   //Crear un único useState con todos los parámetros del filtro y no de otras categorías
-  //crear una fucnión que recoja cada parámetro de
+  //crear una función que recoja cada parámetro de
 
-  useEffect(() => {}, [eventsList]);
+  useEffect(() => {
+    let activityList: Record<string, boolean> = {};
+    let breedList: Record<string, boolean> = {};
+    let sizeList: Record<string, boolean> = {};
+    eventsList.forEach((eventCard) => {
+      const { activity, breed, size } = eventCard;
+
+      if (!activityList[activity]) {
+        activityList = { ...activityList, [activity]: false };
+      }
+
+      if (!breedList[breed]) {
+        breedList = { ...breedList, [breed]: false };
+      }
+
+      if (!sizeList[size]) {
+        sizeList = { ...sizeList, [size]: false };
+      }
+    });
+
+    setFilterParams({
+      ...filterParams,
+      activities: activityList,
+      breeds: breedList,
+      size: sizeList,
+    });
+  }, [eventsList]);
 
   return (
     <>
@@ -70,7 +97,7 @@ function App() {
           return <Card key={event.id} event={event} />;
         })}
       </section>
-      <Sidebar filterData={} />
+      <Sidebar filterData={filterParams} />
     </>
   );
 }
