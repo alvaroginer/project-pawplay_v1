@@ -10,13 +10,15 @@ export const FilterCategory = ({
   categorys: Record<string, boolean>;
 }) => {
   return (
-    <div>
-      <p className="">{capitalizeFirstLetter(title)}</p>
+    <div className="filter-category">
+      <p className="filter-category--title">{capitalizeFirstLetter(title)}</p>
       {Object.keys(categorys).map((category) => {
         return (
           <div className="filter-category--container" key={category}>
-            <input type="checkbox" />
-            <p>{category}</p>
+            <input type="checkbox" className="filter-category--checkbox" />
+            <p className="filter-category--text">
+              {capitalizeFirstLetter(category)}
+            </p>
           </div>
         );
       })}

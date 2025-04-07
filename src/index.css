@@ -266,4 +266,5 @@ body {
 .filter-button {
   text-align: left;
   align-items: stretch;
+  cursor: pointer;
 }

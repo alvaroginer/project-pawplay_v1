@@ -1,5 +1,27 @@
+@keyframes slideInSidebar {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutSidebar {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 .filter-sidebar {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   height: 100%;
@@ -9,12 +31,20 @@
   background-color: white;
   z-index: 10;
   padding: var(--space-40) var(--space-16);
+  overflow-y: auto;
+  scrollbar-width: none;
+  animation: slideInSidebar 0.4s ease-out;
+}
+
+.filter-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .close-button {
   background-color: transparent;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .filter-sidebar--header {

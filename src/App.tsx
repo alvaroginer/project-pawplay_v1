@@ -21,6 +21,7 @@ export interface FilterProps {
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
   const [filterParams, setFilterParams] = useState<FilterProps>({});
+  const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -71,6 +72,15 @@ function App() {
     });
   }, [eventsList]);
 
+  console.log(filterParams);
+
+  const handleSidebarDisplay = (sidebarDisplay: boolean) => {
+    setSidebarDisplay(!sidebarDisplay);
+  };
+
+  // Faltaría añadir una función para cambiar el estado de las categorías en los filtros una vez haya un cambio en los checkbox
+  // Y luego crear en una función a parte que actualice el useState de con los parámetros de filtros
+
   return (
     <>
       <div className="filter-container">
@@ -87,7 +97,10 @@ function App() {
           <Button className="btn btn--terciary" text="Social Event" />
           <Button className="btn btn--terciary" text="Social Event" />
         </div>
-        <div className="filter-button display--flex">
+        <div
+          className="filter-button display--flex"
+          onClick={() => handleSidebarDisplay(sidebarDisplay)}
+        >
           <p>Filters</p>
           <img src="imgs/filter.svg" alt="Filter Icon" />
         </div>
@@ -97,7 +110,9 @@ function App() {
           return <Card key={event.id} event={event} />;
         })}
       </section>
-      <Sidebar filterData={filterParams} />
+      {sidebarDisplay && (
+        <Sidebar filterData={filterParams} onClick={handleSidebarDisplay} />
+      )}
     </>
   );
 }
