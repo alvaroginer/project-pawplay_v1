@@ -6,10 +6,18 @@
 
 .filter-category--title {
   font-size: var(--font--16);
+  font-weight: var(--font-medium);
 }
 
 .filter-category--container {
   display: flex;
   flex-direction: row;
   gap: var(--space-8);
+}
+
+.filter-category--text {
+  font-size: var(--font--14);
+}
+
+.filter-category--checkbox {
 }
