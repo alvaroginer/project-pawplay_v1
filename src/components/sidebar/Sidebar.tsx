@@ -1,13 +1,10 @@
 import { FilterProps } from "../../App";
 import { FilterCategory } from "../filterCategory/FilterCategory";
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import "../../index.css";
 import "./Sidebar.css";
 
 export const Sidebar = ({ filterData }: { filterData: FilterProps }) => {
-  function capitalizeFirstLetter(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
   return (
     <aside className="filter-sidebar">
       <div className="filter-sidebar--header">
@@ -19,7 +16,7 @@ export const Sidebar = ({ filterData }: { filterData: FilterProps }) => {
       {Object.keys(filterData).map((category: string) => {
         return (
           <FilterCategory
-            categorys={Object.keys(filterData[category])}
+            categorys={filterData[category]}
             title={capitalizeFirstLetter(category)}
           />
         );

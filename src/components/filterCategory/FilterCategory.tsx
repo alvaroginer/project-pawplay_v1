@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import "../../index.css";
 import "./FilterCategory.css";
 
@@ -10,7 +11,7 @@ export const FilterCategory = ({
 }) => {
   return (
     <div>
-      <p className="">{title}</p>
+      <p className="">{capitalizeFirstLetter(title)}</p>
       {Object.keys(categorys).map((category) => {
         return (
           <div className="filter-category--container" key={category}>
