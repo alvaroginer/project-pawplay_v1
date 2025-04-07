@@ -39,6 +39,11 @@ function App() {
     fetchData();
   }, []);
 
+  //Crear un único useState con todos los parámetros del filtro y no de otras categorías
+  //crear una fucnión que recoja cada parámetro de
+
+  useEffect(() => {}, [eventsList]);
+
   return (
     <>
       <div className="filter-container">
