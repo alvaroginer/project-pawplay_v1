@@ -20,7 +20,12 @@ export interface FilterProps {
 
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
-  const [filterParams, setFilterParams] = useState<FilterProps>({});
+  const [filterParams, setFilterParams] = useState<FilterProps>({
+    activities: {},
+    breeds: {},
+    size: {},
+    date: {},
+  });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [filteredEventList, setFilteredEventList] =
     useState<CardData[]>(eventsList);
