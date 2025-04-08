@@ -22,6 +22,7 @@ function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
   const [filterParams, setFilterParams] = useState<FilterProps>({});
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
+  const [filteredEventList, setFilteredEventList] = useState<CardData[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -42,7 +43,7 @@ function App() {
   }, []);
 
   //Crear un único useState con todos los parámetros del filtro y no de otras categorías
-  //crear una función que recoja cada parámetro de
+  //crear una función que recoja cada parámetro y pueda cambiarlo
 
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
@@ -72,14 +73,47 @@ function App() {
     });
   }, [eventsList]);
 
-  console.log(filterParams);
-
+  //Funciónn para mostrar el sidebar
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     setSidebarDisplay(!sidebarDisplay);
   };
 
-  // Faltaría añadir una función para cambiar el estado de las categorías en los filtros una vez haya un cambio en los checkbox
-  // Y luego crear en una función a parte que actualice el useState de con los parámetros de filtros
+  //Función para procesar el cambio de filtros
+  //Esta primera prueba se está realizando sin tener en cuenta el uso de botones en el filtro
+  //Si queremos utilizar botones de filtros esta función debe separar la actualizaciónd el objeto con filtros con el objeto de los eventos filtrados
+  const handleFilterParams = (category: string) => {
+    if (filterParams.activities[category]) {
+      setFilterParams((prevFilterParams) => ({
+        ...prevFilterParams,
+        activities: {
+          ...prevFilterParams.activities,
+          [category]: !prevFilterParams.activities[category],
+        },
+      }));
+    }
+
+    if (filterParams.breeds[category]) {
+      setFilterParams((prevFilterParams) => ({
+        ...prevFilterParams,
+        breeds: {
+          ...prevFilterParams.breeds,
+          [category]: prevFilterParams.breeds[category],
+        },
+      }));
+    }
+
+    if (filterParams.size[category]) {
+      setFilterParams((prevFilterParams) => ({
+        ...prevFilterParams,
+        size: {
+          ...prevFilterParams.size,
+          [category]: !prevFilterParams.size[category],
+        },
+      }));
+    }
+  };
+
+  console.log(filterParams);
 
   return (
     <>
@@ -111,7 +145,11 @@ function App() {
         })}
       </section>
       {sidebarDisplay && (
-        <Sidebar filterData={filterParams} onClick={handleSidebarDisplay} />
+        <Sidebar
+          filterData={filterParams}
+          onClick={handleSidebarDisplay}
+          onChange={handleFilterParams}
+        />
       )}
     </>
   );

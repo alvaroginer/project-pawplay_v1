@@ -4,18 +4,24 @@ import "./FilterCategory.css";
 
 export const FilterCategory = ({
   title,
-  categorys,
+  categories,
+  onChange,
 }: {
   title: string;
-  categorys: Record<string, boolean>;
+  categories: Record<string, boolean>;
+  onChange: (string: string) => void;
 }) => {
   return (
     <div className="filter-category">
       <p className="filter-category--title">{capitalizeFirstLetter(title)}</p>
-      {Object.keys(categorys).map((category) => {
+      {Object.keys(categories).map((category) => {
         return (
           <div className="filter-category--container" key={category}>
-            <input type="checkbox" className="filter-category--checkbox" />
+            <input
+              type="checkbox"
+              className="filter-category--checkbox"
+              onChange={() => onChange(category)}
+            />
             <p className="filter-category--text">
               {capitalizeFirstLetter(category)}
             </p>

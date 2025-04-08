@@ -1,16 +1,17 @@
 import { FilterProps } from "../../App";
 import { FilterCategory } from "../filterCategory/FilterCategory";
 import { capitalizeFirstLetter } from "../../functions/Functions";
+import { Button } from "../button/Button";
 import "../../index.css";
 import "./Sidebar.css";
 
-export const Sidebar = ({
-  filterData,
-  onClick,
-}: {
+interface SidebarProps {
   filterData: FilterProps;
-  onClick: (boolean: boolean) => void;
-}) => {
+  onClick: (sidebarDisplay: boolean) => void;
+  onChange: (category: string) => void;
+}
+
+export const Sidebar = ({ filterData, onClick, onChange }: SidebarProps) => {
   return (
     <aside className="filter-sidebar">
       <div className="filter-sidebar--header">
@@ -23,11 +24,16 @@ export const Sidebar = ({
         return (
           <FilterCategory
             key={category}
-            categorys={filterData[category]}
+            categories={filterData[category]}
             title={capitalizeFirstLetter(category)}
+            onChange={onChange}
           />
         );
       })}
+      <div className="filter-sidebar--button-container">
+        <Button className="btn btn--secondary__outlined" text="Cancel" />
+        <Button className="btn btn--secondary margin--left__20" text="Apply" />
+      </div>
     </aside>
   );
 };

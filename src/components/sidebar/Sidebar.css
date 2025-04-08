@@ -54,3 +54,10 @@
   align-items: center;
   margin-bottom: var(--space-36);
 }
+
+.filter-sidebar--button-container {
+  display: fixed;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
