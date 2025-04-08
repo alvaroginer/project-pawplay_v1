@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "../../functions/Functions";
 import { Button } from "../button/Button";
 import "../../index.css";
 import "./Sidebar.css";
+import { useEffect } from "react";
 
 interface SidebarProps {
   filterData: FilterProps;

@@ -22,7 +22,8 @@ function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
   const [filterParams, setFilterParams] = useState<FilterProps>({});
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
-  const [filteredEventList, setFilteredEventList] = useState<CardData[]>([]);
+  const [filteredEventList, setFilteredEventList] =
+    useState<CardData[]>(eventsList);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,6 +45,16 @@ function App() {
 
   //Crear un único useState con todos los parámetros del filtro y no de otras categorías
   //crear una función que recoja cada parámetro y pueda cambiarlo
+  // useEffect(() => {
+  //   setFilteredEventList({ ...filteredEventList });
+
+  //     if(Object.values(filterParams.activities).includes(true)){
+  //       setFilteredEventList((prevFilteredList) =>
+  //         ()
+  //       )
+  //     }
+
+  // }, [eventsList]);
 
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
@@ -82,7 +93,8 @@ function App() {
   //Esta primera prueba se está realizando sin tener en cuenta el uso de botones en el filtro
   //Si queremos utilizar botones de filtros esta función debe separar la actualizaciónd el objeto con filtros con el objeto de los eventos filtrados
   const handleFilterParams = (category: string) => {
-    if (filterParams.activities[category]) {
+    if (category in filterParams.activities) {
+      console.log("entra en la primera condición");
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         activities: {
@@ -92,7 +104,7 @@ function App() {
       }));
     }
 
-    if (filterParams.breeds[category]) {
+    if (category in filterParams.breeds) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         breeds: {
@@ -102,7 +114,7 @@ function App() {
       }));
     }
 
-    if (filterParams.size[category]) {
+    if (category in filterParams.size) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         size: {
@@ -112,8 +124,6 @@ function App() {
       }));
     }
   };
-
-  console.log(filterParams);
 
   return (
     <>
