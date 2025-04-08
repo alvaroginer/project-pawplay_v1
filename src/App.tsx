@@ -45,16 +45,49 @@ function App() {
 
   //Crear un único useState con todos los parámetros del filtro y no de otras categorías
   //crear una función que recoja cada parámetro y pueda cambiarlo
-  // useEffect(() => {
-  //   setFilteredEventList({ ...filteredEventList });
+  useEffect(() => {
+    setFilteredEventList({ ...eventsList });
 
-  //     if(Object.values(filterParams.activities).includes(true)){
-  //       setFilteredEventList((prevFilteredList) =>
-  //         ()
-  //       )
-  //     }
+    if (Object.values(filterParams.activities).includes(true)) {
+      const activeCategorys: string[] = [];
+      Object.keys(filterParams.activities).forEach((activity) => {
+        if (filterParams.activities[activity] === true) {
+          activeCategorys.push(activity);
+        }
+      });
+      setFilteredEventList((prevFilteredList) =>
+        prevFilteredList.filter((card) =>
+          activeCategorys.includes(card.activity)
+        )
+      );
+    }
 
-  // }, [eventsList]);
+    if (Object.values(filterParams.breeds).includes(true)) {
+      const activeCategorys: string[] = [];
+      Object.keys(filterParams.breeds).forEach((breed) => {
+        if (filterParams.breeds[breed] === true) {
+          activeCategorys.push(breed);
+        }
+      });
+      setFilteredEventList((prevFilteredList) =>
+        prevFilteredList.filter((card) => activeCategorys.includes(card.breed))
+      );
+    }
+
+    if (Object.values(filterParams.size).includes(true)) {
+      const activeCategorys: string[] = [];
+      Object.keys(filterParams.size).forEach((dogSize) => {
+        if (filterParams.size[dogSize] === true) {
+          activeCategorys.push(dogSize);
+        }
+      });
+      setFilteredEventList((prevFilteredList) =>
+        prevFilteredList.filter((card) => activeCategorys.includes(card.size))
+      );
+    }
+  }, [filterParams, eventsList]);
+
+  console.log(filteredEventList);
 
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
