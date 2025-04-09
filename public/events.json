@@ -6,7 +6,7 @@
       "date": "25.04.25",
       "time": "18:00h",
       "location": "Central Park, NY",
-      "activity": "Outdoors",
+      "activity": "outdoors",
       "rating": 1,
       "breed": "affenpischer",
       "size": "small"
@@ -17,7 +17,7 @@
       "date": "10.05.25",
       "time": "15:00h",
       "location": "Prospect Park, NY",
-      "activity": "Sports",
+      "activity": "sports",
       "rating": 5,
       "breed": "affenpischer",
       "size": "medium"

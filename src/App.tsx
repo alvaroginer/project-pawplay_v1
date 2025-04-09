@@ -51,7 +51,7 @@ function App() {
   //Crear un único useState con todos los parámetros del filtro y no de otras categorías
   //crear una función que recoja cada parámetro y pueda cambiarlo
   useEffect(() => {
-    setFilteredEventList({ ...eventsList });
+    setFilteredEventList([...eventsList]);
 
     if (Object.values(filterParams.activities).includes(true)) {
       const activeCategorys: string[] = [];
