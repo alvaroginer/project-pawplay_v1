@@ -30,6 +30,7 @@ function App() {
   const [filteredEventList, setFilteredEventList] =
     useState<CardData[]>(eventsList);
 
+  //Llamada al archivo json
   useEffect(() => {
     async function fetchData() {
       try {
@@ -48,8 +49,7 @@ function App() {
     fetchData();
   }, []);
 
-  //Crear un único useState con todos los parámetros del filtro y no de otras categorías
-  //crear una función que recoja cada parámetro y pueda cambiarlo
+  //Función de filtrado, cambiar por un useMemo
   useEffect(() => {
     setFilteredEventList([...eventsList]);
 
@@ -92,8 +92,9 @@ function App() {
     }
   }, [filterParams, eventsList]);
 
-  console.log(filteredEventList);
+  //console.log(filteredEventList);
 
+  //Creamos dinámicamente el useState de los filtros
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
     let breedList: Record<string, boolean> = {};
@@ -122,14 +123,10 @@ function App() {
     });
   }, [eventsList]);
 
-  //Funciónn para mostrar el sidebar
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     setSidebarDisplay(!sidebarDisplay);
   };
 
-  //Función para procesar el cambio de filtros
-  //Esta primera prueba se está realizando sin tener en cuenta el uso de botones en el filtro
-  //Si queremos utilizar botones de filtros esta función debe separar la actualizaciónd el objeto con filtros con el objeto de los eventos filtrados
   const handleFilterParams = (category: string) => {
     if (category in filterParams.activities) {
       console.log("entra en la primera condición");
