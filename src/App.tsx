@@ -1,6 +1,6 @@
 import { Card } from "./components/card/card";
 import { CardData } from "./components/card/card";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
 import "./App.css";
@@ -27,8 +27,6 @@ function App() {
     date: {},
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
-  const [filteredEventList, setFilteredEventList] =
-    useState<CardData[]>(eventsList);
 
   //Llamada al archivo json
   useEffect(() => {
@@ -50,51 +48,49 @@ function App() {
   }, []);
 
   //Función de filtrado, cambiar por un useMemo
-  useEffect(() => {
-    setFilteredEventList([...eventsList]);
+  // useEffect(() => {
+  //   setFilteredEventList([...eventsList]);
 
-    if (Object.values(filterParams.activities).includes(true)) {
-      const activeCategorys: string[] = [];
-      Object.keys(filterParams.activities).forEach((activity) => {
-        if (filterParams.activities[activity] === true) {
-          activeCategorys.push(activity);
-        }
-      });
-      setFilteredEventList((prevFilteredList) =>
-        prevFilteredList.filter((card) =>
-          activeCategorys.includes(card.activity)
-        )
-      );
-    }
+  //   if (Object.values(filterParams.activities).includes(true)) {
+  //     const activeCategorys: string[] = [];
+  //     Object.keys(filterParams.activities).forEach((activity) => {
+  //       if (filterParams.activities[activity] === true) {
+  //         activeCategorys.push(activity);
+  //       }
+  //     });
+  //     setFilteredEventList((prevFilteredList) =>
+  //       prevFilteredList.filter((card) =>
+  //         activeCategorys.includes(card.activity)
+  //       )
+  //     );
+  //   }
 
-    if (Object.values(filterParams.breeds).includes(true)) {
-      const activeCategorys: string[] = [];
-      Object.keys(filterParams.breeds).forEach((breed) => {
-        if (filterParams.breeds[breed] === true) {
-          activeCategorys.push(breed);
-        }
-      });
-      setFilteredEventList((prevFilteredList) =>
-        prevFilteredList.filter((card) => activeCategorys.includes(card.breed))
-      );
-    }
+  //   if (Object.values(filterParams.breeds).includes(true)) {
+  //     const activeCategorys: string[] = [];
+  //     Object.keys(filterParams.breeds).forEach((breed) => {
+  //       if (filterParams.breeds[breed] === true) {
+  //         activeCategorys.push(breed);
+  //       }
+  //     });
+  //     setFilteredEventList((prevFilteredList) =>
+  //       prevFilteredList.filter((card) => activeCategorys.includes(card.breed))
+  //     );
+  //   }
 
-    if (Object.values(filterParams.size).includes(true)) {
-      const activeCategorys: string[] = [];
-      Object.keys(filterParams.size).forEach((dogSize) => {
-        if (filterParams.size[dogSize] === true) {
-          activeCategorys.push(dogSize);
-        }
-      });
-      setFilteredEventList((prevFilteredList) =>
-        prevFilteredList.filter((card) => activeCategorys.includes(card.size))
-      );
-    }
-  }, [filterParams, eventsList]);
+  //   if (Object.values(filterParams.size).includes(true)) {
+  //     const activeCategorys: string[] = [];
+  //     Object.keys(filterParams.size).forEach((dogSize) => {
+  //       if (filterParams.size[dogSize] === true) {
+  //         activeCategorys.push(dogSize);
+  //       }
+  //     });
+  //     setFilteredEventList((prevFilteredList) =>
+  //       prevFilteredList.filter((card) => activeCategorys.includes(card.size))
+  //     );
+  //   }
+  // }, [filterParams, eventsList]);
 
-  //console.log(filteredEventList);
-
-  //Creamos dinámicamente el useState de los filtros
+  //Creamos dinámicamente el useState de los filtros, alo mejor se puede cambiar por un useMemo
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
     let breedList: Record<string, boolean> = {};
@@ -123,13 +119,64 @@ function App() {
     });
   }, [eventsList]);
 
+  const filteredEventList = useMemo(() => {
+    if (
+      Object.values(filterParams.activities).includes(true) ||
+      Object.values(filterParams.breeds).includes(true) ||
+      Object.values(filterParams.size).includes(true)
+    ) {
+      console.log("entra en la primera condción");
+
+      const activeSizes: string[] = Object.keys(filterParams.size).filter(
+        (dogSize) => filterParams.size[dogSize] === true
+      );
+      console.log("activeSizes", activeSizes);
+
+      const activeBreeds: string[] = Object.keys(filterParams.breeds).filter(
+        (dogBreed) => filterParams.breeds[dogBreed] === true
+      );
+      console.log("activeBreeds", activeBreeds);
+
+      const activeActivities: string[] = Object.keys(
+        filterParams.activities
+      ).filter((activity) => filterParams.activities[activity] === true);
+      console.log("activeActivities", activeActivities);
+
+      return eventsList.filter((event, index) => {
+        if (activeSizes.length > 0 && !activeSizes.includes(event.size)) {
+          console.log(event.size, index);
+          return false;
+        }
+
+        if (activeBreeds.length > 0 && !activeBreeds.includes(event.breed)) {
+          console.log(event.breed, index);
+          return false;
+        }
+
+        if (
+          activeActivities.length > 0 &&
+          !activeActivities.includes(event.activity)
+        ) {
+          console.log(event.activity, index);
+          return false;
+        }
+
+        return true;
+      });
+    } else {
+      return eventsList;
+    }
+  }, [filterParams, eventsList]);
+
+  console.log(filteredEventList);
+  console.log("filterparams", filterParams);
+
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     setSidebarDisplay(!sidebarDisplay);
   };
 
   const handleFilterParams = (category: string) => {
     if (category in filterParams.activities) {
-      console.log("entra en la primera condición");
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         activities: {
@@ -144,7 +191,7 @@ function App() {
         ...prevFilterParams,
         breeds: {
           ...prevFilterParams.breeds,
-          [category]: prevFilterParams.breeds[category],
+          [category]: !prevFilterParams.breeds[category],
         },
       }));
     }
@@ -185,7 +232,7 @@ function App() {
         </div>
       </div>
       <section className="grid">
-        {eventsList.map((event: CardData) => {
+        {filteredEventList.map((event: CardData) => {
           return <Card key={event.id} event={event} />;
         })}
       </section>
