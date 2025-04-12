@@ -6,12 +6,12 @@ import "../../index.css";
 import "./Sidebar.css";
 
 interface SidebarProps {
-  filterData: FilterProps;
+  filterParams: FilterProps;
   onClick: (sidebarDisplay: boolean) => void;
   onChange: (category: string) => void;
 }
 
-export const Sidebar = ({ filterData, onClick, onChange }: SidebarProps) => {
+export const Sidebar = ({ filterParams, onClick, onChange }: SidebarProps) => {
   return (
     <aside className="filter-sidebar">
       <div className="filter-sidebar--header">
@@ -20,11 +20,11 @@ export const Sidebar = ({ filterData, onClick, onChange }: SidebarProps) => {
           <img src="imgs/close-thick.svg" alt="Close Icon" />
         </button>
       </div>
-      {Object.keys(filterData).map((category: string) => {
+      {Object.keys(filterParams).map((category: string) => {
         return (
           <FilterCategory
             key={category}
-            categories={filterData[category]}
+            categories={filterParams[category]}
             title={capitalizeFirstLetter(category)}
             onChange={onChange}
           />

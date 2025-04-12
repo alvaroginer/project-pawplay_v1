@@ -1,5 +1,4 @@
-import { Card } from "./components/card/card";
-import { CardData } from "./components/card/card";
+import { CardData, Card } from "./components/card/card";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
@@ -12,11 +11,6 @@ export interface FilterProps {
   size: Record<string, boolean>;
   date: Record<number, boolean>;
 }
-
-//El filtro se creará dinamicamente a partir de los datos que proprcionen las cards
-//Existirá un único useState para el filtro que tendrá la estructura de FilterProps
-// cada propiedad de Filter prop tendrá un objeto con el nombre de la categoria y un estado de verdadero falso que marcará si es un requisito de filtro
-// el componente sidebar recibirá la estructura de filterprops
 
 function App() {
   const [eventsList, setEventsList] = useState<CardData[]>([]);
@@ -47,50 +41,7 @@ function App() {
     fetchData();
   }, []);
 
-  //Función de filtrado, cambiar por un useMemo
-  // useEffect(() => {
-  //   setFilteredEventList([...eventsList]);
-
-  //   if (Object.values(filterParams.activities).includes(true)) {
-  //     const activeCategorys: string[] = [];
-  //     Object.keys(filterParams.activities).forEach((activity) => {
-  //       if (filterParams.activities[activity] === true) {
-  //         activeCategorys.push(activity);
-  //       }
-  //     });
-  //     setFilteredEventList((prevFilteredList) =>
-  //       prevFilteredList.filter((card) =>
-  //         activeCategorys.includes(card.activity)
-  //       )
-  //     );
-  //   }
-
-  //   if (Object.values(filterParams.breeds).includes(true)) {
-  //     const activeCategorys: string[] = [];
-  //     Object.keys(filterParams.breeds).forEach((breed) => {
-  //       if (filterParams.breeds[breed] === true) {
-  //         activeCategorys.push(breed);
-  //       }
-  //     });
-  //     setFilteredEventList((prevFilteredList) =>
-  //       prevFilteredList.filter((card) => activeCategorys.includes(card.breed))
-  //     );
-  //   }
-
-  //   if (Object.values(filterParams.size).includes(true)) {
-  //     const activeCategorys: string[] = [];
-  //     Object.keys(filterParams.size).forEach((dogSize) => {
-  //       if (filterParams.size[dogSize] === true) {
-  //         activeCategorys.push(dogSize);
-  //       }
-  //     });
-  //     setFilteredEventList((prevFilteredList) =>
-  //       prevFilteredList.filter((card) => activeCategorys.includes(card.size))
-  //     );
-  //   }
-  // }, [filterParams, eventsList]);
-
-  //Creamos dinámicamente el useState de los filtros, alo mejor se puede cambiar por un useMemo
+  //Creamos dinámicamente el useState de los filtros, a lo mejor se puede cambiar por un useMemo??
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
     let breedList: Record<string, boolean> = {};
@@ -112,10 +63,10 @@ function App() {
     });
 
     setFilterParams({
-      ...filterParams,
       activities: activityList,
       breeds: breedList,
       size: sizeList,
+      date: {},
     });
   }, [eventsList]);
 
@@ -167,9 +118,6 @@ function App() {
       return eventsList;
     }
   }, [filterParams, eventsList]);
-
-  console.log(filteredEventList);
-  console.log("filterparams", filterParams);
 
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     setSidebarDisplay(!sidebarDisplay);
@@ -238,7 +186,7 @@ function App() {
       </section>
       {sidebarDisplay && (
         <Sidebar
-          filterData={filterParams}
+          filterParams={filterParams}
           onClick={handleSidebarDisplay}
           onChange={handleFilterParams}
         />
