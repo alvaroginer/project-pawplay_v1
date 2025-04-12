@@ -21,6 +21,7 @@ function App() {
     date: {},
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
+  const [exitAnimation, setExitAnimation] = useState<boolean>(false);
 
   //Llamada al archivo json
   useEffect(() => {
@@ -120,7 +121,17 @@ function App() {
   }, [filterParams, eventsList]);
 
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
-    setSidebarDisplay(!sidebarDisplay);
+    if (sidebarDisplay === true) {
+      setExitAnimation(true);
+      setTimeout(() => {
+        setExitAnimation(false);
+        setSidebarDisplay(false);
+      }, 400);
+
+      return;
+    }
+
+    setSidebarDisplay(true);
   };
 
   const handleFilterParams = (category: string) => {
@@ -179,18 +190,21 @@ function App() {
           <img src="imgs/filter.svg" alt="Filter Icon" />
         </div>
       </div>
-      <section className="grid">
-        {filteredEventList.map((event: CardData) => {
-          return <Card key={event.id} event={event} />;
-        })}
-      </section>
-      {sidebarDisplay && (
-        <Sidebar
-          filterParams={filterParams}
-          onClick={handleSidebarDisplay}
-          onChange={handleFilterParams}
-        />
-      )}
+      <div className="events-container">
+        <section className="grid">
+          {filteredEventList.map((event: CardData) => {
+            return <Card key={event.id} event={event} />;
+          })}
+        </section>
+        {sidebarDisplay && (
+          <Sidebar
+            exitAnimation={exitAnimation}
+            filterParams={filterParams}
+            onClick={handleSidebarDisplay}
+            onChange={handleFilterParams}
+          />
+        )}
+      </div>
     </>
   );
 }

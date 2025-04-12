@@ -1,13 +1,15 @@
 .filter-category {
-  padding-bottom: var(--space-20);
+  padding-bottom: var(--space-40);
   border-bottom: var(--space-1) solid var(--color-gray-300);
-  margin-bottom: var(--space-20);
+  margin-bottom: var(--space-40);
 }
 
 .filter-category--title {
   font-size: var(--font--16);
-  font-weight: 500;
+  font-weight: var(--font-semibold);
   text-align: left;
+  margin-top: 0;
+  margin-bottom: var(--space-30);
 }
 
 .filter-category--container {

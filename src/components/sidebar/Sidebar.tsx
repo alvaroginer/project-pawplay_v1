@@ -1,19 +1,30 @@
 import { FilterProps } from "../../App";
 import { FilterCategory } from "../filterCategory/FilterCategory";
 import { capitalizeFirstLetter } from "../../functions/Functions";
-import { Button } from "../button/Button";
 import "../../index.css";
 import "./Sidebar.css";
 
 interface SidebarProps {
   filterParams: FilterProps;
+  exitAnimation: boolean;
   onClick: (sidebarDisplay: boolean) => void;
   onChange: (category: string) => void;
 }
 
-export const Sidebar = ({ filterParams, onClick, onChange }: SidebarProps) => {
+export const Sidebar = ({
+  filterParams,
+  onClick,
+  onChange,
+  exitAnimation,
+}: SidebarProps) => {
   return (
-    <aside className="filter-sidebar">
+    <aside
+      className={
+        !exitAnimation
+          ? "filter-sidebar"
+          : "filter-sidebar filter-sidebar__exit"
+      }
+    >
       <div className="filter-sidebar--header">
         <p className="margin--0">Filters</p>
         <button className="close-button" onClick={() => onClick(true)}>
@@ -31,8 +42,12 @@ export const Sidebar = ({ filterParams, onClick, onChange }: SidebarProps) => {
         );
       })}
       <div className="filter-sidebar--button-container">
-        <Button className="btn btn--secondary__outlined" text="Cancel" />
-        <Button className="btn btn--secondary margin--left__20" text="Apply" />
+        <button
+          className="btn btn--secondary margin--left__20"
+          onClick={() => onClick(true)}
+        >
+          Apply
+        </button>
       </div>
     </aside>
   );

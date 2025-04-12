@@ -26,7 +26,6 @@
   right: 0;
   height: 100%;
   width: 100%;
-  max-width: 400px;
   text-align: right;
   background-color: white;
   z-index: 10;
@@ -34,6 +33,10 @@
   overflow-y: auto;
   scrollbar-width: none;
   animation: slideInSidebar 0.4s ease-out;
+}
+
+.filter-sidebar__exit {
+  animation: slideOutSidebar 0.4s ease-out;
 }
 
 .filter-sidebar::-webkit-scrollbar {
@@ -60,4 +63,25 @@
   right: 0;
   bottom: 0;
   text-align: center;
+}
+
+@media (min-width: 995px) {
+  .filter-sidebar {
+    position: static;
+    padding-top: 0;
+    max-width: calc(var(--space-200) * 2);
+  }
+
+  .filter-sidebar--header {
+    display: none;
+  }
+
+  .events-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .filter-sidebar .btn--secondary {
+    display: none;
+  }
 }
