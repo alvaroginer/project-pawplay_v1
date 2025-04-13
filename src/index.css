@@ -43,6 +43,7 @@
   --space-36: 36px;
   --space-40: 40px;
   --space-50: 50px;
+  --space-113: 113px;
   --space-200: 200px;
   --space-268: 268px;
   --space-292: 292px;
@@ -201,10 +202,12 @@ body {
 }
 
 /* -----> Margins */
+/* All */
 .margin--0 {
   margin: 0;
 }
 
+/* Left */
 .margin--left__4 {
   margin-left: var(--space-4);
 }
@@ -213,6 +216,16 @@ body {
   margin-left: var(--space-20);
 }
 
+/* Right */
+.margin--right__14 {
+  margin-right: var(--space-14);
+}
+
+.margin--right__40 {
+  margin-right: var(--space-40);
+}
+
+/* Bottom */
 .margin--bt__24 {
   margin-bottom: var(--space-24);
 }
@@ -220,6 +233,11 @@ body {
 /* -----> Border-radius */
 .border-radius__12 {
   border-radius: var(--space-12);
+}
+
+/* -----> Text-Decoration */
+.text-decoration-none {
+  text-decoration: none;
 }
 
 /* Media Queries */
@@ -251,6 +269,7 @@ body {
 
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
+  margin-top: var(--space-113);
   margin-bottom: var(--space-34);
   padding: var(--space-12);
   border-style: solid;
