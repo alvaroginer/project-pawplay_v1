@@ -8,6 +8,8 @@ import parkImg from "../imgs/centralPark.jpg";
 export const Event = () => {
   const params = useParams();
   console.log(params);
+
+  //Estaría bien hacer componente las características y que se recre a través de un map
   return (
     <>
       <div className="event--header">
