@@ -1,0 +1,31 @@
+.event--header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: var(--space-113);
+}
+
+.event--header button {
+  background-color: transparent;
+  margin: 0;
+  margin-bottom: var(--space-30);
+  padding: 0;
+  border: none;
+}
+
+/* No funciona la clase margin-right */
+button.btn--icon.margin--right__10 {
+  margin-right: var(--space-10);
+}
+
+.event--img-container {
+  border-radius: var(--space-14);
+  height: 190px;
+}
+
+.event--img-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--space-14);
+  object-fit: cover;
+}

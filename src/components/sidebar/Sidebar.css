@@ -1,22 +1,18 @@
 @keyframes slideInSidebar {
   from {
     transform: translateX(100%);
-    opacity: 0;
   }
   to {
     transform: translateX(0);
-    opacity: 1;
   }
 }
 
 @keyframes slideOutSidebar {
   from {
     transform: translateX(0);
-    opacity: 1;
   }
   to {
     transform: translateX(100%);
-    opacity: 0;
   }
 }
 
@@ -26,6 +22,7 @@
   right: 0;
   height: 100%;
   width: 100%;
+  margin-top: var(--space-113);
   text-align: right;
   background-color: white;
   z-index: 10;
@@ -69,6 +66,7 @@
   .filter-sidebar {
     position: static;
     padding-top: 0;
+    margin-top: 0;
     max-width: calc(var(--space-200) * 2);
   }
 

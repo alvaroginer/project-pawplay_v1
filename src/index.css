@@ -31,6 +31,7 @@
   --space-4: 4px;
   --space-6: 6px;
   --space-8: 8px;
+  --space-10: 10px;
   --space-12: 12px;
   --space-14: 14px;
   --space-16: 16px;
@@ -95,8 +96,11 @@ body {
   font-family: var(--font-family);
   margin: 0;
   padding-inline: 16px;
-  display: flex;
-  justify-content: center;
+  position: relative;
+  right: auto;
+  left: auto;
+  /* display: flex;
+  justify-content: center; */
 }
 
 /* Width */
@@ -165,7 +169,6 @@ body {
   gap: var(--space-36);
   justify-content: center;
   align-items: center;
-  max-width: 1330px;
 }
 
 .grid-cell {
@@ -217,6 +220,10 @@ body {
 }
 
 /* Right */
+.margin--right__10 {
+  margin-right: var(--space-10);
+}
+
 .margin--right__14 {
   margin-right: var(--space-14);
 }
@@ -238,6 +245,19 @@ body {
 /* -----> Text-Decoration */
 .text-decoration-none {
   text-decoration: none;
+}
+
+/* -----> Text-Align */
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
 }
 
 /* Media Queries */

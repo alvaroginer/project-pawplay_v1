@@ -4,6 +4,7 @@ import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
 import "./App.css";
 import "./index.css";
+import filter from "./imgs/filter.svg";
 
 export interface FilterProps {
   activities: Record<string, boolean>;
@@ -187,7 +188,7 @@ export const EventsMainPage = () => {
           onClick={() => handleSidebarDisplay(sidebarDisplay)}
         >
           <p>Filters</p>
-          <img src="imgs/filter.svg" alt="Filter Icon" />
+          <img src={filter} alt="Filter Icon" />
         </div>
       </div>
       <div className="events-container">

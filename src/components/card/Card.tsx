@@ -1,6 +1,9 @@
 import { Rating } from "../rating/Rating";
 import "../../index.css";
 import "./card.css";
+import park from "../../imgs/image-park.jpg";
+import footprint from "../../imgs/footprint-dog.svg";
+import dots from "../../imgs/dots.svg";
 
 export interface CardData {
   id?: number;
@@ -21,13 +24,13 @@ export const Card = (props: { event: CardData }) => {
   return (
     <div className="event-card grid-cell margin--bt__24">
       <div className="event-card--image position-relative">
-        <img src="imgs/image-park.jpg" alt="Park" />
+        <img src={park} alt="Park" />
         <div className="fav-button--container">
           <button className="fav-button">
-            <img src="imgs/footprint-dog.svg" alt="Dog Footprint" />
+            <img src={footprint} alt="Dog Footprint" />
           </button>
           <button className="fav-button">
-            <img src="imgs/dots.svg" alt="Dog Footprint" />
+            <img src={dots} alt="Dots Icon" />
           </button>
         </div>
       </div>

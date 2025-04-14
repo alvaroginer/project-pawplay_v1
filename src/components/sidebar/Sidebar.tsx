@@ -3,6 +3,7 @@ import { FilterCategory } from "../filterCategory/FilterCategory";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "../../index.css";
 import "./Sidebar.css";
+import close from "../../imgs/close-thick.svg";
 
 interface SidebarProps {
   filterParams: FilterProps;
@@ -28,7 +29,7 @@ export const Sidebar = ({
       <div className="filter-sidebar--header">
         <p className="margin--0">Filters</p>
         <button className="close-button" onClick={() => onClick(true)}>
-          <img src="imgs/close-thick.svg" alt="Close Icon" />
+          <img src={close} alt="Close Icon" />
         </button>
       </div>
       {Object.keys(filterParams).map((category: string) => {
