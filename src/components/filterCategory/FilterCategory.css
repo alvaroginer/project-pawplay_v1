@@ -6,7 +6,7 @@
 
 .filter-category--title {
   font-size: var(--font--16);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-medium);
   text-align: left;
   margin-top: 0;
   margin-bottom: var(--space-30);
