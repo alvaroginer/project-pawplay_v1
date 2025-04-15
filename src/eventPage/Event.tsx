@@ -28,6 +28,7 @@ export const Event = () => {
       <div className="event--img-container">
         <img src={parkImg} alt="" />
       </div>
+      <h3 className="event--title">Golden Retrievers Meetup at Central Park</h3>
     </>
   );
 };

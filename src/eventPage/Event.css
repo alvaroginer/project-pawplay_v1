@@ -28,4 +28,19 @@ button.btn--icon.margin--right__10 {
   height: 100%;
   border-radius: var(--space-14);
   object-fit: cover;
+  margin-bottom: var(--space-30);
+}
+
+.event--title {
+  font-size: var(--font-20);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-50);
+}
+
+.event--category {
+  display: flex;
+}
+
+.category--text__title {
+  margin-bottom: var(--space-12);
 }
