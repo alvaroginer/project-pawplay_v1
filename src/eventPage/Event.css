@@ -13,6 +13,10 @@
   border: none;
 }
 
+.btn--icon:hover {
+  cursor: pointer;
+}
+
 /* No funciona la clase margin-right */
 button.btn--icon.margin--right__10 {
   margin-right: var(--space-10);
@@ -32,7 +36,14 @@ button.btn--icon.margin--right__10 {
 }
 
 .event--title {
-  font-size: var(--font-20);
-  font-weight: var(--font-semibold);
+  font-size: var(--font-24);
+  font-weight: var(--font-medium);
+  margin-top: var(--space-30);
   margin-bottom: var(--space-50);
+}
+
+.event--profile-title {
+  font-size: var(--font-22);
+  font-weight: var(--font-regular);
+  margin-bottom: var(--space-12);
 }

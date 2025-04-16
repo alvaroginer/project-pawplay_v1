@@ -45,9 +45,13 @@
   --space-40: 40px;
   --space-50: 50px;
   --space-113: 113px;
+  --space-120: 120px;
+  --space-133: 133px;
+  --space-155: 155px;
   --space-200: 200px;
   --space-268: 268px;
   --space-292: 292px;
+  --space-328: 328px;
 
   /* -----> Fonts */
 
@@ -60,6 +64,7 @@
   --font-16: var(--space-16);
   --font-18: var(--space-18);
   --font-20: var(--space-20);
+  --font-22: var(--space-22);
   --font-24: var(--space-24);
 
   /* Font-weight */

@@ -2,6 +2,21 @@
   display: flex;
 }
 
+.event--category__text {
+  margin-left: var(--space-12);
+  margin-bottom: var(--space-50);
+}
+
 .category--text__title {
+  margin-top: 0;
   margin-bottom: var(--space-12);
+  font-weight: var(--font-regular);
+  font-size: var(--font-22);
+}
+
+.category--text__text {
+  font-size: var(--space-16);
+  color: var(--color-gray-300);
+  margin-top: var(--font-12);
+  margin-bottom: 0;
 }
