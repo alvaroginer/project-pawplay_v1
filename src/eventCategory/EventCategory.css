@@ -1,0 +1,7 @@
+.event--category {
+  display: flex;
+}
+
+.category--text__title {
+  margin-bottom: var(--space-12);
+}

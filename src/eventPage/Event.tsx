@@ -1,4 +1,5 @@
 import { NavLink, useParams } from "react-router";
+import { EventCategory } from "../eventCategory/EventCategory";
 import "./Event.css";
 import arrow from "../imgs/arrow-left.svg";
 import share from "../imgs/share.svg";
@@ -29,6 +30,12 @@ export const Event = () => {
         <img src={parkImg} alt="" />
       </div>
       <h3 className="event--title">Golden Retrievers Meetup at Central Park</h3>
+      <EventCategory img={} title="Location" info="" />
+      <EventCategory img={} title="Location" info="" />
+      <EventCategory img={} title="Location" info="" />
+      <EventCategory img={} title="Location" info="" />
+      <EventCategory img={} title="Location" info="" />
+      <EventCategory img={} title="Location" info="" />
     </>
   );
 };

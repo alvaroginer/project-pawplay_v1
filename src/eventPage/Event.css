@@ -36,11 +36,3 @@ button.btn--icon.margin--right__10 {
   font-weight: var(--font-semibold);
   margin-bottom: var(--space-50);
 }
-
-.event--category {
-  display: flex;
-}
-
-.category--text__title {
-  margin-bottom: var(--space-12);
-}

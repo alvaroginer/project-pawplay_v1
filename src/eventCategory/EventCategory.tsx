@@ -1,4 +1,6 @@
-interface EventCategoryProps {
+import "./EventCategory.css";
+
+export interface EventCategoryProps {
   img: string;
   title: string;
   info: string;

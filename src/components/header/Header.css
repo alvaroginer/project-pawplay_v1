@@ -22,3 +22,13 @@ a {
   display: flex;
   align-items: center;
 }
+
+@media (max-width: 652px) {
+  .header--nav-container .btn {
+    display: none;
+  }
+
+  .headbar {
+    min-height: 83.33px;
+  }
+}
