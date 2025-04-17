@@ -1,10 +1,5 @@
+import { EventCategoryProps } from "../types";
 import "./EventCategory.css";
-
-export interface EventCategoryProps {
-  img: string;
-  title: string;
-  info: string;
-}
 
 export const EventCategory = ({ img, title, info }: EventCategoryProps) => {
   return (

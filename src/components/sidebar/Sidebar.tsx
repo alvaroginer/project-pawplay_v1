@@ -1,16 +1,9 @@
-import { FilterProps } from "../../App";
 import { FilterCategory } from "../filterCategory/FilterCategory";
 import { capitalizeFirstLetter } from "../../functions/Functions";
+import { SidebarProps } from "../../types";
 import "../../index.css";
 import "./Sidebar.css";
 import close from "../../imgs/close-thick.svg";
-
-interface SidebarProps {
-  filterParams: FilterProps;
-  exitAnimation: boolean;
-  onClick: (sidebarDisplay: boolean) => void;
-  onChange: (category: string) => void;
-}
 
 export const Sidebar = ({
   filterParams,

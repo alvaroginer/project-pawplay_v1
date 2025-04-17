@@ -1,13 +1,12 @@
-import { ReactNode } from "react";
+import { ButtonProps } from "../../types";
 import "../../index.css";
 import "./Button.css";
 
-interface ButtonProps {
-  className: string;
-  children: ReactNode;
-}
-
-export const Button = ({ className = "primary", children }: ButtonProps) => {
+export const Button = ({
+  className = "primary",
+  onClick,
+  children,
+}: ButtonProps) => {
   let buttonType: string;
   switch (className) {
     case "primary":
@@ -35,5 +34,9 @@ export const Button = ({ className = "primary", children }: ButtonProps) => {
       break;
   }
 
-  return <button className={`btn ${buttonType}`}>{children}</button>;
+  return (
+    <button onClick={onClick} className={`btn ${buttonType}`}>
+      {children}
+    </button>
+  );
 };

@@ -5,6 +5,8 @@ import footprint from "../../imgs/footprint-dog.svg";
 import dots from "../../imgs/dots.svg";
 import bone from "../../imgs/bone.svg";
 
+// Ya se puede crear la función que calcula el rating
+
 export interface CardData {
   id?: number;
   name: string;

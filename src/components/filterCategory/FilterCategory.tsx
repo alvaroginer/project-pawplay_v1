@@ -1,12 +1,7 @@
+import { FilterCategoryProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "../../index.css";
 import "./FilterCategory.css";
-
-interface FilterCategoryProps {
-  title: string;
-  categories: Record<string, boolean>;
-  onChange: (string: string) => void;
-}
 
 export const FilterCategory = ({
   title,

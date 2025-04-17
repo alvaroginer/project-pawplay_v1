@@ -2,16 +2,10 @@ import { CardData, Card } from "./components/card/card";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
+import { FilterProps } from "./types";
 import "./App.css";
 import "./index.css";
 import filter from "./imgs/filter.svg";
-
-export interface FilterProps {
-  activities: Record<string, boolean>;
-  breeds: Record<string, boolean>;
-  size: Record<string, boolean>;
-  date: Record<number, boolean>;
-}
 
 export const EventsMainPage = () => {
   const [eventsList, setEventsList] = useState<CardData[]>([]);

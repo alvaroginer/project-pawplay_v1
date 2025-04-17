@@ -133,4 +133,6 @@ events: array
         |__places: number
         |
         |__activity: string
+        |
+        |__breeds: string[]
 ```

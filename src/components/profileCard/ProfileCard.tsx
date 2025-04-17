@@ -2,6 +2,8 @@ import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/bone.svg";
 
+// Ya se pueden crear las funciones que calculan el rating por ejemplo
+
 interface ProfileCardProps {
   name: string;
   rating: number;
