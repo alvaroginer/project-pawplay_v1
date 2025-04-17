@@ -1,4 +1,4 @@
-import { CardData, Card } from "./components/card/card";
+import { CardData, EventCard } from "./components/card/EventCard";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
@@ -122,11 +122,9 @@ export const EventsMainPage = () => {
         setExitAnimation(false);
         setSidebarDisplay(false);
       }, 400);
-
-      return;
+    } else {
+      setSidebarDisplay(true);
     }
-
-    setSidebarDisplay(true);
   };
 
   const handleFilterParams = (category: string) => {
@@ -188,7 +186,7 @@ export const EventsMainPage = () => {
       <div className="events-container">
         <section className="grid">
           {filteredEventList.map((event: CardData) => {
-            return <Card key={event.id} event={event} />;
+            return <EventCard key={event.id} event={event} />;
           })}
         </section>
         {sidebarDisplay && (

@@ -1,5 +1,5 @@
 import "../../index.css";
-import "./card.css";
+import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
 import footprint from "../../imgs/footprint-dog.svg";
 import dots from "../../imgs/dots.svg";
@@ -19,7 +19,7 @@ export interface CardData {
   size: string;
 }
 
-export const Card = (props: { event: CardData }) => {
+export const EventCard = (props: { event: CardData }) => {
   const { event } = props;
   const { name, date, time, location, activity, rating } = event;
 
