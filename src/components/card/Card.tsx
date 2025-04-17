@@ -1,9 +1,9 @@
-import { Rating } from "../rating/Rating";
 import "../../index.css";
 import "./card.css";
 import park from "../../imgs/image-park.jpg";
 import footprint from "../../imgs/footprint-dog.svg";
 import dots from "../../imgs/dots.svg";
+import bone from "../../imgs/bone.svg";
 
 export interface CardData {
   id?: number;
@@ -43,7 +43,10 @@ export const Card = (props: { event: CardData }) => {
         <p className="event-card--text__p">{location}</p>
         <p className="event-card--text__p">{activity}</p>
       </div>
-      {<Rating rating={rating} />}
+      <div className="event-card--rating">
+        <img src={bone} alt="Bone Icon" />
+        <p>{rating}</p>
+      </div>
     </div>
   );
 };

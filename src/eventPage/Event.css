@@ -24,7 +24,9 @@ button.btn--icon.margin--right__10 {
 
 .event--img-container {
   border-radius: var(--space-14);
-  height: 190px;
+  min-height: var(--space-190);
+  max-height: 582px;
+  overflow: hidden;
 }
 
 .event--img-container img {
@@ -32,18 +34,45 @@ button.btn--icon.margin--right__10 {
   height: 100%;
   border-radius: var(--space-14);
   object-fit: cover;
-  margin-bottom: var(--space-30);
+  object-position: center;
+  margin-bottom: inherit;
 }
 
 .event--title {
-  font-size: var(--font-24);
+  font-size: clamp(24px, 0.8vw + 0.9rem, 36px);
   font-weight: var(--font-medium);
   margin-top: var(--space-30);
   margin-bottom: var(--space-50);
 }
 
 .event--profile-title {
-  font-size: var(--font-22);
+  font-size: clamp(22px, 0.8vw + 0.6rem, 26px);
   font-weight: var(--font-regular);
   margin-bottom: var(--space-12);
+}
+
+.event--modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-22) 0;
+}
+
+@media (min-width: 1012.5px) {
+  .event--container {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .event--container__categories {
+    flex: 0 0 65%;
+  }
+
+  .event--container__sidebar {
+    flex: 0 0 35%;
+  }
+
+  .event--profile-title {
+    margin-top: 0;
+  }
 }

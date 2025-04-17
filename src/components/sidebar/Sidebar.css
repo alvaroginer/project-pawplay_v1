@@ -20,13 +20,14 @@
   position: fixed;
   top: 0;
   right: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   margin-top: var(--space-113);
   text-align: right;
   background-color: white;
   z-index: 10;
   padding: var(--space-40) var(--space-16);
+  padding-bottom: 138px;
   overflow-y: auto;
   scrollbar-width: none;
   animation: slideInSidebar 0.4s ease-out;
@@ -56,18 +57,25 @@
 }
 
 .filter-sidebar--button-container {
-  display: fixed;
+  position: fixed;
+  left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
+  padding: var(--space-22) 0;
+  background-color: white;
+  border-top: var(--space-1) solid var(--color-gray-300);
 }
 
 @media (min-width: 995px) {
   .filter-sidebar {
+    height: 100%;
     position: static;
     padding-top: 0;
+    padding-bottom: 0;
     margin-top: 0;
     max-width: calc(var(--space-200) * 2);
+    overflow: hidden;
   }
 
   .filter-sidebar--header {

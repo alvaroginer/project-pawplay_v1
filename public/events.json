@@ -42,7 +42,7 @@
       "activity": "social",
       "rating": 4,
       "breed": "affenpischer",
-      "size": ""
+      "size": "any"
     },
     {
       "id": 195752,
@@ -86,7 +86,7 @@
       "activity": "outdoors",
       "rating": 3,
       "breed": "affenpischer",
-      "size": ""
+      "size": "any"
     },
     {
       "id": 195756,
@@ -108,7 +108,7 @@
       "activity": "social",
       "rating": 2,
       "breed": "affenpischer",
-      "size": ""
+      "size": "any"
     }
   ]
 }

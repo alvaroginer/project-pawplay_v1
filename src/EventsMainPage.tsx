@@ -176,12 +176,12 @@ export const EventsMainPage = () => {
           placeholder="Search the event you want to go"
         />
         <div className="filter-button--container">
-          <Button className="btn btn--terciary" text="Social Event" />
-          <Button className="btn btn--terciary" text="Outdoors" />
-          <Button className="btn btn--terciary" text="Walks" />
-          <Button className="btn btn--terciary" text="Small Dogs" />
-          <Button className="btn btn--terciary" text="Social Event" />
-          <Button className="btn btn--terciary" text="Social Event" />
+          <Button className="terciary">Social Event</Button>
+          <Button className="terciary">Outdoors</Button>
+          <Button className="terciary">Walks</Button>
+          <Button className="terciary">Small Dogs</Button>
+          <Button className="terciary">Big Dogs</Button>
+          <Button className="terciary">Any Dogs</Button>
         </div>
         <div
           className="filter-button display--flex"

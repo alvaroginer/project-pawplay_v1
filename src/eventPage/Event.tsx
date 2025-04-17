@@ -1,6 +1,7 @@
 import { NavLink, useParams } from "react-router";
 import { EventCategory } from "../eventCategory/EventCategory";
 import { ProfileCard } from "../components/profileCard/ProfileCard";
+import { Button } from "../components/button/Button";
 import "./Event.css";
 import arrow from "../imgs/arrow-left.svg";
 import share from "../imgs/share.svg";
@@ -37,28 +38,37 @@ export const Event = () => {
         <img src={parkImg} alt="" />
       </div>
       <h3 className="event--title">Golden Retrievers Meetup at Central Park</h3>
-      <EventCategory
-        img={location}
-        title="Location"
-        info="5th Avenue & E 97th St, New York, NY"
-      />
-      <EventCategory img={tag} title="Activity" info="Outdoors" />
-      <EventCategory
-        img={description}
-        title="Description"
-        info="Asasa dhsjb fkdn fnjfbdj fndhjds f dsjhfjbf,mhmnsofgf hgjfb gjbdn gn,fb nhjgnfbjg njfd gjd mg sgbdsbgf s gbdsgmf gnfndgfds gbfdsmn"
-      />
-      <EventCategory
-        img={time}
-        title="Start time and end time"
-        info="5pm/6pm"
-      />
-      <EventCategory img={calendar} title="Day" info="11/04/2025" />
-      <EventCategory img={dog} title="Maximum places" info="Unlimited" />
+      <div className="event--container">
+        <main className="event--container__categories">
+          <EventCategory
+            img={location}
+            title="Location"
+            info="5th Avenue & E 97th St, New York, NY"
+          />
+          <EventCategory img={tag} title="Activity" info="Outdoors" />
+          <EventCategory
+            img={description}
+            title="Description"
+            info="Asasa dhsjb fkdn fnjfbdj fndhjds f dsjhfjbf,mhmnsofgf hgjfb gjbdn gn,fb nhjgnfbjg njfd gjd mg sgbdsbgf s gbdsgmf gnfndgfds gbfdsmn"
+          />
+          <EventCategory
+            img={time}
+            title="Start time and end time"
+            info="5pm/6pm"
+          />
+          <EventCategory img={calendar} title="Day" info="11/04/2025" />
+          <EventCategory img={dog} title="Maximum places" info="Unlimited" />
+        </main>
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <ProfileCard name="Flufy" rating={4.8} events={6} />
+        </aside>
+      </div>
+      <div className="event--modal">
+        <Button className="primary">Join Us</Button>
+      </div>
       {/* Falta el botón de apuntarse */}
       {/* Falta el mapa */}
-      <h3 className="event--profile-title">Know your organisator</h3>
-      <ProfileCard name="Flufy" rating={4.8} events={6} />
     </>
   );
 };

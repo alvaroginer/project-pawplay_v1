@@ -10,13 +10,15 @@
 .category--text__title {
   margin-top: 0;
   margin-bottom: var(--space-12);
+  padding: 0;
   font-weight: var(--font-regular);
-  font-size: var(--font-22);
+  font-size: clamp(22px, 0.8vw + 0.6rem, 26px);
 }
 
 .category--text__text {
-  font-size: var(--space-16);
-  color: var(--color-gray-300);
+  max-width: calc(var(--space-200) * 3);
   margin-top: var(--font-12);
   margin-bottom: 0;
+  font-size: clamp(16px, 0.8vw + 0.6rem, 22px);
+  color: var(--color-gray-300);
 }

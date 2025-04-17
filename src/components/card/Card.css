@@ -49,3 +49,12 @@
 .right .fav-button:hover {
   color: grey;
 }
+
+.event-card--rating {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.event-card--rating p {
+  margin: 0;
+}
