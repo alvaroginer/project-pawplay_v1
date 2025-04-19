@@ -18,7 +18,14 @@ export const Event = () => {
   const params = useParams();
   console.log(params);
 
-  //Estaría bien hacer componente las características y que se recre a través de un map
+  //Crear función que cree un array con 5 objetos de eventos
+  //que tengan la misma carcaterística de "activity" que el
+  //del event mostrado, a lo mejor la vraible que los contiene debe ser un useState
+
+  //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
+  //events hacer un find de algún evento que sea del miso tipo y
+  //no esté dentro del array de similar events
+
   return (
     <>
       <div className="event--header">
@@ -62,13 +69,16 @@ export const Event = () => {
         <aside className="event--container__sidebar">
           <h3 className="event--profile-title">Know your organisator</h3>
           <ProfileCard name="Flufy" rating={4.8} events={6} />
+          <div className="event--modal">
+            <Button className="primary">Join Us</Button>
+          </div>
         </aside>
       </div>
-      <div className="event--modal">
-        <Button className="primary">Join Us</Button>
+      <div className="event--events-container">
+        <h3 className="event--profile-title">Similar Events</h3>
       </div>
-      {/* Falta el botón de apuntarse */}
       {/* Falta el mapa */}
+      {/* Falta el apartado de Similar Events */}
     </>
   );
 };

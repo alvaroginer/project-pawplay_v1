@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap);
 
 :root {
   /* -----> Colors */
@@ -40,10 +41,13 @@
   --space-22: 22px;
   --space-24: 24px;
   --space-30: 30px;
+  --space-32: 32px;
   --space-34: 34px;
   --space-36: 36px;
   --space-40: 40px;
   --space-50: 50px;
+  --space-80: 80px;
+  --space-100: 100px;
   --space-113: 113px;
   --space-120: 120px;
   --space-133: 133px;
@@ -58,8 +62,10 @@
 
   /* Font-Family */
   --font-family: "Atkinson Hyperlegible Next", sans-serif;
+  --font-family--logo: "Fredoka", sans-serif;
 
   /* Font-size */
+  --font-10: var(--space-10);
   --font-12: var(--space-12);
   --font-14: var(--space-14);
   --font-16: var(--space-16);
@@ -67,6 +73,7 @@
   --font-20: var(--space-20);
   --font-22: var(--space-22);
   --font-24: var(--space-24);
+  --font-32: var(--space-32)
 
   /* Font-weight */
   --font-extra-light: 200;
@@ -105,8 +112,6 @@ body {
   position: relative;
   right: auto;
   left: auto;
-  /* display: flex;
-  justify-content: center; */
 }
 
 /* Width */
@@ -316,6 +321,19 @@ body {
   cursor: pointer;
 }
 
+.create-event-modal {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-22);
+  background-color: white;
+  border-top: var(--space-1) solid var(--color-gray-300);
+}
+
 .icon {
   width: 40px;
   height: 40px;
@@ -326,4 +344,10 @@ body {
 .icon.flipped {
   transform: rotate(180deg);
   color: hsl(355, 100%, 80%);
+}
+
+@media (min-width: 652px) {
+  .create-event-modal {
+    display: none;
+  }
 }

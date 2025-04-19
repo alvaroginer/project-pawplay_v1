@@ -1,0 +1,26 @@
+.footer {
+  padding: var(--space-34) var(--space-16);
+}
+
+.footer--title {
+  font-family: var(--font-family--logo);
+  font-size: var(--font-32);
+  text-align: center;
+}
+
+.footer--links-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer--legal-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer--text {
+  font-size: var(--font-12);
+  text-align: center;
+}

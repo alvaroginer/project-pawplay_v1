@@ -28,7 +28,6 @@ export const ProfileCard = ({
       </div>
       <div className="profile--card__info">
         <p className="profile--card__name">{name}</p>
-
         <div className="profile--card__block-rating">
           <div className="profile--card__rating">
             <img className="profile--card__icon" src={bone} alt="" />
@@ -36,7 +35,6 @@ export const ProfileCard = ({
           </div>
           <p className="profile--card__label">Rating</p>
         </div>
-
         <div className="profile--card__block-events">
           <p className="profile--card__value">{events}</p>
           <p className="profile--card__label">Events created</p>

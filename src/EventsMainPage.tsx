@@ -198,6 +198,9 @@ export const EventsMainPage = () => {
           />
         )}
       </div>
+      <div className="create-event-modal">
+        <Button className="primary">Create an event</Button>
+      </div>
     </>
   );
 };
