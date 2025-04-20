@@ -180,7 +180,7 @@ body {
   flex-wrap: wrap;
   gap: var(--space-36);
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .grid-cell {
@@ -272,31 +272,38 @@ body {
   text-align: right;
 }
 
-/* Media Queries */
-@media (min-width: 652px) {
-  .grid-cell {
-    flex: 0 0 50%;
-  }
-
-  .scroll-grid {
-    grid-auto-columns: 20%;
-  }
-}
-
-@media (min-width: 1012.5px) {
-  .grid-cell {
-    flex: 0 0 33.333%;
-  }
-
-  .scroll-grid {
-    grid-auto-columns: 15%;
-  }
-}
-
 .filter-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.filter-container--filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* o center, según cómo lo quieras */
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: var(--space-34);
+  padding: var(--space-16);
+}
+
+.filter-container--buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: var(--space-14);
+  scrollbar-width: none; /* Firefox */
+  width: 100%;
+}
+
+.filter-container--buttons::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.filter-container--buttons button {
+  flex-shrink: 0;
 }
 
 .searchbar {
@@ -317,9 +324,20 @@ body {
 }
 
 .filter-button {
-  text-align: left;
-  align-items: stretch;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  margin-top: var(--space-22);
+  text-align: right;
+}
+
+.filter-button p {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0;
 }
 
 .create-event-modal {
@@ -347,8 +365,39 @@ body {
   color: hsl(355, 100%, 80%);
 }
 
+/* Media Queries */
 @media (min-width: 652px) {
+  .grid-cell {
+    flex: 0 0 50%;
+  }
+
+  .scroll-grid {
+    grid-auto-columns: 20%;
+  }
+
   .create-event-modal {
     display: none;
+  }
+}
+
+@media (min-width: 787px) {
+  .filter-container--buttons {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 837px) {
+  .filter-container--buttons {
+    overflow-x: visible;
+  }
+}
+
+@media (min-width: 1012.5px) {
+  .grid-cell {
+    flex: 0 0 33.333%;
+  }
+
+  .scroll-grid {
+    grid-auto-columns: 15%;
   }
 }

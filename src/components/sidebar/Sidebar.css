@@ -89,7 +89,7 @@
     flex-direction: row;
   }
 
-  .filter-sidebar .btn--secondary {
+  .filter-sidebar--button-container {
     display: none;
   }
 }
