@@ -23,6 +23,17 @@ a {
   align-items: center;
 }
 
+.navigation-menu--button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.navigation-menu--button:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 652px) {
   .header--nav-container .btn {
     display: none;

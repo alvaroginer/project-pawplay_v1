@@ -87,3 +87,9 @@ export interface EventCategoryProps {
   title: string;
   info: string;
 }
+
+// -----> Navigation Menu
+
+export interface NavMenuProps {
+  onClick: (value: boolean) => void;
+}

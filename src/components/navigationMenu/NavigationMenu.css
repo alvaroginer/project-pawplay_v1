@@ -1,0 +1,50 @@
+.navigation-menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  margin-top: var(--space-113);
+  text-align: left;
+  background-color: white;
+  z-index: 100;
+  padding: var(--space-40) var(--space-16);
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.navigation-menu--header {
+  text-align: right;
+  margin-bottom: var(--space-36);
+}
+
+.navigation-menu--container-link {
+  padding-bottom: var(--space-10);
+  border-bottom: var(--space-1) solid var(--color-gray-300);
+  margin-bottom: var(--space-20);
+}
+
+.navigation-menu--link {
+  display: block;
+  margin-bottom: var(--space-10);
+  font-weight: var(--font-regular);
+  font-size: var(--font-20);
+  color: var(--color-gray);
+}
+
+.log-out--button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-weight: var(--font-regular);
+  font-size: var(--font-20);
+  color: var(--color-gray);
+}

@@ -10,6 +10,7 @@ import { ContactUs } from "./contactUs/ContactUs.tsx";
 import { Cookies } from "./cookies/Cookies.tsx";
 import { PrivacyPolicy } from "./privacyPolicy/PrivacyPolicy.tsx";
 import { ServiceTerms } from "./serviceTerms/ServiceTerms.tsx";
+import { CreateEvent } from "./createEvent/CreateEvent.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -17,15 +18,16 @@ createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route index element={<EventsMainPage />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/event/:userEventId" element={<Event />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/contactUs" element={<ContactUs />} />
-        <Route path="/aboutUs" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/service" element={<ServiceTerms />} />
+        <Route path="/create" element={<CreateEvent />} />
       </Route>
+      <Route path="/login" element={<Login />} />
     </Routes>
   </BrowserRouter>
 );

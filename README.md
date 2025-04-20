@@ -94,20 +94,6 @@ profiles: array
           |__sex: string
           |
           |__size: string
-          |
-          |__rating: ratingProps[]
-          |       |
-          |       |__fromProfileId: string
-          |       |
-          |       |__value: number
-          |
-          |__events
-                  |
-                  |__eventsCreated: string[] eventId
-                  |
-                  |__eventsJoined: string[] eventId
-                  |
-                  |__eventsFavourites: string[] eventId
 
 3. Events
 events: array
@@ -135,4 +121,29 @@ events: array
         |__activity: string
         |
         |__breeds: string[]
+        |
+        |__assistantLimit: string []
+
+4. Events Joined & Favourites
+events: array
+|
+|___profileId
+            |
+            |__eventsJoined: string[] eventId
+            |
+            |__eventsFavourites: string[] eventId
+
+5. Ratings
+ratings: array
+|
+|___rating
+         |
+         |__profileId: string
+         |
+         |__fromProfileId: string
+         |
+         |__value: number
+         |
+         |__commentaries?: string
+
 ```

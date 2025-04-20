@@ -6,7 +6,7 @@ import "./Footer.css";
 export const Footer = () => {
   return (
     <footer className="footer">
-      <h2 className="footer--title">Paw Play</h2>
+      <h2 className="footer--title">PawPlay</h2>
       <div className="footer--links-container">
         <div className="footer--links-container__nav">
           <h5 className="footer--links-container__title">Navigation</h5>
@@ -31,26 +31,30 @@ export const Footer = () => {
         </div>
         <div className="footer--links-container__rrss">
           <h5 className="footer--links-container__title">Follow us</h5>
-          <a href="" target="_blank">
+          <a href="" target="_blank" className="footer--links-container__link">
             <img src={instagram} alt="Instagram Icon" />
           </a>
-          <a href="" target="_blank">
+          <a href="" target="_blank" className="footer--links-container__link">
             <img src={xLogo} alt="X Icon" />
           </a>
         </div>
       </div>
       <div className="footer--legal-container">
-        <NavLink className="footer--legal-container__link" to="/privacy">
-          Privacy policy
-        </NavLink>
-        <NavLink className="footer--legal-container__link" to="/service">
-          Terms of service
-        </NavLink>
-        <NavLink className="footer--legal-container__link" to="/cookies">
-          Cookies
-        </NavLink>
+        <div className="footer--legal-container__container">
+          <NavLink className="footer--legal-container__link" to="/privacy">
+            Privacy policy
+          </NavLink>
+          <NavLink className="footer--legal-container__link" to="/service">
+            Terms of service
+          </NavLink>
+          <NavLink className="footer--legal-container__link" to="/cookies">
+            Cookies
+          </NavLink>
+        </div>
+        <p className="footer--text">
+          &copy; 2025, PawPlay. All rights reserved.
+        </p>
       </div>
-      <p className="footer--text"></p>
     </footer>
   );
 };
