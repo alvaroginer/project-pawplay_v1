@@ -7,6 +7,7 @@
   border-style: solid;
   border-color: transparent;
   border-radius: var(--space-50);
+  font-family: var(--font-family);
   font-size: var(--font-20);
   font-weight: var(--font-regular);
   transition: all ease-in 0.15s;

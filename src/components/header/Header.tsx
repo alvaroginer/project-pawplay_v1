@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { useState } from "react";
 import { NavigationMenu } from "../navigationMenu/NavigationMenu";
+import { Button } from "../button/Button";
 import "../../index.css";
 import "./Header.css";
 import logo from "../../imgs/Logo-black.svg";
@@ -21,10 +22,10 @@ export const Header = () => {
           <img src={logo} alt="PawPlay Logo" />
         </NavLink>
         <div className="header--nav-container">
-          <NavLink to="" className="btn margin--right__40">
-            Create Event
+          <NavLink to="">
+            <Button className="primary">Create event</Button>
           </NavLink>
-          <NavLink to="login" className="margin--right__14">
+          <NavLink to="login" className="navigation-menu--button__sign-in">
             Sign In
           </NavLink>
           <button className="navigation-menu--button">

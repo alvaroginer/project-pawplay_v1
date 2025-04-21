@@ -54,10 +54,6 @@ button.btn--icon.margin--right__10 {
   ); /* Margen para que cuadre el espacio entre el eventCategory el título */
 }
 
-.event--container__sidebar .profile--card {
-  margin-bottom: 0;
-}
-
 .event--modal {
   display: flex;
   align-items: center;
@@ -106,7 +102,7 @@ button.btn--icon.margin--right__10 {
     width: 100%;
   }
 
-  .profile--card {
+  .event--container__sidebar .profile--card {
     margin-bottom: var(--space-40);
   }
 }

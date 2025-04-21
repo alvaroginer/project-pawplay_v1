@@ -11,7 +11,8 @@ import { Cookies } from "./cookies/Cookies.tsx";
 import { PrivacyPolicy } from "./privacyPolicy/PrivacyPolicy.tsx";
 import { ServiceTerms } from "./serviceTerms/ServiceTerms.tsx";
 import { CreateEvent } from "./createEvent/CreateEvent.tsx";
-import "./index.css";
+import { MyEventsPage } from "./myEventPage/MyEventPage.tsx";
+import { ProfileSelection } from "./profileSelection/ProfileSelection.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -26,6 +27,8 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/service" element={<ServiceTerms />} />
         <Route path="/create" element={<CreateEvent />} />
+        <Route path="/my-events" element={<MyEventsPage />} />
+        <Route path="/profile-selection" element={<ProfileSelection />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

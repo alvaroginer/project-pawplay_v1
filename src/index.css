@@ -46,7 +46,9 @@
   --space-34: 34px;
   --space-36: 36px;
   --space-40: 40px;
+  --space-46: 46px;
   --space-50: 50px;
+  --space-60: 60px;
   --space-80: 80px;
   --space-100: 100px;
   --space-113: 113px;
@@ -58,6 +60,9 @@
   --space-268: 268px;
   --space-292: 292px;
   --space-328: 328px;
+
+  /* -----> Padding */
+  --body-inline-padding: clamp(16px, 10.79vw, 178px);
 
   /* -----> Fonts */
 
@@ -231,6 +236,10 @@ body {
   margin-left: var(--space-20);
 }
 
+.margin--left__40 {
+  margin-left: var(--space-40);
+}
+
 /* Right */
 .margin--right__10 {
   margin-right: var(--space-10);
@@ -366,6 +375,12 @@ body {
 }
 
 /* Media Queries */
+@media screen and (width>= 500px) {
+  body {
+    padding-inline: var(--body-inline-padding);
+  }
+}
+
 @media (min-width: 652px) {
   .grid-cell {
     flex: 0 0 50%;

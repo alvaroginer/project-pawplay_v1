@@ -3,6 +3,7 @@
   background-color: var(--color-gray-footer);
   margin-left: -16px;
   margin-right: -16px;
+  margin-top: var(--space-100);
 }
 
 .footer--title {
@@ -65,5 +66,11 @@
 @media (max-width: 652px) {
   .footer {
     margin-bottom: 98px;
+  }
+}
+
+@media screen and (width>= 500px) {
+  .footer {
+    margin-inline: calc(-1 * var(--body-inline-padding));
   }
 }

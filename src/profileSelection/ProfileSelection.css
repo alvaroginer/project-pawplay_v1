@@ -1,0 +1,26 @@
+.profile-selection {
+  padding-top: var(--space-113);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-46);
+}
+
+.profiles-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-46);
+  max-width: 1564px;
+  padding: 0 var(--space-100);
+  min-height: 265px;
+}
+
+/* Footer abajo probelmas para mantenerlo, solución de momento temporal */
+
+/* @media screen and (width <= 360px) {
+  .profiles-container {
+    padding: 0 var(--space-30);
+  }
+} */

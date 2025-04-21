@@ -20,5 +20,6 @@
   margin-top: var(--font-12);
   margin-bottom: 0;
   font-size: clamp(16px, 0.8vw + 0.6rem, 22px);
+  font-weight: var(--font-regular);
   color: var(--color-gray-300);
 }
