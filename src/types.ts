@@ -11,7 +11,7 @@ export interface EventData {
   hour: number;
   location: string;
   places: number;
-  activity: string;
+  activity: "outdoors" | "social event" | "private property" | "walks";
   breeds: string[];
 }
 

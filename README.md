@@ -112,8 +112,6 @@ events: array
         |
         |__dateTime: number
         |
-        |__hour: number
-        |
         |__location: string
         |
         |__places: number
@@ -122,7 +120,7 @@ events: array
         |
         |__breeds: string[]
         |
-        |__assistantLimit: string []
+        |__assistantLimit: number
 
 4. Events Joined & Favourites
 events: array
