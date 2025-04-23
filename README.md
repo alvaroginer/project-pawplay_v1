@@ -138,10 +138,12 @@ ratings: array
          |
          |__profileId: string
          |
-         |__fromProfileId: string
          |
-         |__value: number
-         |
-         |__commentaries?: string
+         |__profileRating: array
+                        |__fromProfileId: string
+                        |
+                        |__value: number
+
+
 
 ```
