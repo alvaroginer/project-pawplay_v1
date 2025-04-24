@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "./components/button/Button";
 import { Sidebar } from "./components/sidebar/Sidebar";
 import { FilterProps } from "./types";
+import { getEvents } from "./dataBase/firebase";
 import "./App.css";
 import "./index.css";
 import filter from "./imgs/filter.svg";
@@ -35,6 +36,14 @@ export const EventsMainPage = () => {
     }
 
     fetchData();
+
+    async function fetchEvents() {
+      const eventsDb = await getEvents();
+      console.log(eventsDb);
+      //Faltaría poner el setEventList(eventsDb)
+    }
+
+    fetchEvents();
   }, []);
 
   //Creamos dinámicamente el useState de los filtros, a lo mejor se puede cambiar por un useMemo??
