@@ -143,7 +143,4 @@ ratings: array
                         |__fromProfileId: string
                         |
                         |__value: number
-
-
-
 ```
