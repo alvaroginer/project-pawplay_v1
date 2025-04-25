@@ -1,12 +1,10 @@
-import { CardData, EventCard } from "./components/card/EventCard";
+import { CardData, EventCard } from "../components/card/EventCard";
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "./components/button/Button";
-import { Sidebar } from "./components/sidebar/Sidebar";
-import { FilterProps } from "./types";
-import { getEvents } from "./dataBase/firebase";
-import "./App.css";
-import "./index.css";
-import filter from "./imgs/filter.svg";
+import { Button } from "../components/button/Button";
+import { Sidebar } from "../components/sidebar/Sidebar";
+import { FilterProps } from "../types";
+import { getEvents } from "../dataBase/firebase";
+import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
   const [eventsList, setEventsList] = useState<CardData[]>([]);

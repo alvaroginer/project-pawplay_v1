@@ -1,4 +1,4 @@
-import { EventCategoryProps } from "../types";
+import { EventCategoryProps } from "../../types";
 import "./EventCategory.css";
 
 export const EventCategory = ({ img, title, info }: EventCategoryProps) => {

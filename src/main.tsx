@@ -1,18 +1,18 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { Login } from "./login/Login.tsx";
-import { Event } from "./eventPage/Event.tsx";
-import { Profile } from "./profile/Profile.tsx";
+import { Login } from "./pages/login/Login.tsx";
+import { Event } from "./pages/eventPage/Event.tsx";
+import { Profile } from "./pages/profile/Profile.tsx";
 import { App } from "./App.tsx";
-import { EventsMainPage } from "./EventsMainPage.tsx";
-import { AboutUs } from "./aboutUs/AboutUs.tsx";
-import { ContactUs } from "./contactUs/ContactUs.tsx";
-import { Cookies } from "./cookies/Cookies.tsx";
-import { PrivacyPolicy } from "./privacyPolicy/PrivacyPolicy.tsx";
-import { ServiceTerms } from "./serviceTerms/ServiceTerms.tsx";
-import { CreateEvent } from "./createEvent/CreateEvent.tsx";
-import { MyEventsPage } from "./myEventPage/MyEventPage.tsx";
-import { ProfileSelection } from "./profileSelection/ProfileSelection.tsx";
+import { EventsMainPage } from "./pages/EventsMainPage.tsx";
+import { AboutUs } from "./pages/aboutUs/AboutUs.tsx";
+import { ContactUs } from "./pages/contactUs/ContactUs.tsx";
+import { Cookies } from "./pages/cookies/Cookies.tsx";
+import { PrivacyPolicy } from "./pages/privacyPolicy/PrivacyPolicy.tsx";
+import { ServiceTerms } from "./pages/serviceTerms/ServiceTerms.tsx";
+import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
+import { MyEventsPage } from "./pages/myEventPage/MyEventPage.tsx";
+import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

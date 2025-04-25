@@ -1,7 +1,7 @@
-import { ProfileCard } from "../components/profileCard/ProfileCard";
-import { Button } from "../components/button/Button";
+import { ProfileCard } from "../../components/profileCard/ProfileCard";
+import { Button } from "../../components/button/Button";
 import "./ProfileSelection.css";
-import dogUser from "../imgs/dogUser.jpg";
+import dogUser from "../../imgs/dogUser.jpg";
 
 export const ProfileSelection = () => {
   return (

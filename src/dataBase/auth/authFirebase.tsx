@@ -26,7 +26,7 @@ createUserWithEmailAndPassword(auth, email, password)
     console.error(error.code, error.message);
   });
 
-signInWithEmailAndPassword(auth, email : string, password: string)
+signInWithEmailAndPassword(auth, email, password)
   .then((userCredential: UserCredential) => {
     // Signed in
     const user = userCredential.user;

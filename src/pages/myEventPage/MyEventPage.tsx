@@ -1,6 +1,6 @@
-import { EventCard, CardData } from "../components/card/EventCard";
+import { EventCard, CardData } from "../../components/card/EventCard";
 import "./MyEventPage.css";
-import arrow from "../imgs/arrow-left.svg";
+import arrow from "../../imgs/arrow-left.svg";
 
 export const MyEventsPage = () => {
   const exampleEventData: CardData = {

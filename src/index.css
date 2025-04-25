@@ -303,13 +303,13 @@ body {
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: var(--space-14);
-  scrollbar-width: none; /* Firefox */
+  /* scrollbar-width: none; Firefox */
   width: 100%;
 }
 
-.filter-container--buttons::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
+/* .filter-container--buttons::-webkit-scrollbar {
+  display: none; 
+} */
 
 .filter-container--buttons button {
   flex-shrink: 0;
