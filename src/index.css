@@ -15,17 +15,29 @@
   --color-pink-active: hsl(355, 100%, 77%);
   --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
 
+  /* White */
+  --color-white: hsla(0, 0%, 100%, 1);
+
+  /* Blue */
   --color-light-blue: hsl(213, 100%, 93%);
-  --color-white: hsl(0, 0, 100%, 1);
+  --color-blue: hsl(213, 49%, 49%);
+  --color-blue-hover: hsl(213, 48%, 45%);
+  --color-blue-disabled: hsl(213, 30%, 60%);
 
   /* Black */
   --color-black: hsl(0, 0, 0);
-  --color-black-light: hsl(0, 0%, 10%, 1);
+  --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
   --color-gray: hsl(0, 0%, 47%, 1);
   --color-gray-300: hsl(0, 0%, 64%, 1);
   --color-gray-footer: hsl(0, 0%, 97%, 1);
+
+  /* Red */
+  --color-red: hsl(0, 93%, 58%);
+
+  /* Brown */
+  --color-brown: hsla(32, 40%, 61%, 1);
 
   /* -----> Spacing */
   --space-1: 1px;
@@ -46,6 +58,7 @@
   --space-34: 34px;
   --space-36: 36px;
   --space-40: 40px;
+  --space-44: 44px;
   --space-46: 46px;
   --space-50: 50px;
   --space-60: 60px;
@@ -60,6 +73,11 @@
   --space-268: 268px;
   --space-292: 292px;
   --space-328: 328px;
+
+  /* Border radius */
+  --radius-sm: var(--space-4);
+  --radius-md: var(--space-14);
+  --radius-full: var(--space-50);
 
   /* -----> Padding */
   --body-inline-padding: clamp(16px, 10.79vw, 178px);
@@ -80,6 +98,7 @@
   --font-22: var(--space-22);
   --font-24: var(--space-24);
   --font-32: var(--space-32);
+  --font-36: var(--space-36);
 
   /* Font-weight */
   --font-extra-light: 200;

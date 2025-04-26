@@ -1,0 +1,49 @@
+.input {
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8);
+  border-width: var(--space-1);
+  border-style: solid;
+  border-color: var(--color-gray);
+  border-radius: var(--space-4);
+  background-color: #ffffff;
+
+  &:hover {
+    border-width: var(--space-2);
+  }
+}
+
+input::placeholder {
+  color: var(--color-gray);
+  font-family: var(--font-family);
+  font-size: var(--font-16);
+  font-style: normal;
+  font-weight: var(--font-regular);
+  line-height: normal;
+}
+
+.label {
+  color: var(--color-black-light);
+  font-family: "Atkinson Hyperlegible Next";
+  font-size: var(--font-14);
+  font-style: normal;
+  font-weight: var(--font-regular);
+  line-height: normal;
+}
+
+.input--focus {
+  border-color: var(--color-blue);
+}
+
+.input--error {
+  border-color: var(--color-red);
+}
+
+.input--disabled {
+  opacity: 0.5;
+}
+
+.label--disabled {
+  opacity: 0.5;
+}

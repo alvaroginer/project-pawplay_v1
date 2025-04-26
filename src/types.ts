@@ -93,3 +93,22 @@ export interface EventCategoryProps {
 export interface NavMenuProps {
   onClick: (value: boolean) => void;
 }
+
+// -----> Input
+
+export interface InputProps {
+  label: string;
+  placeholder: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string; // Permite pasar clases adicionales
+  disabled?: boolean;
+}
+
+// -----> Forgot Password Modal
+export interface ForgotPasswordModalProps {
+  email: string;
+  onEmailChange: (email: string) => void;
+  onClose: () => void;
+}
