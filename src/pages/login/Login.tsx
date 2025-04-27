@@ -46,6 +46,7 @@ export const Login = () => {
 
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
+      //Actualizar useState/useContext de LogIn
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Aqui procesariamos la respuesta del servidor
