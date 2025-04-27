@@ -1,4 +1,4 @@
-import { EventCard, CardData } from "../../components/card/EventCard";
+import { EventCard, CardData } from "../../components/eventCard/EventCard";
 import "./MyEventPage.css";
 import arrow from "../../imgs/arrow-left.svg";
 

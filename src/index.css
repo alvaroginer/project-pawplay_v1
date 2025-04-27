@@ -23,6 +23,7 @@
   --color-blue: hsl(213, 49%, 49%);
   --color-blue-hover: hsl(213, 48%, 45%);
   --color-blue-disabled: hsl(213, 30%, 60%);
+  --color-blue-800: rgb(99, 116, 128);
 
   /* Black */
   --color-black: hsl(0, 0, 0);
@@ -142,6 +143,12 @@ body {
 /* Width */
 .width-100 {
   width: 100%;
+}
+
+/* Max-width */
+
+.max-width-150 {
+  max-width: var(--space-155);
 }
 
 /* Position */

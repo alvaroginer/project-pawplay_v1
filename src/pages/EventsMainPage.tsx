@@ -1,4 +1,4 @@
-import { CardData, EventCard } from "../components/card/EventCard";
+import { CardData, EventCard } from "../components/eventCard/EventCard";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";

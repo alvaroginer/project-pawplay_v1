@@ -1,5 +1,5 @@
-import { Card } from "../card/EventCard";
-import { CardData } from "../card/EventCard";
+import { Card } from "../eventCard/EventCard";
+import { CardData } from "../eventCard/EventCard";
 import { useEffect, useState } from "react";
 
 export const Grid = () => {

@@ -1,0 +1,25 @@
+.view-all-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: var(--space-292);
+  height: 100%;
+  background-color: var(--color-blue-800);
+  border-radius: var(--space-12);
+  box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.2);
+}
+
+.view-all-card__text {
+  margin: 0;
+  color: #ffffff;
+  font-size: var(--space-40);
+  font-weight: var(--font-regular);
+}
+
+.view-all-card__icon {
+  width: var(--space-40);
+  width: var(--space-40);
+}

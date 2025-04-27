@@ -86,6 +86,9 @@ export interface EventCategoryProps {
   img: string;
   title: string;
   info: string;
+  fullWidth: boolean;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
 }
 
 // -----> Navigation Menu
@@ -112,3 +115,91 @@ export interface ForgotPasswordModalProps {
   onEmailChange: (email: string) => void;
   onClose: () => void;
 }
+
+// -----> Accordion
+export interface AccordionProps {
+  text: string;
+  children?: React.ReactNode;
+  isOpen?: boolean;
+  defaultOpen?: boolean;
+}
+
+/* ----- New Types ----- */
+
+type SelectDataType =
+  | typeof dogSizesType
+  | typeof dogGenderType
+  | typeof dogAgeType
+  | typeof dogBreedsType;
+
+// Sizes
+export const dogSizesType = ["Small", "Medium", "Big", "Any"];
+
+// Gender
+export const dogGenderType = ["Male", "Female", "Other"];
+
+// Age
+export const dogAgeType = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+];
+
+// Breeds
+export const dogBreedsType = [
+  "Akita",
+  "Alaskan Malamute",
+  "American Eskimo Dog",
+  "Australian Cattle Dog",
+  "Australian Shepherd",
+  "Basset Hound",
+  "Beagle",
+  "Belgian Malinois",
+  "Bernese Mountain Dog",
+  "Bloodhound",
+  "Border Collie",
+  "Boston Terrier",
+  "Boxer",
+  "Bulldog",
+  "Bull Terrier",
+  "Cane Corso",
+  "Cavalier King Charles Spaniel",
+  "Chihuahua",
+  "Chow Chow",
+  "Cocker Spaniel",
+  "Collie",
+  "Dachshund",
+  "Doberman Pinscher",
+  "English Springer Spaniel",
+  "French Bulldog",
+  "German Shepherd",
+  "Golden Retriever",
+  "Great Dane",
+  "Havanese",
+  "Irish Setter",
+  "Jack Russell Terrier",
+  "Labrador Retriever",
+  "Lhasa Apso",
+  "Maltese",
+  "Mastiff",
+  "Miniature Schnauzer",
+  "Newfoundland",
+  "Old English Sheepdog",
+  "Papillon",
+  "Pekingese",
+  "Pitbull",
+  "Pomeranian",
+  "Portuguese Water Dog",
+  "Rhodesian Ridgeback",
+  "Rottweiler",
+  "Saint Bernard",
+  "Samoyed",
+  "Shiba Inu",
+  "Shih Tzu",
+  "Shetland Sheepdog",
+  "Siberian Husky",
+  "Staffordshire Bull Terrier",
+  "Vizsla",
+  "Weimaraner",
+  "West Highland White Terrier",
+  "Whippet",
+  "Yorkshire Terrier",
+];
