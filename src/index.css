@@ -146,7 +146,6 @@ body {
 }
 
 /* Max-width */
-
 .max-width-150 {
   max-width: var(--space-155);
 }

@@ -51,6 +51,21 @@ export interface RatingProps {
   value: number;
 }
 
+// -----> Form Data
+export interface FormData {
+  name: string;
+  dogName: string;
+  email: string;
+  password: string;
+}
+
+export interface FormErrors {
+  name?: string;
+  dogName?: string;
+  email?: string;
+  password?: string;
+}
+
 /* ----- Components Props and Hooks Props ----- */
 
 // -----> Buttons
@@ -107,6 +122,8 @@ export interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string; // Permite pasar clases adicionales
   disabled?: boolean;
+  error?: string;
+  type?: string;
 }
 
 // -----> Forgot Password Modal

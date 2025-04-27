@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
+import { Link } from "react-router";
 
 export const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -159,7 +160,9 @@ export const Login = () => {
               }}
             >
               <span className="or-text">or</span>{" "}
-              <span className="sign-in-text">Sign In</span>
+              <Link to="signin" className="sign-in-text">
+                Sign In
+              </Link>
             </a>
 
             <p className="form__policy">

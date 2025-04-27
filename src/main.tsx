@@ -13,6 +13,7 @@ import { ServiceTerms } from "./pages/serviceTerms/ServiceTerms.tsx";
 import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
 import { MyEventsPage } from "./pages/myEventPage/MyEventPage.tsx";
 import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
+import { SignIn } from "./pages/signIn/SignIn.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -31,6 +32,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/profile-selection" element={<ProfileSelection />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/signin" element={<SignIn />} />
     </Routes>
   </BrowserRouter>
 );

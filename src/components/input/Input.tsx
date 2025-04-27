@@ -2,15 +2,23 @@ import { InputProps } from "../../types";
 import "./Input.css";
 
 export const Input = (props: InputProps) => {
-  const { label, placeholder, name, value, onChange, className, disabled } =
-    props;
+  const {
+    label,
+    placeholder,
+    name,
+    value,
+    onChange,
+    className,
+    disabled,
+    type,
+  } = props;
 
   return (
     <>
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
-        type="text"
+        type={type ? `${type}` : "text"}
         placeholder={placeholder}
         name={name}
         value={value}

@@ -8,6 +8,7 @@ Tareas:
   - Separar componente descripción
   - Diseño select options CSS
   - Modificar Select de año nacimiento
+  - Pasar lógica del select al componente del input??
 */
 
 export const EventCategory = ({
