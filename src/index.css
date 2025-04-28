@@ -39,6 +39,7 @@
 
   /* Brown */
   --color-brown: hsla(32, 40%, 61%, 1);
+  --color-brown-light: hsla(29, 90%, 76%, 1);
 
   /* -----> Spacing */
   --space-1: 1px;
@@ -61,6 +62,7 @@
   --space-40: 40px;
   --space-44: 44px;
   --space-46: 46px;
+  --space-48: 48px;
   --space-50: 50px;
   --space-60: 60px;
   --space-80: 80px;
@@ -74,6 +76,7 @@
   --space-268: 268px;
   --space-292: 292px;
   --space-328: 328px;
+  --space-1000: 1000px;
 
   /* Border radius */
   --radius-sm: var(--space-4);

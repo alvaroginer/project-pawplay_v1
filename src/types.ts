@@ -54,14 +54,14 @@ export interface RatingProps {
 // -----> Form Data
 export interface FormData {
   name: string;
-  dogName: string;
+  lastName: string;
   email: string;
   password: string;
 }
 
 export interface FormErrors {
   name?: string;
-  dogName?: string;
+  lastName?: string;
   email?: string;
   password?: string;
 }
