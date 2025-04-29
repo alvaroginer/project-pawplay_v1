@@ -25,7 +25,7 @@ export const Header = () => {
           <NavLink to="">
             <Button className="primary">Create event</Button>
           </NavLink>
-          <NavLink to="login" className="navigation-menu--button__sign-in">
+          <NavLink to="signin" className="navigation-menu--button__sign-in">
             Sign In
           </NavLink>
           <button className="navigation-menu--button">

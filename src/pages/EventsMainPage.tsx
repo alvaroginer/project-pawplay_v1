@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { FilterProps } from "../types";
-import { getEvents } from "../dataBase/firebase";
+import { getEvents } from "../dataBase/services/servicesFunctions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
