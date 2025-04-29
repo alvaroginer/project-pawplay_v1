@@ -15,17 +15,19 @@ export const Input = (props: InputProps) => {
 
   return (
     <>
-      <label htmlFor={name}>{label}</label>
-      <input
-        id={name}
-        type={type ? `${type}` : "text"}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={`input ${className || ""}`}
-        disabled={disabled}
-      />
+      <div>
+        <label htmlFor={name}>{label}</label>
+        <input
+          id={name}
+          type={type ? `${type}` : "text"}
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className={`input ${className || ""}`}
+          disabled={disabled}
+        />
+      </div>
     </>
   );
 };

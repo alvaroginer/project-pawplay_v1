@@ -220,3 +220,13 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
+
+// -----> FormLayout
+
+export interface FormLayoutProps {
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
