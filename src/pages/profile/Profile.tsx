@@ -22,6 +22,7 @@ import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
 import "./Profile.css";
+import { WarningModal } from "../../components/warningModal/WarningModal";
 
 export const Profile = () => {
   const exampleEventData: CardData = {
@@ -196,7 +197,7 @@ export const Profile = () => {
           </Link>{" "}
         </Accordion>
       </div>
-      {isModalOpen && <DeleteModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <WarningModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };

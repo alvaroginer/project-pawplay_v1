@@ -3,6 +3,13 @@ import { useState } from "react";
 import "./CreateEvent.css";
 import { Field, maximumPlaces, typeOfActivity } from "../../types";
 
+/* 
+Tareas:
+  - Primera opcion del select, más bonita
+  - Funcionalidad button publish
+  - Select date and time, que hacemos con eso?
+*/
+
 export const CreateEvent = () => {
   const [formData, setFormData] = useState({
     title: "",
