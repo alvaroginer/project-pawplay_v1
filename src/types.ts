@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 // -----> Data of a created Event
 export interface EventData {
   id: string;
+  userUid: string;
   profileIDCreator: string;
   profileIdAsisstant: string[];
   eventPhoto: string[];
@@ -16,7 +17,8 @@ export interface EventData {
 }
 
 // -----> Data of a Profile
-export interface ProfileDate {
+export interface ProfileData {
+  userUid: string;
   id: string;
   profileName: string;
   profilePhoto: string;
@@ -24,13 +26,10 @@ export interface ProfileDate {
   age: number;
   breed: string;
   size: "small" | "medium" | "big" | "any";
-  rating: RatingProps[];
-  events: EventsProfileProps;
 }
 
 // -----> Data of a User, mainly acces data and profileIds
 export interface UserData {
-  id: string;
   uid: string;
   mail: string;
   name: string;
