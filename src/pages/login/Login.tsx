@@ -61,11 +61,6 @@ export const Login = () => {
     }
   };
 
-  const handleSignIn = () => {
-    console.log('Sign In clicked');
-    // Aquí la logica para redirigir a la página de registro
-  };
-
   return (
     <div className="login-container">
       <div className="modal">
@@ -145,19 +140,9 @@ export const Login = () => {
               )}
             </button>
 
-            <a
-              href="#"
-              className="form__sign-in-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSignIn();
-              }}
-            >
-              <span className="or-text">or</span>{' '}
-              <Link to="signin" className="sign-in-text">
-                Sign In
-              </Link>
-            </a>
+            <Link to="/signin" className=" form__sign-in-link">
+              <span className="or-text">or</span> Sign In
+            </Link>
 
             <p className="form__policy">
               by become a paw player you agree to our{' '}
