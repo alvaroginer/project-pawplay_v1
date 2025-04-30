@@ -193,7 +193,7 @@ export const EventsMainPage = () => {
         </div>
       </div>
       <div className="events-container">
-        <section className="grid">
+        <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
           {filteredEventList.map((event: CardData) => {
             return <EventCard key={event.id} event={event} />;
           })}
