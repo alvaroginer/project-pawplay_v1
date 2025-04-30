@@ -1,4 +1,4 @@
-.form-container {
+.form {
   padding-top: var(--space-113);
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.form-container__content {
+.form__content {
   width: 100%;
   max-width: 800px;
   display: flex;
@@ -14,40 +14,62 @@
   align-items: center;
 }
 
-.form-container__image {
+.form__image-section {
   width: 100%;
-  height: clamp(466px, 10vw, 199px);
+  height: clamp(190px, 60vw, 466px);
   background-color: var(--color-gray-200);
   border-radius: var(--space-14);
   margin-bottom: var(--space-34);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
 
-.info__image {
+.form__image-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.form__upload-instructions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
+  position: absolute;
 }
 
-.info__image-title {
-  font-size: var(--space-16);
+.form__image-title {
+  font-size: var(--space-20);
   color: var(--color-black);
+  text-align: center;
 }
 
-input[type="file"] {
+.form__image-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--space-14);
+  z-index: 1;
+}
+
+.form__file-input {
   display: none; /* Ocultamos el campo de entrada */
 }
 
-.upload-button {
+.form__upload-button {
   display: inline-block;
   padding: 8px 12px;
   background-color: white;
   color: black;
-  border: 1px solid black; /* Borde negro */
+  border: 1px solid black;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
@@ -56,17 +78,17 @@ input[type="file"] {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.upload-button:hover {
+.form__upload-button:hover {
   background-color: black;
-  color: white; /* Cambio de texto a blanco al pasar el cursor */
+  color: white;
 }
 
-.upload-button:active {
+.form__upload-button:active {
   background-color: #444;
   color: white;
 }
 
-.form-container__elements {
+.form__elements {
   display: flex;
   flex-direction: column;
   gap: var(--space-36);
@@ -76,19 +98,19 @@ input[type="file"] {
   width: 100%;
 }
 
-.form-container__title {
+.form__title {
   margin: 0;
   font-size: var(--space-18);
 }
 
-.form-container__inputs {
+.form__inputs {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: var(--space-16);
 }
 
-.form-container__button {
+.container__button {
   display: flex;
   justify-content: center;
 }

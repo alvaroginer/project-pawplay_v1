@@ -5,20 +5,24 @@ import { FormLayoutProps } from "../../types";
 import { useState } from "react";
 
 export const FormLayout = (props: FormLayoutProps) => {
-  const { title, fields, formData, onChange } = props;
+  const { title, fields, formData } = props;
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   return (
-    <div className="form-container">
-      <div className="form-container__content">
-        <div className="form-container__image">
-          <div className="info__image">
-            <p className="info__image-title">
-              Upload an image of the event location.
-            </p>
-            <label htmlFor="file-input" className="upload-button">
-              Choose a file
-            </label>
+    <div className="form">
+      <div className="form__content">
+        <div className="form__image-section">
+          <div className="form__image-wrapper">
+            {!selectedImage && (
+              <div className="form__upload-instructions">
+                <p className="form__image-title">
+                  Upload an image of the event location.
+                </p>
+                <label htmlFor="file-input" className="form__upload-button">
+                  Choose a file
+                </label>
+              </div>
+            )}
             <input
               id="file-input"
               type="file"
@@ -26,22 +30,24 @@ export const FormLayout = (props: FormLayoutProps) => {
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  setSelectedImage(file); // guardamos la imagen seleccionada
+                  setSelectedImage(file);
                 }
               }}
+              className="form__file-input"
             />
             {selectedImage && (
               <img
                 src={URL.createObjectURL(selectedImage)}
                 alt="Preview"
-                className="image-preview"
+                className="form__image-preview"
               />
             )}
           </div>
         </div>
-        <div className="form-container__elements">
-          <p className="form-container__title">{title}</p>
-          <div className="form-container__inputs">
+
+        <div className="form__elements">
+          <p className="form__title">{title}</p>
+          <div className="form__inputs">
             {fields.map((field) => (
               <Input
                 key={field.name}
@@ -49,11 +55,13 @@ export const FormLayout = (props: FormLayoutProps) => {
                 name={field.name}
                 value={formData[field.name] || ""}
                 placeholder={field.placeholder}
-                onChange={onChange}
+                onChange={field.onChange}
+                editable={field.editable || ""}
+                selectData={field.selectData}
               />
             ))}
           </div>
-          <div className="form-container__button">
+          <div className="container__button">
             <Button className="primary">Publish</Button>
           </div>
         </div>

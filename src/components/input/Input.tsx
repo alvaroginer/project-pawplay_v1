@@ -11,12 +11,14 @@ export const Input = (props: InputProps) => {
     className,
     disabled,
     type,
+    editable,
+    selectData,
   } = props;
 
   return (
-    <>
-      <div>
-        <label htmlFor={name}>{label}</label>
+    <div>
+      <label htmlFor={name}>{label}</label>
+      {editable === "string" ? (
         <input
           id={name}
           type={type ? `${type}` : "text"}
@@ -27,7 +29,22 @@ export const Input = (props: InputProps) => {
           className={`input ${className || ""}`}
           disabled={disabled}
         />
-      </div>
-    </>
+      ) : (
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className={`input ${className || ""}`}
+          disabled={disabled}
+        >
+          {selectData?.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
   );
 };

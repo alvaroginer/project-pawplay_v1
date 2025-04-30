@@ -96,16 +96,6 @@ export interface FilterCategoryProps {
   onChange: (string: string) => void;
 }
 
-// -----> Event Page
-export interface EventCategoryProps {
-  img: string;
-  title: string;
-  info: string;
-  fullWidth: boolean;
-  editable: "string" | "select" | "";
-  selectData?: SelectDataType;
-}
-
 // -----> Navigation Menu
 
 export interface NavMenuProps {
@@ -119,11 +109,15 @@ export interface InputProps {
   placeholder: string;
   name: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   className?: string; // Permite pasar clases adicionales
   disabled?: boolean;
   error?: string;
   type?: string;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
 }
 
 // -----> Forgot Password Modal
@@ -141,13 +135,50 @@ export interface AccordionProps {
   defaultOpen?: boolean;
 }
 
+// -----> Event Page
+export interface EventCategoryProps {
+  img: string;
+  title: string;
+  info: string;
+  fullWidth: boolean;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
+}
+
 /* ----- New Types ----- */
 
 type SelectDataType =
   | typeof dogSizesType
   | typeof dogGenderType
   | typeof dogAgeType
-  | typeof dogBreedsType;
+  | typeof dogBreedsType
+  | typeof typeOfActivity
+  | typeof maximumPlaces;
+
+// TypeOfActivity
+export const typeOfActivity = [
+  "Social events",
+  "Outdoors",
+  "Walks",
+  "Private property",
+];
+
+// MaximumPlaces
+export const maximumPlaces = [
+  "Any",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+];
 
 // Sizes
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
@@ -227,6 +258,18 @@ export interface FormLayoutProps {
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
   // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface Field {
+  label: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  editable: "string" | "select";
+  selectData?: string[];
 }

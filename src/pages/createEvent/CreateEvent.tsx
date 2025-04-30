@@ -1,6 +1,7 @@
 import { FormLayout } from "../../components/formLayout/FormLayout";
 import { useState } from "react";
 import "./CreateEvent.css";
+import { Field, maximumPlaces, typeOfActivity } from "../../types";
 
 export const CreateEvent = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,9 @@ export const CreateEvent = () => {
     organisator: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -22,13 +25,14 @@ export const CreateEvent = () => {
     }));
   };
 
-  const fields = [
+  const fields: Field[] = [
     {
       label: "Title",
       name: "title",
       placeholder: "Title of the event",
       value: formData.title,
       onChange: handleChange,
+      editable: "string",
     },
     {
       label: "Location",
@@ -36,6 +40,7 @@ export const CreateEvent = () => {
       placeholder: "Put the adress of the event",
       value: formData.location,
       onChange: handleChange,
+      editable: "string",
     },
     {
       label: "Type of activity",
@@ -43,6 +48,8 @@ export const CreateEvent = () => {
       placeholder: "Select the type of the activity",
       value: formData.activityType,
       onChange: handleChange,
+      editable: "select",
+      selectData: typeOfActivity,
     },
     {
       label: "Description",
@@ -50,6 +57,7 @@ export const CreateEvent = () => {
       placeholder: "Description of the event",
       value: formData.description,
       onChange: handleChange,
+      editable: "string",
     },
     {
       label: "Start time and end time",
@@ -57,6 +65,7 @@ export const CreateEvent = () => {
       placeholder: "Start / End",
       value: formData.time,
       onChange: handleChange,
+      editable: "string",
     },
     {
       label: "Day",
@@ -64,6 +73,7 @@ export const CreateEvent = () => {
       placeholder: "Month / Day / Year",
       value: formData.day,
       onChange: handleChange,
+      editable: "string",
     },
     {
       label: "Maximum places",
@@ -71,6 +81,8 @@ export const CreateEvent = () => {
       placeholder: "Maximum places for the event",
       value: formData.places,
       onChange: handleChange,
+      editable: "select",
+      selectData: maximumPlaces,
     },
     {
       label: "Organisator name",
@@ -78,6 +90,7 @@ export const CreateEvent = () => {
       placeholder: "Put the name of the organisator",
       value: formData.organisator,
       onChange: handleChange,
+      editable: "string",
     },
   ];
 
@@ -87,7 +100,6 @@ export const CreateEvent = () => {
         title="Fill the information to create an event"
         fields={fields}
         formData={formData}
-        onChange={handleChange}
         // onSubmit={handleSubmit}
       />
     </div>
