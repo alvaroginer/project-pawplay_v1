@@ -52,18 +52,21 @@ export const Login = () => {
     // Simulamos una carga de 2 segundos
     try {
       // Aquí iría la lógica real de autenticación
-      console.log("Login with:", { email, password });
-
       const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      const userSnap = await getDoc(doc(db, "users", `${email}`));
-      login(userSnap);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const uid = user.uid;
+
+      const userSnap = await getDoc(doc(db, "users", uid));
+      login(userSnap.data());
 
       //Actualizar useState/useContext de LogIn
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Aqui procesariamos la respuesta del servidor
       console.log("Login successful!");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Desactivar el spinner después de la carga
       setIsLoading(false);

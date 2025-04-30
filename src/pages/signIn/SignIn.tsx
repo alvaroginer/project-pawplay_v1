@@ -2,7 +2,7 @@ import { useState, useContext, type FormEvent } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
 import { validateEmail, validatePassword } from "../../utils/validation";
-import { FormData, FormErrors } from "../../types";
+import { FormData, FormErrors, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { collection, setDoc, doc } from "firebase/firestore";
@@ -88,9 +88,9 @@ export const SignIn = () => {
 
         const usersRef = collection(db, "users");
         const newUserRef = doc(usersRef, uidKey);
-        const userData = {
-          id: newUserRef.id,
+        const userData: UserData = {
           uid: uidKey,
+          mail: formData.email,
           name: formData.name,
           lastName: formData.lastName,
           profiles: [],
