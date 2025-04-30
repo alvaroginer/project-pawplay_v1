@@ -14,25 +14,28 @@ import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
 import { MyEventsPage } from "./pages/myEventPage/MyEventPage.tsx";
 import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
 import { SignIn } from "./pages/signIn/SignIn.tsx";
+import { AuthProvider } from "./auth/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route index element={<EventsMainPage />} />
-        <Route path="/event/:userEventId" element={<Event />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/cookies" element={<Cookies />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/service" element={<ServiceTerms />} />
-        <Route path="/create" element={<CreateEvent />} />
-        <Route path="/my-events" element={<MyEventsPage />} />
-        <Route path="/profile-selection" element={<ProfileSelection />} />
-      </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signin" element={<SignIn />} />
-    </Routes>
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<EventsMainPage />} />
+          <Route path="/event/:userEventId" element={<Event />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/service" element={<ServiceTerms />} />
+          <Route path="/create" element={<CreateEvent />} />
+          <Route path="/my-events" element={<MyEventsPage />} />
+          <Route path="/profile-selection" element={<ProfileSelection />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
 );

@@ -1,14 +1,13 @@
-import { setDoc, doc } from "firebase/firestore/lite";
+import { setDoc, doc } from "firebase/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { db } from "../firebase";
 
 const auth = getAuth();
-const db = getFirestore();
 
 createUserWithEmailAndPassword(auth, email, password)
   .then(async (userCredential) => {

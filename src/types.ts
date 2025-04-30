@@ -31,8 +31,8 @@ export interface ProfileDate {
 // -----> Data of a User, mainly acces data and profileIds
 export interface UserData {
   id: string;
+  uid: string;
   mail: string;
-  password: string;
   name: string;
   lastName: string;
   profiles: string[];

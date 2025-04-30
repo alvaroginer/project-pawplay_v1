@@ -1,10 +1,12 @@
-import { useState, type FormEvent } from "react";
+import { useState, useContext, type FormEvent } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { FormData, FormErrors } from "../../types";
 import { Link, useNavigate } from "react-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { collection, setDoc, getFirestore, doc } from "firebase/firestore";
+import { collection, setDoc, doc } from "firebase/firestore";
+import { db } from "../../dataBase/firebase";
 import dogImage from "../../imgs/loginImage.png";
 import "./SignIn.css";
 
@@ -19,6 +21,7 @@ export const SignIn = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showErrors, setShowErrors] = useState<boolean>(false);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,17 +85,21 @@ export const SignIn = () => {
         const uidKey = user.uid;
 
         //create new doc in user collection
-        const db = getFirestore();
-        const usersRef = collection(db, "users");
-        const newUserRef = doc(usersRef);
 
-        await setDoc(newUserRef, {
+        const usersRef = collection(db, "users");
+        const newUserRef = doc(usersRef, uidKey);
+        const userData = {
           id: newUserRef.id,
           uid: uidKey,
           name: formData.name,
           lastName: formData.lastName,
           profiles: [],
-        });
+        };
+
+        await setDoc(newUserRef, userData);
+
+        //Updating useContext
+        login(userData);
 
         //Faltaria actualizar el useContext de AuthContext
 
@@ -103,8 +110,6 @@ export const SignIn = () => {
       }
       // Simulate API call
       setTimeout(() => {
-        console.log("Form submitted:", formData);
-        alert("Login successful!");
         setIsSubmitting(false);
         navigate("/");
       }, 1500);
@@ -134,6 +139,18 @@ export const SignIn = () => {
                     label="Your name"
                     placeholder="Put your name"
                     value={formData.name}
+                    onChange={handleChange}
+                    className={
+                      errors.name && showErrors ? "signin__input--error" : ""
+                    }
+                  />
+                </div>
+                <div className="signin__form-group">
+                  <Input
+                    name="lastName"
+                    label="Your last name"
+                    placeholder="Put your last name"
+                    value={formData.lastName}
                     onChange={handleChange}
                     className={
                       errors.name && showErrors ? "signin__input--error" : ""

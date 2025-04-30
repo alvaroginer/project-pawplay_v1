@@ -1,10 +1,13 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useContext, type FormEvent } from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { AuthContext } from '../../auth/AuthContext';
+import { db } from '../../dataBase/firebase';
 import { validateEmail, validatePassword } from '../../utils/validation';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { ForgotPasswordModal } from '../../components/modals/forgotPassword/ForgotPasswordModal';
 import './Login.css';
 import dogImage from '../../imgs/dog-login.png';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 export const Login = () => {
   const [email, setEmail] = useState<string>('');
@@ -13,6 +16,12 @@ export const Login = () => {
   const [passwordError, setPasswordError] = useState<string>('');
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // const auth = useContext(AuthContext);
+  // if (!auth) throw new Error("AuthContext must be used within an AuthProvider");
+  // const { login } = auth;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,6 +56,9 @@ export const Login = () => {
 
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
+      const userSnap = await getDoc(doc(db, 'users', `${email}`));
+      login(userSnap);
+
       //Actualizar useState/useContext de LogIn
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -55,6 +67,7 @@ export const Login = () => {
 
       // Desactivar el spinner después de la carga
       setIsLoading(false);
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
       setIsLoading(false);
