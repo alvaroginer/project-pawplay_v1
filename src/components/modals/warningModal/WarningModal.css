@@ -1,0 +1,94 @@
+.modal-overlay {
+  position: fixed; /* <-- cambio aquí */
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  padding-top: var(--space-113);
+}
+
+.modal-container {
+  position: relative;
+  background-color: hsla(335, 100%, 80%, 100%);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 600px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.close-button {
+  position: absolute;
+  top: 26px;
+  right: 26px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+.modal-text {
+  font-size: clamp(18px, 5vw, 34px);
+  font-weight: var(--font-regular);
+  color: hsla(0, 0%, 0%, 100%);
+  margin: 0;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.complete-button {
+  background-color: hsla(50, 100%, 55%, 100%);
+  border-radius: 50px;
+  width: 195px;
+  height: 51px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  transition: background-color 0.2s ease;
+  outline: none;
+}
+
+.complete-button:hover {
+  background-color: hsla(50, 100%, 50%, 100%);
+}
+
+.complete-button:focus {
+  box-shadow: 0 0 0 2px hsla(50, 100%, 40%, 50%);
+}
+
+.complete-button:active {
+  background-color: hsla(50, 100%, 45%, 100%);
+}
+
+.button-text {
+  font-size: 20px;
+  font-weight: normal;
+  color: hsla(0, 0%, 10%, 100%);
+  line-height: 1;
+}

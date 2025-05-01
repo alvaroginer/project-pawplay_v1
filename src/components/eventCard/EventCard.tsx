@@ -1,9 +1,9 @@
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
-import footprint from "../../imgs/footprint-dog.svg";
-import dots from "../../imgs/dots.svg";
-import bone from "../../imgs/bone.svg";
+import footprint from "../../imgs/eventCard/footprint-dog.svg";
+import dots from "../../imgs/eventCard/dots.svg";
+import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se puede crear la función que calcula el rating
 
@@ -19,12 +19,12 @@ export interface CardData {
   size: string;
 }
 
-export const EventCard = (props: { event: CardData }) => {
-  const { event } = props;
+export const EventCard = (props: { event: CardData; onClick: () => void }) => {
+  const { event, onClick } = props;
   const { name, date, time, location, activity, rating } = event;
 
   return (
-    <div className="event-card grid-cell margin--bt__24">
+    <div className="event-card grid-cell margin--bt__24" onClick={onClick}>
       <div className="event-card--image position-relative">
         <img src={park} alt="Park" />
         <div className="fav-button--container">

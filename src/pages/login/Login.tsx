@@ -1,18 +1,27 @@
-import { useState, type FormEvent } from 'react';
-import { validateEmail, validatePassword } from '../../utils/validation';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { ForgotPasswordModal } from '../../components/modals/forgotPassword/ForgotPasswordModal';
-import './Login.css';
-import dogImage from '../../imgs/dog-login.png';
-import { Link } from 'react-router';
+import { useState, useContext, type FormEvent } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { validateEmail, validatePassword } from "../../utils/validation";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../dataBase/firebase";
+import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+import { Link, useNavigate } from "react-router";
+import "./Login.css";
+import dogImage from "../../imgs/dog-login.png";
 
 export const Login = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // const auth = useContext(AuthContext);
+  // if (!auth) throw new Error("AuthContext must be used within an AuthProvider");
+  // const { login } = auth;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,18 +31,18 @@ export const Login = () => {
 
     // Validar email
     if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError("Please enter a valid email address");
       isValid = false;
     } else {
-      setEmailError('');
+      setEmailError("");
     }
 
     // Validar contraseña
     if (!validatePassword(password)) {
-      setPasswordError('Password must be at least 8 characters long');
+      setPasswordError("Password must be at least 8 characters long");
       isValid = false;
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
 
     if (!isValid) return;
@@ -43,27 +52,29 @@ export const Login = () => {
     // Simulamos una carga de 2 segundos
     try {
       // Aquí iría la lógica real de autenticación
-      console.log('Login with:', { email, password });
-
       const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      //Actualizar useState/useContext de LogIn
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const uid = user.uid;
 
-      // Aqui procesariamos la respuesta del servidor
-      console.log('Login successful!');
+      const userSnap = await getDoc(doc(db, "users", uid));
+      login(userSnap.data());
+
+      //Actualizar useState/useContext de LogIn
+      console.log("Login successful!");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Desactivar el spinner después de la carga
       setIsLoading(false);
+      navigate("/");
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       setIsLoading(false);
     }
-  };
-
-  const handleSignIn = () => {
-    console.log('Sign In clicked');
-    // Aquí la logica para redirigir a la página de registro
   };
 
   return (
@@ -71,7 +82,7 @@ export const Login = () => {
       <div className="modal">
         <div className="modal__image-container">
           <img
-            src={dogImage || '/placeholder.svg'}
+            src={dogImage || "/placeholder.svg"}
             alt="Perro con gafas trabajando en un portátil"
             className="modal__image"
           />
@@ -88,13 +99,15 @@ export const Login = () => {
               <input
                 type="email"
                 id="email"
-                className={`form__input ${emailError ? 'form__input--error' : ''}`}
+                className={`form__input ${
+                  emailError ? "form__input--error" : ""
+                }`}
                 placeholder="Put your email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (emailError && validateEmail(e.target.value)) {
-                    setEmailError('');
+                    setEmailError("");
                   }
                 }}
                 required
@@ -110,19 +123,23 @@ export const Login = () => {
               <input
                 type="password"
                 id="password"
-                className={`form__input ${passwordError ? 'form__input--error' : ''}`}
+                className={`form__input ${
+                  passwordError ? "form__input--error" : ""
+                }`}
                 placeholder="Put a strong password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (passwordError && validatePassword(e.target.value)) {
-                    setPasswordError('');
+                    setPasswordError("");
                   }
                 }}
                 required
                 disabled={isLoading}
               />
-              {passwordError && <span className="form__error">{passwordError}</span>}
+              {passwordError && (
+                <span className="form__error">{passwordError}</span>
+              )}
               <a
                 href="#"
                 className="form__forgot-link"
@@ -141,30 +158,20 @@ export const Login = () => {
                   <div className="spinner__circle"></div>
                 </div>
               ) : (
-                'Login'
+                "Login"
               )}
             </button>
 
-            <a
-              href="#"
-              className="form__sign-in-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSignIn();
-              }}
-            >
-              <span className="or-text">or</span>{' '}
-              <Link to="signin" className="sign-in-text">
-                Sign In
-              </Link>
-            </a>
+            <Link to="/signin" className=" form__sign-in-link">
+              <span className="or-text">or</span> Sign In
+            </Link>
 
             <p className="form__policy">
-              by become a paw player you agree to our{' '}
+              by become a paw player you agree to our{" "}
               <a href="#" className="form__link">
                 Terms of Services
-              </a>{' '}
-              and{' '}
+              </a>{" "}
+              and{" "}
               <a href="#" className="form__link">
                 Privacy Policy
               </a>
@@ -174,7 +181,11 @@ export const Login = () => {
       </div>
 
       {showForgotPassword && (
-        <ForgotPasswordModal email={email} onEmailChange={setEmail} onClose={() => setShowForgotPassword(false)} />
+        <ForgotPasswordModal
+          email={email}
+          onEmailChange={setEmail}
+          onClose={() => setShowForgotPassword(false)}
+        />
       )}
     </div>
   );

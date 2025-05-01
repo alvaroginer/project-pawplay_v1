@@ -59,17 +59,12 @@
   margin: 0;
   font-size: clamp(16px, 0.8vw + 0.6rem, 26px);
   color: var(--color-gray-300);
-  /* max-width: 200px; */
+  max-width: 200px;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
   hyphens: auto;
 }
-
-/* .category--text__text--full {
-  max-width: 95%;
-  white-space: normal;
-} */
 
 .category--text__icon {
   width: 20px;

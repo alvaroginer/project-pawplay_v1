@@ -3,16 +3,16 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 import "./Event.css";
-import arrow from "../../imgs/arrow-left.svg";
-import share from "../../imgs/share.svg";
-import footprintBlack from "../../imgs/footprint-dog--black.svg";
+import arrow from "../../imgs/eventPage/arrow-left.svg";
+import share from "../../imgs/eventPage/share.svg";
+import footprintBlack from "../../imgs/eventPage/footprint-dog.svg";
 import parkImg from "../../imgs/centralPark.jpg";
-import location from "../../imgs/location.svg";
-import tag from "../../imgs/tag.svg";
-import description from "../../imgs/description.svg";
-import time from "../../imgs/time.svg";
-import calendar from "../../imgs/calendar.svg";
-import dog from "../../imgs/dog-side.svg";
+import location from "../../imgs/eventPage/location.svg";
+import tag from "../../imgs/eventPage/tag.svg";
+import description from "../../imgs/eventPage/description.svg";
+import time from "../../imgs/eventPage/time.svg";
+import calendar from "../../imgs/eventPage/calendar.svg";
+import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
   const params = useParams();
@@ -51,20 +51,38 @@ export const Event = () => {
             img={location}
             title="Location"
             info="5th Avenue & E 97th St, New York, NY"
+            editable=""
           />
-          <EventCategory img={tag} title="Activity" info="Outdoors" />
+          <EventCategory
+            img={tag}
+            title="Activity"
+            info="Outdoors"
+            editable=""
+          />
           <EventCategory
             img={description}
             title="Description"
             info="Asasa dhsjb fkdn fnjfbdj fndhjds f dsjhfjbf,mhmnsofgf hgjfb gjbdn gn,fb nhjgnfbjg njfd gjd mg sgbdsbgf s gbdsgmf gnfndgfds gbfdsmn"
+            editable=""
           />
           <EventCategory
             img={time}
             title="Start time and end time"
             info="5pm/6pm"
+            editable=""
           />
-          <EventCategory img={calendar} title="Day" info="11/04/2025" />
-          <EventCategory img={dog} title="Maximum places" info="Unlimited" />
+          <EventCategory
+            img={calendar}
+            title="Day"
+            info="11/04/2025"
+            editable=""
+          />
+          <EventCategory
+            img={dog}
+            title="Maximum places"
+            info="Unlimited"
+            editable=""
+          />
         </main>
         <aside className="event--container__sidebar">
           <h3 className="event--profile-title">Know your organisator</h3>

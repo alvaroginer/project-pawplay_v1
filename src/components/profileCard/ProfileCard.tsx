@@ -1,6 +1,6 @@
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
-import bone from "../../imgs/bone.svg";
+import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se pueden crear las funciones que calculan el rating por ejemplo
 

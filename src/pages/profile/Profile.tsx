@@ -11,17 +11,18 @@ import {
   dogGenderType,
   dogAgeType,
 } from "../../types";
-import arrow from "../../imgs/arrow-left.svg";
-import account from "../../imgs/account-outline.svg";
-import dog from "../../imgs/dog.svg";
-import gender from "../../imgs/gender-transgender.svg";
-import medal from "../../imgs/medal-outline.svg";
-import ruler from "../../imgs/ruler.svg";
-import star from "../../imgs/star-outline.svg";
-import timer from "../../imgs/timer-sand.svg";
-import description from "../../imgs/description.svg";
+import arrow from "../../imgs/profilePage/arrow-left.svg";
+import account from "../../imgs/profilePage/account-outline.svg";
+import dog from "../../imgs/profilePage/dog.svg";
+import gender from "../../imgs/profilePage/gender-transgender.svg";
+import medal from "../../imgs/profilePage/medal-outline.svg";
+import ruler from "../../imgs/profilePage/ruler.svg";
+import star from "../../imgs/profilePage/star-outline.svg";
+import timer from "../../imgs/profilePage/timer-sand.svg";
+import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
 import "./Profile.css";
+import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 
 export const Profile = () => {
   const exampleEventData: CardData = {
@@ -196,7 +197,7 @@ export const Profile = () => {
           </Link>{" "}
         </Accordion>
       </div>
-      {isModalOpen && <DeleteModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <WarningModal onClose={() => setIsModalOpen(false)} />}
     </>
   );
 };

@@ -1,9 +1,12 @@
 import { CardData, EventCard } from "../components/eventCard/EventCard";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { FilterProps } from "../types";
-import { getEvents } from "../dataBase/firebase";
+import { getEvents } from "../dataBase/services/servicesFunctions";
+import { WarningModal } from "../components/modals/warningModal/WarningModal";
+
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -16,6 +19,8 @@ export const EventsMainPage = () => {
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
+  const [signInModal, setSignInModal] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
 
   //Llamada al archivo json
   useEffect(() => {
@@ -166,8 +171,20 @@ export const EventsMainPage = () => {
     }
   };
 
+  const handleWarningModal = () => {
+    console.log("click en una card", signInModal);
+    setSignInModal(!signInModal);
+  };
+
   return (
     <>
+      {signInModal && !user && (
+        <WarningModal
+          modalText="Paws up! You need to log in before you can join the pack."
+          buttonText="Sign or Log in"
+          onClose={handleWarningModal}
+        />
+      )}
       <div className="filter-container">
         <input
           type="text"
@@ -193,9 +210,15 @@ export const EventsMainPage = () => {
         </div>
       </div>
       <div className="events-container">
-        <section className="grid">
+        <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
           {filteredEventList.map((event: CardData) => {
-            return <EventCard key={event.id} event={event} />;
+            return (
+              <EventCard
+                key={event.id}
+                event={event}
+                onClick={handleWarningModal}
+              />
+            );
           })}
         </section>
         {sidebarDisplay && (

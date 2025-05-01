@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 // -----> Data of a created Event
 export interface EventData {
   id: string;
+  userUid: string;
   profileIDCreator: string;
   profileIdAsisstant: string[];
   eventPhoto: string[];
@@ -16,7 +17,8 @@ export interface EventData {
 }
 
 // -----> Data of a Profile
-export interface ProfileDate {
+export interface ProfileData {
+  userUid: string;
   id: string;
   profileName: string;
   profilePhoto: string;
@@ -24,15 +26,12 @@ export interface ProfileDate {
   age: number;
   breed: string;
   size: "small" | "medium" | "big" | "any";
-  rating: RatingProps[];
-  events: EventsProfileProps;
 }
 
 // -----> Data of a User, mainly acces data and profileIds
 export interface UserData {
-  id: string;
+  uid: string;
   mail: string;
-  password: string;
   name: string;
   lastName: string;
   profiles: string[];
@@ -54,14 +53,14 @@ export interface RatingProps {
 // -----> Form Data
 export interface FormData {
   name: string;
-  dogName: string;
+  lastName: string;
   email: string;
   password: string;
 }
 
 export interface FormErrors {
   name?: string;
-  dogName?: string;
+  lastName?: string;
   email?: string;
   password?: string;
 }
@@ -96,16 +95,6 @@ export interface FilterCategoryProps {
   onChange: (string: string) => void;
 }
 
-// -----> Event Page
-export interface EventCategoryProps {
-  img: string;
-  title: string;
-  info: string;
-  fullWidth: boolean;
-  editable: "string" | "select" | "";
-  selectData?: SelectDataType;
-}
-
 // -----> Navigation Menu
 
 export interface NavMenuProps {
@@ -119,11 +108,15 @@ export interface InputProps {
   placeholder: string;
   name: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   className?: string; // Permite pasar clases adicionales
   disabled?: boolean;
   error?: string;
   type?: string;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
 }
 
 // -----> Forgot Password Modal
@@ -141,13 +134,56 @@ export interface AccordionProps {
   defaultOpen?: boolean;
 }
 
+// -----> Event Page & Profile Page
+export interface EventCategoryProps {
+  img: string;
+  title: string;
+  info: string;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
+}
+
+export interface EventCategoryBigProps {
+  img: string;
+  title: string;
+  info: string;
+  editable: boolean;
+}
+
 /* ----- New Types ----- */
 
 type SelectDataType =
   | typeof dogSizesType
   | typeof dogGenderType
   | typeof dogAgeType
-  | typeof dogBreedsType;
+  | typeof dogBreedsType
+  | typeof typeOfActivity
+  | typeof maximumPlaces;
+
+// TypeOfActivity
+export const typeOfActivity = [
+  "Social events",
+  "Outdoors",
+  "Walks",
+  "Private property",
+];
+
+// MaximumPlaces
+export const maximumPlaces = [
+  "Any",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+];
 
 // Sizes
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
@@ -220,3 +256,25 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
+
+// -----> FormLayout
+
+export interface FormLayoutProps {
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface Field {
+  label: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  editable: "string" | "select";
+  selectData?: string[];
+}
