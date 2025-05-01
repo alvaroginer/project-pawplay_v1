@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Input } from "../../components/input/Input";
-import Button from "./Button";
+import { Button } from "../../components/button/Button";
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { FormData, FormErrors } from "../../types";
 import dogImage from "../../imgs/loginImage.png";

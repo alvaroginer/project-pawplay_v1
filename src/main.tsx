@@ -27,7 +27,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/service" element={<ServiceTerms />} />
-        <Route path="/create" element={<CreateEvent />} />
+        <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/my-events" element={<MyEventsPage />} />
         <Route path="/profile-selection" element={<ProfileSelection />} />
       </Route>

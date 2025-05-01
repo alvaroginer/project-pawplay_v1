@@ -23,6 +23,7 @@
   --color-blue: hsl(213, 49%, 49%);
   --color-blue-hover: hsl(213, 48%, 45%);
   --color-blue-disabled: hsl(213, 30%, 60%);
+  --color-blue-500: hsl(213, 100%, 93%);
   --color-blue-800: rgb(99, 116, 128);
 
   /* Black */
@@ -31,7 +32,8 @@
 
   /* Gray */
   --color-gray: hsl(0, 0%, 47%, 1);
-  --color-gray-300: hsl(0, 0%, 64%, 1);
+  --color-gray-300: hsl(0, 0%, 64%);
+  --color-gray-200: hsl(0, 0%, 82%);
   --color-gray-footer: hsl(0, 0%, 97%, 1);
 
   /* Red */

@@ -3,16 +3,16 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 import "./Event.css";
-import arrow from "../../imgs/arrow-left.svg";
-import share from "../../imgs/share.svg";
-import footprintBlack from "../../imgs/footprint-dog--black.svg";
+import arrow from "../../imgs/eventPage/arrow-left.svg";
+import share from "../../imgs/eventPage/share.svg";
+import footprintBlack from "../../imgs/eventPage/footprint-dog.svg";
 import parkImg from "../../imgs/centralPark.jpg";
-import location from "../../imgs/location.svg";
-import tag from "../../imgs/tag.svg";
-import description from "../../imgs/description.svg";
-import time from "../../imgs/time.svg";
-import calendar from "../../imgs/calendar.svg";
-import dog from "../../imgs/dog-side.svg";
+import location from "../../imgs/eventPage/location.svg";
+import tag from "../../imgs/eventPage/tag.svg";
+import description from "../../imgs/eventPage/description.svg";
+import time from "../../imgs/eventPage/time.svg";
+import calendar from "../../imgs/eventPage/calendar.svg";
+import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
   const params = useParams();
