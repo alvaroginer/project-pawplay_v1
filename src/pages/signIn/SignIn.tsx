@@ -1,6 +1,9 @@
 import { useState, useContext, type FormEvent } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
+
+import { Button } from "../../components/button/Button";
+
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { FormData, FormErrors, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
