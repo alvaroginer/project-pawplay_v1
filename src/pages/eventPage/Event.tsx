@@ -2,6 +2,7 @@ import { NavLink, useParams } from "react-router";
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
+import { CheckListProfile } from "../../components/checkListProfile/CheckListProfile";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -97,6 +98,7 @@ export const Event = () => {
       </div>
       {/* Falta el mapa */}
       {/* Falta el apartado de Similar Events */}
+      <CheckListProfile />
     </>
   );
 };
