@@ -1,9 +1,10 @@
 import { useState, createContext, ReactNode, useEffect } from "react";
-import { UserData } from "../types";
+import { ProfileData, UserData } from "../types";
 
 interface AuthContextType {
   user: UserData | null;
-  login: (userData: UserData) => void;
+  loggedProfile: ProfileData | null;
+  login: (userData: UserData, profileData: ProfileData) => void;
   logout: () => void;
 }
 
@@ -17,6 +18,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
+  const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
 
   //Load user from LocalStorage
 
@@ -27,10 +29,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  const login = (userData: UserData) => {
+  const login = (userData: UserData, profileData: ProfileData) => {
     setUser(userData);
-    //implemntar localStorage
-    localStorage.setItem("user", JSON.stringify(userData));
+    setLoggedProfile(profileData);
+    const logInfoUser = { user: userData, profile: profileData };
+
+    //Guardamos en localStorage
+    localStorage.setItem("user", JSON.stringify(logInfoUser));
   };
 
   const logout = () => {
@@ -38,7 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loggedProfile, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,7 @@ import { useState, useContext, type FormEvent } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
 import { validateEmail, validatePassword } from "../../utils/validation";
-import { FormData, FormErrors, UserData } from "../../types";
+import { FormData, FormErrors, ProfileData, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { collection, setDoc, doc } from "firebase/firestore";
@@ -83,11 +83,15 @@ export const SignIn = () => {
           formData.password
         );
 
+        // Manually define UID for users
         const user = userCredential.user;
         const uidKey = user.uid;
 
-        //create new doc in user collection
+        // Manually define ID for profile
+        const profileRef = collection(db, "profiles");
+        const newProfileRef = doc(profileRef);
 
+        //create new doc in user collection
         const usersRef = collection(db, "users");
         const newUserRef = doc(usersRef, uidKey);
         const userData: UserData = {
@@ -95,18 +99,30 @@ export const SignIn = () => {
           mail: formData.email,
           name: formData.name,
           lastName: formData.lastName,
-          profiles: [],
+          profiles: [newProfileRef.id],
         };
 
         await setDoc(newUserRef, userData);
 
-        //Updating useContext
-        login(userData);
+        //Create new doc in profiles collection
+        const profileData: ProfileData = {
+          userUid: uidKey,
+          id: newProfileRef.id,
+          profileName: "",
+          profilePhoto: "",
+          profileBio: "",
+          age: null,
+          breed: "",
+          size: "any",
+        };
 
-        //Faltaria actualizar el useContext de AuthContext
+        await setDoc(newProfileRef, profileData);
+
+        //Updating useContext
+        login(userData, profileData);
 
         console.log("User created with UID:", uidKey);
-        console.log("Firestore document ID:", newUserRef.id);
+        console.log("Profile created with ID:", newProfileRef);
       } catch (error) {
         console.error("SignIn error:", error);
       }

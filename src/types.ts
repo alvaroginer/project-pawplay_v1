@@ -23,7 +23,7 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number;
+  age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
 }
@@ -150,6 +150,28 @@ export interface EventCategoryBigProps {
   editable: boolean;
 }
 
+// -----> FormLayout
+
+export interface FormLayoutProps {
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface Field {
+  label: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  editable: "string" | "select";
+  selectData?: string[];
+}
+
 /* ----- New Types ----- */
 
 type SelectDataType =
@@ -256,25 +278,3 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
-
-// -----> FormLayout
-
-export interface FormLayoutProps {
-  title: string;
-  fields: InputProps[];
-  formData: { [key: string]: string };
-
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
-}
-
-export interface Field {
-  label: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  editable: "string" | "select";
-  selectData?: string[];
-}
