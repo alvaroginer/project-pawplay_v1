@@ -1,9 +1,11 @@
 import { CardData, EventCard } from "../components/eventCard/EventCard";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { FilterProps } from "../types";
-import { getEvents } from "../dataBase/firebase";
+import { getEvents } from "../dataBase/services/servicesFunctions";
+import { SignInModal } from "../components/modals/signInModal/SignInModal";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -16,6 +18,8 @@ export const EventsMainPage = () => {
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
+  const [signInModal, setSignInModal] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
 
   //Llamada al archivo json
   useEffect(() => {
@@ -166,8 +170,14 @@ export const EventsMainPage = () => {
     }
   };
 
+  const handleSignInModal = () => {
+    console.log("click en una card", signInModal);
+    setSignInModal(!signInModal);
+  };
+
   return (
     <>
+      {signInModal && !user && <SignInModal onClick={handleSignInModal} />}
       <div className="filter-container">
         <input
           type="text"
@@ -193,9 +203,15 @@ export const EventsMainPage = () => {
         </div>
       </div>
       <div className="events-container">
-        <section className="grid">
+        <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
           {filteredEventList.map((event: CardData) => {
-            return <EventCard key={event.id} event={event} />;
+            return (
+              <EventCard
+                key={event.id}
+                event={event}
+                onClick={handleSignInModal}
+              />
+            );
           })}
         </section>
         {sidebarDisplay && (

@@ -1,0 +1,35 @@
+.sign-in-modal--container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.sign-in-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--space-328);
+  padding: var(--space-50);
+  border-radius: var(--radius-md);
+  background-color: var(--color-pink);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sign-in-modal div .close-button {
+  margin-left: auto;
+}
+
+.sign-in-modal p {
+  font-size: var(--font-18);
+  font-weight: var(--font-regular);
+}
+
+.sign-in-modal a {
+  text-align: center;
+}

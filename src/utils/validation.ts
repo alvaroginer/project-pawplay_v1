@@ -16,5 +16,6 @@ export const validateEmail = (email: string): boolean => {
  * @returns true si la contraseña es válida, false en caso contrario
  */
 export const validatePassword = (password: string): boolean => {
-  return password.length >= 8;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  return passwordRegex.test(password);
 };

@@ -1,10 +1,13 @@
-import { useState, type FormEvent } from "react";
+import { useState, useContext, type FormEvent } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../dataBase/firebase";
 import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+import { Link, useNavigate } from "react-router";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
-import { Link } from "react-router";
 
 export const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -13,6 +16,12 @@ export const Login = () => {
   const [passwordError, setPasswordError] = useState<string>("");
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // const auth = useContext(AuthContext);
+  // if (!auth) throw new Error("AuthContext must be used within an AuthProvider");
+  // const { login } = auth;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,27 +52,29 @@ export const Login = () => {
     // Simulamos una carga de 2 segundos
     try {
       // Aquí iría la lógica real de autenticación
-      console.log("Login with:", { email, password });
-
       const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      //Actualizar useState/useContext de LogIn
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      const uid = user.uid;
 
-      // Aqui procesariamos la respuesta del servidor
+      const userSnap = await getDoc(doc(db, "users", uid));
+      login(userSnap.data());
+
+      //Actualizar useState/useContext de LogIn
       console.log("Login successful!");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Desactivar el spinner después de la carga
       setIsLoading(false);
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       setIsLoading(false);
     }
-  };
-
-  const handleSignIn = () => {
-    console.log("Sign In clicked");
-    // Aquí la logica para redirigir a la página de registro
   };
 
   return (
@@ -151,19 +162,9 @@ export const Login = () => {
               )}
             </button>
 
-            <a
-              href="#"
-              className="form__sign-in-link"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSignIn();
-              }}
-            >
-              <span className="or-text">or</span>{" "}
-              <Link to="signin" className="sign-in-text">
-                Sign In
-              </Link>
-            </a>
+            <Link to="/signin" className=" form__sign-in-link">
+              <span className="or-text">or</span> Sign In
+            </Link>
 
             <p className="form__policy">
               by become a paw player you agree to our{" "}

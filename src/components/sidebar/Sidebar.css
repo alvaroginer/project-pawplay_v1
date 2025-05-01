@@ -78,6 +78,7 @@
     margin-top: 0;
     max-width: calc(var(--space-200) * 2);
     overflow: hidden;
+    flex: 0 0 25%;
   }
 
   .filter-sidebar--header {
@@ -87,6 +88,7 @@
   .events-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
   }
 
   .filter-sidebar--button-container {
