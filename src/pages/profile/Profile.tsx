@@ -22,7 +22,7 @@ import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
 import "./Profile.css";
-import { WarningModal } from "../../components/warningModal/WarningModal";
+import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 
 export const Profile = () => {
   const exampleEventData: CardData = {

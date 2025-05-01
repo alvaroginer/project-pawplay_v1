@@ -5,7 +5,8 @@ import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/servicesFunctions";
-import { SignInModal } from "../components/modals/signInModal/SignInModal";
+import { WarningModal } from "../components/modals/warningModal/WarningModal";
+
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -170,14 +171,20 @@ export const EventsMainPage = () => {
     }
   };
 
-  const handleSignInModal = () => {
+  const handleWarningModal = () => {
     console.log("click en una card", signInModal);
     setSignInModal(!signInModal);
   };
 
   return (
     <>
-      {signInModal && !user && <SignInModal onClick={handleSignInModal} />}
+      {signInModal && !user && (
+        <WarningModal
+          modalText="Paws up! You need to log in before you can join the pack."
+          buttonText="Sign or Log in"
+          onClose={handleWarningModal}
+        />
+      )}
       <div className="filter-container">
         <input
           type="text"
@@ -209,7 +216,7 @@ export const EventsMainPage = () => {
               <EventCard
                 key={event.id}
                 event={event}
-                onClick={handleSignInModal}
+                onClick={handleWarningModal}
               />
             );
           })}

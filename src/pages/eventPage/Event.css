@@ -22,6 +22,10 @@ button.btn--icon.margin--right__10 {
   margin-right: var(--space-10);
 }
 
+.event--container {
+  position: relative;
+}
+
 .event--img-container {
   border-radius: var(--space-14);
   min-height: var(--space-190);
@@ -41,7 +45,7 @@ button.btn--icon.margin--right__10 {
 .event--title {
   font-size: clamp(24px, 0.8vw + 0.9rem, 36px);
   font-weight: var(--font-medium);
-  margin-top: var(--space-30);
+  margin-top: var(--space-80);
   margin-bottom: var(--space-50);
 }
 
@@ -73,18 +77,19 @@ button.btn--icon.margin--right__10 {
   margin-bottom: var(--space-100);
 }
 
-@media (min-width: 1012.5px) {
+@media (min-width: 1035px) {
   .event--container {
     display: flex;
     align-items: flex-start;
+    gap: var(--space-20);
   }
 
   .event--container__categories {
-    flex: 0 0 65%;
+    flex-grow: 1;
   }
 
   .event--container__sidebar {
-    flex: 0 0 35%;
+    min-width: var(--space-328);
   }
 
   .event--profile-title {

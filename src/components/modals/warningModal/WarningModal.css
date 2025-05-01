@@ -2,7 +2,6 @@
   position: fixed; /* <-- cambio aquí */
   top: 0;
   left: 0;
-  width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -49,6 +48,7 @@
   font-weight: var(--font-regular);
   color: hsla(0, 0%, 0%, 100%);
   margin: 0;
+  text-align: center;
 }
 
 .button-container {

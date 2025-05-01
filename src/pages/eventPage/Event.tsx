@@ -51,20 +51,38 @@ export const Event = () => {
             img={location}
             title="Location"
             info="5th Avenue & E 97th St, New York, NY"
+            editable=""
           />
-          <EventCategory img={tag} title="Activity" info="Outdoors" />
+          <EventCategory
+            img={tag}
+            title="Activity"
+            info="Outdoors"
+            editable=""
+          />
           <EventCategory
             img={description}
             title="Description"
             info="Asasa dhsjb fkdn fnjfbdj fndhjds f dsjhfjbf,mhmnsofgf hgjfb gjbdn gn,fb nhjgnfbjg njfd gjd mg sgbdsbgf s gbdsgmf gnfndgfds gbfdsmn"
+            editable=""
           />
           <EventCategory
             img={time}
             title="Start time and end time"
             info="5pm/6pm"
+            editable=""
           />
-          <EventCategory img={calendar} title="Day" info="11/04/2025" />
-          <EventCategory img={dog} title="Maximum places" info="Unlimited" />
+          <EventCategory
+            img={calendar}
+            title="Day"
+            info="11/04/2025"
+            editable=""
+          />
+          <EventCategory
+            img={dog}
+            title="Maximum places"
+            info="Unlimited"
+            editable=""
+          />
         </main>
         <aside className="event--container__sidebar">
           <h3 className="event--profile-title">Know your organisator</h3>

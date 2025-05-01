@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { EventCategoryProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
-import "./EventCategory.css";
-
+import "./EventCategoryBig.css";
 /* 
 Tareas:
   - Separar componente descripción
@@ -16,47 +15,9 @@ export const EventCategory = ({
   title,
   info,
   editable,
-  selectData,
 }: EventCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info);
-
-  const handleEditType = () => {
-    if (editable === "string") {
-      return (
-        <input
-          type="text"
-          value={categoryValue}
-          onChange={(e) => setCategoryValue(e.target.value)}
-          className={`category--text__input max-width-150${
-            categoryValue.length === 0 || categoryValue.length > 20
-              ? " category--text__input--error"
-              : ""
-          }`}
-        />
-      );
-    } else if (selectData !== undefined) {
-      return (
-        <select
-          value={categoryValue}
-          className="category--select"
-          onChange={(e) => setCategoryValue(e.target.value)}
-        >
-          {selectData.map((data) => {
-            return (
-              <option
-                className="category--select__option"
-                value={data}
-                key={data}
-              >
-                {data}
-              </option>
-            );
-          })}
-        </select>
-      );
-    }
-  };
 
   return (
     <div className="event--category">
@@ -67,7 +28,16 @@ export const EventCategory = ({
         <h4 className="category--text__title">{title}</h4>
         <div className="category--text-container">
           {isEditable ? (
-            handleEditType()
+            <input
+              type="text"
+              value={categoryValue}
+              onChange={(e) => setCategoryValue(e.target.value)}
+              className={`category--text__input max-width-150${
+                categoryValue.length === 0 || categoryValue.length > 20
+                  ? " category--text__input--error"
+                  : ""
+              }`}
+            />
           ) : (
             <p className="category--text__text">
               {capitalizeFirstLetter(categoryValue).trim()}

@@ -1,9 +1,6 @@
 import { useState, useContext, type FormEvent } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
-
-import { Button } from "../../components/button/Button";
-
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { FormData, FormErrors, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
@@ -27,7 +24,9 @@ export const SignIn = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -146,6 +145,7 @@ export const SignIn = () => {
                     className={
                       errors.name && showErrors ? "signin__input--error" : ""
                     }
+                    editable="string"
                   />
                 </div>
                 <div className="signin__form-group">
@@ -155,6 +155,7 @@ export const SignIn = () => {
                     placeholder="Put your last name"
                     value={formData.lastName}
                     onChange={handleChange}
+                    editable="string"
                     className={
                       errors.name && showErrors ? "signin__input--error" : ""
                     }
@@ -168,6 +169,7 @@ export const SignIn = () => {
                     placeholder="Put your email"
                     value={formData.email}
                     onChange={handleChange}
+                    editable="string"
                     className={
                       errors.email && showErrors ? "signin__input--error" : ""
                     }
@@ -181,6 +183,7 @@ export const SignIn = () => {
                     placeholder="Put a strong password"
                     value={formData.password}
                     onChange={handleChange}
+                    editable="string"
                     className={
                       errors.password && showErrors
                         ? "signin__input--error"

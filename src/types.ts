@@ -134,14 +134,20 @@ export interface AccordionProps {
   defaultOpen?: boolean;
 }
 
-// -----> Event Page
+// -----> Event Page & Profile Page
 export interface EventCategoryProps {
   img: string;
   title: string;
   info: string;
-  fullWidth: boolean;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
+}
+
+export interface EventCategoryBigProps {
+  img: string;
+  title: string;
+  info: string;
+  editable: boolean;
 }
 
 /* ----- New Types ----- */
