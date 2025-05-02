@@ -260,6 +260,7 @@ export const dogBreedsType = [
 // -----> FormLayout
 
 export interface FormLayoutProps {
+  imageTitle: string;
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
@@ -276,5 +277,5 @@ export interface Field {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   editable: "string" | "select";
-  selectData?: string[];
+  selectData?: string[] | number[];
 }
