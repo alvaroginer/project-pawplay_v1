@@ -16,6 +16,7 @@ import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
+  //Params para la url
   const params = useParams();
   console.log(params);
 

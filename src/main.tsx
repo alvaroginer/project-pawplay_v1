@@ -22,8 +22,8 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<EventsMainPage />} />
-          <Route path="/event/:userEventId" element={<Event />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/event/:eventId" element={<Event />} />
+          <Route path="/profile/:profileId" element={<Profile />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/cookies" element={<Cookies />} />

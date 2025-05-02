@@ -6,7 +6,7 @@ import { Sidebar } from "../components/sidebar/Sidebar";
 import { FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/servicesFunctions";
 import { WarningModal } from "../components/modals/warningModal/WarningModal";
-
+import { useNavigate } from "react-router";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -21,6 +21,7 @@ export const EventsMainPage = () => {
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
   const [signInModal, setSignInModal] = useState<boolean>(false);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   //Llamada al archivo json
   useEffect(() => {
@@ -171,9 +172,12 @@ export const EventsMainPage = () => {
     }
   };
 
-  const handleWarningModal = () => {
-    console.log("click en una card", signInModal);
-    setSignInModal(!signInModal);
+  const handleEventCardClick = () => {
+    if (user) {
+      navigate(`/event/${user.loggedProfile}`);
+    } else {
+      setSignInModal(!signInModal);
+    }
   };
 
   return (
@@ -182,7 +186,7 @@ export const EventsMainPage = () => {
         <WarningModal
           modalText="Paws up! You need to log in before you can join the pack."
           buttonText="Sign or Log in"
-          onClose={handleWarningModal}
+          onClose={handleEventCardClick}
         />
       )}
       <div className="filter-container">
@@ -216,7 +220,7 @@ export const EventsMainPage = () => {
               <EventCard
                 key={event.id}
                 event={event}
-                onClick={handleWarningModal}
+                onClick={handleEventCardClick}
               />
             );
           })}

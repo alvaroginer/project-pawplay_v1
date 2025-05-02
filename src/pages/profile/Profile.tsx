@@ -11,6 +11,10 @@ import {
   dogGenderType,
   dogAgeType,
 } from "../../types";
+import { WarningModal } from "../../components/modals/warningModal/WarningModal";
+import { useParams } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import dog from "../../imgs/profilePage/dog.svg";
@@ -22,9 +26,14 @@ import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
 import "./Profile.css";
-import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 
 export const Profile = () => {
+  const { user } = useContext(AuthContext);
+
+  // Params for url
+  const params = useParams();
+  console.log(params);
+
   const exampleEventData: CardData = {
     id: 1,
     name: "Afternoon of games",
@@ -91,30 +100,26 @@ export const Profile = () => {
             <div className="profile-page__info-left">
               <EventCategory
                 img={account}
-                title={"Owner's name"}
+                title="Owner's name"
                 info={"Bob Jackson"}
-                fullWidth={false}
-                editable={"string"}
+                editable="string"
               />
               <EventCategory
                 img={dog}
                 title={"Dog's name"}
                 info={"Moon"}
-                fullWidth={false}
                 editable={"string"}
               />
               <EventCategory
                 img={star}
                 title={"Rating"}
                 info={"4.5 Stars"}
-                fullWidth={false}
                 editable={""}
               />
               <EventCategory
                 img={medal}
                 title={"Breed"}
                 info={"Pitbull"}
-                fullWidth={false}
                 editable={"select"}
                 selectData={dogBreedsType}
               />
@@ -124,7 +129,6 @@ export const Profile = () => {
                 img={timer}
                 title={"Age"}
                 info={"6"}
-                fullWidth={false}
                 editable={"select"}
                 selectData={dogAgeType}
               />
@@ -132,7 +136,6 @@ export const Profile = () => {
                 img={gender}
                 title={"Gender"}
                 info={"Male"}
-                fullWidth={false}
                 editable={"select"}
                 selectData={dogGenderType}
               />
@@ -140,7 +143,6 @@ export const Profile = () => {
                 img={ruler}
                 title={"Size"}
                 info={"Medium"}
-                fullWidth={false}
                 editable={"select"}
                 selectData={dogSizesType}
               />
@@ -197,7 +199,13 @@ export const Profile = () => {
           </Link>{" "}
         </Accordion>
       </div>
-      {isModalOpen && <WarningModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <WarningModal
+          modalText="Are you sure you want to delete this lovely dog profile?"
+          buttonText="Yes, I am sure"
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </>
   );
 };

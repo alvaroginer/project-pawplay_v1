@@ -62,6 +62,7 @@ export const Login = () => {
       const uid = user.uid;
 
       const userSnap = await getDoc(doc(db, "users", uid));
+      //Falta logear el perfil, habrá que seleccionar el último que se esocgió
       login(userSnap.data());
 
       //Actualizar useState/useContext de LogIn
