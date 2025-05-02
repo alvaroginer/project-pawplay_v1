@@ -5,40 +5,55 @@ import "./Footer.css";
 
 export const Footer = () => {
   return (
-    <footer className="footer">
-      <h2 className="footer--title">PawPlay</h2>
-      <div className="footer--links-container">
-        <div className="footer--links-container__nav">
-          <h5 className="footer--links-container__title">Navigation</h5>
-          <NavLink className="footer--links-container__link" to="">
-            Home
-          </NavLink>
-          <NavLink className="footer--links-container__link" to="/aboutUs">
-            About us
-          </NavLink>
-          <NavLink className="footer--links-container__link" to="/contactUs">
-            Contact us
-          </NavLink>
+    <>
+      <footer className="footer">
+        <div className="footer--algo">
+          <h2 className="footer--title">PawPlay</h2>
+          <div className="footer--links-container">
+            <div className="footer--links-container__elements">
+              <h5 className="footer--links-container__title">Navigation</h5>
+              <NavLink className="footer--links-container__link" to="">
+                Home
+              </NavLink>
+              <NavLink className="footer--links-container__link" to="/aboutUs">
+                About us
+              </NavLink>
+              <NavLink
+                className="footer--links-container__link"
+                to="/contactUs"
+              >
+                Contact us
+              </NavLink>
+            </div>
+            <div className="footer--links-container__elements">
+              <h5 className="footer--links-container__title">Your PawPlay</h5>
+              <NavLink className="footer--links-container__link" to="/profile">
+                My account
+              </NavLink>
+              <NavLink className="footer--links-container__link" to="/profile">
+                My events
+              </NavLink>
+            </div>
+            <div className="footer--links-container__elements">
+              <h5 className="footer--links-container__title">Follow us</h5>
+              <a
+                href=""
+                target="_blank"
+                className="footer--links-container__link"
+              >
+                <img src={instagram} alt="Instagram Icon" />
+              </a>
+              <a
+                href=""
+                target="_blank"
+                className="footer--links-container__link"
+              >
+                <img src={xLogo} alt="X Icon" />
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="footer--links-container__profile">
-          <h5 className="footer--links-container__title">Your PawPlay</h5>
-          <NavLink className="footer--links-container__link" to="/profile">
-            My account
-          </NavLink>
-          <NavLink className="footer--links-container__link" to="/profile">
-            My events
-          </NavLink>
-        </div>
-        <div className="footer--links-container__rrss">
-          <h5 className="footer--links-container__title">Follow us</h5>
-          <a href="" target="_blank" className="footer--links-container__link">
-            <img src={instagram} alt="Instagram Icon" />
-          </a>
-          <a href="" target="_blank" className="footer--links-container__link">
-            <img src={xLogo} alt="X Icon" />
-          </a>
-        </div>
-      </div>
+      </footer>
       <div className="footer--legal-container">
         <div className="footer--legal-container__container">
           <NavLink className="footer--legal-container__link" to="/privacy">
@@ -55,6 +70,6 @@ export const Footer = () => {
           &copy; 2025, PawPlay. All rights reserved.
         </p>
       </div>
-    </footer>
+    </>
   );
 };
