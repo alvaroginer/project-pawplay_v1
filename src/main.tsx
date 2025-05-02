@@ -11,6 +11,7 @@ import { Cookies } from "./pages/cookies/Cookies.tsx";
 import { PrivacyPolicy } from "./pages/privacyPolicy/PrivacyPolicy.tsx";
 import { ServiceTerms } from "./pages/serviceTerms/ServiceTerms.tsx";
 import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
+import { CreateProfile } from "./pages/createProfile/CreateProfile.tsx";
 import { MyEventsPage } from "./pages/myEventPage/MyEventPage.tsx";
 import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
 import { SignIn } from "./pages/signIn/SignIn.tsx";
@@ -32,6 +33,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/my-events" element={<MyEventsPage />} />
           <Route path="/profile-selection" element={<ProfileSelection />} />
+          <Route path="/create-profile" element={<CreateProfile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
