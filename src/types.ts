@@ -1,19 +1,22 @@
+import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
 // -----> Data of a created Event
 export interface EventData {
   id: string;
   userUid: string;
-  profileIDCreator: string;
+  profileIdCreator: string;
   profileIdAsisstant: string[];
-  eventPhoto: string[];
+  eventTitle: string;
+  eventPhoto: string | null;
   eventDescription: string;
-  dateTime: number;
+  dateTime: Timestamp;
   hour: number;
   location: string;
   places: number;
+  size: "small" | "medium" | "big" | "any";
   activity: "outdoors" | "social event" | "private property" | "walks";
-  breeds: string[];
+  breeds: string;
 }
 
 // -----> Data of a Profile

@@ -3,6 +3,19 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 import { CheckListProfile } from "../../components/checkListProfile/CheckListProfile";
+import {
+  getOneEvent,
+  getOneProfile,
+} from "../../dataBase/services/servicesFunctions";
+import { EventData, ProfileData } from "../../types";
+import {
+  normalizeDate,
+  normalizeTime,
+  normalizePlaces,
+} from "../../functions/Functions";
+import { db } from "../../dataBase/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -16,13 +29,66 @@ import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
+  const [eventData, setEventData] = useState<EventData>();
+  const [profileData, setProfileData] = useState<ProfileData>();
+  const [createdEventsByProfile, setCreatedEventsByProfile] =
+    useState<EventData[]>();
+
   //Params para la url
   const params = useParams();
-  console.log(params);
+  const paramsStr: string = `${params}`;
 
-  //Crear función que cree un array con 5 objetos de eventos
-  //que tengan la misma carcaterística de "activity" que el
-  //del event mostrado, a lo mejor la vraible que los contiene debe ser un useState
+  useEffect(() => {
+    //Fetching Event info
+    const fetchEvent = async () => {
+      const eventSnap = await getOneEvent(paramsStr);
+
+      if (!eventSnap.exists()) {
+        console.error("El evento no existe con id:", paramsStr);
+        return;
+      }
+
+      const typedEventSnap: EventData = eventSnap.data() as EventData;
+      console.log(typedEventSnap);
+      setEventData(typedEventSnap);
+    };
+    fetchEvent();
+  }, [paramsStr]);
+
+  useEffect(() => {
+    //Fetching Event info
+    if (!eventData) return;
+
+    const profileID: string = eventData?.profileIdCreator || "";
+
+    //Fetching Profile Info
+    const fecthProfile = async () => {
+      const profileSnap = await getOneProfile(profileID);
+
+      if (!profileSnap.exists()) {
+        console.error("El perfil no existe con id:", profileID);
+        return;
+      }
+
+      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+      console.log(typedProfileSnap);
+      setProfileData(typedProfileSnap);
+    };
+    fecthProfile();
+
+    //Fetching Events created by Profile
+    const ref = collection(db, "events");
+    const q = query(ref, where("profileIdCreator", "==", profileID));
+    const fetchQuerySnap = async () => {
+      const querySnap = await getDocs(q);
+      const typedQuerySnap: EventData[] = querySnap.docs.map(
+        (doc) => doc.data() as EventData
+      );
+      console.log(typedQuerySnap);
+      setCreatedEventsByProfile(typedQuerySnap);
+    };
+    fetchQuerySnap();
+  }, [eventData]);
 
   //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
   //events hacer un find de algún evento que sea del miso tipo y
@@ -44,51 +110,82 @@ export const Event = () => {
         </div>
       </div>
       <div className="event--img-container">
-        <img src={parkImg} alt="" />
+        <img
+          src={eventData?.eventPhoto ? eventData.eventPhoto : parkImg}
+          alt=""
+        />
       </div>
-      <h3 className="event--title">Golden Retrievers Meetup at Central Park</h3>
+      <h3 className="event--title">{eventData?.eventTitle}</h3>
       <div className="event--container">
         <main className="event--container__categories">
           <EventCategory
             img={location}
             title="Location"
-            info="5th Avenue & E 97th St, New York, NY"
+            info={eventData?.location ? eventData?.location : "Not available"}
             editable=""
           />
           <EventCategory
             img={tag}
             title="Activity"
-            info="Outdoors"
+            info={eventData?.activity ? eventData?.activity : "Not available"}
             editable=""
           />
           <EventCategory
             img={description}
             title="Description"
-            info="Asasa dhsjb fkdn fnjfbdj fndhjds f dsjhfjbf,mhmnsofgf hgjfb gjbdn gn,fb nhjgnfbjg njfd gjd mg sgbdsbgf s gbdsgmf gnfndgfds gbfdsmn"
+            info={
+              eventData?.eventDescription
+                ? eventData?.eventDescription
+                : "Not available"
+            }
             editable=""
           />
           <EventCategory
             img={time}
-            title="Start time and end time"
-            info="5pm/6pm"
+            title="Start time"
+            info={
+              eventData?.dateTime
+                ? normalizeTime(eventData?.dateTime.toDate())
+                : "Not available"
+            }
             editable=""
           />
           <EventCategory
             img={calendar}
             title="Day"
-            info="11/04/2025"
+            info={
+              eventData?.dateTime
+                ? normalizeDate(eventData?.dateTime.toDate())
+                : "Not available"
+            }
             editable=""
           />
           <EventCategory
             img={dog}
             title="Maximum places"
-            info="Unlimited"
+            info={
+              eventData?.places
+                ? normalizePlaces(eventData?.places)
+                : "Not available"
+            }
             editable=""
           />
         </main>
         <aside className="event--container__sidebar">
           <h3 className="event--profile-title">Know your organisator</h3>
-          <ProfileCard name="Flufy" rating={4.8} events={6} />
+          <ProfileCard
+            name={
+              profileData?.profileName
+                ? profileData?.profileName
+                : "Not available"
+            }
+            rating={0}
+            events={
+              createdEventsByProfile?.length
+                ? createdEventsByProfile?.length
+                : 0
+            }
+          />
           <div className="event--modal">
             <Button className="primary">Join Us</Button>
           </div>
