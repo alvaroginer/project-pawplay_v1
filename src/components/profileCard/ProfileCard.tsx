@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/profileCard/bone.svg";
@@ -27,7 +28,7 @@ export const ProfileCard = ({
         />
       </div>
       <div className="profile--card__info">
-        <p className="profile--card__name">{name}</p>
+        <p className="profile--card__name">{capitalizeFirstLetter(name)}</p>
         <div className="profile--card__block-rating">
           <div className="profile--card__rating">
             <img className="profile--card__icon" src={bone} alt="" />

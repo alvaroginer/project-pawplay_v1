@@ -6,7 +6,7 @@ export const normalizeTime = (i: Date) => {
   const hours: number = i.getHours();
   const minutes: number = i.getMinutes();
 
-  return `${hours < 10 ? `0${hours}` : 0}:${minutes < 10 ? `0${minutes}` : 0}`;
+  return `${hours < 10 ? `0${hours}` : 0}:${minutes < 10 ? `0${minutes}` : 0}h`;
 };
 
 export const normalizeDate = (i: Date) => {
