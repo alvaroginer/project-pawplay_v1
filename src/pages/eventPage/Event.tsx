@@ -35,8 +35,9 @@ export const Event = () => {
     useState<EventData[]>();
 
   //Params para la url
-  const params = useParams();
-  const paramsStr: string = `${params}`;
+  const { eventId } = useParams();
+  const paramsStr: string = eventId ?? "";
+  console.log(eventId);
 
   useEffect(() => {
     //Fetching Event info
@@ -49,11 +50,12 @@ export const Event = () => {
       }
 
       const typedEventSnap: EventData = eventSnap.data() as EventData;
-      console.log(typedEventSnap);
+      console.log("esto es el el objeto de BBDD", typedEventSnap);
       setEventData(typedEventSnap);
     };
     fetchEvent();
   }, [paramsStr]);
+  console.log("esto es el useState", eventData);
 
   useEffect(() => {
     //Fetching Event info
@@ -89,6 +91,10 @@ export const Event = () => {
     };
     fetchQuerySnap();
   }, [eventData]);
+
+  const handleEventData = (eventSnap) => {
+    setEventData((prev) => ({ ...prev, ...eventSnap }));
+  };
 
   //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
   //events hacer un find de algún evento que sea del miso tipo y
