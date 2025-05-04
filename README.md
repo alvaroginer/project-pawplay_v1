@@ -54,6 +54,13 @@ export default tseslint.config({
 ```
 
 ```
+To work with this repository use the following command on a Unix-like Terminal:
+cp .env.example .env
+
+And fill it with the correspondant keys
+```
+
+```
 Posible DataBase structure
 
 1. Users

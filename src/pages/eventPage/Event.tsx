@@ -60,7 +60,7 @@ export const Event = () => {
   useEffect(() => {
     //Fetching Event info
     if (!eventData) return;
-
+    console.log("entra en el segundo useEffect");
     const profileID: string = eventData?.profileIdCreator || "";
 
     //Fetching Profile Info
@@ -92,9 +92,9 @@ export const Event = () => {
     fetchQuerySnap();
   }, [eventData]);
 
-  const handleEventData = (eventSnap) => {
-    setEventData((prev) => ({ ...prev, ...eventSnap }));
-  };
+  // const handleEventData = (eventSnap) => {
+  //   setEventData((prev) => ({ ...prev, ...eventSnap }));
+  // };
 
   //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
   //events hacer un find de algún evento que sea del miso tipo y
