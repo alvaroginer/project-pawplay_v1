@@ -8,13 +8,18 @@ interface AuthContextType {
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
+
+interface AuthLocalStorageProps {
+  user: UserData | null;
+  loggedProfile: ProfileData | null;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
@@ -23,16 +28,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   //Load user from LocalStorage
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUserString = localStorage.getItem("user");
+    const storedUser: AuthLocalStorageProps | null = storedUserString
+      ? (JSON.parse(storedUserString) as AuthLocalStorageProps)
+      : null;
+
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(storedUser.user);
+      setLoggedProfile(storedUser.loggedProfile);
     }
   }, []);
 
   const login = (userData: UserData, profileData: ProfileData) => {
     setUser(userData);
     setLoggedProfile(profileData);
-    const logInfoUser = { user: userData, profile: profileData };
+    const logInfoUser = { user: userData, loggedProfile: profileData };
 
     //Guardamos en localStorage
     localStorage.setItem("user", JSON.stringify(logInfoUser));
