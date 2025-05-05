@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import { useState, useContext } from "react";
 import { NavigationMenu } from "../navigationMenu/NavigationMenu";
 import { Button } from "../button/Button";
-import { AuthContext, AuthProvider } from "../../auth/AuthContext";
+import { AuthContext } from "../../auth/AuthContext";
 import "../../index.css";
 import "./Header.css";
 import logo from "../../imgs/Logo-black.svg";
@@ -29,7 +29,10 @@ export const Header = () => {
             <Button className="primary">Create event</Button>
           </NavLink>
           {user ? (
-            <NavLink to="/profile" className="navigation-menu--button__sign-in">
+            <NavLink
+              to={`/profile/${user.loggedProfile}`}
+              className="navigation-menu--button__sign-in"
+            >
               <img src={profileUserImg} alt="Profile Icon" />
             </NavLink>
           ) : (

@@ -1,19 +1,22 @@
+import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
 // -----> Data of a created Event
 export interface EventData {
   id: string;
   userUid: string;
-  profileIDCreator: string;
+  profileIdCreator: string;
   profileIdAsisstant: string[];
-  eventPhoto: string[];
+  eventTitle: string;
+  eventPhoto: string | null;
   eventDescription: string;
-  dateTime: number;
+  dateTime: Timestamp;
   hour: number;
   location: string;
   places: number;
+  size: "small" | "medium" | "big" | "any";
   activity: "outdoors" | "social event" | "private property" | "walks";
-  breeds: string[];
+  breeds: string;
 }
 
 // -----> Data of a Profile
@@ -23,9 +26,10 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number;
+  age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
+  gender: "male" | "female";
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -150,6 +154,29 @@ export interface EventCategoryBigProps {
   editable: boolean;
 }
 
+// -----> FormLayout
+
+export interface FormLayoutProps {
+  imageTitle: string;
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface Field {
+  label: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  editable: "string" | "select";
+  selectData?: string[];
+}
+
 /* ----- New Types ----- */
 
 type SelectDataType =
@@ -256,26 +283,3 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
-
-// -----> FormLayout
-
-export interface FormLayoutProps {
-  imageTitle: string;
-  title: string;
-  fields: InputProps[];
-  formData: { [key: string]: string };
-
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
-}
-
-export interface Field {
-  label: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  editable: "string" | "select";
-  selectData?: string[] | number[];
-}

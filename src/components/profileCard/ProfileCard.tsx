@@ -1,45 +1,85 @@
+import { capitalizeFirstLetter } from "../../functions/Functions";
+import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { getOneProfile } from "../../dataBase/services/servicesFunctions";
+import { ProfileData, EventData } from "../../types";
+import { db } from "../../dataBase/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se pueden crear las funciones que calculan el rating por ejemplo
 
-interface ProfileCardProps {
-  name: string;
-  rating: number;
-  events: number;
-  img?: string;
-}
+export const ProfileCard = ({ eventId }: { eventId: string }) => {
+  const [profileData, setProfileData] = useState<ProfileData>();
+  const [createdEventsByProfile, setCreatedEventsByProfile] =
+    useState<EventData[]>();
 
-export const ProfileCard = ({
-  name,
-  rating,
-  events,
-  img,
-}: ProfileCardProps) => {
-  return (
-    <div className="profile--card">
-      <div className="profile--card__image-container">
-        <img
-          className="profile--card__image"
-          src={img ? img : dogUser}
-          alt="Profile Image"
-        />
-      </div>
-      <div className="profile--card__info">
-        <p className="profile--card__name">{name}</p>
-        <div className="profile--card__block-rating">
-          <div className="profile--card__rating">
-            <img className="profile--card__icon" src={bone} alt="" />
-            <p className="profile--card__value">{rating}</p>
+  useEffect(() => {
+    console.log("se ejecuta el useEffect en el componente de profileCrad");
+    const fecthProfile = async () => {
+      const profileSnap = await getOneProfile(eventId);
+
+      if (!profileSnap.exists()) {
+        console.error("El perfil no existe con id:", eventId);
+        return;
+      }
+
+      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+      console.log(typedProfileSnap);
+      setProfileData(typedProfileSnap);
+    };
+    fecthProfile();
+
+    const ref = collection(db, "events");
+    const q = query(ref, where("profileIdCreator", "==", eventId));
+    const fetchQuerySnap = async () => {
+      const querySnap = await getDocs(q);
+      const typedQuerySnap: EventData[] = querySnap.docs.map(
+        (doc) => doc.data() as EventData
+      );
+      console.log("esto es la query", typedQuerySnap);
+      setCreatedEventsByProfile(typedQuerySnap);
+    };
+    fetchQuerySnap();
+  }, [eventId]);
+
+  if (!profileData) {
+    return null;
+  } else {
+    return (
+      <Link to={`/profile/${eventId}`}>
+        <div className="profile--card">
+          <div className="profile--card__image-container">
+            <img
+              className="profile--card__image"
+              src={
+                profileData.profilePhoto ? profileData.profilePhoto : dogUser
+              }
+              alt="Profile Image"
+            />
           </div>
-          <p className="profile--card__label">Rating</p>
+          <div className="profile--card__info">
+            <p className="profile--card__name">
+              {capitalizeFirstLetter(profileData.profileName)}
+            </p>
+            <div className="profile--card__block-rating">
+              <div className="profile--card__rating">
+                <img className="profile--card__icon" src={bone} alt="" />
+                <p className="profile--card__value">{0}</p>
+              </div>
+              <p className="profile--card__label">Rating</p>
+            </div>
+            <div className="profile--card__block-events">
+              <p className="profile--card__value">
+                {createdEventsByProfile && createdEventsByProfile.length}
+              </p>
+              <p className="profile--card__label">Events created</p>
+            </div>
+          </div>
         </div>
-        <div className="profile--card__block-events">
-          <p className="profile--card__value">{events}</p>
-          <p className="profile--card__label">Events created</p>
-        </div>
-      </div>
-    </div>
-  );
+      </Link>
+    );
+  }
 };
