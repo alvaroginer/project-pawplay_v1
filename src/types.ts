@@ -157,9 +157,12 @@ export interface EventCategoryBigProps {
 // -----> FormLayout
 
 export interface FormLayoutProps {
+  imageTitle: string;
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
+
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 export interface Field {

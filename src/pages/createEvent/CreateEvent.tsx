@@ -104,6 +104,7 @@ export const CreateEvent = () => {
   return (
     <div className="container">
       <FormLayout
+        imageTitle="Upload an image of the event location"
         title="Fill the information to create an event"
         fields={fields}
         formData={formData}
