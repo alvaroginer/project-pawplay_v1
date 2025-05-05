@@ -3,6 +3,7 @@ import { normalizeTime, normalizeDate } from "../../functions/Functions";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { WarningModal } from "../modals/warningModal/WarningModal";
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import { useNavigate } from "react-router";
 import "../../index.css";
 import "./EventCard.css";
@@ -66,7 +67,9 @@ export const EventCard = ({ event }: { event: EventData }) => {
             </p>
           </div>
           <p className="event-card--text__p">{location}</p>
-          <p className="event-card--text__p">{activity}</p>
+          <p className="event-card--text__p">
+            {capitalizeFirstLetter(activity)}
+          </p>
         </div>
         <div className="event-card--rating">
           <img src={bone} alt="Bone Icon" />

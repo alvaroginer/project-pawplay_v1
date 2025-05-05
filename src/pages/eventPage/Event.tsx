@@ -3,18 +3,13 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 import { CheckListProfile } from "../../components/checkListProfile/CheckListProfile";
-import {
-  getOneEvent,
-  getOneProfile,
-} from "../../dataBase/services/servicesFunctions";
-import { EventData, ProfileData } from "../../types";
+import { getOneEvent } from "../../dataBase/services/servicesFunctions";
+import { EventData } from "../../types";
 import {
   normalizeDate,
   normalizeTime,
   normalizePlaces,
 } from "../../functions/Functions";
-import { db } from "../../dataBase/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
@@ -30,9 +25,6 @@ import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData>();
-  const [profileData, setProfileData] = useState<ProfileData>();
-  const [createdEventsByProfile, setCreatedEventsByProfile] =
-    useState<EventData[]>();
 
   //Params para la url
   const { eventId } = useParams();
@@ -54,45 +46,6 @@ export const Event = () => {
     };
     fetchEvent();
   }, [paramsStr]);
-
-  useEffect(() => {
-    //Fetching Event info
-    if (!eventData) return;
-
-    //Fetching Profile Info
-    const fecthProfile = async () => {
-      const profileSnap = await getOneProfile(eventData.profileIdCreator);
-
-      if (!profileSnap.exists()) {
-        console.error(
-          "El perfil no existe con id:",
-          eventData.profileIdCreator
-        );
-        return;
-      }
-
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
-      console.log(typedProfileSnap);
-      setProfileData(typedProfileSnap);
-    };
-    fecthProfile();
-
-    //Fetching Events created by Profile
-    const ref = collection(db, "events");
-    const q = query(
-      ref,
-      where("profileIdCreator", "==", eventData.profileIdCreator)
-    );
-    const fetchQuerySnap = async () => {
-      const querySnap = await getDocs(q);
-      const typedQuerySnap: EventData[] = querySnap.docs.map(
-        (doc) => doc.data() as EventData
-      );
-      console.log("esto es la query", typedQuerySnap);
-      setCreatedEventsByProfile(typedQuerySnap);
-    };
-    fetchQuerySnap();
-  }, [eventData]);
 
   //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
   //events hacer un find de algún evento que sea del miso tipo y
@@ -163,19 +116,7 @@ export const Event = () => {
           </main>
           <aside className="event--container__sidebar">
             <h3 className="event--profile-title">Know your organisator</h3>
-            <ProfileCard
-              name={
-                profileData?.profileName
-                  ? profileData?.profileName
-                  : "Not available"
-              }
-              rating={0}
-              events={
-                createdEventsByProfile?.length
-                  ? createdEventsByProfile?.length
-                  : 0
-              }
-            />
+            <ProfileCard eventId={eventData.profileIdCreator} />
             <div className="event--modal">
               <Button className="primary">Join Us</Button>
             </div>
