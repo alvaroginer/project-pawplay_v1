@@ -29,6 +29,7 @@ export interface ProfileData {
   age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
+  gender: "male" | "female";
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -159,8 +160,6 @@ export interface FormLayoutProps {
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
-
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 export interface Field {

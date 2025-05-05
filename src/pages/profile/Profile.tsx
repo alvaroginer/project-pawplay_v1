@@ -33,11 +33,13 @@ export const Profile = () => {
   const { loggedProfile } = useContext(AuthContext);
 
   // Params for url
-  const { profileIdParams } = useParams();
-  const profileIdParamsStr: string = profileIdParams ?? "";
-  console.log(profileIdParamsStr);
+  const { profileId } = useParams();
+  const profileIdParamsStr: string = profileId ?? "";
+  console.log(profileIdParamsStr, "esto es el profileId tipado");
 
   useEffect(() => {
+    console.log("entra en el useEfect de la página del perfil");
+    //console.log(profileInfo.id, "esto es loggedprofile");
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
@@ -109,25 +111,25 @@ export const Profile = () => {
                 <EventCategory
                   img={account}
                   title="Owner's name"
-                  info={"Bob Jackson"}
+                  info={profileInfo.profileName}
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
                 <EventCategory
                   img={dog}
                   title={"Dog's name"}
-                  info={"Moon"}
+                  info={profileInfo.profileName}
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
                 <EventCategory
                   img={star}
                   title={"Rating"}
-                  info={"4.5 Stars"}
+                  info={`4.5 Stars`}
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
                 <EventCategory
                   img={medal}
                   title={"Breed"}
-                  info={"Pitbull"}
+                  info={profileInfo.breed}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogBreedsType}
                 />
@@ -136,21 +138,21 @@ export const Profile = () => {
                 <EventCategory
                   img={timer}
                   title={"Age"}
-                  info={"6"}
+                  info={`${profileInfo.age}`}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogAgeType}
                 />
                 <EventCategory
                   img={gender}
                   title={"Gender"}
-                  info={"Male"}
+                  info={profileInfo.gender}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogGenderType}
                 />
                 <EventCategory
                   img={ruler}
                   title={"Size"}
-                  info={"Medium"}
+                  info={profileInfo.size}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogSizesType}
                 />
@@ -161,7 +163,7 @@ export const Profile = () => {
                 img={description}
                 title={"Description"}
                 info={
-                  "Moon is a loving, sociable dog and is always ready to make new friends, both human and doggy. He loves to run in the park, play with his ball and get cuddles all the time. He is very intelligent and learns tricks easily, especially if there are treats involved." // Texto completo
+                  profileInfo.profileBio // Texto completo
                 }
                 editable={loggedProfile.id === profileInfo.id ? "string" : ""}
               />
