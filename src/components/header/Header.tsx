@@ -16,7 +16,7 @@ export const Header = () => {
   const handleNavMenuDisplay = () => {
     setNavigationMenuDisplay(!navigationMenuDisplay);
   };
-  const { user } = useContext(AuthContext);
+  const { user, loggedProfile } = useContext(AuthContext);
 
   return (
     <>
@@ -30,7 +30,7 @@ export const Header = () => {
           </NavLink>
           {user ? (
             <NavLink
-              to={`/profile/${user.loggedProfile}`}
+              to={`/profile/${loggedProfile.id}`}
               className="navigation-menu--button__sign-in"
             >
               <img src={profileUserImg} alt="Profile Icon" />
