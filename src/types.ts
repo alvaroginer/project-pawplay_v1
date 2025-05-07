@@ -133,7 +133,11 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  children?: React.ReactNode;
+  eventTypes:
+    | "upcoming events"
+    | "hosted events"
+    | "favourite events"
+    | "past events";
   isOpen?: boolean;
   defaultOpen?: boolean;
 }

@@ -191,7 +191,7 @@ export const Profile = () => {
                   <ViewMoreCard />
                 </Link>
               </Accordion>
-              <Accordion text={"Favorites events"}>
+              <Accordion text={"Favourites events"}>
                 <EventCard event={exampleEventData} />
                 <EventCard event={exampleEventData} />
                 <EventCard event={exampleEventData} />

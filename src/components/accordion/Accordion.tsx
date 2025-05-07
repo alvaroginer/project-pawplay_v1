@@ -1,11 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { AccordionProps } from "../../types";
+import {
+  getFavouriteEvents,
+  getHostedEvents,
+  getPastEvents,
+  getUpcomingEvents,
+} from "../../dataBase/services/servicesFunctions";
+
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
 
 export const Accordion = ({
   text,
-  children,
+  eventTypes,
   defaultOpen = false,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState(defaultOpen);
@@ -51,6 +58,33 @@ export const Accordion = ({
       slider.removeEventListener("mousemove", handleMouseMove);
     };
   }, [showAccordion]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      switch (eventTypes) {
+        case "upcoming events": {
+          const upcomingEvents = await getUpcomingEvents();
+          return upcomingEvents;
+        }
+
+        case "favourite events": {
+          const favouriteEvents = await getFavouriteEvents();
+          return favouriteEvents;
+        }
+
+        case "hosted events": {
+          const hostedEvents = await getHostedEvents();
+          return hostedEvents;
+        }
+
+        case "past events": {
+          const pastEvents = await getPastEvents();
+          return pastEvents;
+        }
+      }
+    };
+    fetchEvents();
+  });
 
   const handleClick = () => {
     setShowAccordion(!showAccordion);
