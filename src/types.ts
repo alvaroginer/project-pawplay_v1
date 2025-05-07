@@ -30,6 +30,7 @@ export interface ProfileData {
   breed: string;
   size: "small" | "medium" | "big" | "any";
   gender: "male" | "female";
+  likedEvents: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -138,6 +139,8 @@ export interface AccordionProps {
     | "hosted events"
     | "favourite events"
     | "past events";
+  profileId: string;
+  likedEvents: string[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }

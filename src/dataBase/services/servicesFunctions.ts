@@ -76,14 +76,12 @@ export const getHostedEvents = async (profileId: string) => {
 };
 
 // Get Favourite Events
-export const getFavouriteEvents = async (likedProfiles: string[]) => {
-  const likedEventsData: Promise<EventData>[] = likedProfiles.map(
-    async (id) => {
-      const docSnap = await getDoc(doc(db, "events", id));
-      const typedQuerySnap: EventData = docSnap.data() as EventData;
-      return typedQuerySnap;
-    }
-  );
+export const getFavouriteEvents = async (likedEvents: string[]) => {
+  const likedEventsData: Promise<EventData>[] = likedEvents.map(async (id) => {
+    const docSnap = await getDoc(doc(db, "events", id));
+    const typedQuerySnap: EventData = docSnap.data() as EventData;
+    return typedQuerySnap;
+  });
 
   const likedEventsResult: EventData[] = await Promise.all(likedEventsData);
   return likedEventsResult;

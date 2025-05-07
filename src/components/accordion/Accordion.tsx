@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router";
+import { ViewMoreCard } from "../viewMoreCard/ViewMoreCard";
 import { AccordionProps } from "../../types";
 import {
   getFavouriteEvents,
@@ -14,6 +16,8 @@ export const Accordion = ({
   text,
   eventTypes,
   defaultOpen = false,
+  likedEvents,
+  profileId,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState(defaultOpen);
 
@@ -63,22 +67,22 @@ export const Accordion = ({
     const fetchEvents = async () => {
       switch (eventTypes) {
         case "upcoming events": {
-          const upcomingEvents = await getUpcomingEvents();
+          const upcomingEvents = await getUpcomingEvents(profileId);
           return upcomingEvents;
         }
 
         case "favourite events": {
-          const favouriteEvents = await getFavouriteEvents();
+          const favouriteEvents = await getFavouriteEvents(likedEvents);
           return favouriteEvents;
         }
 
         case "hosted events": {
-          const hostedEvents = await getHostedEvents();
+          const hostedEvents = await getHostedEvents(profileId);
           return hostedEvents;
         }
 
         case "past events": {
-          const pastEvents = await getPastEvents();
+          const pastEvents = await getPastEvents(profileId);
           return pastEvents;
         }
       }
@@ -102,10 +106,11 @@ export const Accordion = ({
           />
         </div>
         {showAccordion && (
-          <div className="accordion__cards" ref={cardsContainerRef}>
-            {children}
-          </div>
+          <div className="accordion__cards" ref={cardsContainerRef}></div>
         )}
+        <Link to="/my-events" className="accordion__view-all-link">
+          <ViewMoreCard />
+        </Link>
       </div>
     </>
   );

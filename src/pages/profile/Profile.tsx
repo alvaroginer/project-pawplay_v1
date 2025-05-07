@@ -1,8 +1,5 @@
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { Accordion } from "../../components/accordion/Accordion";
-import { ViewMoreCard } from "../../components/viewMoreCard/ViewMoreCard";
-import { EventCard } from "../../components/eventCard/EventCard";
-import { Link } from "react-router";
 import {
   dogBreedsType,
   dogSizesType,
@@ -173,42 +170,34 @@ export const Profile = () => {
         <div className="accordion-container">
           {loggedProfile.id === profileInfo.id && (
             <>
-              <Accordion text={"My upcoming events"} defaultOpen={true}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Hosted hangouts"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Favourites events"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Past adventures"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
+              <Accordion
+                text={"My upcoming events"}
+                defaultOpen={true}
+                eventTypes="upcoming events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Hosted hangouts"}
+                defaultOpen={true}
+                eventTypes="hosted events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Favourite Events"}
+                defaultOpen={true}
+                eventTypes="favourite events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Past adventures"}
+                defaultOpen={true}
+                eventTypes="past events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
             </>
           )}
         </div>
