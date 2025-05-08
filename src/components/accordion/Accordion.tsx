@@ -96,7 +96,11 @@ export const Accordion = ({
 
   return (
     <>
-      <div className={`accordion ${showAccordion ? "accordion--open" : ""}`}>
+      <div
+        className={`accordion ${
+          showAccordion === true ? "accordion--open" : ""
+        }`}
+      >
         <div className="accordion__info" onClick={handleClick}>
           <p className="accordion__title">{text}</p>
           <img
@@ -105,12 +109,14 @@ export const Accordion = ({
             className="accordion__icon"
           />
         </div>
-        {showAccordion && (
-          <div className="accordion__cards" ref={cardsContainerRef}></div>
+        {showAccordion === true && (
+          <>
+            <div className="accordion__cards" ref={cardsContainerRef}></div>
+            <Link to="/my-events" className="accordion__view-all-link">
+              <ViewMoreCard />
+            </Link>
+          </>
         )}
-        <Link to="/my-events" className="accordion__view-all-link">
-          <ViewMoreCard />
-        </Link>
       </div>
     </>
   );

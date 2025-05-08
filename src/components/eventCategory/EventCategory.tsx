@@ -57,7 +57,7 @@ export const EventCategory = ({
       );
     }
   };
-
+  console.log(typeof categoryValue, categoryValue);
   return (
     <div className="event--category">
       <div className="event--category__img">

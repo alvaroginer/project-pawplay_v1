@@ -29,7 +29,7 @@ export interface ProfileData {
   age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female";
+  gender: "male" | "female" | "not specify";
   likedEvents: string[];
 }
 

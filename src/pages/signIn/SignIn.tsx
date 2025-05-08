@@ -114,6 +114,8 @@ export const SignIn = () => {
           age: null,
           breed: "",
           size: "any",
+          gender: "not specify",
+          likedEvents: [],
         };
 
         await setDoc(newProfileRef, profileData);

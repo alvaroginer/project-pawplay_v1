@@ -55,7 +55,7 @@ export const Profile = () => {
   const handleClick = () => {
     setIsModalOpen(true);
   };
-
+  console.log(profileInfo);
   if (!profileInfo) {
     return null;
   } else {
