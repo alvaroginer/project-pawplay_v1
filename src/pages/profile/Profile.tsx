@@ -179,21 +179,21 @@ export const Profile = () => {
               />
               <Accordion
                 text={"Hosted hangouts"}
-                defaultOpen={true}
+                defaultOpen={false}
                 eventTypes="hosted events"
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
               <Accordion
                 text={"Favourite Events"}
-                defaultOpen={true}
+                defaultOpen={false}
                 eventTypes="favourite events"
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
               <Accordion
                 text={"Past adventures"}
-                defaultOpen={true}
+                defaultOpen={false}
                 eventTypes="past events"
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
