@@ -18,6 +18,12 @@ export const getUsers = async () => {
   return userList;
 };
 
+// Get a single user
+export const getOneUser = async (userId: string) => {
+  const userSnap = await getDoc(doc(db, "users", userId));
+  return userSnap;
+};
+
 /* -----> Profiles */
 // Get profiles from database
 export const getProfiles = async () => {

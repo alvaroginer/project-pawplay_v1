@@ -11,7 +11,10 @@ import { WarningModal } from "../../components/modals/warningModal/WarningModal"
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import { getOneProfile } from "../../dataBase/services/servicesFunctions";
+import {
+  getOneProfile,
+  getOneUser,
+} from "../../dataBase/services/servicesFunctions";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import dog from "../../imgs/profilePage/dog.svg";
@@ -27,7 +30,7 @@ import "./Profile.css";
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { loggedProfile } = useContext(AuthContext);
+  const { loggedProfile, user } = useContext(AuthContext);
 
   // Params for url
   const { profileId } = useParams();
@@ -35,13 +38,11 @@ export const Profile = () => {
   console.log(profileIdParamsStr, "esto es el profileId tipado");
 
   useEffect(() => {
-    console.log("entra en el useEfect de la página del perfil");
-    //console.log(profileInfo.id, "esto es loggedprofile");
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
       if (!profileSnap.exists()) {
-        console.error("El evento no existe con id:", profileIdParamsStr);
+        console.error("El perfil no existe con id:", profileIdParamsStr);
         return;
       }
       const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
@@ -50,6 +51,24 @@ export const Profile = () => {
     };
 
     fetchProfile();
+
+    const fetchUser = async () => {
+      const profileSnap = await getOneUser(profileInfo.userUid);
+
+      if (!profileSnap.exists()) {
+        console.error("El perfil no existe con id:", profileIdParamsStr);
+        return;
+      }
+      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+
+      setProfileInfo(typedProfileSnap);
+    };
+
+    if (loggedProfile.id !== profileInfo.id) {
+      return null;
+    } else {
+      fetchUser();
+    }
   }, [profileIdParamsStr]);
 
   const handleClick = () => {
@@ -108,7 +127,11 @@ export const Profile = () => {
                 <EventCategory
                   img={account}
                   title="Owner's name"
-                  info={profileInfo.profileName}
+                  info={
+                    loggedProfile.id === profileInfo.id
+                      ? `${user.name} ${user.lastName}`
+                      : profileInfo.profileName
+                  }
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
                 <EventCategory

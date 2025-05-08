@@ -232,6 +232,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
+  "Other",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
