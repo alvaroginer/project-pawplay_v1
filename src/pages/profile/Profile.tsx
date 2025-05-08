@@ -6,6 +6,7 @@ import {
   dogGenderType,
   dogAgeType,
   ProfileData,
+  UserData,
 } from "../../types";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 import { useParams } from "react-router";
@@ -29,13 +30,13 @@ import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
+  const [userInfo, setUserInfo] = useState<UserData>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { loggedProfile, user } = useContext(AuthContext);
 
   // Params for url
   const { profileId } = useParams();
   const profileIdParamsStr: string = profileId ?? "";
-  console.log(profileIdParamsStr, "esto es el profileId tipado");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -51,30 +52,31 @@ export const Profile = () => {
     };
 
     fetchProfile();
+  }, [profileIdParamsStr]);
+
+  useEffect(() => {
+    if (!profileInfo) return;
+
+    if (loggedProfile.id !== profileInfo.id) return;
 
     const fetchUser = async () => {
-      const profileSnap = await getOneUser(profileInfo.userUid);
+      const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", profileIdParamsStr);
+      if (!userSnap.exists()) {
+        console.error("El perfil no existe con id:", profileInfo.userUid);
         return;
       }
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
-
-      setProfileInfo(typedProfileSnap);
+      const typedUserSnap: UserData = userSnap.data() as UserData;
+      setUserInfo(typedUserSnap);
     };
 
-    if (loggedProfile.id !== profileInfo.id) {
-      return null;
-    } else {
-      fetchUser();
-    }
-  }, [profileIdParamsStr]);
+    fetchUser();
+  }, [loggedProfile.id, profileInfo]);
 
   const handleClick = () => {
     setIsModalOpen(true);
   };
-  console.log(profileInfo);
+
   if (!profileInfo) {
     return null;
   } else {
@@ -130,10 +132,13 @@ export const Profile = () => {
                   info={
                     loggedProfile.id === profileInfo.id
                       ? `${user.name} ${user.lastName}`
-                      : profileInfo.profileName
+                      : userInfo
+                      ? `${userInfo.name} ${userInfo.lastName}`
+                      : "Unknown owner"
                   }
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
+
                 <EventCategory
                   img={dog}
                   title={"Dog's name"}
