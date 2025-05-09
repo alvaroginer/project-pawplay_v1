@@ -71,11 +71,13 @@ export const Profile = () => {
     };
 
     fetchUser();
-  }, [loggedProfile.id, profileInfo]);
+  }, [loggedProfile, profileInfo]);
 
   const handleClick = () => {
     setIsModalOpen(true);
   };
+
+  console.log(profileInfo);
 
   if (!profileInfo) {
     return null;

@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router";
 import { ViewMoreCard } from "../viewMoreCard/ViewMoreCard";
-import { AccordionProps } from "../../types";
+import { AccordionProps, EventData } from "../../types";
 import {
-  getFavouriteEvents,
-  getHostedEvents,
-  getPastEvents,
-  getUpcomingEvents,
+  getFavouriteEventsLimited,
+  getHostedEventsLimited,
+  getPastEventsLimited,
+  getUpcomingEventsLimited,
 } from "../../dataBase/services/servicesFunctions";
 
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
+import { EventCard } from "../eventCard/EventCard";
 
 export const Accordion = ({
   text,
@@ -19,7 +20,8 @@ export const Accordion = ({
   likedEvents,
   profileId,
 }: AccordionProps) => {
-  const [showAccordion, setShowAccordion] = useState(defaultOpen);
+  const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
+  const [cardsContent, setCardsContent] = useState<EventData[]>();
 
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
   const mousePressed = useRef(false);
@@ -66,33 +68,45 @@ export const Accordion = ({
   useEffect(() => {
     const fetchEvents = async () => {
       switch (eventTypes) {
-        case "upcoming events": {
-          const upcomingEvents = await getUpcomingEvents(profileId);
-          return upcomingEvents;
-        }
+        case "upcoming events":
+          {
+            const upcomingEvents = await getUpcomingEventsLimited(profileId);
+            setCardsContent(upcomingEvents);
+          }
+          break;
 
-        case "favourite events": {
-          const favouriteEvents = await getFavouriteEvents(likedEvents);
-          return favouriteEvents;
-        }
+        case "favourite events":
+          {
+            const favouriteEvents = await getFavouriteEventsLimited(
+              likedEvents
+            );
+            setCardsContent(favouriteEvents);
+          }
+          break;
 
-        case "hosted events": {
-          const hostedEvents = await getHostedEvents(profileId);
-          return hostedEvents;
-        }
+        case "hosted events":
+          {
+            const hostedEvents = await getHostedEventsLimited(profileId);
+            setCardsContent(hostedEvents);
+          }
+          break;
 
-        case "past events": {
-          const pastEvents = await getPastEvents(profileId);
-          return pastEvents;
-        }
+        case "past events":
+          {
+            const pastEvents = await getPastEventsLimited(profileId);
+            setCardsContent(pastEvents);
+          }
+          break;
       }
     };
     fetchEvents();
-  });
+  }, [eventTypes, likedEvents, profileId]);
 
   const handleClick = () => {
     setShowAccordion(!showAccordion);
   };
+
+  console.log(cardsContent);
 
   return (
     <>
@@ -111,10 +125,20 @@ export const Accordion = ({
         </div>
         {showAccordion === true && (
           <>
-            <div className="accordion__cards" ref={cardsContainerRef}></div>
-            <Link to="/my-events" className="accordion__view-all-link">
-              <ViewMoreCard />
-            </Link>
+            <div className="accordion__cards" ref={cardsContainerRef}>
+              {cardsContent && cardsContent.length > 0 ? (
+                cardsContent.map((eventData: EventData) => {
+                  return <EventCard key={eventData.id} event={eventData} />;
+                })
+              ) : (
+                <p>Sorry... There are no related events</p>
+              )}
+            </div>
+            {cardsContent && cardsContent.length > 0 && (
+              <Link to="/my-events" className="accordion__view-all-link">
+                <ViewMoreCard />
+              </Link>
+            )}
           </>
         )}
       </div>

@@ -12,10 +12,13 @@ import { PrivacyPolicy } from "./pages/privacyPolicy/PrivacyPolicy.tsx";
 import { ServiceTerms } from "./pages/serviceTerms/ServiceTerms.tsx";
 import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
 import { CreateProfile } from "./pages/createProfile/CreateProfile.tsx";
-import { MyEventsPage } from "./pages/myEventPage/MyEventPage.tsx";
 import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
 import { SignIn } from "./pages/signIn/SignIn.tsx";
 import { AuthProvider } from "./auth/AuthContext.tsx";
+import { MyPastEvents } from "./pages/myEvents/myPastEvents/MyPastEvents.tsx";
+import { MyUpcomingEvents } from "./pages/myEvents/myUpcomingEvents/MyUpcomingEvents.tsx";
+import { MyHostedEvents } from "./pages/myEvents/myHostedEvents/MyHostedEvents.tsx";
+import { MyFavouriteEvents } from "./pages/myEvents/myFavouriteEvents/MyFavouriteEvents.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
@@ -31,9 +34,12 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/service" element={<ServiceTerms />} />
           <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/my-events" element={<MyEventsPage />} />
           <Route path="/profile-selection" element={<ProfileSelection />} />
           <Route path="/create-profile" element={<CreateProfile />} />
+          <Route path="/my-events/hosted" element={<MyHostedEvents />} />
+          <Route path="/my-events/favourites" element={<MyFavouriteEvents />} />
+          <Route path="/my-events/joined" element={<MyUpcomingEvents />} />
+          <Route path="/my-events/past" element={<MyPastEvents />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
