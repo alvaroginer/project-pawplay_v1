@@ -19,10 +19,13 @@ export const Sidebar = ({
           : "filter-sidebar filter-sidebar__exit"
       }
     >
-      <div className="filter-sidebar--header">
-        <p className="margin--0">Filters</p>
-        <button className="close-button" onClick={() => onClick(true)}>
-          <img src={close} alt="Close Icon" />
+      <div className='filter-sidebar--header'>
+        <p className='filter-sidebar--header__text'>Filters</p>
+        <button
+          className='filter-sidebar--header__close-button'
+          onClick={() => onClick(true)}
+        >
+          <img src={close} alt='Close Icon' />
         </button>
       </div>
       {Object.keys(filterParams).map((category: string) => {
@@ -35,9 +38,9 @@ export const Sidebar = ({
           />
         );
       })}
-      <div className="filter-sidebar--button-container">
+      <div className='filter-sidebar--button-container'>
         <button
-          className="btn btn--secondary margin--left__20"
+          className='btn btn--secondary margin--left__20'
           onClick={() => onClick(true)}
         >
           Apply

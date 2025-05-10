@@ -36,7 +36,7 @@ export const EventsMainPage = () => {
     eventsList.forEach((eventCard) => {
       const { activity, breeds, size } = eventCard;
 
-      if (!breedsList[breeds]) {
+      if (!breedsList[breeds] && breeds !== "") {
         breedsList = { ...breedsList, [breeds]: false };
       }
 
@@ -44,7 +44,7 @@ export const EventsMainPage = () => {
         activityList = { ...activityList, [activity]: false };
       }
 
-      if (!sizeList[size]) {
+      if (!sizeList[size] && size !== "Any") {
         sizeList = { ...sizeList, [size]: false };
       }
     });

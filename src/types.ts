@@ -14,8 +14,8 @@ export interface EventData {
   hour: number;
   location: string;
   places: number;
-  size: "small" | "medium" | "big" | "any";
-  activity: "outdoors" | "social event" | "private property" | "walks";
+  size: "Small" | "Medium" | "Big" | "Any";
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
   breeds: string;
 }
 
@@ -200,6 +200,7 @@ export const typeOfActivity = [
   "Outdoors",
   "Walks",
   "Private property",
+  "Any",
 ];
 
 // MaximumPlaces

@@ -11,7 +11,7 @@
 
   /* Pink */
   --color-pink: hsl(320, 91%, 35%);
-  --color-pink-hover: hsl(355, 100%, 85%);
+  --color-pink-hover: hsl(320, 47%, 91%);
   --color-pink-active: hsl(355, 100%, 77%);
   --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
 
@@ -429,7 +429,7 @@ body {
 
   .filter-button--container {
     margin: 0;
-    margin-top: var(--space-113);
+    margin-top: 85px;
     width: fit-content;
   }
 }
