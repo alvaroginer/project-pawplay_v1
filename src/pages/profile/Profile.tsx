@@ -1,20 +1,21 @@
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { Accordion } from "../../components/accordion/Accordion";
-import { ViewMoreCard } from "../../components/viewMoreCard/ViewMoreCard";
-import { EventCard } from "../../components/eventCard/EventCard";
-import { Link } from "react-router";
 import {
   dogBreedsType,
   dogSizesType,
   dogGenderType,
   dogAgeType,
   ProfileData,
+  UserData,
 } from "../../types";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
-import { getOneProfile } from "../../dataBase/services/servicesFunctions";
+import {
+  getOneProfile,
+  getOneUser,
+} from "../../dataBase/services/servicesFunctions";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import dog from "../../imgs/profilePage/dog.svg";
@@ -29,22 +30,20 @@ import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
+  const [userInfo, setUserInfo] = useState<UserData>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { loggedProfile } = useContext(AuthContext);
+  const { loggedProfile, user } = useContext(AuthContext);
 
   // Params for url
   const { profileId } = useParams();
   const profileIdParamsStr: string = profileId ?? "";
-  console.log(profileIdParamsStr, "esto es el profileId tipado");
 
   useEffect(() => {
-    console.log("entra en el useEfect de la página del perfil");
-    //console.log(profileInfo.id, "esto es loggedprofile");
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
       if (!profileSnap.exists()) {
-        console.error("El evento no existe con id:", profileIdParamsStr);
+        console.error("El perfil no existe con id:", profileIdParamsStr);
         return;
       }
       const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
@@ -55,9 +54,30 @@ export const Profile = () => {
     fetchProfile();
   }, [profileIdParamsStr]);
 
+  useEffect(() => {
+    if (!profileInfo) return;
+
+    if (loggedProfile.id !== profileInfo.id) return;
+
+    const fetchUser = async () => {
+      const userSnap = await getOneUser(profileInfo.userUid);
+
+      if (!userSnap.exists()) {
+        console.error("El perfil no existe con id:", profileInfo.userUid);
+        return;
+      }
+      const typedUserSnap: UserData = userSnap.data() as UserData;
+      setUserInfo(typedUserSnap);
+    };
+
+    fetchUser();
+  }, [loggedProfile, profileInfo]);
+
   const handleClick = () => {
     setIsModalOpen(true);
   };
+
+  console.log(profileInfo);
 
   if (!profileInfo) {
     return null;
@@ -111,9 +131,16 @@ export const Profile = () => {
                 <EventCategory
                   img={account}
                   title="Owner's name"
-                  info={profileInfo.profileName}
+                  info={
+                    loggedProfile.id === profileInfo.id
+                      ? `${user.name} ${user.lastName}`
+                      : userInfo
+                      ? `${userInfo.name} ${userInfo.lastName}`
+                      : "Unknown owner"
+                  }
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
+
                 <EventCategory
                   img={dog}
                   title={"Dog's name"}
@@ -173,42 +200,34 @@ export const Profile = () => {
         <div className="accordion-container">
           {loggedProfile.id === profileInfo.id && (
             <>
-              <Accordion text={"My upcoming events"} defaultOpen={true}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Hosted hangouts"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Favorites events"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
-              <Accordion text={"Past adventures"}>
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <EventCard event={exampleEventData} />
-                <Link to="/my-events" className="accordion__view-all-link">
-                  <ViewMoreCard />
-                </Link>
-              </Accordion>
+              <Accordion
+                text={"My upcoming events"}
+                defaultOpen={true}
+                eventTypes="upcoming events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Hosted hangouts"}
+                defaultOpen={false}
+                eventTypes="hosted events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Favourite Events"}
+                defaultOpen={false}
+                eventTypes="favourite events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
+              <Accordion
+                text={"Past adventures"}
+                defaultOpen={false}
+                eventTypes="past events"
+                profileId={profileInfo.id}
+                likedEvents={profileInfo.likedEvents}
+              />
             </>
           )}
         </div>

@@ -1,14 +1,30 @@
 import { useState, useRef, useEffect } from "react";
-import { AccordionProps } from "../../types";
+import { Link } from "react-router";
+import { ViewMoreCard } from "../viewMoreCard/ViewMoreCard";
+import { AccordionProps, EventData } from "../../types";
+import {
+  getFavouriteEventsLimited,
+  getHostedEventsLimited,
+  getPastEventsLimited,
+  getUpcomingEventsLimited,
+} from "../../dataBase/services/servicesFunctions";
+
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
+import { EventCard } from "../eventCard/EventCard";
 
 export const Accordion = ({
   text,
-  children,
+  eventTypes,
   defaultOpen = false,
+  likedEvents,
+  profileId,
 }: AccordionProps) => {
-  const [showAccordion, setShowAccordion] = useState(defaultOpen);
+  const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
+  const [cardsContent, setCardsContent] = useState<EventData[]>();
+  const [urlNav, setUrlNav] = useState<
+    "hosted" | "favourites" | "upcoming" | "past"
+  >();
 
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
   const mousePressed = useRef(false);
@@ -52,25 +68,88 @@ export const Accordion = ({
     };
   }, [showAccordion]);
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      switch (eventTypes) {
+        case "upcoming events":
+          {
+            const upcomingEvents = await getUpcomingEventsLimited(profileId);
+            setCardsContent(upcomingEvents);
+            setUrlNav("upcoming");
+          }
+          break;
+
+        case "favourite events":
+          {
+            const favouriteEvents = await getFavouriteEventsLimited(
+              likedEvents
+            );
+            setCardsContent(favouriteEvents);
+            setUrlNav("favourites");
+          }
+          break;
+
+        case "hosted events":
+          {
+            const hostedEvents = await getHostedEventsLimited(profileId);
+            setCardsContent(hostedEvents);
+            setUrlNav("hosted");
+          }
+          break;
+
+        case "past events":
+          {
+            const pastEvents = await getPastEventsLimited(profileId);
+            setCardsContent(pastEvents);
+            setUrlNav("past");
+          }
+          break;
+      }
+    };
+    fetchEvents();
+  }, [eventTypes, likedEvents, profileId]);
+
   const handleClick = () => {
     setShowAccordion(!showAccordion);
   };
 
+  console.log(cardsContent);
+
   return (
     <>
-      <div className={`accordion ${showAccordion ? "accordion--open" : ""}`}>
-        <div className="accordion__info" onClick={handleClick}>
-          <p className="accordion__title">{text}</p>
+      <div
+        className={`accordion ${
+          showAccordion === true ? "accordion--open" : ""
+        }`}
+      >
+        <div className='accordion__info' onClick={handleClick}>
+          <p className='accordion__title'>{text}</p>
           <img
             src={plus}
-            alt="Icon to expand section"
-            className="accordion__icon"
+            alt='Icon to expand section'
+            className='accordion__icon'
           />
         </div>
-        {showAccordion && (
-          <div className="accordion__cards" ref={cardsContainerRef}>
-            {children}
-          </div>
+        {showAccordion === true && (
+          <>
+            <div className='accordion__cards' ref={cardsContainerRef}>
+              {cardsContent && cardsContent.length > 0 ? (
+                cardsContent.map((eventData: EventData) => {
+                  return <EventCard key={eventData.id} event={eventData} />;
+                })
+              ) : (
+                <p>Sorry... There are no related events</p>
+              )}
+            </div>
+            {cardsContent && cardsContent.length > 0 && (
+              <Link
+                to={`/my-events/${urlNav})`}
+                className='accordion__view-all-link'
+              >
+                <ViewMoreCard />
+              </Link>
+            )}
+          </>
         )}
       </div>
     </>

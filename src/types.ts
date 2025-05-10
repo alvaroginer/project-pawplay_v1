@@ -29,7 +29,8 @@ export interface ProfileData {
   age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female";
+  gender: "male" | "female" | "not specify";
+  likedEvents: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -133,7 +134,13 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  children?: React.ReactNode;
+  eventTypes:
+    | "upcoming events"
+    | "hosted events"
+    | "favourite events"
+    | "past events";
+  profileId: string;
+  likedEvents: string[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }
@@ -225,6 +232,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
+  "Other",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",

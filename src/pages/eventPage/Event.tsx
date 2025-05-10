@@ -98,19 +98,19 @@ export const Event = () => {
             <EventCategory
               img={time}
               title="Start time"
-              info={normalizeTime(eventData?.dateTime.toDate())}
+              info={normalizeTime(eventData.dateTime.toDate())}
               editable=""
             />
             <EventCategory
               img={calendar}
               title="Day"
-              info={normalizeDate(eventData?.dateTime.toDate())}
+              info={normalizeDate(eventData.dateTime.toDate())}
               editable=""
             />
             <EventCategory
               img={dog}
               title="Maximum places"
-              info={normalizePlaces(eventData?.places)}
+              info={normalizePlaces(eventData.places)}
               editable=""
             />
           </main>
