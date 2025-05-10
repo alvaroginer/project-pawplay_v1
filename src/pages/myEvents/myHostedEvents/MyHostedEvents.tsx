@@ -26,7 +26,7 @@ export const MyHostedEvents = () => {
           alt="Return Icon"
           className="my-events-page__back-icon"
         />
-        <h1 className="my-events-page__title">My upcoming events</h1>
+        <h1 className="my-events-page__title">My hosted events</h1>
         <div className="my-events-page__events-container">
           {hostedEvents &&
             hostedEvents.map((eventData) => {

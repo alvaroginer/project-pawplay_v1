@@ -22,6 +22,9 @@ export const Accordion = ({
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
   const [cardsContent, setCardsContent] = useState<EventData[]>();
+  const [urlNav, setUrlNav] = useState<
+    "hosted" | "favourites" | "upcoming" | "past"
+  >();
 
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
   const mousePressed = useRef(false);
@@ -72,6 +75,7 @@ export const Accordion = ({
           {
             const upcomingEvents = await getUpcomingEventsLimited(profileId);
             setCardsContent(upcomingEvents);
+            setUrlNav("upcoming");
           }
           break;
 
@@ -81,6 +85,7 @@ export const Accordion = ({
               likedEvents
             );
             setCardsContent(favouriteEvents);
+            setUrlNav("favourites");
           }
           break;
 
@@ -88,6 +93,7 @@ export const Accordion = ({
           {
             const hostedEvents = await getHostedEventsLimited(profileId);
             setCardsContent(hostedEvents);
+            setUrlNav("hosted");
           }
           break;
 
@@ -95,6 +101,7 @@ export const Accordion = ({
           {
             const pastEvents = await getPastEventsLimited(profileId);
             setCardsContent(pastEvents);
+            setUrlNav("past");
           }
           break;
       }
@@ -115,17 +122,17 @@ export const Accordion = ({
           showAccordion === true ? "accordion--open" : ""
         }`}
       >
-        <div className="accordion__info" onClick={handleClick}>
-          <p className="accordion__title">{text}</p>
+        <div className='accordion__info' onClick={handleClick}>
+          <p className='accordion__title'>{text}</p>
           <img
             src={plus}
-            alt="Icon to expand section"
-            className="accordion__icon"
+            alt='Icon to expand section'
+            className='accordion__icon'
           />
         </div>
         {showAccordion === true && (
           <>
-            <div className="accordion__cards" ref={cardsContainerRef}>
+            <div className='accordion__cards' ref={cardsContainerRef}>
               {cardsContent && cardsContent.length > 0 ? (
                 cardsContent.map((eventData: EventData) => {
                   return <EventCard key={eventData.id} event={eventData} />;
@@ -135,7 +142,10 @@ export const Accordion = ({
               )}
             </div>
             {cardsContent && cardsContent.length > 0 && (
-              <Link to="/my-events" className="accordion__view-all-link">
+              <Link
+                to={`/my-events/${urlNav})`}
+                className='accordion__view-all-link'
+              >
                 <ViewMoreCard />
               </Link>
             )}

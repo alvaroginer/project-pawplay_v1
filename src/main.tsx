@@ -38,7 +38,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/create-profile" element={<CreateProfile />} />
           <Route path="/my-events/hosted" element={<MyHostedEvents />} />
           <Route path="/my-events/favourites" element={<MyFavouriteEvents />} />
-          <Route path="/my-events/joined" element={<MyUpcomingEvents />} />
+          <Route path="/my-events/upcoming" element={<MyUpcomingEvents />} />
           <Route path="/my-events/past" element={<MyPastEvents />} />
         </Route>
         <Route path="/login" element={<Login />} />
