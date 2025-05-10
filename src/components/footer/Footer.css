@@ -1,9 +1,10 @@
 .footer {
-  padding: 16px 34px;
+  padding: 34px 64px;
   background-color: var(--color-gray-footer);
   margin-left: -16px;
   margin-right: -16px;
   margin-top: var(--space-100);
+  margin-inline: calc(-1 * var(--body-inline-padding));
 }
 
 .footer__title {
@@ -17,9 +18,8 @@
 
 .footer__links {
   display: flex;
-  gap: clamp(50px, 10vw, 200px);
+  /* gap: clamp(40px, 5vw, 100px); */
   justify-content: space-between;
-  align-items: start;
 }
 
 .footer__section {
@@ -66,16 +66,14 @@
   margin: 0;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (width>= 900px) {
   .footer__content {
     display: flex;
     padding: 50px 50px;
     justify-content: space-between;
   }
-}
 
-@media screen and (min-width: 500px) {
-  .footer {
-    margin-inline: calc(-1 * var(--body-inline-padding));
+  .footer__links {
+    gap: 100px;
   }
 }
