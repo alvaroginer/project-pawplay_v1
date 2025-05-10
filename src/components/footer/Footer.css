@@ -71,6 +71,6 @@
 
 @media screen and (width>= 500px) {
   .footer {
-    margin-inline: calc(-1 * var(--body-inline-padding));
+    margin-inline: calc(-1 * var(--space-24));
   }
 }

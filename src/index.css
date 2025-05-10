@@ -10,7 +10,7 @@
   --color-yellow-disabled: hsl(50, 100%, 55%, 0.5);
 
   /* Pink */
-  --color-pink: hsl(355, 100%, 80%);
+  --color-pink: hsl(320, 91%, 35%);
   --color-pink-hover: hsl(355, 100%, 85%);
   --color-pink-active: hsl(355, 100%, 77%);
   --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
@@ -31,7 +31,7 @@
   --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
-  --color-gray: hsl(0, 0%, 47%, 1);
+  --color-gray: hsla(206, 7%, 45%, 1);
   --color-gray-300: hsl(0, 0%, 64%);
   --color-gray-200: hsl(0, 0%, 82%);
   --color-gray-footer: hsl(0, 0%, 97%, 1);
@@ -84,9 +84,6 @@
   --radius-sm: var(--space-4);
   --radius-md: var(--space-14);
   --radius-full: var(--space-50);
-
-  /* -----> Padding */
-  --body-inline-padding: clamp(16px, 10.79vw, 178px);
 
   /* -----> Fonts */
 
@@ -321,38 +318,14 @@ body {
   align-items: center;
 }
 
-.filter-container--filters {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* o center, según cómo lo quieras */
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-bottom: var(--space-34);
-  padding: var(--space-16);
-}
-
-.filter-container--buttons {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: var(--space-14);
-  /* scrollbar-width: none; Firefox */
-  width: 100%;
-}
-
 /* .filter-container--buttons::-webkit-scrollbar {
   display: none; 
 } */
 
-.filter-container--buttons button {
-  flex-shrink: 0;
-}
-
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
   margin-top: var(--space-113);
-  margin-bottom: var(--space-34);
+  margin-bottom: var(--space-30);
   padding: var(--space-12);
   border-style: solid;
   border-width: var(--space-1);
@@ -366,13 +339,19 @@ body {
   }
 }
 
-.filter-button {
-  flex-shrink: 0;
+.filter-button--container {
   display: flex;
+  justify-content: flex-end;
+  width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
+  margin-bottom: var(--space-30);
+}
+
+.filter-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   cursor: pointer;
-  margin-top: var(--space-22);
-  text-align: right;
 }
 
 .filter-button p {
@@ -411,7 +390,7 @@ body {
 /* Media Queries */
 @media screen and (width>= 500px) {
   body {
-    padding-inline: var(--body-inline-padding);
+    padding-inline: var(--space-24);
   }
 }
 
@@ -438,6 +417,20 @@ body {
 @media (min-width: 837px) {
   .filter-container--buttons {
     overflow-x: visible;
+  }
+}
+
+@media screen and (min-width: 995px) {
+  .filter-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-30);
+  }
+
+  .filter-button--container {
+    margin: 0;
+    margin-top: var(--space-113);
+    width: fit-content;
   }
 }
 

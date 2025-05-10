@@ -152,31 +152,23 @@ export const EventsMainPage = () => {
 
   return (
     <>
-      <div className="filter-container">
+      <div className='filter-container'>
         <input
-          type="text"
-          className="searchbar"
-          placeholder="Search the event you want to go"
+          type='text'
+          className='searchbar'
+          placeholder='Search the event you want to go'
         />
-        <div className="filter-container--filters">
-          <div className="filter-container--buttons">
-            <Button className="terciary">Social Event</Button>
-            <Button className="terciary">Outdoors</Button>
-            <Button className="terciary">Walks</Button>
-            <Button className="terciary">Small Dogs</Button>
-            <Button className="terciary">Big Dogs</Button>
-            <Button className="terciary">Any Dogs</Button>
-          </div>
+        <div className='filter-button--container'>
           <div
-            className="filter-button"
+            className='filter-button'
             onClick={() => handleSidebarDisplay(sidebarDisplay)}
           >
             <p>Filters</p>
-            <img src={filter} alt="Filter Icon" />
+            <img src={filter} alt='Filter Icon' />
           </div>
         </div>
       </div>
-      <div className="events-container">
+      <div className='events-container'>
         <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
           {filteredEventList.map((event: EventData) => {
             return <EventCard key={event.id} event={event} />;
@@ -191,8 +183,8 @@ export const EventsMainPage = () => {
           />
         )}
       </div>
-      <div className="create-event-modal">
-        <Button className="primary">Create an event</Button>
+      <div className='create-event-modal'>
+        <Button className='primary'>Create an event</Button>
       </div>
     </>
   );

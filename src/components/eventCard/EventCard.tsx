@@ -36,44 +36,48 @@ export const EventCard = ({ event }: { event: EventData }) => {
     <>
       {isWarningModal && !user && (
         <WarningModal
-          modalText="Paws up! You need to log in before you can join the pack."
-          buttonText="Sign or Log in"
+          modalText='Paws up! You need to log in before you can join the pack.'
+          buttonText='Sign or Log in'
           onClose={handleEventCardClick}
         />
       )}
       <div
-        className="event-card grid-cell margin--bt__24"
+        className='event-card grid-cell margin--bt__24'
         onClick={handleEventCardClick}
       >
-        <div className="event-card--image position-relative">
-          <img src={eventPhoto !== null ? eventPhoto : park} alt="Park" />
-          <div className="fav-button--container">
-            <button className="fav-button">
-              <img src={footprint} alt="Dog Footprint" />
+        <div className='event-card--image position-relative'>
+          <img src={eventPhoto !== null ? eventPhoto : park} alt='Park' />
+          <div className='fav-button--container'>
+            <button className='fav-button'>
+              <img src={footprint} alt='Dog Footprint' />
             </button>
-            <button className="fav-button">
-              <img src={dots} alt="Dots Icon" />
+            <button className='fav-button'>
+              <img src={dots} alt='Dots Icon' />
             </button>
           </div>
         </div>
-        <div className="event-card--text">
-          <h3 className="event-card--text__title">{eventTitle}</h3>
-          <div className="display--flex gap__4">
-            <p className="event-card--text__p">
-              {normalizeDate(eventDateTime)}
-            </p>
-            <p className="event-card--text__p">
-              {normalizeTime(eventDateTime)}
-            </p>
+        <div className='event-card--bottom-section'>
+          <div className='event-card--text'>
+            <div className='display--flex gap__4'>
+              <p className='event-card--text__date'>
+                {normalizeDate(eventDateTime)}
+              </p>
+              <p className='event-card--text__date'>
+                {normalizeTime(eventDateTime)}
+              </p>
+            </div>
+            <h3 className='event-card--text__title'>{eventTitle}</h3>
+            <p className='event-card--text__p--gray'>{location}</p>
           </div>
-          <p className="event-card--text__p">{location}</p>
-          <p className="event-card--text__p">
-            {capitalizeFirstLetter(activity)}
-          </p>
-        </div>
-        <div className="event-card--rating">
-          <img src={bone} alt="Bone Icon" />
-          <p>4</p>
+          <div className='event-card--footer'>
+            <p className='event-card--text__tag'>
+              {capitalizeFirstLetter(activity)}
+            </p>
+            <div className='event-card--rating'>
+              <img src={bone} alt='Bone Icon' />
+              <p>4</p>
+            </div>
+          </div>
         </div>
       </div>
     </>
