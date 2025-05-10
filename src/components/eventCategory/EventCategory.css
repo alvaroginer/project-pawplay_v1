@@ -58,7 +58,7 @@
 .category--text__text {
   margin: 0;
   font-size: clamp(16px, 0.8vw + 0.6rem, 26px);
-  color: var(--color-gray-300);
+  color: var(--color-gray-text);
   /* max-width: 200px; */
   overflow-wrap: break-word;
   word-break: break-word;
