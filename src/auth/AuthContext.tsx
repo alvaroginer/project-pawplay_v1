@@ -1,36 +1,51 @@
 import { useState, createContext, ReactNode, useEffect } from "react";
-import { UserData } from "../types";
+import { ProfileData, UserData } from "../types";
 
 interface AuthContextType {
   user: UserData | null;
-  login: (userData: UserData) => void;
+  loggedProfile: ProfileData | null;
+  login: (userData: UserData, profileData: ProfileData) => void;
   logout: () => void;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+interface AuthLocalStorageProps {
+  user: UserData | null;
+  loggedProfile: ProfileData | null;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
+  const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
 
   //Load user from LocalStorage
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUserString = localStorage.getItem("user");
+    const storedUser: AuthLocalStorageProps | null = storedUserString
+      ? (JSON.parse(storedUserString) as AuthLocalStorageProps)
+      : null;
+
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(storedUser.user);
+      setLoggedProfile(storedUser.loggedProfile);
     }
   }, []);
 
-  const login = (userData: UserData) => {
+  const login = (userData: UserData, profileData: ProfileData) => {
     setUser(userData);
-    //implemntar localStorage
-    localStorage.setItem("user", JSON.stringify(userData));
+    setLoggedProfile(profileData);
+    const logInfoUser = { user: userData, loggedProfile: profileData };
+
+    //Guardamos en localStorage
+    localStorage.setItem("user", JSON.stringify(logInfoUser));
   };
 
   const logout = () => {
@@ -38,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loggedProfile, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,9 +1,13 @@
 import { NavMenuProps } from "../../types";
-import close from "../../imgs/close-thick.svg";
 import { NavLink } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import close from "../../imgs/close-thick.svg";
 import "./NavigationMenu.css";
 
 export const NavigationMenu = ({ onClick }: NavMenuProps) => {
+  const { user } = useContext(AuthContext);
+
   return (
     <nav className="navigation-menu">
       <div className="navigation-menu--header">
@@ -12,7 +16,10 @@ export const NavigationMenu = ({ onClick }: NavMenuProps) => {
         </button>
       </div>
       <div className="navigation-menu--container-link">
-        <NavLink className="navigation-menu--link" to="/profile">
+        <NavLink
+          className="navigation-menu--link"
+          to={`/profile/${user.loggedProfile}`}
+        >
           My account
         </NavLink>
         <NavLink className="navigation-menu--link" to="/profile">

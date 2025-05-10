@@ -1,19 +1,22 @@
+import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
 // -----> Data of a created Event
 export interface EventData {
   id: string;
   userUid: string;
-  profileIDCreator: string;
+  profileIdCreator: string;
   profileIdAsisstant: string[];
-  eventPhoto: string[];
+  eventTitle: string;
+  eventPhoto: string | null;
   eventDescription: string;
-  dateTime: number;
+  dateTime: Timestamp;
   hour: number;
   location: string;
   places: number;
+  size: "small" | "medium" | "big" | "any";
   activity: "outdoors" | "social event" | "private property" | "walks";
-  breeds: string[];
+  breeds: string;
 }
 
 // -----> Data of a Profile
@@ -23,9 +26,11 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number;
+  age: number | null;
   breed: string;
   size: "small" | "medium" | "big" | "any";
+  gender: "male" | "female" | "not specify";
+  likedEvents: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -129,7 +134,13 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  children?: React.ReactNode;
+  eventTypes:
+    | "upcoming events"
+    | "hosted events"
+    | "favourite events"
+    | "past events";
+  profileId: string;
+  likedEvents: string[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }
@@ -148,6 +159,29 @@ export interface EventCategoryBigProps {
   title: string;
   info: string;
   editable: boolean;
+}
+
+// -----> FormLayout
+
+export interface FormLayoutProps {
+  imageTitle: string;
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+
+  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface Field {
+  label: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  editable: "string" | "select";
+  selectData?: string[];
 }
 
 /* ----- New Types ----- */
@@ -198,6 +232,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
+  "Other",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
@@ -256,25 +291,3 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
-
-// -----> FormLayout
-
-export interface FormLayoutProps {
-  title: string;
-  fields: InputProps[];
-  formData: { [key: string]: string };
-
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
-}
-
-export interface Field {
-  label: string;
-  name: string;
-  placeholder: string;
-  value: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  editable: "string" | "select";
-  selectData?: string[];
-}

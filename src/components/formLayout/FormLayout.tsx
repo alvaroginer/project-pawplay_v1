@@ -5,7 +5,7 @@ import { FormLayoutProps } from "../../types";
 import { useState } from "react";
 
 export const FormLayout = (props: FormLayoutProps) => {
-  const { title, fields, formData } = props;
+  const { title, fields, formData, imageTitle } = props;
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
   return (
@@ -15,9 +15,7 @@ export const FormLayout = (props: FormLayoutProps) => {
           <div className="form__image-wrapper">
             {!selectedImage && (
               <div className="form__upload-instructions">
-                <p className="form__image-title">
-                  Upload an image of the event location.
-                </p>
+                <p className="form__image-title">{imageTitle}</p>
                 <label htmlFor="file-input" className="form__upload-button">
                   Choose a file
                 </label>

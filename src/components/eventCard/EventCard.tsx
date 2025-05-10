@@ -1,3 +1,10 @@
+import { EventData } from "../../types";
+import { normalizeTime, normalizeDate } from "../../functions/Functions";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { WarningModal } from "../modals/warningModal/WarningModal";
+import { capitalizeFirstLetter } from "../../functions/Functions";
+import { useNavigate } from "react-router";
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
@@ -7,48 +14,68 @@ import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se puede crear la función que calcula el rating
 
-export interface CardData {
-  id?: number;
-  name: string;
-  date: string;
-  time: string;
-  location: string;
-  activity: string;
-  rating: number;
-  breed: string;
-  size: string;
-}
+export const EventCard = ({ event }: { event: EventData }) => {
+  //Destructuring props
+  const { eventPhoto, eventTitle, dateTime, location, activity, id } = event;
 
-export const EventCard = (props: { event: CardData; onClick: () => void }) => {
-  const { event, onClick } = props;
-  const { name, date, time, location, activity, rating } = event;
+  //useState and useContext variable declaration
+  const [isWarningModal, setIsWarningModal] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const eventDateTime = dateTime.toDate();
+
+  const handleEventCardClick = () => {
+    if (user) {
+      navigate(`/event/${id}`);
+    } else {
+      setIsWarningModal(!isWarningModal);
+    }
+  };
 
   return (
-    <div className="event-card grid-cell margin--bt__24" onClick={onClick}>
-      <div className="event-card--image position-relative">
-        <img src={park} alt="Park" />
-        <div className="fav-button--container">
-          <button className="fav-button">
-            <img src={footprint} alt="Dog Footprint" />
-          </button>
-          <button className="fav-button">
-            <img src={dots} alt="Dots Icon" />
-          </button>
+    <>
+      {isWarningModal && !user && (
+        <WarningModal
+          modalText="Paws up! You need to log in before you can join the pack."
+          buttonText="Sign or Log in"
+          onClose={handleEventCardClick}
+        />
+      )}
+      <div
+        className="event-card grid-cell margin--bt__24"
+        onClick={handleEventCardClick}
+      >
+        <div className="event-card--image position-relative">
+          <img src={eventPhoto !== null ? eventPhoto : park} alt="Park" />
+          <div className="fav-button--container">
+            <button className="fav-button">
+              <img src={footprint} alt="Dog Footprint" />
+            </button>
+            <button className="fav-button">
+              <img src={dots} alt="Dots Icon" />
+            </button>
+          </div>
+        </div>
+        <div className="event-card--text">
+          <h3 className="event-card--text__title">{eventTitle}</h3>
+          <div className="display--flex gap__4">
+            <p className="event-card--text__p">
+              {normalizeDate(eventDateTime)}
+            </p>
+            <p className="event-card--text__p">
+              {normalizeTime(eventDateTime)}
+            </p>
+          </div>
+          <p className="event-card--text__p">{location}</p>
+          <p className="event-card--text__p">
+            {capitalizeFirstLetter(activity)}
+          </p>
+        </div>
+        <div className="event-card--rating">
+          <img src={bone} alt="Bone Icon" />
+          <p>4</p>
         </div>
       </div>
-      <div className="event-card--text">
-        <h3 className="event-card--text__title">{name}</h3>
-        <div className="display--flex gap__4">
-          <p className="event-card--text__p">{date}</p>
-          <p className="event-card--text__p">{time}</p>
-        </div>
-        <p className="event-card--text__p">{location}</p>
-        <p className="event-card--text__p">{activity}</p>
-      </div>
-      <div className="event-card--rating">
-        <img src={bone} alt="Bone Icon" />
-        <p>{rating}</p>
-      </div>
-    </div>
+    </>
   );
 };

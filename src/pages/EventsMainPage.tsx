@@ -1,16 +1,14 @@
-import { CardData, EventCard } from "../components/eventCard/EventCard";
-import { useEffect, useMemo, useState, useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { EventCard } from "../components/eventCard/EventCard";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
-import { FilterProps } from "../types";
+import { EventData, FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/servicesFunctions";
-import { WarningModal } from "../components/modals/warningModal/WarningModal";
-
+import { DocumentData } from "firebase/firestore";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
-  const [eventsList, setEventsList] = useState<CardData[]>([]);
+  const [eventsList, setEventsList] = useState<EventData[]>([]);
   const [filterParams, setFilterParams] = useState<FilterProps>({
     activities: {},
     breeds: {},
@@ -19,50 +17,31 @@ export const EventsMainPage = () => {
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
-  const [signInModal, setSignInModal] = useState<boolean>(false);
-  const { user } = useContext(AuthContext);
 
-  //Llamada al archivo json
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/events.json");
-        if (!response.ok) {
-          throw new Error("Error al cargar el JSON");
-        }
-        const data = await response.json();
-        setEventsList(data.events);
-        localStorage.setItem("events", JSON.stringify(data.events));
-      } catch (error) {
-        console.error("Hubo un problema con la carga del JSON:", error);
-      }
-    }
-
-    fetchData();
-
-    async function fetchEvents() {
-      const eventsDb = await getEvents();
-      console.log(eventsDb);
-      //Faltaría poner el setEventList(eventsDb)
-    }
+    // Llamada a la base de datos
+    const fetchEvents = async () => {
+      const eventsDb: DocumentData[] = await getEvents();
+      const typedEvents: EventData[] = eventsDb.map((doc) => doc as EventData);
+      setEventsList(typedEvents);
+    };
 
     fetchEvents();
   }, []);
 
-  //Creamos dinámicamente el useState de los filtros, a lo mejor se puede cambiar por un useMemo??
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
-    let breedList: Record<string, boolean> = {};
+    let breedsList: Record<string, boolean> = {};
     let sizeList: Record<string, boolean> = {};
     eventsList.forEach((eventCard) => {
-      const { activity, breed, size } = eventCard;
+      const { activity, breeds, size } = eventCard;
+
+      if (!breedsList[breeds]) {
+        breedsList = { ...breedsList, [breeds]: false };
+      }
 
       if (!activityList[activity]) {
         activityList = { ...activityList, [activity]: false };
-      }
-
-      if (!breedList[breed]) {
-        breedList = { ...breedList, [breed]: false };
       }
 
       if (!sizeList[size]) {
@@ -72,7 +51,7 @@ export const EventsMainPage = () => {
 
     setFilterParams({
       activities: activityList,
-      breeds: breedList,
+      breeds: breedsList,
       size: sizeList,
       date: {},
     });
@@ -107,8 +86,8 @@ export const EventsMainPage = () => {
           return false;
         }
 
-        if (activeBreeds.length > 0 && !activeBreeds.includes(event.breed)) {
-          console.log(event.breed, index);
+        if (activeBreeds.length > 0 && !activeBreeds.includes(event.breeds)) {
+          console.log(event.breeds, index);
           return false;
         }
 
@@ -171,20 +150,8 @@ export const EventsMainPage = () => {
     }
   };
 
-  const handleWarningModal = () => {
-    console.log("click en una card", signInModal);
-    setSignInModal(!signInModal);
-  };
-
   return (
     <>
-      {signInModal && !user && (
-        <WarningModal
-          modalText="Paws up! You need to log in before you can join the pack."
-          buttonText="Sign or Log in"
-          onClose={handleWarningModal}
-        />
-      )}
       <div className="filter-container">
         <input
           type="text"
@@ -211,14 +178,8 @@ export const EventsMainPage = () => {
       </div>
       <div className="events-container">
         <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
-          {filteredEventList.map((event: CardData) => {
-            return (
-              <EventCard
-                key={event.id}
-                event={event}
-                onClick={handleWarningModal}
-              />
-            );
+          {filteredEventList.map((event: EventData) => {
+            return <EventCard key={event.id} event={event} />;
           })}
         </section>
         {sidebarDisplay && (
