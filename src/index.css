@@ -32,8 +32,10 @@
   --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
-  --color-gray-text: hsl(206, 7%, 45%);
+  --color-gray-800: hsl(206, 7%, 45%);
   --color-gray: hsl(200, 10%, 77%);
+  --color-gray-600: hsl(201, 9%, 71%);
+  --color-gray-400: hsl(196, 12%, 83%);
   --color-gray-300: hsl(196, 19%, 89%);
   --color-gray-200: hsl(195, 22%, 93%);
   --color-gray-100: hsl(195, 29%, 97%);
