@@ -9,11 +9,12 @@
   --color-yellow-active: hsl(48, 100%, 47%);
   --color-yellow-disabled: hsl(50, 100%, 55%, 0.5);
 
-  /* Pink */
-  --color-pink: hsl(355, 100%, 80%);
-  --color-pink-hover: hsl(355, 100%, 85%);
-  --color-pink-active: hsl(355, 100%, 77%);
-  --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
+  /* Berry */
+  --color-berry: hsla(320, 91%, 35%, 1);
+  --color-berry-hover: hsla(318, 92%, 28%, 1);
+  --color-berry-active: hsla(318, 91%, 23%, 1);
+  --color-berry-disabled: rgb(147, 120, 138);
+  --color-berry-200: hsla(323, 67%, 80%, 1);
 
   /* White */
   --color-white: hsla(0, 0%, 100%, 1);
@@ -27,14 +28,17 @@
   --color-blue-800: rgb(99, 116, 128);
 
   /* Black */
-  --color-black: hsl(0, 0, 0);
+  --color-black: hsl(210, 10%, 12%);
   --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
-  --color-gray: hsl(0, 0%, 47%, 1);
-  --color-gray-300: hsl(0, 0%, 64%);
-  --color-gray-200: hsl(0, 0%, 82%);
-  --color-gray-footer: hsl(0, 0%, 97%, 1);
+  --color-gray-800: hsl(206, 7%, 45%);
+  --color-gray: hsl(200, 10%, 77%);
+  --color-gray-600: hsl(201, 9%, 71%);
+  --color-gray-400: hsl(196, 12%, 83%);
+  --color-gray-300: hsl(196, 19%, 89%);
+  --color-gray-200: hsl(195, 22%, 93%);
+  --color-gray-100: hsl(195, 29%, 97%);
 
   /* Red */
   --color-red: hsl(0, 93%, 58%);
@@ -122,10 +126,10 @@
   --button-color-main-disabled: var(--color-yellow-disabled);
 
   /* Secondary */
-  --button-color-secondary: var(--color-pink);
-  --button-color-secondary-hover: var(--color-pink-hover);
-  --button-color-secondary-active: var(--color-pink-active);
-  --button-color-secondary-disabled: var(--color-pink-disabled);
+  --button-color-secondary: var(--color-berry);
+  --button-color-secondary-hover: var(--color-berry-hover);
+  --button-color-secondary-active: var(--color-berry-active);
+  --button-color-secondary-disabled: var(--color-berry-disabled);
 
   /* Terciary */
   --button-color-terciary: var(--color-black);
