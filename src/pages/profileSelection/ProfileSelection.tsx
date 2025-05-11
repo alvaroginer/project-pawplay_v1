@@ -6,7 +6,7 @@ import dogUser from "../../imgs/dogUser.jpg";
 export const ProfileSelection = () => {
   return (
     <div className="profile-selection">
-      <Button className="primary" children={"Add dog"} />
+      <Button className="primary" children={"Add dog"} size={"large"} />
 
       <div className="profiles-container">
         <ProfileCard name={"Tom"} rating={3} events={3} img={dogUser} />
