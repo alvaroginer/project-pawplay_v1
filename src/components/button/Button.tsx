@@ -6,6 +6,7 @@ export const Button = ({
   className = "primary",
   onClick,
   children,
+  size = "medium",
 }: ButtonProps) => {
   let buttonType: string;
   switch (className) {
@@ -34,8 +35,10 @@ export const Button = ({
       break;
   }
 
+  const sizeClass = `btn--${size}`;
+
   return (
-    <button onClick={onClick} className={`btn ${buttonType}`}>
+    <button onClick={onClick} className={`btn ${buttonType} ${sizeClass}`}>
       {children}
     </button>
   );
