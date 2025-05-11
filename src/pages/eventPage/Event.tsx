@@ -3,7 +3,7 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 import { CheckListProfile } from "../../components/checkListProfile/CheckListProfile";
-import { getOneEvent } from "../../dataBase/services/servicesFunctions";
+import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
 import {
   normalizeDate,
@@ -35,14 +35,11 @@ export const Event = () => {
     const fetchEvent = async () => {
       const eventSnap = await getOneEvent(paramsStr);
 
-      if (!eventSnap.exists()) {
-        console.error("El evento no existe con id:", paramsStr);
-        return;
+      if (eventSnap === null) {
+        return null;
       }
 
-      const typedEventSnap: EventData = eventSnap.data() as EventData;
-
-      setEventData(typedEventSnap);
+      setEventData(eventSnap);
     };
     fetchEvent();
   }, [paramsStr]);
@@ -55,75 +52,75 @@ export const Event = () => {
   } else {
     return (
       <>
-        <div className="event--header">
-          <NavLink to="" className="btn--icon">
-            <img src={arrow} alt="Return Icon" />
+        <div className='event--header'>
+          <NavLink to='' className='btn--icon'>
+            <img src={arrow} alt='Return Icon' />
           </NavLink>
-          <div className="event--header__buttons">
-            <button className="btn--icon margin--right__10">
-              <img src={share} alt="Share Icon" />
+          <div className='event--header__buttons'>
+            <button className='btn--icon margin--right__10'>
+              <img src={share} alt='Share Icon' />
             </button>
-            <button className="btn--icon">
-              <img src={footprintBlack} alt="Paw-Like Icon" />
+            <button className='btn--icon'>
+              <img src={footprintBlack} alt='Paw-Like Icon' />
             </button>
           </div>
         </div>
-        <div className="event--img-container">
+        <div className='event--img-container'>
           <img
             src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-            alt=""
+            alt=''
           />
         </div>
-        <h3 className="event--title">{eventData.eventTitle}</h3>
-        <div className="event--container">
-          <main className="event--container__categories">
+        <h3 className='event--title'>{eventData.eventTitle}</h3>
+        <div className='event--container'>
+          <main className='event--container__categories'>
             <EventCategory
               img={location}
-              title="Location"
+              title='Location'
               info={eventData.location}
-              editable=""
+              editable=''
             />
             <EventCategory
               img={tag}
-              title="Activity"
+              title='Activity'
               info={eventData.activity}
-              editable=""
+              editable=''
             />
             <EventCategory
               img={description}
-              title="Description"
+              title='Description'
               info={eventData.eventDescription}
-              editable=""
+              editable=''
             />
             <EventCategory
               img={time}
-              title="Start time"
+              title='Start time'
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
             <EventCategory
               img={calendar}
-              title="Day"
+              title='Day'
               info={normalizeDate(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
             <EventCategory
               img={dog}
-              title="Maximum places"
+              title='Maximum places'
               info={normalizePlaces(eventData.places)}
-              editable=""
+              editable=''
             />
           </main>
-          <aside className="event--container__sidebar">
-            <h3 className="event--profile-title">Know your organisator</h3>
+          <aside className='event--container__sidebar'>
+            <h3 className='event--profile-title'>Know your organisator</h3>
             <ProfileCard eventId={eventData.profileIdCreator} />
-            <div className="event--modal">
-              <Button className="primary">Join Us</Button>
+            <div className='event--modal'>
+              <Button className='primary'>Join Us</Button>
             </div>
           </aside>
         </div>
-        <div className="event--events-container">
-          <h3 className="event--profile-title">Similar Events</h3>
+        <div className='event--events-container'>
+          <h3 className='event--profile-title'>Similar Events</h3>
         </div>
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}

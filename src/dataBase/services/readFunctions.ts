@@ -7,22 +7,31 @@ import {
   where,
   limit,
 } from "firebase/firestore";
-import { db } from "../../dataBase/firebase";
-import { EventData } from "../../types";
+import { db } from "../firebase";
+import { EventData, ProfileData, UserData } from "../../types";
 
 /* -----> Users */
 // Get users from database
 export const getUsers = async () => {
   const usersCol = collection(db, "users");
   const userSnaphot = await getDocs(usersCol);
-  const userList = userSnaphot.docs.map((doc) => doc.data());
-  return userList;
+  const usersList = userSnaphot.docs.map((doc) => doc.data());
+
+  const typedUsers: UserData[] = usersList.map((doc) => doc as UserData);
+  return typedUsers;
 };
 
 // Get a single user
 export const getOneUser = async (userId: string) => {
   const userSnap = await getDoc(doc(db, "users", userId));
-  return userSnap;
+
+  if (!userSnap.exists()) {
+    console.warn(`Perfil con ID ${userId} no encontrado.`);
+    return null;
+  }
+
+  const typedUserSnap: UserData = userSnap.data() as UserData;
+  return typedUserSnap;
 };
 
 /* -----> Profiles */
@@ -30,14 +39,26 @@ export const getOneUser = async (userId: string) => {
 export const getProfiles = async () => {
   const profilesCol = collection(db, "profiles");
   const profilesSnaphot = await getDocs(profilesCol);
+
+  //Typing profiles list
   const profilesList = profilesSnaphot.docs.map((doc) => doc.data());
-  return profilesList;
+  const typedProfiles: ProfileData[] = profilesList.map(
+    (doc) => doc as ProfileData
+  );
+  return typedProfiles;
 };
 
 // Get a single profile
 export const getOneProfile = async (profileId: string) => {
   const profileSnap = await getDoc(doc(db, "profiles", profileId));
-  return profileSnap;
+
+  if (!profileSnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+  return typedProfileSnap;
 };
 
 /* -----> Events */
@@ -45,14 +66,24 @@ export const getOneProfile = async (profileId: string) => {
 export const getEvents = async () => {
   const eventsCol = collection(db, "events");
   const eventSnaphot = await getDocs(eventsCol);
+
+  //Typing event list
   const eventList = eventSnaphot.docs.map((doc) => doc.data());
-  return eventList;
+  const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
+  return typedEvents;
 };
 
 // Get a single event
 export const getOneEvent = async (eventId: string) => {
   const eventSnap = await getDoc(doc(db, "events", eventId));
-  return eventSnap;
+
+  if (!eventSnap.exists()) {
+    console.warn(`Perfil con ID ${eventId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: EventData = eventSnap.data() as EventData;
+  return typedEventSnap;
 };
 
 /* -----> Event Querys */

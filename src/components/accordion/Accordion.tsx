@@ -7,7 +7,7 @@ import {
   getHostedEventsLimited,
   getPastEventsLimited,
   getUpcomingEventsLimited,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
 
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";

@@ -15,7 +15,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import dog from "../../imgs/profilePage/dog.svg";
@@ -42,13 +42,11 @@ export const Profile = () => {
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", profileIdParamsStr);
+      if (profileSnap === null) {
         return;
       }
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
 
-      setProfileInfo(typedProfileSnap);
+      setProfileInfo(profileSnap);
     };
 
     fetchProfile();
@@ -62,12 +60,11 @@ export const Profile = () => {
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (!userSnap.exists()) {
-        console.error("El perfil no existe con id:", profileInfo.userUid);
+      if (userSnap === null) {
         return;
       }
-      const typedUserSnap: UserData = userSnap.data() as UserData;
-      setUserInfo(typedUserSnap);
+
+      setUserInfo(userSnap);
     };
 
     fetchUser();
@@ -84,50 +81,50 @@ export const Profile = () => {
   } else {
     return (
       <>
-        <div className="profile-page__actions1">
+        <div className='profile-page__actions1'>
           <img
             src={arrow}
-            alt="Icon arrow to go back"
-            className="profile-page__back-icon"
+            alt='Icon arrow to go back'
+            className='profile-page__back-icon'
           />
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="profile-page__delete-icon"
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 24 24'
+            fill='none'
+            className='profile-page__delete-icon'
             onClick={handleClick}
           >
-            <path d="M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
+            <path d='M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z' />
           </svg>
         </div>
-        <div className="profile-page">
-          <div className="profile-page__image-container">
+        <div className='profile-page'>
+          <div className='profile-page__image-container'>
             <img
               src={dogUser}
-              alt="Profile picture of the dog"
-              className="profile-page__image"
+              alt='Profile picture of the dog'
+              className='profile-page__image'
             />
           </div>
 
-          <div className="profile-page__details-container">
-            <div className="profile-page__actions2">
+          <div className='profile-page__details-container'>
+            <div className='profile-page__actions2'>
               <img
                 src={arrow}
-                alt="Icon arrow to go back"
-                className="profile-page__back-icon"
+                alt='Icon arrow to go back'
+                className='profile-page__back-icon'
               />
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="profile-page__delete-icon"
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 24 24'
+                fill='none'
+                className='profile-page__delete-icon'
                 onClick={handleClick}
               >
-                <path d="M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
+                <path d='M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z' />
               </svg>
             </div>
-            <div className="profile-page__info">
-              <div className="profile-page__info-left">
+            <div className='profile-page__info'>
+              <div className='profile-page__info-left'>
                 <EventCategory
                   img={account}
                   title="Owner's name"
@@ -161,7 +158,7 @@ export const Profile = () => {
                   selectData={dogBreedsType}
                 />
               </div>
-              <div className="profile-page__info-right">
+              <div className='profile-page__info-right'>
                 <EventCategory
                   img={timer}
                   title={"Age"}
@@ -185,7 +182,7 @@ export const Profile = () => {
                 />
               </div>
             </div>
-            <div className="profile-page__description">
+            <div className='profile-page__description'>
               <EventCategory
                 img={description}
                 title={"Description"}
@@ -197,34 +194,34 @@ export const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="accordion-container">
+        <div className='accordion-container'>
           {loggedProfile.id === profileInfo.id && (
             <>
               <Accordion
                 text={"My upcoming events"}
                 defaultOpen={true}
-                eventTypes="upcoming events"
+                eventTypes='upcoming events'
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
               <Accordion
                 text={"Hosted hangouts"}
                 defaultOpen={false}
-                eventTypes="hosted events"
+                eventTypes='hosted events'
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
               <Accordion
                 text={"Favourite Events"}
                 defaultOpen={false}
-                eventTypes="favourite events"
+                eventTypes='favourite events'
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
               <Accordion
                 text={"Past adventures"}
                 defaultOpen={false}
-                eventTypes="past events"
+                eventTypes='past events'
                 profileId={profileInfo.id}
                 likedEvents={profileInfo.likedEvents}
               />
@@ -233,8 +230,8 @@ export const Profile = () => {
         </div>
         {isModalOpen && (
           <WarningModal
-            modalText="Are you sure you want to delete this lovely dog profile?"
-            buttonText="Yes, I am sure"
+            modalText='Are you sure you want to delete this lovely dog profile?'
+            buttonText='Yes, I am sure'
             onClose={() => setIsModalOpen(false)}
           />
         )}

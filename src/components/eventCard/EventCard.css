@@ -24,6 +24,18 @@
   border-radius: var(--space-12);
 }
 
+.event-card--like {
+  color: var(--color-gray);
+}
+
+.event-card--like:hover {
+  color: black;
+}
+
+.event-card--like--active {
+  color: var(--color-pink);
+}
+
 .event-card--bottom-section {
   display: flex;
   flex-direction: column;

@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { EventData, FilterProps } from "../types";
-import { getEvents } from "../dataBase/services/servicesFunctions";
-import { DocumentData } from "firebase/firestore";
+import { getEvents } from "../dataBase/services/readFunctions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -21,9 +20,9 @@ export const EventsMainPage = () => {
   useEffect(() => {
     // Llamada a la base de datos
     const fetchEvents = async () => {
-      const eventsDb: DocumentData[] = await getEvents();
-      const typedEvents: EventData[] = eventsDb.map((doc) => doc as EventData);
-      setEventsList(typedEvents);
+      const eventsSnap: EventData[] = await getEvents();
+
+      setEventsList(eventsSnap);
     };
 
     fetchEvents();

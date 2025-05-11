@@ -1,7 +1,7 @@
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import { getOneProfile } from "../../dataBase/services/servicesFunctions";
+import { getOneProfile } from "../../dataBase/services/readFunctions";
 import { ProfileData, EventData } from "../../types";
 import { db } from "../../dataBase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -21,14 +21,11 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     const fecthProfile = async () => {
       const profileSnap = await getOneProfile(eventId);
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", eventId);
+      if (profileSnap === null) {
         return;
       }
 
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
-      console.log(typedProfileSnap);
-      setProfileData(typedProfileSnap);
+      setProfileData(profileSnap);
     };
     fecthProfile();
 
@@ -50,32 +47,32 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
   } else {
     return (
       <Link to={`/profile/${eventId}`}>
-        <div className="profile--card">
-          <div className="profile--card__image-container">
+        <div className='profile--card'>
+          <div className='profile--card__image-container'>
             <img
-              className="profile--card__image"
+              className='profile--card__image'
               src={
                 profileData.profilePhoto ? profileData.profilePhoto : dogUser
               }
-              alt="Profile Image"
+              alt='Profile Image'
             />
           </div>
-          <div className="profile--card__info">
-            <p className="profile--card__name">
+          <div className='profile--card__info'>
+            <p className='profile--card__name'>
               {capitalizeFirstLetter(profileData.profileName)}
             </p>
-            <div className="profile--card__block-rating">
-              <div className="profile--card__rating">
-                <img className="profile--card__icon" src={bone} alt="" />
-                <p className="profile--card__value">{0}</p>
+            <div className='profile--card__block-rating'>
+              <div className='profile--card__rating'>
+                <img className='profile--card__icon' src={bone} alt='' />
+                <p className='profile--card__value'>{0}</p>
               </div>
-              <p className="profile--card__label">Rating</p>
+              <p className='profile--card__label'>Rating</p>
             </div>
-            <div className="profile--card__block-events">
-              <p className="profile--card__value">
+            <div className='profile--card__block-events'>
+              <p className='profile--card__value'>
                 {createdEventsByProfile && createdEventsByProfile.length}
               </p>
-              <p className="profile--card__label">Events created</p>
+              <p className='profile--card__label'>Events created</p>
             </div>
           </div>
         </div>
