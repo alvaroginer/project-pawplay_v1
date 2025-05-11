@@ -31,6 +31,7 @@ export const Header = () => {
           {user ? (
             <NavLink
               to={`/profile/${loggedProfile.id}`}
+              // to="/profile-selection"
               className="navigation-menu--button__sign-in"
             >
               <img src={profileUserImg} alt="Profile Icon" />
