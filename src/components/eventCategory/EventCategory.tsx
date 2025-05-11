@@ -61,7 +61,11 @@ export const EventCategory = ({
   return (
     <div className="event--category">
       <div className="event--category__img">
-        <img src={img} alt={`${title} icon`} />
+        <img
+          className="event--category__icon"
+          src={img}
+          alt={`${title} icon`}
+        />
       </div>
       <div className="event--category__text">
         <h4 className="category--text__title">{title}</h4>
