@@ -122,17 +122,17 @@ export const Accordion = ({
           showAccordion === true ? "accordion--open" : ""
         }`}
       >
-        <div className='accordion__info' onClick={handleClick}>
-          <p className='accordion__title'>{text}</p>
+        <div className="accordion__info" onClick={handleClick}>
+          <p className="accordion__title">{text}</p>
           <img
             src={plus}
-            alt='Icon to expand section'
-            className='accordion__icon'
+            alt="Icon to expand section"
+            className="accordion__icon"
           />
         </div>
         {showAccordion === true && (
           <>
-            <div className='accordion__cards' ref={cardsContainerRef}>
+            <div className="accordion__cards" ref={cardsContainerRef}>
               {cardsContent && cardsContent.length > 0 ? (
                 cardsContent.map((eventData: EventData) => {
                   return <EventCard key={eventData.id} event={eventData} />;
@@ -140,15 +140,15 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
+              {cardsContent && cardsContent.length > 0 && (
+                <Link
+                  to={`/my-events/${urlNav}`}
+                  className="accordion__view-all-link"
+                >
+                  <ViewMoreCard />
+                </Link>
+              )}
             </div>
-            {cardsContent && cardsContent.length > 0 && (
-              <Link
-                to={`/my-events/${urlNav})`}
-                className='accordion__view-all-link'
-              >
-                <ViewMoreCard />
-              </Link>
-            )}
           </>
         )}
       </div>

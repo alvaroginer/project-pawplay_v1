@@ -10,7 +10,12 @@ import {
   normalizeTime,
   normalizePlaces,
 } from "../../functions/Functions";
-import { useEffect, useState } from "react";
+import {
+  eventSignUp,
+  eventUnregister,
+} from "../../dataBase/services/updateFunctions";
+import { AuthContext } from "../../auth/AuthContext";
+import { useEffect, useState, useContext } from "react";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -24,7 +29,9 @@ import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 
 export const Event = () => {
-  const [eventData, setEventData] = useState<EventData>();
+  const [eventData, setEventData] = useState<EventData | null>(null);
+  const [hasJoined, setHasJoined] = useState<boolean>();
+  const { loggedProfile } = useContext(AuthContext);
 
   //Params para la url
   const { eventId } = useParams();
@@ -36,7 +43,8 @@ export const Event = () => {
       const eventSnap = await getOneEvent(paramsStr);
 
       if (eventSnap === null) {
-        return null;
+        setEventData(null);
+        return;
       }
 
       setEventData(eventSnap);
@@ -44,83 +52,102 @@ export const Event = () => {
     fetchEvent();
   }, [paramsStr]);
 
-  //Crear un bucle for(let i = 0; i < 5; i++) y dentro del objeto
-  //events hacer un find de algún evento que sea del miso tipo y
-  //no esté dentro del array de similar events
+  const handleHasJoined = async () => {
+    if (eventData === null) return;
+
+    if (!hasJoined) {
+      await eventSignUp(loggedProfile.id, eventData.id);
+      setHasJoined(true);
+    } else {
+      await eventUnregister(loggedProfile.id, eventData.id);
+      setHasJoined(false);
+    }
+  };
+
+  //Falta volver a leer el evento una vez modificado el que te hayas apuntado
+
   if (!eventData) {
     return null;
   } else {
     return (
       <>
-        <div className='event--header'>
-          <NavLink to='' className='btn--icon'>
-            <img src={arrow} alt='Return Icon' />
+        <div className="event--header">
+          <NavLink to="" className="btn--icon">
+            <img src={arrow} alt="Return Icon" />
           </NavLink>
-          <div className='event--header__buttons'>
-            <button className='btn--icon margin--right__10'>
-              <img src={share} alt='Share Icon' />
+          <div className="event--header__buttons">
+            <button className="btn--icon margin--right__10">
+              <img src={share} alt="Share Icon" />
             </button>
-            <button className='btn--icon'>
-              <img src={footprintBlack} alt='Paw-Like Icon' />
+            <button className="btn--icon">
+              <img src={footprintBlack} alt="Paw-Like Icon" />
             </button>
           </div>
         </div>
-        <div className='event--img-container'>
+        <div className="event--img-container">
           <img
             src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-            alt=''
+            alt=""
           />
         </div>
-        <h3 className='event--title'>{eventData.eventTitle}</h3>
-        <div className='event--container'>
-          <main className='event--container__categories'>
+        <h3 className="event--title">{eventData.eventTitle}</h3>
+        <div className="event--container">
+          <main className="event--container__categories">
             <EventCategory
               img={location}
-              title='Location'
+              title="Location"
               info={eventData.location}
-              editable=''
+              editable=""
             />
             <EventCategory
               img={tag}
-              title='Activity'
+              title="Activity"
               info={eventData.activity}
-              editable=''
+              editable=""
             />
             <EventCategory
               img={description}
-              title='Description'
+              title="Description"
               info={eventData.eventDescription}
-              editable=''
+              editable=""
             />
             <EventCategory
               img={time}
-              title='Start time'
+              title="Start time"
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=''
+              editable=""
             />
             <EventCategory
               img={calendar}
-              title='Day'
+              title="Day"
               info={normalizeDate(eventData.dateTime.toDate())}
-              editable=''
+              editable=""
             />
             <EventCategory
               img={dog}
-              title='Maximum places'
+              title="Maximum places"
               info={normalizePlaces(eventData.places)}
-              editable=''
+              editable=""
             />
           </main>
-          <aside className='event--container__sidebar'>
-            <h3 className='event--profile-title'>Know your organisator</h3>
+          <aside className="event--container__sidebar">
+            <h3 className="event--profile-title">Know your organisator</h3>
             <ProfileCard eventId={eventData.profileIdCreator} />
-            <div className='event--modal'>
-              <Button className='primary'>Join Us</Button>
+            <div className="event--modal">
+              {hasJoined ? (
+                <Button onClick={handleHasJoined} className="terciary">
+                  Cancel assistance
+                </Button>
+              ) : (
+                <Button onClick={handleHasJoined} className="primary">
+                  Join Us
+                </Button>
+              )}
             </div>
           </aside>
         </div>
-        <div className='event--events-container'>
-          <h3 className='event--profile-title'>Similar Events</h3>
+        <div className="event--events-container">
+          <h3 className="event--profile-title">Similar Events</h3>
         </div>
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}

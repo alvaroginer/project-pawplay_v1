@@ -15,3 +15,18 @@ export const disLikeEvent = async (profileId: string, eventId: string) => {
     likedEvents: arrayRemove(eventId),
   });
 };
+
+/* -----> Event Updates */
+// Joining an event
+export const eventSignUp = async (profileId: string, eventId: string) => {
+  await updateDoc(doc(db, "events", eventId), {
+    profileIdAsisstant: arrayUnion(profileId),
+  });
+};
+
+//Not joining an event
+export const eventUnregister = async (profileId: string, eventId: string) => {
+  await updateDoc(doc(db, "events", eventId), {
+    profileIdAsisstant: arrayRemove(profileId),
+  });
+};
