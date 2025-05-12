@@ -64,7 +64,8 @@ export const Event = () => {
     }
   };
 
-  //Falta volver a leer el evento una vez modificado el que te hayas apuntado
+  // Falta volver a leer el evento una vez modificado el que te hayas apuntado
+  // Falta comprobar que el perfil está completo para poder apuntarse
 
   if (!eventData) {
     return null;
