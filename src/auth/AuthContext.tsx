@@ -28,19 +28,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
 
-  // //Load user from LocalStorage
-  // useEffect(() => {
-  //   const storedUserString = localStorage.getItem("user");
-  //   const storedUser: AuthLocalStorageProps | null = storedUserString
-  //     ? (JSON.parse(storedUserString) as AuthLocalStorageProps)
-  //     : null;
-
-  //   if (storedUser) {
-  //     setUser(storedUser.user);
-  //     setLoggedProfile(storedUser.loggedProfile);
-  //   }
-  // }, []);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (firebaseUser) => {
       if (firebaseUser) {

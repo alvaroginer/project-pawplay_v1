@@ -12,7 +12,6 @@ import { useNavigate } from "react-router";
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
-// import footprint from "../../imgs/eventCard/like-paw.svg";
 import dots from "../../imgs/eventCard/dots.svg";
 import bone from "../../imgs/profileCard/bone.svg";
 
