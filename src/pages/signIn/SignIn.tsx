@@ -112,9 +112,9 @@ export const SignIn = () => {
           profilePhoto: "",
           profileBio: "",
           age: null,
-          breed: "other",
-          size: "any",
-          gender: "not specify",
+          breed: "",
+          size: null,
+          gender: null,
           likedEvents: [],
         };
 

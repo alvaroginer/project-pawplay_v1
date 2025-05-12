@@ -28,8 +28,8 @@ export interface ProfileData {
   profileBio: string;
   age: number | null;
   breed: string;
-  size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female" | "not specify";
+  size: "Small" | "Medium" | "Big" | "Any" | null;
+  gender: "Male" | "Female" | "Not specify" | null;
   likedEvents: string[];
 }
 
@@ -224,7 +224,7 @@ export const maximumPlaces = [
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
 
 // Gender
-export const dogGenderType = ["Male", "Female", "Other"];
+export const dogGenderType = ["Male", "Female", "Not specify"];
 
 // Age
 export const dogAgeType = [

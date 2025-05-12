@@ -84,6 +84,10 @@
   fill: var(--color-gray);
 }
 
+.checklist__check-icon--checked {
+  fill: var(--color-green);
+}
+
 .checklist__item-title {
   font-size: var(--space-16);
   color: var(--color-gray);
