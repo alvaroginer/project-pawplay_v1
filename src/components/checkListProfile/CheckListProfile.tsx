@@ -61,6 +61,11 @@ export const CheckListProfile = () => {
           <p className="checklist__description">
             Complete your profile to unlock all features.
           </p>
+          <progress
+            max="100"
+            value="80"
+            className="checklist-progressbar"
+          ></progress>
           <div className="checklist__items-container">
             <Link to={`/profile/${loggedProfile.id}`}>
               <div className="checklist__item">
@@ -286,15 +291,13 @@ export const CheckListProfile = () => {
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
               <div className="checklist__item">
-                <div
-                  className={`checklist__check-icon ${
-                    dogSizesType.includes(loggedProfile.size)
-                      ? "checklist__check-icon--checked"
-                      : ""
-                  }`}
-                >
+                <div className="checklist__item-content">
                   <svg
-                    className="checklist__check-icon"
+                    className={`checklist__check-icon ${
+                      dogSizesType.includes(loggedProfile.size)
+                        ? "checklist__check-icon--checked"
+                        : ""
+                    }`}
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
