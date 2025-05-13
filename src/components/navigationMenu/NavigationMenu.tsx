@@ -19,23 +19,47 @@ export const NavigationMenu = ({ onClick }: NavMenuProps) => {
         <NavLink
           className="navigation-menu--link"
           to={`/profile/${user.loggedProfile}`}
+          onClick={() => onClick(true)}
         >
           My account
         </NavLink>
-        <NavLink className="navigation-menu--link" to="/profile">
+        <NavLink
+          className="navigation-menu--link"
+          to="/profile"
+          onClick={() => onClick(true)}
+        >
           My events
+        </NavLink>
+        <NavLink
+          className="navigation-menu--link"
+          to="/profile-selection"
+          onClick={() => onClick(true)}
+        >
+          My profiles
         </NavLink>
       </div>
       <div className="navigation-menu--container-link">
-        <NavLink className="navigation-menu--link" to="/create">
+        <NavLink
+          className="navigation-menu--link"
+          to="/create"
+          onClick={() => onClick(true)}
+        >
           Create Event
         </NavLink>
       </div>
       <div className="navigation-menu--container-link">
-        <NavLink className="navigation-menu--link" to="/about">
+        <NavLink
+          className="navigation-menu--link"
+          to="/about"
+          onClick={() => onClick(true)}
+        >
           About us
         </NavLink>
-        <NavLink className="navigation-menu--link" to="/contact">
+        <NavLink
+          className="navigation-menu--link"
+          to="/contact"
+          onClick={() => onClick(true)}
+        >
           Contact us
         </NavLink>
       </div>
