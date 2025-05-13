@@ -12,7 +12,6 @@ import bone from "../../imgs/profileCard/bone.svg";
 // Ya se pueden crear las funciones que calculan el rating por ejemplo
 
 export const ProfileCard = ({ eventId }: { eventId: string }) => {
-  // ⚠️ Deberiamos cambiar eventId por profileId
   const [profileData, setProfileData] = useState<ProfileData>();
   const [createdEventsByProfile, setCreatedEventsByProfile] =
     useState<EventData[]>();
