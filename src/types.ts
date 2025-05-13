@@ -148,7 +148,7 @@ export interface AccordionProps {
 
 // -----> Event Page & Profile Page
 export interface EventCategoryProps {
-  img: string;
+  img?: string;
   title: string;
   info: string;
   editable: "string" | "select" | "";
