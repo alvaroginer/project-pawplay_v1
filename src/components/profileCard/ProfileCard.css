@@ -9,7 +9,7 @@
 .profile--card {
   align-items: center;
   gap: var(--space-30);
-  max-width: 293px;
+  max-width: 292px;
   padding: var(--space-10);
   background-color: var(--color-white);
   overflow: hidden;
