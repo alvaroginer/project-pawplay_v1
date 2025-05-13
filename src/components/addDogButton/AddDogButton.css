@@ -1,0 +1,25 @@
+.add-dog-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 293px;
+  height: 469px;
+  background-color: var(--color-berry-200);
+  border-radius: var(--space-12);
+  cursor: pointer;
+}
+
+.add-dog-card__text {
+  margin: 0;
+  color: var(--color-black);
+  font-size: var(--space-40);
+  font-weight: var(--font-regular);
+}
+
+.add-dog-card__icon {
+  width: var(--space-40);
+  width: var(--space-40);
+}

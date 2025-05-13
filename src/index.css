@@ -61,6 +61,7 @@
   --space-20: 20px;
   --space-22: 22px;
   --space-24: 24px;
+  --space-26: 26px;
   --space-30: 30px;
   --space-32: 32px;
   --space-34: 34px;
@@ -107,8 +108,10 @@
   --font-20: var(--space-20);
   --font-22: var(--space-22);
   --font-24: var(--space-24);
+  --font-26: var(--space-26);
   --font-32: var(--space-32);
   --font-36: var(--space-36);
+  --font-40: var(--space-40);
 
   /* Font-weight */
   --font-extra-light: 200;

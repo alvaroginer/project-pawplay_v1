@@ -12,7 +12,7 @@
   max-width: 292px;
   padding: var(--space-10);
   background-color: var(--color-white);
-  overflow: hidden;
+  cursor: pointer;
 }
 
 .profile--card__image-container {
