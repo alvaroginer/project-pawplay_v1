@@ -74,6 +74,7 @@ export const Profile = () => {
   }, [loggedProfile, profileInfo]);
 
   const handleClick = () => {
+    console.log("Icon clicked");
     setIsModalOpen(true);
   };
 
@@ -90,7 +91,12 @@ export const Profile = () => {
             alt="Icon arrow to go back"
             className="profile-page__back-icon"
           />
-          <img src={dots} alt="Dots icon for options" />
+          <img src={dots} alt="Dots icon for options" onClick={handleClick} />
+          {isModalOpen && (
+            <div>
+              <p>Delete profile</p>
+            </div>
+          )}
         </div>
         <div className="profile-page">
           <div className="profile-page__image-container">
@@ -107,7 +113,16 @@ export const Profile = () => {
                 alt="Icon arrow to go back"
                 className="profile-page__back-icon"
               />
-              <img src={dots} alt="Dots icon for options" />
+              <img
+                src={dots}
+                alt="Dots icon for options"
+                onClick={handleClick}
+              />
+              {isModalOpen && (
+                <div>
+                  <p>Delete profile</p>
+                </div>
+              )}
             </div>
             <div className="profile-page__info">
               <p className="profile-page__info-name">Robert's profile</p>
@@ -116,7 +131,8 @@ export const Profile = () => {
                   img={star}
                   title={"Rating"}
                   info={`4.5 Stars`}
-                  editable={loggedProfile.id === profileInfo.id ? "string" : ""}
+                  // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
+                  editable={""}
                 />
                 <EventCategory
                   img={medal}
@@ -211,13 +227,13 @@ export const Profile = () => {
           </div>
         </div>
 
-        {isModalOpen && (
+        {/* {isModalOpen && (
           <WarningModal
             modalText="Are you sure you want to delete this lovely dog profile?"
             buttonText="Yes, I am sure"
             onClose={() => setIsModalOpen(false)}
           />
-        )}
+        )} */}
       </>
     );
   }
