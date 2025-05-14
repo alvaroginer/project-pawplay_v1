@@ -31,8 +31,8 @@ import "./Profile.css";
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isWarningModalOpen, setIsWarningModalOpen] = useState<boolean>(false);
+  const [isOptionsMenuOpen, setisOptionsMenuOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
 
   const { loggedProfile, user } = useContext(AuthContext);
 
@@ -75,13 +75,12 @@ export const Profile = () => {
     fetchUser();
   }, [loggedProfile, profileInfo]);
 
-  const handleClick = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleOptionsMenu = () => {
+    setisOptionsMenuOpen(!isOptionsMenuOpen);
   };
 
-  const handleOpen = () => {
-    console.log("click");
-    setIsWarningModalOpen(!isWarningModalOpen);
+  const toggleDeleteModal = () => {
+    setisDeleteModalOpen(!isDeleteModalOpen);
   };
 
   console.log(profileInfo);
@@ -101,12 +100,12 @@ export const Profile = () => {
             <img
               src={dots}
               alt="Dots icon for options"
-              onClick={handleClick}
+              onClick={toggleOptionsMenu}
               className="dots"
             />
-            {isModalOpen && (
+            {isOptionsMenuOpen && (
               <div className="profile-page__options-container">
-                <p className="profile-page__option" onClick={handleOpen}>
+                <p className="profile-page__option" onClick={toggleDeleteModal}>
                   Delete profile
                 </p>
               </div>
@@ -132,12 +131,17 @@ export const Profile = () => {
                 <img
                   src={dots}
                   alt="Dots icon for options"
-                  onClick={handleClick}
+                  onClick={toggleOptionsMenu}
                   className="dots"
                 />
-                {isModalOpen && (
+                {isOptionsMenuOpen && (
                   <div className="profile-page__options-container">
-                    <p className="profile-page__option">Delete profile</p>
+                    <p
+                      className="profile-page__option"
+                      onClick={toggleDeleteModal}
+                    >
+                      Delete profile
+                    </p>
                   </div>
                 )}
               </div>
@@ -245,11 +249,11 @@ export const Profile = () => {
           </div>
         </div>
 
-        {isWarningModalOpen && (
+        {isDeleteModalOpen && (
           <WarningModal
             modalText="Are you sure you want to delete this lovely dog profile?"
             buttonText="Yes, I am sure"
-            onClose={() => setIsWarningModalOpen(false)}
+            onClose={() => setisDeleteModalOpen(false)}
           />
         )}
       </>
