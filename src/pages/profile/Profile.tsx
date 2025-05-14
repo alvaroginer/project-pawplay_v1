@@ -36,7 +36,6 @@ export const Profile = () => {
 
   const { loggedProfile, user } = useContext(AuthContext);
 
-  // Params for url
   const { profileId } = useParams();
   const profileIdParamsStr: string = profileId ?? "";
 
@@ -152,7 +151,7 @@ export const Profile = () => {
                 <EventCategory
                   img={star}
                   title={"Rating"}
-                  info={`4.5 Stars`}
+                  info={`4.5`}
                   // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                   editable={""}
                 />

@@ -3,14 +3,6 @@ import { EventCategoryProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategory.css";
 
-/* 
-Tareas:
-  - Separar componente descripción
-  - Diseño select options CSS
-  - Modificar Select de año nacimiento
-  - Pasar lógica del select al componente del input??
-*/
-
 export const EventCategory = ({
   img,
   title,
