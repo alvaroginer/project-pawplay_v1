@@ -12,7 +12,6 @@ import ruler from "../../imgs/profilePage/ruler.svg";
 import star from "../../imgs/profilePage/star-outline.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
-import dogUser from "../../imgs/dogUser.jpg";
 import "./CreateProfileNew.css";
 import { Input } from "../../components/input/Input";
 import { useState } from "react";
@@ -31,13 +30,6 @@ export const CreateProfileNew = () => {
 
   return (
     <div className="create-profile">
-      {/* <div className="create-profile__image-container">
-        <img
-          src={dogUser}
-          alt="Profile picture of the dog"
-          className="create-profile__image"
-        />
-      </div> */}
       <div className="image-section">
         <div className="image-wrapper">
           {!selectedImage && (
