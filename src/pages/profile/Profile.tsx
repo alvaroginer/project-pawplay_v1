@@ -32,6 +32,8 @@ export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState<boolean>(false);
+
   const { loggedProfile, user } = useContext(AuthContext);
 
   // Params for url
@@ -74,8 +76,12 @@ export const Profile = () => {
   }, [loggedProfile, profileInfo]);
 
   const handleClick = () => {
-    console.log("Icon clicked");
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleOpen = () => {
+    console.log("click");
+    setIsWarningModalOpen(!isWarningModalOpen);
   };
 
   console.log(profileInfo);
@@ -91,12 +97,21 @@ export const Profile = () => {
             alt="Icon arrow to go back"
             className="profile-page__back-icon"
           />
-          <img src={dots} alt="Dots icon for options" onClick={handleClick} />
-          {isModalOpen && (
-            <div>
-              <p>Delete profile</p>
-            </div>
-          )}
+          <div className="profile-page__dots-container">
+            <img
+              src={dots}
+              alt="Dots icon for options"
+              onClick={handleClick}
+              className="dots"
+            />
+            {isModalOpen && (
+              <div className="profile-page__options-container">
+                <p className="profile-page__option" onClick={handleOpen}>
+                  Delete profile
+                </p>
+              </div>
+            )}
+          </div>
         </div>
         <div className="profile-page">
           <div className="profile-page__image-container">
@@ -113,16 +128,19 @@ export const Profile = () => {
                 alt="Icon arrow to go back"
                 className="profile-page__back-icon"
               />
-              <img
-                src={dots}
-                alt="Dots icon for options"
-                onClick={handleClick}
-              />
-              {isModalOpen && (
-                <div>
-                  <p>Delete profile</p>
-                </div>
-              )}
+              <div className="profile-page__dots-container">
+                <img
+                  src={dots}
+                  alt="Dots icon for options"
+                  onClick={handleClick}
+                  className="dots"
+                />
+                {isModalOpen && (
+                  <div className="profile-page__options-container">
+                    <p className="profile-page__option">Delete profile</p>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="profile-page__info">
               <p className="profile-page__info-name">Robert's profile</p>
@@ -227,13 +245,13 @@ export const Profile = () => {
           </div>
         </div>
 
-        {/* {isModalOpen && (
+        {isWarningModalOpen && (
           <WarningModal
             modalText="Are you sure you want to delete this lovely dog profile?"
             buttonText="Yes, I am sure"
-            onClose={() => setIsModalOpen(false)}
+            onClose={() => setIsWarningModalOpen(false)}
           />
-        )} */}
+        )}
       </>
     );
   }
