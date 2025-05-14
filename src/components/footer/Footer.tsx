@@ -1,13 +1,17 @@
 import { NavLink } from "react-router";
 import { CheckListProfile } from "../checkListProfile/CheckListProfile";
+import { AuthContext } from "../../auth/AuthContext";
+import { useContext } from "react";
 import instagram from "../../imgs/instagram.svg";
 import xLogo from "../../imgs/twitter.svg";
 import "./Footer.css";
 
 export const Footer = () => {
+  const { isProfileCompleted } = useContext(AuthContext);
+
   return (
     <>
-      <CheckListProfile />
+      {!isProfileCompleted && <CheckListProfile />}
       <footer className="footer">
         <h2 className="footer--title">PawPlay</h2>
         <div className="footer--links-container">

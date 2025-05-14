@@ -6,9 +6,11 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 interface AuthContextType {
   user: UserData | null;
   loggedProfile: ProfileData | null;
+  isProfileCompleted: boolean;
   login: (userData: UserData, profileData: ProfileData) => void;
   logout: () => void;
   updateAuthContext: () => void;
+  hasCompletedProfile: (profile: ProfileData) => boolean;
 }
 
 interface AuthProviderProps {
@@ -24,9 +26,17 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
+const hasCompletedProfile = (profile: ProfileData | null) => {
+  if (profile === null) return false;
+  return Boolean(
+    profile.profileName && profile.breed && profile.gender && profile.size
+  );
+};
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
+  const isProfileCompleted = hasCompletedProfile(loggedProfile);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (firebaseUser) => {
@@ -76,7 +86,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loggedProfile, login, logout, updateAuthContext }}
+      value={{
+        user,
+        isProfileCompleted,
+        loggedProfile,
+        login,
+        logout,
+        updateAuthContext,
+        hasCompletedProfile,
+      }}
     >
       {children}
     </AuthContext.Provider>
