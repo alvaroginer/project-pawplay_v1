@@ -1,17 +1,15 @@
 .input {
-  outline: none;
   display: flex;
   flex-direction: column;
   padding: var(--space-8);
-  border-width: var(--space-1);
-  border-style: solid;
-  border-color: var(--color-gray);
+  border: none;
   border-radius: var(--space-4);
   background-color: #ffffff;
   width: 100%;
+  outline: var(--space-1) solid var(--color-gray);
 
   &:hover {
-    border-width: var(--space-2);
+    outline-width: var(--space-2);
   }
 }
 
@@ -34,11 +32,11 @@ input::placeholder {
 }
 
 .input--focus {
-  border-color: var(--color-blue);
+  outline-color: var(--color-blue);
 }
 
 .input--error {
-  border-color: var(--color-red);
+  outline-color: var(--color-red);
 }
 
 .input--disabled {

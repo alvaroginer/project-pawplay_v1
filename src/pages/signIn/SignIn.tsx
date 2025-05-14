@@ -224,27 +224,27 @@ export const SignIn = () => {
                     <div className="spinner__circle"></div>
                   </div>
                 ) : (
-                  "Sign In"
+                  "Sign Up"
                 )}
               </button>
 
               <div className="signin__login">
-                <span>or</span>{" "}
-                <Link to="/login" className="signin__login-link">
-                  Log in
-                </Link>
+                <p>
+                  <span>or</span>{" "}
+                  <Link to="/login" className="signin__login-link">
+                    Log in
+                  </Link>
+                </p>
               </div>
 
               <footer className="signin__footer">
                 <p className="signin__footer-text">
-                  By become a paw player you agree to our
+                  By become a paw player you agree to our{" "}
                   <Link to="service" className="signin__footer-link">
-                    {" "}
                     Terms of Services
                   </Link>{" "}
-                  and
+                  and{" "}
                   <Link to="privacy" className="signin__footer-link">
-                    {" "}
                     Privacy Policy
                   </Link>
                 </p>
