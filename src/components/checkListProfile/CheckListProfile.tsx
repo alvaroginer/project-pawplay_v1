@@ -89,19 +89,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Owner's name</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {!user.name && !user.lastName && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -126,19 +128,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Dog's name</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {loggedProfile.profileName === "" && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -163,19 +167,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Picture</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {loggedProfile.profilePhoto === "" && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -200,19 +206,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Breed</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {!dogBreedsType.includes(loggedProfile.breed) && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -237,19 +245,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Age</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {!dogAgeType.includes(loggedProfile.age) && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -274,19 +284,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Gender</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {!dogGenderType.includes(loggedProfile.gender) && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -311,19 +323,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Size</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {!dogSizesType.includes(loggedProfile.size) && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
             <Link to={`/profile/${loggedProfile.id}`}>
@@ -348,19 +362,21 @@ export const CheckListProfile = () => {
                   </svg>
                   <p className="checklist__item-title">Description</p>
                 </div>
-                <svg
-                  className="checklist__arrow-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                >
-                  <path
-                    d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
-                    fill="black"
-                  />
-                </svg>
+                {loggedProfile.profileBio === "" && (
+                  <svg
+                    className="checklist__arrow-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M2.66668 9.16596L2.66668 7.83263L10.6667 7.83263L7.00002 4.16596L7.94668 3.2193L13.2267 8.4993L7.94668 13.7793L7.00002 12.8326L10.6667 9.16596L2.66668 9.16596Z"
+                      fill="black"
+                    />
+                  </svg>
+                )}
               </div>
             </Link>
           </div>
