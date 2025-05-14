@@ -27,26 +27,59 @@ export const CreateProfileNew = () => {
     size: "",
     description: "",
   });
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
   return (
-    <div className="profile-page">
-      <div className="profile-page__image-container">
+    <div className="create-profile">
+      {/* <div className="create-profile__image-container">
         <img
           src={dogUser}
           alt="Profile picture of the dog"
-          className="profile-page__image"
+          className="create-profile__image"
         />
+      </div> */}
+      <div className="image-section">
+        <div className="image-wrapper">
+          {!selectedImage && (
+            <div className="upload-instructions">
+              <p className="image-title">{"Upload an image of your dog"}</p>
+              <label htmlFor="file-input" className="upload-button">
+                Choose a file
+              </label>
+            </div>
+          )}
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setSelectedImage(file);
+              }
+            }}
+            className="file-input"
+          />
+          {selectedImage && (
+            <img
+              src={URL.createObjectURL(selectedImage)}
+              alt="Preview"
+              className="image-preview"
+            />
+          )}
+        </div>
       </div>
-      <div className="profile-page__info">
-        <div className="profile-page__info_container no-padding-top">
-          <div className="event--category">
-            <div className="event--category__img">
+      <div className="create-profile__info">
+        <div className="create-profile__info_container no-padding-top">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={account}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Dog's name"}</h4>
               <div className="category--text-container">
                 <Input
@@ -59,15 +92,15 @@ export const CreateProfileNew = () => {
               </div>
             </div>
           </div>
-          <div className="event--category">
-            <div className="event--category__img">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={gender}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Breed"}</h4>
               <div className="category--text-container">
                 <Input
@@ -82,16 +115,16 @@ export const CreateProfileNew = () => {
             </div>
           </div>
         </div>
-        <div className="profile-page__info_container">
-          <div className="event--category">
-            <div className="event--category__img">
+        <div className="create-profile__info_container">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={medal}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Owner's name"}</h4>
               <div className="category--text-container">
                 <Input
@@ -105,16 +138,16 @@ export const CreateProfileNew = () => {
             </div>
           </div>
         </div>
-        <div className="profile-page__info_container">
-          <div className="event--category">
-            <div className="event--category__img">
+        <div className="create-profile__info_container">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={ruler}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Age"}</h4>
               <div className="category--text-container">
                 <Input
@@ -128,15 +161,15 @@ export const CreateProfileNew = () => {
               </div>
             </div>
           </div>
-          <div className="event--category">
-            <div className="event--category__img">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={star}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Gender"}</h4>
               <div className="category--text-container">
                 <Input
@@ -150,15 +183,15 @@ export const CreateProfileNew = () => {
               </div>
             </div>
           </div>
-          <div className="event--category">
-            <div className="event--category__img">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={timer}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Size"}</h4>
               <div className="category--text-container">
                 <Input
@@ -173,16 +206,16 @@ export const CreateProfileNew = () => {
             </div>
           </div>
         </div>
-        <div className="profile-page__info_container">
-          <div className="event--category">
-            <div className="event--category__img">
+        <div className="create-profile__info_container">
+          <div className="profile--category">
+            <div className="profile--category__img">
               <img
-                className="event--category__icon"
+                className="profile--category__icon"
                 src={description}
                 alt={`${"Name"} icon`}
               />
             </div>
-            <div className="event--category__text">
+            <div className="profile--category__text">
               <h4 className="category--text__title">{"Description"}</h4>
               <div className="category--text-container">
                 <Input
