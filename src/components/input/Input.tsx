@@ -16,7 +16,7 @@ export const Input = (props: InputProps) => {
   } = props;
 
   return (
-    <div>
+    <>
       <label htmlFor={name}>{label}</label>
       {editable === "string" ? (
         <input
@@ -45,6 +45,6 @@ export const Input = (props: InputProps) => {
           ))}
         </select>
       )}
-    </div>
+    </>
   );
 };

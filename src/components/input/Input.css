@@ -7,7 +7,7 @@
   border-style: solid;
   border-color: var(--color-gray);
   border-radius: var(--space-4);
-  background-color: #ffffff;
+  background-color: var(--color-white);
   width: 100%;
 
   &:hover {
@@ -16,7 +16,7 @@
 }
 
 input::placeholder {
-  color: var(--color-gray);
+  color: var(--color-gray-800);
   font-family: var(--font-family);
   font-size: var(--font-16);
   font-style: normal;

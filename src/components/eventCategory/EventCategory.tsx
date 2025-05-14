@@ -11,7 +11,7 @@ export const EventCategory = ({
   selectData,
 }: EventCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [categoryValue, setCategoryValue] = useState<string>(info);
+  const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
 
   const handleEditType = () => {
     if (editable === "string") {
