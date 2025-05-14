@@ -3,14 +3,6 @@ import { EventCategoryProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategory.css";
 
-/* 
-Tareas:
-  - Separar componente descripción
-  - Diseño select options CSS
-  - Modificar Select de año nacimiento
-  - Pasar lógica del select al componente del input??
-*/
-
 export const EventCategory = ({
   img,
   title,
@@ -57,7 +49,7 @@ export const EventCategory = ({
       );
     }
   };
-  console.log(typeof categoryValue, categoryValue);
+  // console.log(typeof categoryValue, categoryValue);
   return (
     <div className="event--category">
       <div className="event--category__img">
@@ -78,27 +70,42 @@ export const EventCategory = ({
             </p>
           )}
 
-          {editable !== "" && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="category--text__icon"
-              onClick={() => {
-                if (categoryValue.length === 0 || categoryValue.length > 20) {
-                  alert("The text must be between 1 and 20 characters");
-                } else {
+          {editable !== "" &&
+            (isEditable ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="category--text__icon--check"
+                onClick={() => {
+                  if (categoryValue.length === 0 || categoryValue.length > 20) {
+                    alert("The text must be between 1 and 20 characters");
+                  } else {
+                    setIsEditable(!isEditable);
+                  }
+                }}
+              >
+                <path d="M9.00004 20.4209L2.79004 14.2109L5.62004 11.3809L9.00004 14.7709L18.88 4.88086L21.71 7.71086L9.00004 20.4209Z" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                className="category--text__icon--edit"
+                onClick={() => {
                   setIsEditable(!isEditable);
-                }
-              }}
-              role="button"
-              aria-label="Toggle edit"
-            >
-              <path d="M20.71 7.04C21.1 6.65 21.1 6 20.71 5.63L18.37 3.29C18 2.9 17.35 2.9 16.96 3.29L15.12 5.12L18.87 8.87M3 17.25V21H6.75L17.81 9.93L14.06 6.18L3 17.25Z" />
-            </svg>
-          )}
+                }}
+                role="button"
+                aria-label="Toggle edit"
+              >
+                <path d="M20.71 7.04C21.1 6.65 21.1 6 20.71 5.63L18.37 3.29C18 2.9 17.35 2.9 16.96 3.29L15.12 5.12L18.87 8.87M3 17.25V21H6.75L17.81 9.93L14.06 6.18L3 17.25Z" />
+              </svg>
+            ))}
         </div>
       </div>
     </div>
