@@ -1,4 +1,5 @@
 import { useState, useContext, type FormEvent } from "react";
+import { Input } from "../../components/input/Input";
 import { AuthContext } from "../../auth/AuthContext";
 import { validateEmail, validatePassword } from "../../utils/validation";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -79,71 +80,60 @@ export const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="modal">
-        <div className="modal__image-container">
+    <div className='login-container'>
+      <div className='modal'>
+        <div className='modal__image-container'>
           <img
             src={dogImage || "/placeholder.svg"}
-            alt="Perro con gafas trabajando en un portátil"
-            className="modal__image"
+            alt='Perro con gafas trabajando en un portátil'
+            className='modal__image'
           />
         </div>
-        <div className="modal__content">
-          <h1 className="modal__title">PawPlay</h1>
-          <h2 className="modal__subtitle">Become a PawPlayer</h2>
+        <div className='modal__content'>
+          <h1 className='modal__title'>PawPlay</h1>
+          <h2 className='modal__subtitle'>Become a PawPlayer</h2>
 
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form__group">
-              <label htmlFor="email" className="form__label">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className={`form__input ${
-                  emailError ? "form__input--error" : ""
-                }`}
-                placeholder="Put your email"
+          <form className='form' onSubmit={handleSubmit}>
+            <div className='form__group'>
+              <Input
+                name='email'
+                label='Email'
+                placeholder='Put your email'
                 value={email}
+                className={`${emailError ? "form__input--error" : ""}`}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (emailError && validateEmail(e.target.value)) {
                     setEmailError("");
                   }
                 }}
-                required
+                editable='string'
                 disabled={isLoading}
+                helpText={emailError}
               />
-              {emailError && <span className="form__error">{emailError}</span>}
             </div>
 
-            <div className="form__group">
-              <label htmlFor="password" className="form__label">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className={`form__input ${
-                  passwordError ? "form__input--error" : ""
-                }`}
-                placeholder="Put a strong password"
+            <div className='form__group'>
+              <Input
+                name='password'
+                password={true}
+                label='Password'
+                placeholder='Put your password'
                 value={password}
+                className={` ${passwordError ? "form__input--error" : ""}`}
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (passwordError && validatePassword(e.target.value)) {
                     setPasswordError("");
                   }
                 }}
-                required
                 disabled={isLoading}
+                editable='string'
+                helpText={passwordError}
               />
-              {passwordError && (
-                <span className="form__error">{passwordError}</span>
-              )}
               <a
-                href="#"
-                className="form__forgot-link"
+                href='#'
+                className='form__forgot-link'
                 onClick={(e) => {
                   e.preventDefault();
                   if (!isLoading) setShowForgotPassword(true);
@@ -153,27 +143,27 @@ export const Login = () => {
               </a>
             </div>
 
-            <button type="submit" className="form__button" disabled={isLoading}>
+            <button type='submit' className='form__button' disabled={isLoading}>
               {isLoading ? (
-                <div className="spinner">
-                  <div className="spinner__circle"></div>
+                <div className='spinner'>
+                  <div className='spinner__circle'></div>
                 </div>
               ) : (
                 "Login"
               )}
             </button>
 
-            <Link to="/signin" className=" form__sign-in-link">
-              <span className="or-text">or</span> Sign In
+            <Link to='/signin' className=' form__sign-in-link'>
+              <span className='or-text'>or</span> Sign In
             </Link>
 
-            <p className="form__policy">
+            <p className='form__policy'>
               by become a paw player you agree to our{" "}
-              <a href="#" className="form__link">
+              <a href='#' className='form__link'>
                 Terms of Services
               </a>{" "}
               and{" "}
-              <a href="#" className="form__link">
+              <a href='#' className='form__link'>
                 Privacy Policy
               </a>
             </p>

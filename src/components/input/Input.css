@@ -47,12 +47,15 @@ input::placeholder {
   opacity: 0.5;
 }
 
-.input--help-text__container {
+/* .input--help-text__container {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .input--help-text {
+  position: absolute;
+  right: 0;
+  margin: 0;
   font-weight: var(--font-regular);
   font-size: var(--font-12);
 }

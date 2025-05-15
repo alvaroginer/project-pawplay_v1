@@ -1,5 +1,11 @@
 import { useState, createContext, ReactNode, useEffect } from "react";
-import { ProfileData, UserData } from "../types";
+import {
+  dogBreedsType,
+  dogGenderType,
+  dogSizesType,
+  ProfileData,
+  UserData,
+} from "../types";
 import { getOneProfile, getOneUser } from "../dataBase/services/readFunctions";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -26,10 +32,20 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
-const hasCompletedProfile = (profile: ProfileData | null) => {
-  if (profile === null) return false;
+const hasCompletedProfile = (profile: ProfileData | null): boolean => {
+  if (
+    !profile ||
+    !profile.profileName ||
+    !profile.breed ||
+    !profile.gender ||
+    !profile.size
+  )
+    return false;
   return Boolean(
-    profile.profileName && profile.breed && profile.gender && profile.size
+    profile.profileName.length > 0 &&
+      dogBreedsType.includes(profile.breed) &&
+      dogGenderType.includes(profile.gender) &&
+      dogSizesType.includes(profile.size)
   );
 };
 
@@ -37,6 +53,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
   const isProfileCompleted = hasCompletedProfile(loggedProfile);
+
+  console.log(isProfileCompleted);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (firebaseUser) => {

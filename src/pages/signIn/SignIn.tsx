@@ -137,71 +137,72 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="signin-container">
-      <main className="signin">
-        <div className="signin__card">
-          <div className="signin__image-container">
+    <div className='signin-container'>
+      <main className='signin'>
+        <div className='signin__card'>
+          <div className='signin__image-container'>
             <img
               src={dogImage || "/placeholder.svg"}
-              alt="Dog with glasses using a laptop"
-              className="signin__image"
+              alt='Dog with glasses using a laptop'
+              className='signin__image'
             />
           </div>
-          <div className="signin__form-container">
-            <div className="signin__form-content">
-              <h1 className="signin__title">PawPlay</h1>
-              <h2 className="signin__subtitle">Become a PawPlayer</h2>
+          <div className='signin__form-container'>
+            <div className='signin__form-content'>
+              <h1 className='signin__title'>PawPlay</h1>
+              <h2 className='signin__subtitle'>Become a PawPlayer</h2>
 
-              <form className="signin__form" onSubmit={handleSubmit}>
-                <div className="signin__form-group">
+              <form className='signin__form' onSubmit={handleSubmit}>
+                <div className='signin__form-group'>
                   <Input
-                    name="name"
-                    label="Your name"
-                    placeholder="Put your name"
+                    name='name'
+                    label='Your name'
+                    placeholder='Put your name'
                     value={formData.name}
                     onChange={handleChange}
                     className={
                       errors.name && showErrors ? "signin__input--error" : ""
                     }
-                    editable="string"
+                    editable='string'
+                    charLimit={20}
                   />
                 </div>
-                <div className="signin__form-group">
+                <div className='signin__form-group'>
                   <Input
-                    name="lastName"
-                    label="Your last name"
-                    placeholder="Put your last name"
+                    name='lastName'
+                    label='Your last name'
+                    placeholder='Put your last name'
                     value={formData.lastName}
                     onChange={handleChange}
-                    editable="string"
+                    editable='string'
                     className={
                       errors.name && showErrors ? "signin__input--error" : ""
                     }
                   />
                 </div>
-                <div className="signin__form-group">
+                <div className='signin__form-group'>
                   <Input
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="Put your email"
+                    name='email'
+                    label='Email'
+                    type='email'
+                    placeholder='Put your email'
                     value={formData.email}
                     onChange={handleChange}
-                    editable="string"
+                    editable='string'
                     className={
                       errors.email && showErrors ? "signin__input--error" : ""
                     }
                   />
                 </div>
-                <div className="signin__form-group">
+                <div className='signin__form-group'>
                   <Input
-                    name="password"
-                    label="Password"
-                    type="password"
-                    placeholder="Put a strong password"
+                    name='password'
+                    label='Password'
+                    type='password'
+                    placeholder='Put a strong password'
                     value={formData.password}
                     onChange={handleChange}
-                    editable="string"
+                    editable='string'
                     className={
                       errors.password && showErrors
                         ? "signin__input--error"
@@ -212,39 +213,39 @@ export const SignIn = () => {
               </form>
             </div>
 
-            <div className="signin__actions">
+            <div className='signin__actions'>
               <button
-                type="submit"
-                className="form__button"
+                type='submit'
+                className='form__button'
                 disabled={isSubmitting}
                 onClick={handleSubmit}
               >
                 {isSubmitting ? (
-                  <div className="spinner">
-                    <div className="spinner__circle"></div>
+                  <div className='spinner'>
+                    <div className='spinner__circle'></div>
                   </div>
                 ) : (
                   "Sign Up"
                 )}
               </button>
 
-              <div className="signin__login">
+              <div className='signin__login'>
                 <p>
                   <span>or</span>{" "}
-                  <Link to="/login" className="signin__login-link">
+                  <Link to='/login' className='signin__login-link'>
                     Log in
                   </Link>
                 </p>
               </div>
 
-              <footer className="signin__footer">
-                <p className="signin__footer-text">
+              <footer className='signin__footer'>
+                <p className='signin__footer-text'>
                   By become a paw player you agree to our{" "}
-                  <Link to="service" className="signin__footer-link">
+                  <Link to='service' className='signin__footer-link'>
                     Terms of Services
                   </Link>{" "}
                   and{" "}
-                  <Link to="privacy" className="signin__footer-link">
+                  <Link to='privacy' className='signin__footer-link'>
                     Privacy Policy
                   </Link>
                 </p>

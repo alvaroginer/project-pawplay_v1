@@ -26,7 +26,7 @@ export const Input = (props: InputProps) => {
   };
 
   return (
-    <div>
+    <div className='position-relative'>
       <label htmlFor={name}>{label}</label>
       {editable === "string" ? (
         <input
@@ -59,9 +59,11 @@ export const Input = (props: InputProps) => {
       {helpText ||
         (charLimit && (
           <div className='input--help-text__container'>
-            <p className='input--help-text'>{helpText}</p>
+            <p className='input--help-text position-relative--left'>
+              {helpText}
+            </p>
             <p
-              className={`input--help-text ${
+              className={`input--help-text position-relative--right ${
                 inputContent.length > charLimit ? "input--help-text__error" : ""
               }`}
             >{`${inputContent.length}/${charLimit}`}</p>

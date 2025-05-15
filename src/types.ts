@@ -124,6 +124,7 @@ export interface InputProps {
   charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
+  password?: boolean;
 }
 
 // -----> Forgot Password Modal
