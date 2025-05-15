@@ -88,22 +88,8 @@
   padding: 0 0 40px 0;
 }
 
-.profile-field__text {
-  width: 100%;
-}
-
-.profile-field {
-  display: flex;
-}
-
-.profile-field__text {
-  margin-left: var(--space-12);
-  width: 100%;
-}
-
-.profile-field__icon {
-  width: var(--clamp-16-18);
-  height: var(--clamp-16-18);
+.create-profile__button-container {
+  margin: 40px auto auto auto;
 }
 
 @media screen and (width <= 1100px) {
@@ -111,11 +97,11 @@
     flex-direction: column;
   }
 
-  .image-section {
+  .create-profile__image-section {
     width: 100%;
   }
 
-  .create-profile__info {
+  .create-profile__form {
     width: 100%;
   }
 }

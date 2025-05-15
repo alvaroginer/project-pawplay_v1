@@ -6,6 +6,7 @@ import {
 } from "../../types";
 
 import { FormField } from "../../components/formField/FormField";
+import { Button } from "../../components/button/Button";
 
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -82,8 +83,8 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={medal}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Breed"
+            placeholder="Select the breed of your dog"
             editable="select"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
@@ -95,8 +96,8 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={account}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Owner's name"
+            placeholder="Write your name"
             editable="string"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
@@ -107,8 +108,8 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={timer}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Age"
+            placeholder="Select the age of your dog"
             editable="select"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
@@ -118,8 +119,8 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={gender}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Gender"
+            placeholder="Select your dog's gender"
             editable="select"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
@@ -129,8 +130,8 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={ruler}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Size"
+            placeholder="Select the size of your dog"
             editable="select"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
@@ -142,13 +143,16 @@ export const CreateProfileNew = () => {
           <FormField
             iconSrc={description}
             iconAlt=""
-            label="Dog's name"
-            placeholder="Write the name of your dog"
+            label="Description"
+            placeholder="Description of your dog"
             editable="string"
             onChange={(e) =>
               setFormData({ ...formData, ownerName: e.target.value })
             }
           />
+        </div>
+        <div className="create-profile__button-container">
+          <Button size="large" className="primary" children="Create profile" />
         </div>
       </div>
     </div>
