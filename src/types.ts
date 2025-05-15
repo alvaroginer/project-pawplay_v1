@@ -111,17 +111,17 @@ export interface NavMenuProps {
 
 export interface InputProps {
   label?: string;
-  placeholder: string;
+  placeholder?: string;
   name?: string;
   value?: string;
-  onChange: (
+  onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   className?: string; // Permite pasar clases adicionales
   disabled?: boolean;
   error?: string;
   type?: string;
-  editable: "string" | "select" | "";
+  editable?: "string" | "select" | "";
   selectData?: SelectDataType;
 }
 

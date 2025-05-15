@@ -5,15 +5,16 @@ import {
   dogAgeType,
 } from "../../types";
 
+import { FormField } from "../../components/formField/FormField";
+
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
 import medal from "../../imgs/profilePage/medal-outline.svg";
 import ruler from "../../imgs/profilePage/ruler.svg";
-import star from "../../imgs/profilePage/star-outline.svg";
+import dog from "../../imgs/profilePage/dog.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import "./CreateProfileNew.css";
-import { Input } from "../../components/input/Input";
 import { useState } from "react";
 
 export const CreateProfileNew = () => {
@@ -30,12 +31,15 @@ export const CreateProfileNew = () => {
 
   return (
     <div className="create-profile">
-      <div className="image-section">
-        <div className="image-wrapper">
+      <div className="create-profile__image-section">
+        <div className="create-profile__image-wrapper">
           {!selectedImage && (
-            <div className="upload-instructions">
-              <p className="image-title">{"Upload an image of your dog"}</p>
-              <label htmlFor="file-input" className="upload-button">
+            <div className="create-profile__upload-instructions">
+              <p>{"Upload an image of your dog"}</p>
+              <label
+                htmlFor="file-input"
+                className="create-profile__upload-button"
+              >
                 Choose a file
               </label>
             </div>
@@ -50,176 +54,101 @@ export const CreateProfileNew = () => {
                 setSelectedImage(file);
               }
             }}
-            className="file-input"
+            className="create-profile__file-input"
           />
           {selectedImage && (
             <img
               src={URL.createObjectURL(selectedImage)}
               alt="Preview"
-              className="image-preview"
+              className="create-profile__image-preview"
             />
           )}
         </div>
       </div>
-      <div className="create-profile__info">
-        <div className="create-profile__info_container no-padding-top">
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={account}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Dog's name"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="The name of your dog"
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  editable="string"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={gender}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Breed"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="hole"
-                  onChange={(e) =>
-                    setFormData({ ...formData, breed: e.target.value })
-                  }
-                  editable="select"
-                  selectData={dogBreedsType}
-                />
-              </div>
-            </div>
-          </div>
+      <div className="create-profile__form">
+        <div className="create-profile__field-group no-padding-top">
+          <FormField
+            iconSrc={dog}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="string"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+          />
         </div>
-        <div className="create-profile__info_container">
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={medal}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Owner's name"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="Your name"
-                  onChange={(e) =>
-                    setFormData({ ...formData, ownerName: e.target.value })
-                  }
-                  editable="string"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="create-profile__field-group">
+          <FormField
+            iconSrc={medal}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="select"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+            selectData={dogBreedsType}
+          />
         </div>
-        <div className="create-profile__info_container">
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={ruler}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Age"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="The age of your dog"
-                  onChange={(e) =>
-                    setFormData({ ...formData, age: e.target.value })
-                  }
-                  editable="select"
-                  selectData={dogAgeType}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={star}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Gender"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="Your dog's gender"
-                  onChange={(e) =>
-                    setFormData({ ...formData, gender: e.target.value })
-                  }
-                  editable="select"
-                  selectData={dogGenderType}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={timer}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Size"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="Select the size of your dog"
-                  onChange={(e) =>
-                    setFormData({ ...formData, size: e.target.value })
-                  }
-                  editable="select"
-                  selectData={dogSizesType}
-                />
-              </div>
-            </div>
-          </div>
+        <div className="create-profile__field-group">
+          <FormField
+            iconSrc={account}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="string"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+          />
         </div>
-        <div className="create-profile__info_container">
-          <div className="profile--category">
-            <div className="profile--category__img">
-              <img
-                className="profile--category__icon"
-                src={description}
-                alt={`${"Name"} icon`}
-              />
-            </div>
-            <div className="profile--category__text">
-              <h4 className="category--text__title">{"Description"}</h4>
-              <div className="category--text-container">
-                <Input
-                  placeholder="Description of your dog"
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  editable="string"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="create-profile__field-group">
+          <FormField
+            iconSrc={timer}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="select"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+            selectData={dogAgeType}
+          />
+          <FormField
+            iconSrc={gender}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="select"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+            selectData={dogGenderType}
+          />
+          <FormField
+            iconSrc={ruler}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="select"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+            selectData={dogSizesType}
+          />
+        </div>
+        <div className="create-profile__field-group">
+          <FormField
+            iconSrc={description}
+            iconAlt=""
+            label="Dog's name"
+            placeholder="Write the name of your dog"
+            editable="string"
+            onChange={(e) =>
+              setFormData({ ...formData, ownerName: e.target.value })
+            }
+          />
         </div>
       </div>
     </div>
