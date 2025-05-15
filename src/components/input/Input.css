@@ -46,3 +46,17 @@ input::placeholder {
 .label--disabled {
   opacity: 0.5;
 }
+
+.input--help-text__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input--help-text {
+  font-weight: var(--font-regular);
+  font-size: var(--font-12);
+}
+
+.input--help-text__error {
+  color: var(--color-red);
+}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { InputProps } from "../../types";
 import "./Input.css";
 
@@ -13,7 +14,16 @@ export const Input = (props: InputProps) => {
     type,
     editable,
     selectData,
+    helpText,
+    charLimit,
   } = props;
+  const [inputContent, setInputContent] = useState<string>("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputContent(newValue);
+    onChange?.(e);
+  };
 
   return (
     <div>
@@ -28,6 +38,7 @@ export const Input = (props: InputProps) => {
           onChange={onChange}
           className={`input ${className || ""}`}
           disabled={disabled}
+          onInput={handleInputChange}
         />
       ) : (
         <select
@@ -45,6 +56,17 @@ export const Input = (props: InputProps) => {
           ))}
         </select>
       )}
+      {helpText ||
+        (charLimit && (
+          <div className='input--help-text__container'>
+            <p className='input--help-text'>{helpText}</p>
+            <p
+              className={`input--help-text ${
+                inputContent.length > charLimit ? "input--help-text__error" : ""
+              }`}
+            >{`${inputContent.length}/${charLimit}`}</p>
+          </div>
+        ))}
     </div>
   );
 };

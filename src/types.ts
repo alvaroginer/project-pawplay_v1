@@ -120,6 +120,8 @@ export interface InputProps {
   disabled?: boolean;
   error?: string;
   type?: string;
+  helpText?: string;
+  charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
