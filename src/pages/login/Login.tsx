@@ -110,13 +110,14 @@ export const Login = () => {
                 editable='string'
                 disabled={isLoading}
                 helpText={emailError}
+                type='email'
               />
             </div>
 
             <div className='form__group'>
               <Input
                 name='password'
-                password={true}
+                type='password'
                 label='Password'
                 placeholder='Put your password'
                 value={password}

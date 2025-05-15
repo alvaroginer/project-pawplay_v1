@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
+import { FieldErrors } from "react-hook-form";
 
 // -----> Data of a created Event
 export interface EventData {
@@ -112,7 +113,7 @@ export interface InputProps {
   label: string;
   placeholder: string;
   name: string;
-  value: string;
+  value?: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -120,11 +121,10 @@ export interface InputProps {
   disabled?: boolean;
   error?: string;
   type?: string;
-  helpText?: string;
+  helpText?: string | FieldErrors<FormData>;
   charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
-  password?: boolean;
 }
 
 // -----> Forgot Password Modal
