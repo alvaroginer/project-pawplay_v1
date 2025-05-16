@@ -18,11 +18,11 @@ import footprintBlack from "../../imgs/eventPage/footprint-dog.svg";
 import parkImg from "../../imgs/centralPark.jpg";
 import location from "../../imgs/eventPage/location.svg";
 import tag from "../../imgs/eventPage/tag.svg";
-import description from "../../imgs/eventPage/description.svg";
+import description from "../../imgs/profilePage/description.svg";
 import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
-import availability from "../../imgs/eventPage/availability.png";
+import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData>();

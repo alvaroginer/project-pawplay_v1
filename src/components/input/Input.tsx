@@ -31,6 +31,7 @@ export const Input = (props: InputProps) => {
         />
       ) : (
         <select
+          required
           id={name}
           name={name}
           value={value}
@@ -38,6 +39,9 @@ export const Input = (props: InputProps) => {
           className={`input ${className || ""}`}
           disabled={disabled}
         >
+          <option value="" disabled hidden>
+            {placeholder}
+          </option>
           {selectData?.map((option, index) => (
             <option key={index} value={option}>
               {option}
