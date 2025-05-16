@@ -1,0 +1,20 @@
+.create-event {
+  gap: clamp(50px, 5vw, 80px);
+  padding-top: var(--space-113);
+  margin-bottom: var(--space-292);
+}
+
+.create-event__image-section {
+  width: 100%;
+  min-height: var(--space-190);
+  max-height: 582px;
+  overflow: hidden;
+  background-color: var(--color-gray-400);
+  border-radius: var(--radius-md);
+}
+
+.hola {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}

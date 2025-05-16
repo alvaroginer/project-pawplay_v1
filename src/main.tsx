@@ -19,6 +19,7 @@ import { MyPastEvents } from "./pages/myEvents/myPastEvents/MyPastEvents.tsx";
 import { MyUpcomingEvents } from "./pages/myEvents/myUpcomingEvents/MyUpcomingEvents.tsx";
 import { MyHostedEvents } from "./pages/myEvents/myHostedEvents/MyHostedEvents.tsx";
 import { MyFavouriteEvents } from "./pages/myEvents/myFavouriteEvents/MyFavouriteEvents.tsx";
+import { CreateEventNew } from "./pages/createEventNew/CreateEventNew.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
@@ -34,6 +35,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/service" element={<ServiceTerms />} />
           <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/create-event-new" element={<CreateEventNew />} />
+
           <Route path="/profile-selection" element={<ProfileSelection />} />
           <Route path="/create-profile" element={<CreateProfile />} />
           <Route path="/my-events/hosted" element={<MyHostedEvents />} />
