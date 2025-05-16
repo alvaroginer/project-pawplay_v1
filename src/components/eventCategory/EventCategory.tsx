@@ -2,6 +2,7 @@ import { useState } from "react";
 import { EventCategoryProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategory.css";
+import { Input } from "../input/Input";
 
 export const EventCategory = ({
   img,
@@ -11,41 +12,36 @@ export const EventCategory = ({
   selectData,
 }: EventCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [categoryValue, setCategoryValue] = useState<string>(info);
+  const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
 
   const handleEditType = () => {
     if (editable === "string") {
       return (
-        <input
-          type="text"
-          value={categoryValue}
-          onChange={(e) => setCategoryValue(e.target.value)}
-          className={`category--text__input max-width-150${
+        <Input
+          className={` ${
+            // Pasa la clase al componente Input
             categoryValue.length === 0 || categoryValue.length > 20
-              ? " category--text__input--error"
+              ? "input--error"
               : ""
           }`}
+          editable="string"
+          value={categoryValue}
+          onChange={(e) => setCategoryValue(e.target.value)}
         />
       );
     } else if (selectData !== undefined) {
       return (
-        <select
-          value={categoryValue}
-          className="category--select"
+        <Input
+          className={` ${
+            // Pasa la clase al componente Input
+            categoryValue.length === 0 || categoryValue.length > 20
+              ? "input--error"
+              : ""
+          }`}
+          editable="select"
+          selectData={selectData}
           onChange={(e) => setCategoryValue(e.target.value)}
-        >
-          {selectData.map((data) => {
-            return (
-              <option
-                className="category--select__option"
-                value={data}
-                key={data}
-              >
-                {data}
-              </option>
-            );
-          })}
-        </select>
+        />
       );
     }
   };

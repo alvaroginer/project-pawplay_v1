@@ -39,6 +39,8 @@
 .profile-page__image-container {
   width: 50%;
   height: clamp(400px, 5vw + 300px, 600px);
+  position: sticky;
+  top: var(--space-113);
 }
 
 .profile-page__image {
@@ -110,6 +112,7 @@
 
   .profile-page__image-container {
     width: 100%;
+    position: static;
   }
 
   .profile-page__actions1 {

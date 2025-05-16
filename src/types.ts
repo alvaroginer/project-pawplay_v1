@@ -110,18 +110,18 @@ export interface NavMenuProps {
 // -----> Input
 
 export interface InputProps {
-  label: string;
-  placeholder: string;
-  name: string;
-  value: string;
-  onChange: (
+  label?: string;
+  placeholder?: string;
+  name?: string;
+  value?: string;
+  onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   className?: string; // Permite pasar clases adicionales
   disabled?: boolean;
   error?: string;
   type?: string;
-  editable: "string" | "select" | "";
+  editable?: "string" | "select" | "";
   selectData?: SelectDataType;
 }
 
@@ -150,7 +150,7 @@ export interface AccordionProps {
 export interface EventCategoryProps {
   img?: string;
   title: string;
-  info: string;
+  info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
