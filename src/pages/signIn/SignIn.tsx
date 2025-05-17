@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { Input } from "../../components/input/Input";
-
-import { FormData, ProfileData, UserData } from "../../types";
+import { SignInData, ProfileData, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { collection, setDoc, doc } from "firebase/firestore";
@@ -12,27 +11,19 @@ import dogImage from "../../imgs/loginImage.png";
 import "./SignIn.css";
 
 export const SignIn = () => {
-  //const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  //const [showErrors, setShowErrors] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  // const [formData, setFormData] = useState<FormData>({
-  //   name: "",
-  //   email: "",
-  //   password: "",
-  //   lastName: "",
-  // });
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<FormData>();
-  const onSubmit: SubmitHandler<FormData> = async (formData) => {
-    // Mostrar errores solo cuando se intenta enviar el formulario
-    //setShowErrors(true);
+  } = useForm<SignInData>();
 
+  const onSubmit: SubmitHandler<SignInData> = async (formData) => {
+    //Activamos spinner
     setIsSubmitting(true);
 
     try {
@@ -86,8 +77,16 @@ export const SignIn = () => {
 
       console.log("User created with UID:", uidKey);
       console.log("Profile created with ID:", newProfileRef);
-    } catch (error) {
-      console.error("SignIn error:", error);
+    } catch (error: any) {
+      if (error.code === "auth/email-already-in-use") {
+        console.log(`Firebase error (${error.code}): ${error.message}`);
+        setError("email", {
+          type: "manual",
+          message: "This email is already registered.",
+        });
+        setIsSubmitting(false);
+        return;
+      }
     }
     // Simulate API call
     setTimeout(() => {
@@ -95,119 +94,6 @@ export const SignIn = () => {
       navigate("/");
     }, 1500);
   };
-  //console.log(watch("name"));
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-
-  //   // Clear error when user types
-  //   if (errors[name as keyof FormErrors]) {
-  //     setErrors((prev) => ({
-  //       ...prev,
-  //       [name]: undefined,
-  //     }));
-  //   }
-  // };
-
-  // Validaciones más compactas
-  // const validateForm = (): boolean => {
-  //   const newErrors: FormErrors = {};
-
-  //   if (!formData.name) newErrors.name = "Required";
-  //   if (!formData.lastName) newErrors.lastName = "Required";
-
-  //   if (!formData.email) {
-  //     newErrors.email = "Required";
-  //   } else if (!validateEmail(formData.email)) {
-  //     newErrors.email = "Invalid";
-  //   }
-
-  //   if (!formData.password) {
-  //     newErrors.password = "Required";
-  //   } else if (!validatePassword(formData.password)) {
-  //     newErrors.password = "Min 8 chars";
-  //   }
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
-  // const handleSubmit = async (e: FormEvent) => {
-  //   e.preventDefault();
-
-  //   // Mostrar errores solo cuando se intenta enviar el formulario
-  //   setShowErrors(true);
-
-  //   if (validateForm()) {
-  //     setIsSubmitting(true);
-
-  //     try {
-  //       //FireBase verification
-  //       const auth = getAuth();
-  //       const userCredential = await createUserWithEmailAndPassword(
-  //         auth,
-  //         formData.email,
-  //         formData.password
-  //       );
-
-  //       // Manually define UID for users
-  //       const user = userCredential.user;
-  //       const uidKey = user.uid;
-
-  //       // Manually define ID for profile
-  //       const profileRef = collection(db, "profiles");
-  //       const newProfileRef = doc(profileRef);
-
-  //       //create new doc in user collection
-  //       const usersRef = collection(db, "users");
-  //       const newUserRef = doc(usersRef, uidKey);
-  //       const userData: UserData = {
-  //         uid: uidKey,
-  //         mail: formData.email,
-  //         name: formData.name,
-  //         lastName: formData.lastName,
-  //         profiles: [newProfileRef.id],
-  //       };
-
-  //       await setDoc(newUserRef, userData);
-
-  //       //Create new doc in profiles collection
-  //       const profileData: ProfileData = {
-  //         userUid: uidKey,
-  //         id: newProfileRef.id,
-  //         profileName: "",
-  //         profilePhoto: "",
-  //         profileBio: "",
-  //         age: null,
-  //         breed: "",
-  //         size: null,
-  //         gender: null,
-  //         likedEvents: [],
-  //       };
-
-  //       await setDoc(newProfileRef, profileData);
-
-  //       //Updating useContext
-  //       login(userData, profileData);
-
-  //       console.log("User created with UID:", uidKey);
-  //       console.log("Profile created with ID:", newProfileRef);
-  //     } catch (error) {
-  //       console.error("SignIn error:", error);
-  //     }
-  //     // Simulate API call
-  //     setTimeout(() => {
-  //       setIsSubmitting(false);
-  //       navigate("/");
-  //     }, 1500);
-  //   }
-  // };
 
   console.log("Form errors:", errors);
 
@@ -236,13 +122,13 @@ export const SignIn = () => {
                     editable='string'
                     charLimit={20}
                     {...register("name", {
-                      required: true,
-                      minLength: 2,
+                      required: "Name is required",
+                      pattern: {
+                        value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
+                        message: "Only letters (2–20 characters)",
+                      },
                     })}
-                    helpText={
-                      errors.name &&
-                      "This field is requiered and needs at least 2 characters"
-                    }
+                    helpText={errors.name && errors.name.message}
                   />
                 </div>
                 <div className='signin__form-group'>
@@ -252,13 +138,13 @@ export const SignIn = () => {
                     editable='string'
                     className={errors.lastName ? "signin__input--error" : ""}
                     {...register("lastName", {
-                      required: true,
-                      minLength: 2,
+                      required: "Last name is required",
+                      pattern: {
+                        value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
+                        message: "Only letters (2–20 characters)",
+                      },
                     })}
-                    helpText={
-                      errors.lastName &&
-                      "This field is requiered and needs at least 2 characters"
-                    }
+                    helpText={errors.lastName && errors.lastName.message}
                     charLimit={20}
                   />
                 </div>
@@ -270,7 +156,7 @@ export const SignIn = () => {
                     editable='string'
                     className={errors.email ? "signin__input--error" : ""}
                     {...register("email", {
-                      required: true,
+                      required: "Email is required",
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Invalid email address",
@@ -287,7 +173,7 @@ export const SignIn = () => {
                     editable='string'
                     className={errors.password ? "signin__input--error" : ""}
                     {...register("password", {
-                      required: true,
+                      required: "Password is required",
                       pattern: {
                         value:
                           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,

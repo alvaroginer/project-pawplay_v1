@@ -1,6 +1,6 @@
+import React from "react";
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
-import { FieldErrors } from "react-hook-form";
 
 // -----> Data of a created Event
 export interface EventData {
@@ -57,18 +57,16 @@ export interface RatingProps {
 }
 
 // -----> Form Data
-export interface FormData {
+export interface SignInData {
   name: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface FormErrors {
-  name?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
+export interface LogInData {
+  email: string;
+  password: string;
 }
 
 /* ----- Components Props and Hooks Props ----- */
@@ -111,20 +109,21 @@ export interface NavMenuProps {
 
 export interface InputProps {
   label: string;
-  placeholder: string;
   name: string;
+  placeholder?: string;
   value?: string;
-  onChange: (
+  onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  className?: string; // Permite pasar clases adicionales
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  className?: string;
   disabled?: boolean;
   error?: string;
   type?: string;
-  helpText?: string | FieldErrors<FormData>;
+  helpText?: string;
   charLimit?: number;
   editable: "string" | "select" | "";
-  selectData?: SelectDataType;
+  selectData?: string[];
 }
 
 // -----> Forgot Password Modal

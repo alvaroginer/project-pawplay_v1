@@ -1,63 +1,40 @@
-import { useState, useContext, type FormEvent } from "react";
+import { useState, useContext } from "react";
 import { Input } from "../../components/input/Input";
 import { AuthContext } from "../../auth/AuthContext";
-import { validateEmail, validatePassword } from "../../utils/validation";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
-import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+//import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+import { LogInData } from "../../types";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
 
 export const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
-  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // const auth = useContext(AuthContext);
-  // if (!auth) throw new Error("AuthContext must be used within an AuthProvider");
-  // const { login } = auth;
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LogInData>();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Validar campos antes de enviar
-    let isValid = true;
-
-    // Validar email
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
-      isValid = false;
-    } else {
-      setEmailError("");
-    }
-
-    // Validar contraseña
-    if (!validatePassword(password)) {
-      setPasswordError("Password must be at least 8 characters long");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (!isValid) return;
-
+  const onSubmit: SubmitHandler<LogInData> = async (formData) => {
     setIsLoading(true); // Activar el spinner
+    console.log(formData);
 
     // Simulamos una carga de 2 segundos
     try {
-      // Aquí iría la lógica real de autenticación
+      // Lógica real de autenticación
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        email,
-        password
+        formData.email,
+        formData.password
       );
       const user = userCredential.user;
       const uid = user.uid;
@@ -73,9 +50,16 @@ export const Login = () => {
       // Desactivar el spinner después de la carga
       setIsLoading(false);
       navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-      setIsLoading(false);
+    } catch (error: any) {
+      if (error.code === "auth/invalid-credential") {
+        console.log(`Firebase error (${error.code}): ${error.message}`);
+
+        setError("email", {
+          type: "manual",
+          message: `Invalid email or password.`,
+        });
+        setIsLoading(false);
+      }
     }
   };
 
@@ -93,66 +77,67 @@ export const Login = () => {
           <h1 className='modal__title'>PawPlay</h1>
           <h2 className='modal__subtitle'>Become a PawPlayer</h2>
 
-          <form className='form' onSubmit={handleSubmit}>
+          <form className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='form__group'>
               <Input
-                name='email'
                 label='Email'
                 placeholder='Put your email'
-                value={email}
-                className={`${emailError ? "form__input--error" : ""}`}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (emailError && validateEmail(e.target.value)) {
-                    setEmailError("");
-                  }
-                }}
+                className={`${errors.email ? "form__input--error" : ""}`}
                 editable='string'
                 disabled={isLoading}
-                helpText={emailError}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
+                helpText={errors.email && errors.email.message}
                 type='email'
               />
             </div>
 
             <div className='form__group'>
               <Input
-                name='password'
                 type='password'
                 label='Password'
                 placeholder='Put your password'
-                value={password}
-                className={` ${passwordError ? "form__input--error" : ""}`}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (passwordError && validatePassword(e.target.value)) {
-                    setPasswordError("");
-                  }
-                }}
+                className={` ${errors.password ? "form__input--error" : ""}`}
                 disabled={isLoading}
                 editable='string'
-                helpText={passwordError}
+                {...register("password", {
+                  required: "Password is required",
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                    message: "Invalid Password",
+                  },
+                })}
+                helpText={errors.password && errors.password.message}
               />
               <a
                 href='#'
                 className='form__forgot-link'
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (!isLoading) setShowForgotPassword(true);
-                }}
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   if (!isLoading) setShowForgotPassword(true);
+                // }}
               >
                 Forgot password?
               </a>
+              <button
+                type='submit'
+                className='form__button'
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className='spinner'>
+                    <div className='spinner__circle'></div>
+                  </div>
+                ) : (
+                  "Login"
+                )}
+              </button>
             </div>
-
-            <button type='submit' className='form__button' disabled={isLoading}>
-              {isLoading ? (
-                <div className='spinner'>
-                  <div className='spinner__circle'></div>
-                </div>
-              ) : (
-                "Login"
-              )}
-            </button>
 
             <Link to='/signin' className=' form__sign-in-link'>
               <span className='or-text'>or</span> Sign In
@@ -172,13 +157,13 @@ export const Login = () => {
         </div>
       </div>
 
-      {showForgotPassword && (
+      {/* {showForgotPassword && (
         <ForgotPasswordModal
           email={email}
           onEmailChange={setEmail}
           onClose={() => setShowForgotPassword(false)}
         />
-      )}
+      )} */}
     </div>
   );
 };
