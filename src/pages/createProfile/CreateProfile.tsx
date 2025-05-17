@@ -15,7 +15,7 @@ import ruler from "../../imgs/profilePage/ruler.svg";
 import dog from "../../imgs/profilePage/dog.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
-import "./CreateProfileNew.css";
+import "./CreateProfile.css";
 import { useState } from "react";
 
 export const CreateProfile = () => {
@@ -73,7 +73,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group no-padding-top">
           <FormField
             iconSrc={dog}
-            iconAlt=""
+            iconAlt="Dog name icon"
             label="Dog's name"
             placeholder="Write the name of your dog"
             editable="string"
@@ -83,7 +83,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={medal}
-            iconAlt=""
+            iconAlt="Dog breed icon"
             label="Breed"
             placeholder="Select the breed of your dog"
             editable="select"
@@ -97,7 +97,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={account}
-            iconAlt=""
+            iconAlt="Owner name icon"
             label="Owner's name"
             placeholder="Write your name"
             editable="string"
@@ -109,7 +109,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={timer}
-            iconAlt=""
+            iconAlt="Dog age icon"
             label="Age"
             placeholder="Select the age of your dog"
             editable="select"
@@ -119,7 +119,7 @@ export const CreateProfile = () => {
           />
           <FormField
             iconSrc={gender}
-            iconAlt=""
+            iconAlt="Dog gender icon"
             label="Gender"
             placeholder="Select your dog's gender"
             editable="select"
@@ -131,7 +131,7 @@ export const CreateProfile = () => {
           />
           <FormField
             iconSrc={ruler}
-            iconAlt=""
+            iconAlt="Dog size icon"
             label="Size"
             placeholder="Select the size of your dog"
             editable="select"
@@ -143,7 +143,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={description}
-            iconAlt=""
+            iconAlt="Dog description icon"
             label="Description"
             placeholder="Description of your dog"
             editable="string"
