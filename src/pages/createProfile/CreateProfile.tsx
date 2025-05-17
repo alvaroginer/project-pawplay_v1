@@ -1,3 +1,13 @@
+import { db } from "../../dataBase/firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  arrayUnion,
+  updateDoc,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
 import {
   dogBreedsType,
   dogSizesType,
@@ -30,6 +40,54 @@ export const CreateProfile = () => {
   });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const auth = getAuth();
+
+  const handleSubmit = async () => {
+    if (!auth.currentUser) {
+      alert("Debes estar autenticado para crear un perfil.");
+      return;
+    }
+
+    if (
+      formData.name === "" ||
+      formData.breed === "" ||
+      formData.ownerName === "" ||
+      formData.age === "" ||
+      formData.gender === "" ||
+      formData.size === "" ||
+      formData.description === ""
+    ) {
+      alert("Please complete all required fields.");
+    } else {
+      await pushNewProfile();
+    }
+  };
+
+  const pushNewProfile = async () => {
+    try {
+      const profilesCollectionRef = collection(db, "profiles");
+      const docRef = await addDoc(profilesCollectionRef, {
+        profileName: formData.name,
+        breed: formData.breed,
+        age: Number(formData.age),
+        sex: formData.gender,
+        size: formData.size,
+        profileBio: formData.description,
+        profilePhoto: "", // aquí va la URL de la imagen, la subirás después
+      });
+
+      const userId = getAuth().currentUser?.uid;
+      if (!userId) throw new Error("No authenticated user found");
+
+      const userDocRef = doc(db, "users", userId);
+
+      await updateDoc(userDocRef, {
+        profiles: arrayUnion(docRef.id),
+      });
+    } catch (error) {
+      console.error("Error adding profile:", error);
+    }
+  };
 
   return (
     <div className="create-profile">
@@ -153,7 +211,12 @@ export const CreateProfile = () => {
           />
         </div>
         <div className="create-profile__button-container">
-          <Button size="large" className="primary" children="Create profile" />
+          <Button
+            size="large"
+            className="primary"
+            children="Create profile"
+            onClick={handleSubmit}
+          />
         </div>
       </div>
     </div>
