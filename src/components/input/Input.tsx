@@ -30,13 +30,10 @@ export const Input = React.forwardRef<
   };
 
   return (
-
     <div className='position-relative'>
       <label className='label' htmlFor={name}>
         {label}
       </label>
-
-
       {editable === "string" ? (
         <input
           ref={ref as React.Ref<HTMLInputElement>}
@@ -52,9 +49,7 @@ export const Input = React.forwardRef<
         />
       ) : (
         <select
-
           ref={ref as React.Ref<HTMLSelectElement>}
-
           id={name}
           name={name}
           value={value}
@@ -62,7 +57,7 @@ export const Input = React.forwardRef<
           className={`input ${className || ""}`}
           disabled={disabled}
         >
-          <option value="" disabled hidden>
+          <option value='' disabled hidden>
             {placeholder}
           </option>
           {selectData?.map((option, index) => (
@@ -72,7 +67,6 @@ export const Input = React.forwardRef<
           ))}
         </select>
       )}
-
 
       <div className='input--help-text__container'>
         {helpText && (
@@ -90,6 +84,5 @@ export const Input = React.forwardRef<
         )}
       </div>
     </div>
-
   );
 });

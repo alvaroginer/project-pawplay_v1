@@ -109,8 +109,7 @@ export interface NavMenuProps {
 // -----> Input
 
 export interface InputProps {
-
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   value?: string;
@@ -126,7 +125,6 @@ export interface InputProps {
   charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: string[];
-
 }
 
 // -----> Forgot Password Modal

@@ -27,7 +27,7 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* ==== Texto (modo lectura) ==== */
@@ -42,6 +42,10 @@
   hyphens: auto;
 }
 
+.category--text__text--incompleted {
+  color: var(--color-berry-active);
+}
+
 /* ==== Iconos SVG ==== */
 .category--text__icon--edit,
 .category--text__icon--check {
@@ -53,7 +57,6 @@
   display: inline-block;
   width: var(--clamp-16-18);
   height: var(--clamp-16-18);
-  fill: var(--color-gray-600);
   cursor: pointer;
   transition: fill 0.2s ease-in-out;
 }
@@ -68,7 +71,7 @@
   fill: hsl(140, 50%, 45%);
 }
 
-.event--category:hover .category--text__icon--edit:hover {
+.event--category__text:hover .category--text__icon--edit {
   fill: var(--color-gray-800);
 }
 
