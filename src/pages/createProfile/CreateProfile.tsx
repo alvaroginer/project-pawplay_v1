@@ -1,3 +1,14 @@
+import { db } from "../../dataBase/firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  arrayUnion,
+  updateDoc,
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth } from "firebase/auth";
+
 import {
   dogBreedsType,
   dogSizesType,
@@ -30,6 +41,70 @@ export const CreateProfile = () => {
   });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const auth = getAuth();
+
+  const handleSubmit = async () => {
+    if (!auth.currentUser) {
+      alert("Debes estar autenticado para crear un perfil.");
+      return;
+    }
+
+    if (
+      formData.name === "" ||
+      formData.breed === "" ||
+      formData.ownerName === "" ||
+      formData.age === "" ||
+      formData.gender === "" ||
+      formData.size === "" ||
+      formData.description === "" ||
+      !selectedImage
+    ) {
+      alert("Please complete all fields and upload an image.");
+    } else {
+      await pushNewProfile();
+    }
+  };
+
+  const uploadProfileImage = async (imageFile: File, profileId: string) => {
+    const storage = getStorage();
+    const imageRef = ref(storage, `profileImages/${profileId}`);
+    await uploadBytes(imageRef, imageFile);
+    return await getDownloadURL(imageRef);
+  };
+
+  const pushNewProfile = async () => {
+    try {
+      const profilesCollectionRef = collection(db, "profiles");
+      const docRef = await addDoc(profilesCollectionRef, {
+        profileName: formData.name,
+        breed: formData.breed,
+        age: Number(formData.age),
+        sex: formData.gender,
+        size: formData.size,
+        profileBio: formData.description,
+        profilePhoto: "",
+      });
+
+      const userId = getAuth().currentUser?.uid;
+      if (!userId) throw new Error("No authenticated user found");
+
+      const userDocRef = doc(db, "users", userId);
+
+      await updateDoc(userDocRef, {
+        profiles: arrayUnion(docRef.id),
+      });
+
+      if (selectedImage) {
+        const imageUrl = await uploadProfileImage(selectedImage, docRef.id);
+        const profileDocRef = doc(db, "profiles", docRef.id);
+        await updateDoc(profileDocRef, { profilePhoto: imageUrl });
+      }
+
+      alert("Perfil creado con éxito");
+    } catch (error) {
+      console.error("Error adding profile:", error);
+    }
+  };
 
   return (
     <div className="create-profile">
@@ -153,7 +228,12 @@ export const CreateProfile = () => {
           />
         </div>
         <div className="create-profile__button-container">
-          <Button size="large" className="primary" children="Create profile" />
+          <Button
+            size="large"
+            className="primary"
+            children="Publish profile"
+            onClick={handleSubmit}
+          />
         </div>
       </div>
     </div>

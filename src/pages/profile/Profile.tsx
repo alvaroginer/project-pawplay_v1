@@ -1,4 +1,5 @@
 import { EventCategory } from "../../components/eventCategory/EventCategory";
+import { EventCategoryBig } from "../../components/eventCategoryBig/EventCategoryBig";
 import { Accordion } from "../../components/accordion/Accordion";
 import {
   dogBreedsType,
@@ -207,7 +208,7 @@ export const Profile = () => {
 
 
               <div className="profile-page__info_container">
-                <EventCategory
+                <EventCategoryBig
                   img={description}
                   title={"Description"}
                   info={
