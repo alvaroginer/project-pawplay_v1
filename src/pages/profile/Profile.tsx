@@ -16,7 +16,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -44,13 +44,11 @@ export const Profile = () => {
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", profileIdParamsStr);
+      if (profileSnap === null) {
         return;
       }
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
 
-      setProfileInfo(typedProfileSnap);
+      setProfileInfo(profileSnap);
     };
 
     fetchProfile();
@@ -64,12 +62,11 @@ export const Profile = () => {
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (!userSnap.exists()) {
-        console.error("El perfil no existe con id:", profileInfo.userUid);
+      if (userSnap === null) {
         return;
       }
-      const typedUserSnap: UserData = userSnap.data() as UserData;
-      setUserInfo(typedUserSnap);
+
+      setUserInfo(userSnap);
     };
 
     fetchUser();
@@ -90,11 +87,11 @@ export const Profile = () => {
   } else {
     return (
       <>
-        <div className="profile-page__actions1">
+        <div className='profile-page__actions1'>
           <img
             src={arrow}
-            alt="Icon arrow to go back"
-            className="profile-page__back-icon"
+            alt='Icon arrow to go back'
+            className='profile-page__back-icon'
           />
           <div className="profile-page__dots-container">
             <img
@@ -111,22 +108,26 @@ export const Profile = () => {
               </div>
             )}
           </div>
+
         </div>
-        <div className="profile-page">
-          <div className="profile-page__image-container">
+        <div className='profile-page'>
+          <div className='profile-page__image-container'>
             <img
               src={dogUser}
-              alt="Profile picture of the dog"
-              className="profile-page__image"
+              alt='Profile picture of the dog'
+              className='profile-page__image'
             />
           </div>
+
           <div className="profile-page__details-container">
             <div className="profile-page__actions2">
+
               <img
                 src={arrow}
-                alt="Icon arrow to go back"
-                className="profile-page__back-icon"
+                alt='Icon arrow to go back'
+                className='profile-page__back-icon'
               />
+
               <div className="profile-page__dots-container">
                 <img
                   src={dots}
@@ -178,7 +179,10 @@ export const Profile = () => {
                   editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                 />
               </div>
+
+
               <div className="profile-page__info_container">
+
                 <EventCategory
                   img={timer}
                   title={"Age"}
@@ -201,6 +205,8 @@ export const Profile = () => {
                   selectData={dogSizesType}
                 />
               </div>
+
+
               <div className="profile-page__info_container">
                 <EventCategoryBig
                   img={description}
@@ -254,6 +260,7 @@ export const Profile = () => {
             modalText="Are you sure you want to delete this lovely dog profile?"
             buttonText="Yes, I am sure"
             onClose={() => setisDeleteModalOpen(false)}
+
           />
         )}
       </>

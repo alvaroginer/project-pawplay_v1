@@ -7,7 +7,7 @@ import {
   getHostedEventsLimited,
   getPastEventsLimited,
   getUpcomingEventsLimited,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
 
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
@@ -140,15 +140,15 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
+              {cardsContent && cardsContent.length > 0 && (
+                <Link
+                  to={`/my-events/${urlNav}`}
+                  className="accordion__view-all-link"
+                >
+                  <ViewMoreCard />
+                </Link>
+              )}
             </div>
-            {cardsContent && cardsContent.length > 0 && (
-              <Link
-                to={`/my-events/${urlNav})`}
-                className="accordion__view-all-link"
-              >
-                <ViewMoreCard />
-              </Link>
-            )}
           </>
         )}
       </div>

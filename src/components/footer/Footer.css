@@ -73,7 +73,9 @@
     justify-content: space-between;
   }
 
-  .footer__links {
-    gap: 100px;
+
+@media screen and (width>= 500px) {
+  .footer {
+    margin-inline: calc(-1 * var(--space-24));
   }
 }

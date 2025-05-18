@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { EventData, FilterProps } from "../types";
-import { getEvents } from "../dataBase/services/servicesFunctions";
-import { DocumentData } from "firebase/firestore";
+import { getEvents } from "../dataBase/services/readFunctions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -21,9 +20,9 @@ export const EventsMainPage = () => {
   useEffect(() => {
     // Llamada a la base de datos
     const fetchEvents = async () => {
-      const eventsDb: DocumentData[] = await getEvents();
-      const typedEvents: EventData[] = eventsDb.map((doc) => doc as EventData);
-      setEventsList(typedEvents);
+      const eventsSnap: EventData[] = await getEvents();
+
+      setEventsList(eventsSnap);
     };
 
     fetchEvents();
@@ -36,7 +35,7 @@ export const EventsMainPage = () => {
     eventsList.forEach((eventCard) => {
       const { activity, breeds, size } = eventCard;
 
-      if (!breedsList[breeds]) {
+      if (!breedsList[breeds] && breeds !== "") {
         breedsList = { ...breedsList, [breeds]: false };
       }
 
@@ -44,7 +43,7 @@ export const EventsMainPage = () => {
         activityList = { ...activityList, [activity]: false };
       }
 
-      if (!sizeList[size]) {
+      if (!sizeList[size] && size !== "Any") {
         sizeList = { ...sizeList, [size]: false };
       }
     });
@@ -152,31 +151,23 @@ export const EventsMainPage = () => {
 
   return (
     <>
-      <div className="filter-container">
+      <div className='filter-container'>
         <input
-          type="text"
-          className="searchbar"
-          placeholder="Search the event you want to go"
+          type='text'
+          className='searchbar'
+          placeholder='Search the event you want to go'
         />
-        <div className="filter-container--filters">
-          <div className="filter-container--buttons">
-            <Button className="terciary">Social Event</Button>
-            <Button className="terciary">Outdoors</Button>
-            <Button className="terciary">Walks</Button>
-            <Button className="terciary">Small Dogs</Button>
-            <Button className="terciary">Big Dogs</Button>
-            <Button className="terciary">Any Dogs</Button>
-          </div>
+        <div className='filter-button--container'>
           <div
-            className="filter-button"
+            className='filter-button'
             onClick={() => handleSidebarDisplay(sidebarDisplay)}
           >
             <p>Filters</p>
-            <img src={filter} alt="Filter Icon" />
+            <img src={filter} alt='Filter Icon' />
           </div>
         </div>
       </div>
-      <div className="events-container">
+      <div className='events-container'>
         <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
           {filteredEventList.map((event: EventData) => {
             return <EventCard key={event.id} event={event} />;
@@ -191,8 +182,8 @@ export const EventsMainPage = () => {
           />
         )}
       </div>
-      <div className="create-event-modal">
-        <Button className="primary">Create an event</Button>
+      <div className='create-event-modal'>
+        <Button className='primary'>Create an event</Button>
       </div>
     </>
   );

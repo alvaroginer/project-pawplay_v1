@@ -16,9 +16,33 @@
 }
 
 .checklist__title {
+  margin: 0;
+  margin-bottom: var(--space-12);
+  margin-top: var(--space-14);
   font-size: var(--space-16);
   font-weight: var(--font-medium);
   cursor: pointer;
+}
+
+.checklist-progressbar {
+  width: 100%;
+  margin-bottom: var(--space-24);
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: var(--space-100);
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: #6a5acd;
+  border-radius: var(--space-100);
 }
 
 .checklist__chevron {
@@ -52,7 +76,7 @@
 }
 
 .checklist__description {
-  margin: 12px 0;
+  margin: 0;
 }
 
 .checklist__items-container {
@@ -82,6 +106,10 @@
   width: 16px;
   height: 16px;
   fill: var(--color-gray);
+}
+
+.checklist__check-icon--checked {
+  fill: var(--color-green);
 }
 
 .checklist__item-title {
