@@ -1,78 +1,83 @@
-.event--container__categories .event--category {
-  margin-bottom: var(--space-50);
-}
-
+/* ==== Layout de contenedores ==== */
 .event--category {
   display: flex;
-}
-
-.event--category:hover .category--text__icon {
-  fill: var(--color-gray-300);
 }
 
 .event--category__text {
   margin-left: var(--space-12);
 }
 
-.category--text__title {
-  margin: 0 0 var(--space-12) 0;
-  font-weight: var(--font-regular);
-  font-size: clamp(22px, 0.8vw + 0.6rem, 32px);
+.event--category__icon {
+  width: var(--clamp-16-18);
+  height: var(--clamp-16-18);
 }
 
+/* ==== Título ==== */
+.category--text__title {
+  margin: 0 0 var(--space-12) 0;
+  color: var(--color-gray-800);
+  font-weight: var(--font-regular);
+  font-size: clamp(16px, 0.5vw + 0.5rem, 18px);
+  line-height: 1;
+}
+
+/* ==== Contenedor de texto y edición ==== */
 .category--text-container {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
   width: 100%;
   overflow: hidden;
 }
 
-.category--text__input {
-  border: 1px solid #787878;
-  border-radius: var(--space-4);
-  padding: var(--space-8);
-  font-family: var(--font-family);
-  font-size: clamp(16px, 0.8vw + 0.6rem, 26px);
-  color: var(--color-black);
-}
-
-.category--text__input:hover {
-  border: 2px solid #787878;
-}
-
-.category--text__input--error {
-  border-color: var(--color-red);
-}
-
-.category--text__input--error:hover {
-  border-color: var(--color-red);
-}
-
-.category--text__input--error:focus {
-  outline: none; /* quita el borde azul de navegador */
-  border: 2px solid red; /* pones tu propio borde rojo */
-}
-
+/* ==== Texto (modo lectura) ==== */
 .category--text__text {
   margin: 0;
-  font-size: clamp(16px, 0.8vw + 0.6rem, 26px);
-  color: var(--color-gray-300);
-  /* max-width: 200px; */
+  font-size: var(--clamp-18-20);
+  color: var(--color-black);
+  max-width: 600px;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
   hyphens: auto;
 }
 
-/* .category--text__text--full {
-  max-width: 95%;
-  white-space: normal;
-} */
-
-.category--text__icon {
-  width: 20px;
-  height: 20px;
+/* ==== Iconos SVG ==== */
+.category--text__icon--edit,
+.category--text__icon--check {
   cursor: pointer;
+  transition: fill 0.2s ease-in-out;
+}
+
+.category--text__icon--edit {
+  display: inline-block;
+  width: var(--clamp-16-18);
+  height: var(--clamp-16-18);
+  fill: var(--color-gray-600);
+  cursor: pointer;
+  transition: fill 0.2s ease-in-out;
+}
+
+.category--text__icon--check {
+  width: var(--clamp-18-16);
+  height: var(--clamp-18-16);
+  fill: var(--color-gray-600);
+}
+
+.category--text__icon--check:hover {
+  fill: hsl(140, 50%, 45%);
+}
+
+.event--category:hover .category--text__icon--edit:hover {
+  fill: var(--color-gray-800);
+}
+
+@media screen and (min-width: 1100px) {
+  .category--text__icon--edit {
+    display: none;
+  }
+
+  .event--category:hover .category--text__icon--edit {
+    display: inline-block;
+  }
 }

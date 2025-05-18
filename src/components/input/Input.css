@@ -2,19 +2,37 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-8);
+
   border: none;
-  border-radius: var(--space-4);
-  background-color: #ffffff;
-  width: 100%;
-  outline: var(--space-1) solid var(--color-gray);
+
+  /* border-width: var(--space-1);
+  border-style: solid;
+  border-color: var(--color-gray); */
+  outline-width: var(--space-1);
+  outline-style: solid;
+  outline-color: var(--color-gray-600);
+
 
   &:hover {
+
     outline-width: var(--space-2);
+
+    /* border-width: var(--space-2); */
+
   }
 }
 
 input::placeholder {
-  color: var(--color-gray);
+  color: var(--color-gray-800);
+  font-family: var(--font-family);
+  font-size: var(--font-16);
+  font-style: normal;
+  font-weight: var(--font-regular);
+  line-height: normal;
+}
+
+select:invalid {
+  color: var(--color-gray-800);
   font-family: var(--font-family);
   font-size: var(--font-16);
   font-style: normal;

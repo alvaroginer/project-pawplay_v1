@@ -23,10 +23,11 @@ import footprintBlack from "../../imgs/eventPage/footprint-dog.svg";
 import parkImg from "../../imgs/centralPark.jpg";
 import location from "../../imgs/eventPage/location.svg";
 import tag from "../../imgs/eventPage/tag.svg";
-import description from "../../imgs/eventPage/description.svg";
+import description from "../../imgs/profilePage/description.svg";
 import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
+import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
@@ -95,6 +96,18 @@ export const Event = () => {
         <div className="event--container">
           <main className="event--container__categories">
             <EventCategory
+              img={calendar}
+              title="Day"
+              info={normalizeDate(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <EventCategory
+              img={time}
+              title="Start time"
+              info={normalizeTime(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <EventCategory
               img={location}
               title="Location"
               info={eventData.location}
@@ -107,34 +120,31 @@ export const Event = () => {
               editable=""
             />
             <EventCategory
+              img={dog}
+              title="Allowed breeds"
+              info={normalizePlaces(eventData.places)}
+              editable=""
+            />
+            <EventCategory
+              img={availability}
+              title="Availability"
+              info={normalizePlaces(eventData.places)}
+              editable=""
+            />
+            <EventCategory
               img={description}
               title="Description"
               info={eventData.eventDescription}
               editable=""
             />
-            <EventCategory
-              img={time}
-              title="Start time"
-              info={normalizeTime(eventData.dateTime.toDate())}
-              editable=""
-            />
-            <EventCategory
-              img={calendar}
-              title="Day"
-              info={normalizeDate(eventData.dateTime.toDate())}
-              editable=""
-            />
-            <EventCategory
-              img={dog}
-              title="Maximum places"
-              info={normalizePlaces(eventData.places)}
-              editable=""
-            />
           </main>
           <aside className="event--container__sidebar">
             <h3 className="event--profile-title">Know your organisator</h3>
-            <ProfileCard eventId={eventData.profileIdCreator} />
+            <div className="profile-card">
+              <ProfileCard eventId={eventData.profileIdCreator} />
+            </div>
             <div className="event--modal">
+
               {hasJoined ? (
                 <Button onClick={handleHasJoined} className="terciary">
                   Cancel assistance
@@ -144,6 +154,7 @@ export const Event = () => {
                   Join Us
                 </Button>
               )}
+
             </div>
           </aside>
         </div>

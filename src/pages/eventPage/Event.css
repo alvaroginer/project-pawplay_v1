@@ -1,3 +1,4 @@
+/* ESTRUCTURA GENERAL */
 .event--header {
   display: flex;
   flex-direction: row;
@@ -5,6 +6,23 @@
   padding-top: var(--space-113);
 }
 
+.event--container__categories {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 4vw, 50px);
+  margin-bottom: clamp(60px, 5vw, 80px);
+}
+
+.event--container__sidebar {
+  min-width: auto; /* solo en media query */
+}
+
+.event--events-container {
+  margin-top: var(--space-80);
+  margin-bottom: var(--space-100);
+}
+
+/* BOTONES */
 .event--header button {
   background-color: transparent;
   margin: 0;
@@ -13,19 +31,15 @@
   border: none;
 }
 
-.btn--icon:hover {
-  cursor: pointer;
-}
-
-/* No funciona la clase margin-right */
 button.btn--icon.margin--right__10 {
   margin-right: var(--space-10);
 }
 
-.event--container {
-  position: relative;
+.btn--icon:hover {
+  cursor: pointer;
 }
 
+/* IMÁGENES */
 .event--img-container {
   border-radius: var(--space-14);
   min-height: var(--space-190);
@@ -42,6 +56,7 @@ button.btn--icon.margin--right__10 {
   margin-bottom: inherit;
 }
 
+/* TEXTO / TÍTULOS */
 .event--title {
   font-size: clamp(24px, 0.8vw + 0.9rem, 36px);
   font-weight: var(--font-medium);
@@ -53,9 +68,12 @@ button.btn--icon.margin--right__10 {
   font-size: clamp(22px, 0.8vw + 0.6rem, 26px);
   font-weight: var(--font-regular);
   margin-bottom: var(--space-12);
-  margin-top: var(
-    --space-30
-  ); /* Margen para que cuadre el espacio entre el eventCategory el título */
+  margin-top: var(--space-30);
+}
+
+/* ELEMENTOS ESPECÍFICOS */
+.profile-card {
+  width: 292px;
 }
 
 .event--modal {
@@ -72,11 +90,7 @@ button.btn--icon.margin--right__10 {
   border-top: var(--space-1) solid var(--color-gray-300);
 }
 
-.event--events-container {
-  margin-top: var(--space-80);
-  margin-bottom: var(--space-100);
-}
-
+/* MEDIA QUERY */
 @media (min-width: 1035px) {
   .event--container {
     display: flex;
@@ -89,7 +103,7 @@ button.btn--icon.margin--right__10 {
   }
 
   .event--container__sidebar {
-    min-width: var(--space-328);
+    min-width: auto;
   }
 
   .event--profile-title {

@@ -11,6 +11,7 @@ export const Footer = () => {
 
   return (
     <>
+
       {user && !isProfileCompleted && <CheckListProfile />}
       <footer className='footer'>
         <h2 className='footer--title'>PawPlay</h2>
@@ -71,6 +72,7 @@ export const Footer = () => {
           </p>
         </div>
       </footer>
+
     </>
   );
 };

@@ -122,10 +122,10 @@ progress[value]::-webkit-progress-value {
   height: 17px;
 }
 
-@media screen and (width <= 1100px) {
+@media screen and (width <= 1034px) {
   .checklist {
     position: fixed;
-    bottom: 101px;
+    bottom: 93px;
     right: 0;
     width: 100%;
   }
