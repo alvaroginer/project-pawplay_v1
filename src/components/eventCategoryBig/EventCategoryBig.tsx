@@ -6,7 +6,7 @@ import { Input } from "../input/Input";
 
 export const EventCategoryBig = ({
   img,
-  title,
+  reference,
   info,
   editable,
 }: EventCategoryProps) => {
@@ -17,7 +17,7 @@ export const EventCategoryBig = ({
     if (editable === "string") {
       return (
         <Input
-          name={title}
+          name={reference.dbCategory}
           className={` ${
             // Pasa la clase al componente Input
             categoryValue.length === 0 || categoryValue.length > 301
@@ -38,11 +38,11 @@ export const EventCategoryBig = ({
         <img
           className='event--category__icon'
           src={img}
-          alt={`${title} icon`}
+          alt={`${reference.title} icon`}
         />
       </div>
       <div className='event--category__text'>
-        <h4 className='category--text__title'>{title}</h4>
+        <h4 className='category--text__title'>{reference.title}</h4>
         <div className='category--text-container'>
           {isEditable ? (
             handleEditType()

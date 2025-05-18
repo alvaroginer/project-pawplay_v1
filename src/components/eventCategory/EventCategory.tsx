@@ -3,6 +3,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import { EventCategoryProps } from "../../types";
 import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { capitalizeFirstLetter } from "../../functions/Functions";
+import { toast } from "react-toastify";
 import "./EventCategory.css";
 import { Input } from "../input/Input";
 
@@ -34,6 +35,7 @@ export const EventCategory = ({
       );
     }
     await updateAuthContext();
+    toast(`${reference.title} updated!`);
   };
 
   const handleEditType = () => {
@@ -49,7 +51,7 @@ export const EventCategory = ({
           }`}
           editable='string'
           value={categoryValue}
-          onChange={(e) => updateProfileInfo(e.target.value)}
+          onChange={(e) => setCategoryValue(e.target.value)}
         />
       );
     } else if (selectData !== undefined) {
@@ -65,7 +67,7 @@ export const EventCategory = ({
           value={categoryValue}
           editable='select'
           selectData={selectData}
-          onChange={(e) => updateProfileInfo(e.target.value)}
+          onChange={(e) => setCategoryValue(e.target.value)}
         />
       );
     }
@@ -109,9 +111,11 @@ export const EventCategory = ({
                 onClick={() => {
                   if (categoryValue.length === 0 || categoryValue.length > 20) {
                     alert("The text must be between 1 and 20 characters");
-                  } else {
-                    setIsEditable(!isEditable);
+                    return;
                   }
+
+                  updateProfileInfo(categoryValue); // actualiza en base de datos
+                  setIsEditable(false); // cierra el modo edición
                 }}
               >
                 <path d='M9.00004 20.4209L2.79004 14.2109L5.62004 11.3809L9.00004 14.7709L18.88 4.88086L21.71 7.71086L9.00004 20.4209Z' />
