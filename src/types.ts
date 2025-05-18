@@ -1,3 +1,4 @@
+import React from "react";
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
@@ -14,8 +15,8 @@ export interface EventData {
   hour: number;
   location: string;
   places: number;
-  size: "small" | "medium" | "big" | "any";
-  activity: "outdoors" | "social event" | "private property" | "walks";
+  size: "Small" | "Medium" | "Big" | "Any";
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
   breeds: string;
 }
 
@@ -28,8 +29,8 @@ export interface ProfileData {
   profileBio: string;
   age: number | null;
   breed: string;
-  size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female" | "not specify";
+  size: "Small" | "Medium" | "Big" | "Any" | null;
+  gender: "Male" | "Female" | "Not specify" | null;
   likedEvents: string[];
 }
 
@@ -56,18 +57,16 @@ export interface RatingProps {
 }
 
 // -----> Form Data
-export interface FormData {
+export interface SignInData {
   name: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface FormErrors {
-  name?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
+export interface LogInData {
+  email: string;
+  password: string;
 }
 
 /* ----- Components Props and Hooks Props ----- */
@@ -110,19 +109,24 @@ export interface NavMenuProps {
 // -----> Input
 
 export interface InputProps {
-  label?: string;
+
+  label: string;
+  name: string;
   placeholder?: string;
-  name?: string;
   value?: string;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  className?: string; // Permite pasar clases adicionales
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  className?: string;
   disabled?: boolean;
   error?: string;
   type?: string;
-  editable?: "string" | "select" | "";
-  selectData?: SelectDataType;
+  helpText?: string;
+  charLimit?: number;
+  editable: "string" | "select" | "";
+  selectData?: string[];
+
 }
 
 // -----> Forgot Password Modal
@@ -202,6 +206,7 @@ export const typeOfActivity = [
   "Outdoors",
   "Walks",
   "Private property",
+  "Any",
 ];
 
 // MaximumPlaces
@@ -243,7 +248,7 @@ export const maximumPlaces = [
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
 
 // Gender
-export const dogGenderType = ["Male", "Female", "Other"];
+export const dogGenderType = ["Male", "Female", "Not specify"];
 
 // Age
 export const dogAgeType = [
