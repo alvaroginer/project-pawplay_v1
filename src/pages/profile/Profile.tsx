@@ -159,7 +159,10 @@ export const Profile = () => {
                 {loggedProfile.id === profileInfo.id && (
                   <EventCategory
                     img={dogIcon}
-                    title={"Dog's Name"}
+                    reference={{
+                      title: "Dog's Name",
+                      dbCategory: "profileName",
+                    }}
                     info={loggedProfile.profileName}
                     // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                     editable={""}
@@ -167,14 +170,20 @@ export const Profile = () => {
                 )}
                 <EventCategory
                   img={star}
-                  title={"Rating"}
+                  reference={{
+                    title: "Rating",
+                    dbCategory: "rating",
+                  }}
                   info={`4.5`}
                   // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                   editable={""}
                 />
                 <EventCategory
                   img={medal}
-                  title={"Breed"}
+                  reference={{
+                    title: "Breed",
+                    dbCategory: "breed",
+                  }}
                   info={profileInfo.breed}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogBreedsType}
@@ -183,7 +192,10 @@ export const Profile = () => {
               <div className='profile-page__info_container'>
                 <EventCategory
                   img={account}
-                  title="Owner's name"
+                  reference={{
+                    title: "Owner's Name",
+                    dbCategory: "ownerName",
+                  }}
                   info={
                     loggedProfile.id === profileInfo.id
                       ? `${user.name} ${user.lastName}`
@@ -197,21 +209,30 @@ export const Profile = () => {
               <div className='profile-page__info_container'>
                 <EventCategory
                   img={timer}
-                  title={"Age"}
+                  reference={{
+                    title: "Age",
+                    dbCategory: "age",
+                  }}
                   info={`${profileInfo.age}`}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogAgeType}
                 />
                 <EventCategory
                   img={gender}
-                  title={"Gender"}
+                  reference={{
+                    title: "Gender",
+                    dbCategory: "gender",
+                  }}
                   info={profileInfo.gender}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogGenderType}
                 />
                 <EventCategory
                   img={ruler}
-                  title={"Size"}
+                  reference={{
+                    title: "Size",
+                    dbCategory: "size",
+                  }}
                   info={profileInfo.size}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogSizesType}
@@ -220,7 +241,10 @@ export const Profile = () => {
               <div className='profile-page__info_container margin--bt__200'>
                 <EventCategoryBig
                   img={description}
-                  title={"Description"}
+                  reference={{
+                    title: "Description",
+                    dbCategory: "profileBio",
+                  }}
                   info={
                     profileInfo.profileBio // Texto completo
                   }

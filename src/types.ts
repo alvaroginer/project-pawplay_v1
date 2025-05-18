@@ -149,9 +149,14 @@ export interface AccordionProps {
 }
 
 // -----> Event Page & Profile Page
+interface dbProfileCategory {
+  title: string;
+  dbCategory: string;
+}
+
 export interface EventCategoryProps {
   img?: string;
-  title: string;
+  reference: dbProfileCategory;
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
@@ -159,7 +164,7 @@ export interface EventCategoryProps {
 
 export interface EventCategoryBigProps {
   img: string;
-  title: string;
+  reference: dbProfileCategory;
   info: string;
   editable: boolean;
 }

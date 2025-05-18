@@ -1,24 +1,46 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import { EventCategoryProps } from "../../types";
+import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategory.css";
 import { Input } from "../input/Input";
 
 export const EventCategory = ({
   img,
-  title,
+  reference,
   info,
   editable,
   selectData,
 }: EventCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
+  const { loggedProfile, updateAuthContext } = useContext(AuthContext);
+
+  const updateProfileInfo = async (inputData: string) => {
+    setCategoryValue(inputData);
+    if (reference.dbCategory === "age") {
+      const dataToNumber = Number(inputData);
+      await updateProfileCategoryDB(
+        loggedProfile.id,
+        reference.dbCategory,
+        dataToNumber
+      );
+    } else {
+      await updateProfileCategoryDB(
+        loggedProfile.id,
+        reference.dbCategory,
+        inputData
+      );
+    }
+    await updateAuthContext();
+  };
 
   const handleEditType = () => {
     if (editable === "string") {
       return (
         <Input
-          name={title}
+          name={reference.dbCategory}
           className={` ${
             // Pasa la clase al componente Input
             categoryValue.length === 0 || categoryValue.length > 20
@@ -27,13 +49,13 @@ export const EventCategory = ({
           }`}
           editable='string'
           value={categoryValue}
-          onChange={(e) => setCategoryValue(e.target.value)}
+          onChange={(e) => updateProfileInfo(e.target.value)}
         />
       );
     } else if (selectData !== undefined) {
       return (
         <Input
-          name={title}
+          name={reference.dbCategory}
           className={` ${
             // Pasa la clase al componente Input
             categoryValue.length === 0 || categoryValue.length > 20
@@ -43,7 +65,7 @@ export const EventCategory = ({
           value={categoryValue}
           editable='select'
           selectData={selectData}
-          onChange={(e) => setCategoryValue(e.target.value)}
+          onChange={(e) => updateProfileInfo(e.target.value)}
         />
       );
     }
@@ -55,11 +77,11 @@ export const EventCategory = ({
         <img
           className='event--category__icon'
           src={img}
-          alt={`${title} icon`}
+          alt={`${reference} icon`}
         />
       </div>
       <div className='event--category__text'>
-        <h4 className='category--text__title'>{title}</h4>
+        <h4 className='category--text__title'>{reference.title}</h4>
         <div className='category--text-container'>
           {isEditable ? (
             handleEditType()
