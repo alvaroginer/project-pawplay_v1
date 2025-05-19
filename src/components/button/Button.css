@@ -101,8 +101,8 @@
     font-size: var(--font-14);
   }
 }
-
-.btn--small {
+/*cambiar tsx boton
+/*.btn--small {
   padding: 10px 24px;
   font-size: var(--font-14);
 }
@@ -115,4 +115,23 @@
 .btn--large {
   padding: 10px 24px;
   font-size: var(--font-20);
+}
+*/
+@media (width>= 400px) {
+  .btn{
+    padding: 10px 24px;
+  font-size: var(--font-14);
+  }
+}
+@media (width>= 900px) {
+  .btn{
+    padding: 10px 24px;
+    font-size: var(--font-16);
+  }
+}
+@media (width>= 1200px) {
+  .btn{
+    padding: 10px 24px;
+  font-size: var(--font-20);
+  }
 }

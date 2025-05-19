@@ -75,7 +75,7 @@ export interface LogInData {
 export interface ButtonProps {
   className: string;
   children: ReactNode;
-  size: "large" | "medium" | "small";
+  //size: "large" | "medium" | "small";
   onClick?: (value: any) => void;
 }
 
