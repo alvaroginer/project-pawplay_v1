@@ -97,43 +97,64 @@ export const Event = () => {
           <main className="event--container__categories">
             <EventCategory
               img={calendar}
-              title="Day"
+              reference={{
+                title: "Day",
+                dbCategory: "dateTime",
+              }}
               info={normalizeDate(eventData.dateTime.toDate())}
               editable=""
             />
             <EventCategory
               img={time}
-              title="Start time"
+              reference={{
+                title: "Start time",
+                dbCategory: "dateTime",
+              }}
               info={normalizeTime(eventData.dateTime.toDate())}
               editable=""
             />
             <EventCategory
               img={location}
-              title="Location"
+              reference={{
+                title: "Location",
+                dbCategory: "location",
+              }}
               info={eventData.location}
               editable=""
             />
             <EventCategory
               img={tag}
-              title="Activity"
+              reference={{
+                title: "Activity",
+                dbCategory: "activity",
+              }}
               info={eventData.activity}
               editable=""
             />
             <EventCategory
               img={dog}
-              title="Allowed breeds"
+              reference={{
+                title: "Allowed breeds",
+                dbCategory: "breeds",
+              }}
               info={normalizePlaces(eventData.places)}
               editable=""
             />
             <EventCategory
               img={availability}
-              title="Availability"
+              reference={{
+                title: "Availability",
+                dbCategory: "profileIdAsisstant",
+              }}
               info={normalizePlaces(eventData.places)}
               editable=""
             />
             <EventCategory
               img={description}
-              title="Description"
+              reference={{
+                title: "Description",
+                dbCategory: "eventDescription",
+              }}
               info={eventData.eventDescription}
               editable=""
             />
@@ -144,7 +165,6 @@ export const Event = () => {
               <ProfileCard eventId={eventData.profileIdCreator} />
             </div>
             <div className="event--modal">
-
               {hasJoined ? (
                 <Button onClick={handleHasJoined} className="terciary">
                   Cancel assistance
@@ -154,7 +174,6 @@ export const Event = () => {
                   Join Us
                 </Button>
               )}
-
             </div>
           </aside>
         </div>
