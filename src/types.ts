@@ -124,7 +124,7 @@ export interface InputProps {
   helpText?: string;
   charLimit?: number;
   editable: "string" | "select" | "";
-  selectData?: string[];
+  selectData?: string[] | number[];
 }
 
 // -----> Forgot Password Modal
@@ -157,7 +157,7 @@ interface dbProfileCategory {
 export interface EventCategoryProps {
   img?: string;
   reference: dbProfileCategory;
-  info?: string | number;
+  info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
