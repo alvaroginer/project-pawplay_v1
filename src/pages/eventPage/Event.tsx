@@ -99,43 +99,64 @@ export const Event = () => {
             <main className="event--container__categories">
               <EventCategory
                 img={calendar}
-                title="Day"
+                reference={{
+                  title: "Day",
+                  dbCategory: "dateTime",
+                }}
                 info={normalizeDate(eventData.dateTime.toDate())}
                 editable=""
               />
               <EventCategory
                 img={time}
-                title="Start time"
-                info={normalizeTime(eventData.dateTime.toDate())}
+                reference={{
+                  title: "Start time",
+                  dbCategory: "hour",
+                }}
+                info={normalizeTime(new Date(eventData.hour))}
                 editable=""
               />
               <EventCategory
                 img={location}
-                title="Location"
+                reference={{
+                  title: "Location",
+                  dbCategory: "location",
+                }}
                 info={eventData.location}
                 editable=""
               />
               <EventCategory
                 img={tag}
-                title="Activity"
+                reference={{
+                  title: "Activity",
+                  dbCategory: "activity",
+                }}
                 info={eventData.activity}
                 editable=""
               />
               <EventCategory
                 img={dog}
-                title="Allowed breeds"
-                info={normalizePlaces(eventData.places)}
+                reference={{
+                  title: "Allowed breeds",
+                  dbCategory: "places",
+                }}
+                info={eventData.breeds}
                 editable=""
               />
               <EventCategory
                 img={availability}
-                title="Availability"
+                reference={{
+                  title: "Availability",
+                  dbCategory: "places",
+                }}
                 info={normalizePlaces(eventData.places)}
                 editable=""
               />
               <EventCategory
                 img={description}
-                title="Description"
+                reference={{
+                  title: "Description",
+                  dbCategory: "eventDescription",
+                }}
                 info={eventData.eventDescription}
                 editable=""
               />
