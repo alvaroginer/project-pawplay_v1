@@ -12,7 +12,6 @@ export interface EventData {
   eventPhoto: string | null;
   eventDescription: string;
   dateTime: Timestamp;
-  hour: number;
   location: string;
   places: number;
   size: "Small" | "Medium" | "Big" | "Any";
@@ -178,6 +177,19 @@ export interface FormLayoutProps {
   formData: { [key: string]: string };
 
   // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+}
+
+export interface CreateEventProps {
+  eventPhoto: string | null;
+  eventTitle: string;
+  location: string;
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
+  eventDescription: string;
+  time: string;
+  day: string;
+  places: string;
+  breeds: string;
+  size: "Small" | "Medium" | "Big" | "Any";
 }
 
 export interface Field {
