@@ -157,7 +157,7 @@ interface dbProfileCategory {
 export interface EventCategoryProps {
   img?: string;
   reference: dbProfileCategory;
-  info?: string;
+  info?: string | number;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
