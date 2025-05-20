@@ -75,7 +75,7 @@ export interface LogInData {
 export interface ButtonProps {
   className: string;
   children: ReactNode;
-  size: "large" | "medium" | "small";
+  //size: "large" | "medium" | "small";
   onClick?: (value: any) => void;
 }
 
@@ -109,8 +109,7 @@ export interface NavMenuProps {
 // -----> Input
 
 export interface InputProps {
-
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   value?: string;
@@ -126,7 +125,6 @@ export interface InputProps {
   charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: string[];
-
 }
 
 // -----> Forgot Password Modal
@@ -151,9 +149,14 @@ export interface AccordionProps {
 }
 
 // -----> Event Page & Profile Page
+interface dbProfileCategory {
+  title: string;
+  dbCategory: string;
+}
+
 export interface EventCategoryProps {
   img?: string;
-  title: string;
+  reference: dbProfileCategory;
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
@@ -161,7 +164,7 @@ export interface EventCategoryProps {
 
 export interface EventCategoryBigProps {
   img: string;
-  title: string;
+  reference: dbProfileCategory;
   info: string;
   editable: boolean;
 }

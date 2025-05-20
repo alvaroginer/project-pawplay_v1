@@ -2,6 +2,17 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase";
 
 /* -----> Profile Updates */
+// Profile Updates for string or number types
+export const updateProfileCategoryDB = async (
+  profileId: string,
+  categoryName: string,
+  newInfo: string | number
+) => {
+  await updateDoc(doc(db, "profiles", profileId), {
+    [categoryName]: newInfo,
+  });
+};
+
 // Give like to an event
 export const likeEvent = async (profileId: string, eventId: string) => {
   await updateDoc(doc(db, "profiles", profileId), {
@@ -17,6 +28,17 @@ export const disLikeEvent = async (profileId: string, eventId: string) => {
 };
 
 /* -----> Event Updates */
+// Profile Updates for string or number types
+export const updateEventCategoryDB = async (
+  eventId: string,
+  categoryName: string,
+  newInfo: string | number
+) => {
+  await updateDoc(doc(db, "events", eventId), {
+    [categoryName]: newInfo,
+  });
+};
+
 // Joining an event
 export const eventSignUp = async (profileId: string, eventId: string) => {
   await updateDoc(doc(db, "events", eventId), {

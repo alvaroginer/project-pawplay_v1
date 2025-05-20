@@ -141,6 +141,7 @@ export const Event = () => {
               />
             </main>
           </div>
+
           <aside className="event--container__sidebar">
             <h3 className="event--profile-title">Know your organisator</h3>
             <div className="profile-card">
