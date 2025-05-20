@@ -110,6 +110,7 @@ export interface NavMenuProps {
 
 export interface DotsMenuProps {
   children: ReactNode;
+  className: string;
 }
 
 // -----> Input

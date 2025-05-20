@@ -28,14 +28,12 @@ import star from "../../imgs/profilePage/star-outline.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
-import dots from "../../imgs/eventCard/dots.svg";
 import dogIcon from "../../imgs/profilePage/dog.svg";
 import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
-  const [isOptionsMenuOpen, setisOptionsMenuOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
 
   const { loggedProfile, user } = useContext(AuthContext);
@@ -75,10 +73,6 @@ export const Profile = () => {
     fetchUser();
   }, [loggedProfile, profileInfo]);
 
-  const toggleOptionsMenu = () => {
-    setisOptionsMenuOpen(!isOptionsMenuOpen);
-  };
-
   const toggleDeleteModal = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -96,27 +90,9 @@ export const Profile = () => {
             alt="Icon arrow to go back"
             className="profile-page__back-icon"
           />
-          {/* <div className='profile-page__dots-container'>
-            <img
-              src={dots}
-              alt='Dots icon for options'
-              onClick={toggleOptionsMenu}
-              className='dots'
-            />
-            {isOptionsMenuOpen && (
-              <div className='profile-page__options-container'>
-                <p className='profile-page__option' onClick={toggleDeleteModal}>
-                  Delete profile
-                </p>
-              </div>
-            )}
-          </div> */}
-          <DotsMenu>
+          <DotsMenu className="">
             <p className="profile-page__option" onClick={toggleDeleteModal}>
               Delete profile
-            </p>
-            <p className="profile-page__option" onClick={toggleDeleteModal}>
-              Chuapala
             </p>
           </DotsMenu>
         </div>
@@ -136,32 +112,11 @@ export const Profile = () => {
                 alt="Icon arrow to go back"
                 className="profile-page__back-icon"
               />
-              <DotsMenu>
+              <DotsMenu className="">
                 <p className="profile-page__option" onClick={toggleDeleteModal}>
                   Delete profile
                 </p>
-                <p className="profile-page__option" onClick={toggleDeleteModal}>
-                  Chuapala
-                </p>
               </DotsMenu>
-              {/* <div className="profile-page__dots-container">
-                <img
-                  src={dots}
-                  alt="Dots icon for options"
-                  onClick={toggleOptionsMenu}
-                  className="dots"
-                />
-                {isOptionsMenuOpen && (
-                  <div className="profile-page__options-container">
-                    <p
-                      className="profile-page__option"
-                      onClick={toggleDeleteModal}
-                    >
-                      Delete profile
-                    </p>
-                  </div>
-                )}
-              </div> */}
             </div>
             <div className="profile-page__info">
               <p className="profile-page__info-name">

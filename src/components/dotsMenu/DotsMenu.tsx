@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DotsMenuProps } from "../../types";
 
 export const DotsMenu = (props: DotsMenuProps) => {
-  const { children } = props;
+  const { children, className } = props;
 
   const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
 
@@ -13,7 +13,7 @@ export const DotsMenu = (props: DotsMenuProps) => {
   };
 
   return (
-    <div className="profile-page__dots-container">
+    <div className="dots-container" onClick={(e) => e.stopPropagation()}>
       <img
         src={dots}
         alt="Dots icon for options"
@@ -21,12 +21,8 @@ export const DotsMenu = (props: DotsMenuProps) => {
         className="dots"
       />
       {isOptionsMenuOpen && (
-        <div className="profile-page__options-container">{children}</div>
+        <div className={`options-container ${className ?? ""}`}>{children}</div>
       )}
     </div>
   );
 };
-
-//  <p className="profile-page__option" onClick={toggleDeleteModal}>
-//             Delete profile
-//           </p>
