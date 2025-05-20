@@ -106,6 +106,12 @@ export interface NavMenuProps {
   onClick: (value: boolean) => void;
 }
 
+// -----> Dots Menu
+
+export interface DotsMenuProps {
+  children: ReactNode;
+}
+
 // -----> Input
 
 export interface InputProps {
