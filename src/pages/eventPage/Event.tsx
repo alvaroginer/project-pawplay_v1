@@ -92,73 +92,56 @@ export const Event = () => {
             alt=""
           />
         </div>
-        <h3 className="event--title">{eventData.eventTitle}</h3>
         <div className="event--container">
-          <main className="event--container__categories">
-            <EventCategory
-              img={calendar}
-              reference={{
-                title: "Day",
-                dbCategory: "dateTime",
-              }}
-              info={normalizeDate(eventData.dateTime.toDate())}
-              editable=""
-            />
-            <EventCategory
-              img={time}
-              reference={{
-                title: "Start time",
-                dbCategory: "dateTime",
-              }}
-              info={normalizeTime(eventData.dateTime.toDate())}
-              editable=""
-            />
-            <EventCategory
-              img={location}
-              reference={{
-                title: "Location",
-                dbCategory: "location",
-              }}
-              info={eventData.location}
-              editable=""
-            />
-            <EventCategory
-              img={tag}
-              reference={{
-                title: "Activity",
-                dbCategory: "activity",
-              }}
-              info={eventData.activity}
-              editable=""
-            />
-            <EventCategory
-              img={dog}
-              reference={{
-                title: "Allowed breeds",
-                dbCategory: "breeds",
-              }}
-              info={normalizePlaces(eventData.places)}
-              editable=""
-            />
-            <EventCategory
-              img={availability}
-              reference={{
-                title: "Availability",
-                dbCategory: "profileIdAsisstant",
-              }}
-              info={normalizePlaces(eventData.places)}
-              editable=""
-            />
-            <EventCategory
-              img={description}
-              reference={{
-                title: "Description",
-                dbCategory: "eventDescription",
-              }}
-              info={eventData.eventDescription}
-              editable=""
-            />
-          </main>
+          <div className="event--container__left">
+            <h3 className="event--title">{eventData.eventTitle}</h3>
+
+            <main className="event--container__categories">
+              <EventCategory
+                img={calendar}
+                title="Day"
+                info={normalizeDate(eventData.dateTime.toDate())}
+                editable=""
+              />
+              <EventCategory
+                img={time}
+                title="Start time"
+                info={normalizeTime(eventData.dateTime.toDate())}
+                editable=""
+              />
+              <EventCategory
+                img={location}
+                title="Location"
+                info={eventData.location}
+                editable=""
+              />
+              <EventCategory
+                img={tag}
+                title="Activity"
+                info={eventData.activity}
+                editable=""
+              />
+              <EventCategory
+                img={dog}
+                title="Allowed breeds"
+                info={normalizePlaces(eventData.places)}
+                editable=""
+              />
+              <EventCategory
+                img={availability}
+                title="Availability"
+                info={normalizePlaces(eventData.places)}
+                editable=""
+              />
+              <EventCategory
+                img={description}
+                title="Description"
+                info={eventData.eventDescription}
+                editable=""
+              />
+            </main>
+          </div>
+
           <aside className="event--container__sidebar">
             <h3 className="event--profile-title">Know your organisator</h3>
             <div className="profile-card">
