@@ -28,9 +28,15 @@ interface AuthLocalStorageProps {
   loggedProfile: ProfileData | null;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  loggedProfile: null,
+  isProfileCompleted: false,
+  login: () => {},
+  logout: () => {},
+  updateAuthContext: () => {},
+  hasCompletedProfile: () => false,
+});
 
 const hasCompletedProfile = (profile: ProfileData | null): boolean => {
   if (

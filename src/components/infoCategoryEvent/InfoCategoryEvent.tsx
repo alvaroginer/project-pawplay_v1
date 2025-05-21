@@ -12,6 +12,8 @@ export const EventCategory = (props: InfoCategoryProps) => {
   //const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
   const { loggedProfile, updateAuthContext } = useContext(AuthContext);
 
+  if (loggedProfile === null) return;
+
   const updateEventInfo = async (inputData: string) => {
     //setCategoryValue(inputData);
     if (reference.dbCategory === "places") {

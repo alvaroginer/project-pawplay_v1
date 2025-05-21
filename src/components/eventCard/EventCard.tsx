@@ -48,6 +48,8 @@ export const EventCard = ({ event }: { event: EventData }) => {
   };
 
   const handleLike = async () => {
+    if (loggedProfile === null) return;
+
     if (!isLike) {
       await likeEvent(loggedProfile.id, id);
       setIsLike(true);
