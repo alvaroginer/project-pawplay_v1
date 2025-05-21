@@ -26,10 +26,10 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number | null;
+  age?: number;
   breed: string;
-  size: "Small" | "Medium" | "Big" | "Any" | null;
-  gender: "Male" | "Female" | "Not specify" | null;
+  size?: "Small" | "Medium" | "Big" | "Any";
+  gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];
 }
 
@@ -153,12 +153,13 @@ interface dbProfileCategory {
   dbCategory: string;
 }
 
-export interface EventCategoryProps {
+export interface InfoCategoryProps {
   img?: string;
   reference: dbProfileCategory;
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
+  updateFunction: (referenceId: string) => void;
 }
 
 export interface EventCategoryBigProps {

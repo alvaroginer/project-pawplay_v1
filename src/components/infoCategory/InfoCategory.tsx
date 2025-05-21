@@ -1,42 +1,43 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
-import { EventCategoryProps } from "../../types";
-import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
+//import { AuthContext } from "../../auth/AuthContext";
+import { InfoCategoryProps } from "../../types";
+//import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { capitalizeFirstLetter } from "../../functions/Functions";
-import { toast } from "react-toastify";
-import "./EventCategory.css";
+//import { toast } from "react-toastify";
 import { Input } from "../input/Input";
+import "./InfoCategory.css";
 
-export const EventCategory = ({
+export const InfoCategory = ({
   img,
   reference,
   info,
   editable,
   selectData,
+  updateFunction,
 }: EventCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
-  const { loggedProfile, updateAuthContext } = useContext(AuthContext);
+  //const { loggedProfile, updateAuthContext } = useContext(AuthContext);
 
-  const updateProfileInfo = async (inputData: string) => {
-    setCategoryValue(inputData);
-    if (reference.dbCategory === "age") {
-      const dataToNumber = Number(inputData);
-      await updateProfileCategoryDB(
-        loggedProfile.id,
-        reference.dbCategory,
-        dataToNumber
-      );
-    } else {
-      await updateProfileCategoryDB(
-        loggedProfile.id,
-        reference.dbCategory,
-        inputData
-      );
-    }
-    await updateAuthContext();
-    toast(`${reference.title} updated!`);
-  };
+  // const updateProfileInfo = async (inputData: string) => {
+  //   setCategoryValue(inputData);
+  //   if (reference.dbCategory === "age") {
+  //     const dataToNumber = Number(inputData);
+  //     await updateProfileCategoryDB(
+  //       loggedProfile.id,
+  //       reference.dbCategory,
+  //       dataToNumber
+  //     );
+  //   } else {
+  //     await updateProfileCategoryDB(
+  //       loggedProfile.id,
+  //       reference.dbCategory,
+  //       inputData
+  //     );
+  //   }
+  //   await updateAuthContext();
+  //   toast(`${reference.title} updated!`);
+  // };
 
   const handleEditType = () => {
     if (editable === "string") {
@@ -72,7 +73,7 @@ export const EventCategory = ({
       );
     }
   };
-  // console.log(typeof categoryValue, categoryValue);
+
   return (
     <div className="event--category">
       <div className="event--category__img">

@@ -1,5 +1,5 @@
 import { NavLink, useParams } from "react-router";
-import { EventCategory } from "../../components/eventCategory/EventCategory";
+import { EventCategory } from "../../components/infoCategory/InfoCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 
