@@ -105,6 +105,23 @@
   .create-profile__image-section {
     width: 100%;
     position: static;
+    max-height: none;
+  }
+
+  .create-profile__image-wrapper {
+    position: relative;
+  }
+
+  .create-profile__image-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .create-profile__upload-instructions {
+    position: static;
+    padding: 20px 0;
   }
 
   .create-profile__form {

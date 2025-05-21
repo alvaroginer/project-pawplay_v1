@@ -15,6 +15,7 @@ import tag from "../../imgs/eventPage/tag.svg";
 import allowedBreeds from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
 import description from "../../imgs/profilePage/description.svg";
+import { toast, ToastContainer, Slide } from "react-toastify";
 
 import "./CreateEvent.css";
 import { useState } from "react";
@@ -156,7 +157,8 @@ export const CreateEvent = () => {
           }
         />
         <div className="create-event__button-container">
-          <Button size="large" className="primary" children="Publish event" />
+          <Button className="primary" children="Publish event" />
+          <ToastContainer transition={Slide} />
         </div>
       </div>
     </div>
