@@ -193,7 +193,7 @@ export const SignUpPrueba = () => {
 
             <div className="login__secondary-info">
               <div className="login__button-wrapper">
-                <Button className="auth">Sign Up</Button>
+                <Button className="auth">Sing Up</Button>
               </div>
 
               <Link to="/signin" className=" form__sign-in-link">
