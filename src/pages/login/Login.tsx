@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { Input } from "../../components/input/Input";
+import { Button } from "../../components/button/Button";
 import { AuthContext } from "../../auth/AuthContext";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -64,26 +65,26 @@ export const Login = () => {
   };
 
   return (
-    <div className='login-container'>
-      <div className='modal'>
-        <div className='modal__image-container'>
+    <div className="login">
+      <div className="login__modal">
+        <div className="login__image-container">
           <img
             src={dogImage || "/placeholder.svg"}
-            alt='Perro con gafas trabajando en un portátil'
-            className='modal__image'
+            alt="Perro con gafas trabajando en un portátil"
+            className="login__image"
           />
         </div>
-        <div className='modal__content'>
-          <h1 className='modal__title'>PawPlay</h1>
-          <h2 className='modal__subtitle'>Become a PawPlayer</h2>
+        <div className="login__content">
+          <h1 className="login__title">PawPlay</h1>
+          <h2 className="login__subtitle">Become a PawPlayer</h2>
 
-          <form className='form' onSubmit={handleSubmit(onSubmit)}>
-            <div className='form__group'>
+          <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="login__form-group">
               <Input
-                label='Email'
-                placeholder='Put your email'
+                label="Email"
+                placeholder="Put your email"
                 className={`${errors.email ? "form__input--error" : ""}`}
-                editable='string'
+                editable="string"
                 disabled={isLoading}
                 {...register("email", {
                   required: "Email is required",
@@ -93,18 +94,15 @@ export const Login = () => {
                   },
                 })}
                 helpText={errors.email && errors.email.message}
-                type='email'
+                type="email"
               />
-            </div>
-
-            <div className='form__group'>
               <Input
-                type='password'
-                label='Password'
-                placeholder='Put your password'
+                type="password"
+                label="Password"
+                placeholder="Put your password"
                 className={` ${errors.password ? "form__input--error" : ""}`}
                 disabled={isLoading}
-                editable='string'
+                editable="string"
                 {...register("password", {
                   required: "Password is required",
                   pattern: {
@@ -115,8 +113,8 @@ export const Login = () => {
                 helpText={errors.password && errors.password.message}
               />
               <a
-                href='#'
-                className='form__forgot-link'
+                href="#"
+                className="login__forgot-link"
                 // onClick={(e) => {
                 //   e.preventDefault();
                 //   if (!isLoading) setShowForgotPassword(true);
@@ -124,35 +122,27 @@ export const Login = () => {
               >
                 Forgot password?
               </a>
-              <button
-                type='submit'
-                className='form__button'
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className='spinner'>
-                    <div className='spinner__circle'></div>
-                  </div>
-                ) : (
-                  "Login"
-                )}
-              </button>
             </div>
 
-            <Link to='/signin' className=' form__sign-in-link'>
-              <span className='or-text'>or</span> Sign In
-            </Link>
+            <div className="login__secondary-info">
+              <div className="login__button-wrapper">
+                <Button className="auth">Login</Button>
+              </div>
 
-            <p className='form__policy'>
-              by become a paw player you agree to our{" "}
-              <a href='#' className='form__link'>
-                Terms of Services
-              </a>{" "}
-              and{" "}
-              <a href='#' className='form__link'>
-                Privacy Policy
-              </a>
-            </p>
+              <Link to="/signin" className=" form__sign-in-link">
+                <span className="login__or-text">or</span> Sign Up
+              </Link>
+              <p className="login__policy">
+                by become a paw player you agree to our{" "}
+                <a href="#" className="login__link">
+                  Terms of Services
+                </a>{" "}
+                and{" "}
+                <a href="#" className="login__link">
+                  Privacy Policy
+                </a>
+              </p>
+            </div>
           </form>
         </div>
       </div>
