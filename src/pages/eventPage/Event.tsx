@@ -60,9 +60,11 @@ export const Event = () => {
     if (!hasJoined) {
       await eventSignUp(loggedProfile.id, eventData.id);
       setHasJoined(true);
+      toast.success("You've successfully joined the event!");
     } else {
       await eventUnregister(loggedProfile.id, eventData.id);
       setHasJoined(false);
+      toast.success("You've left the event.");
     }
   };
 
@@ -179,7 +181,7 @@ export const Event = () => {
                   Join Us
                 </Button>
               )}
-              <ToastContainer />
+              <ToastContainer transition={Slide} />
             </div>
           </aside>
         </div>
