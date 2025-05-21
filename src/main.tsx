@@ -13,12 +13,13 @@ import { ServiceTerms } from "./pages/serviceTerms/ServiceTerms.tsx";
 import { CreateEvent } from "./pages/createEvent/CreateEvent.tsx";
 import { CreateProfile } from "./pages/createProfile/CreateProfile.tsx";
 import { ProfileSelection } from "./pages/profileSelection/ProfileSelection.tsx";
-import { SignIn } from "./pages/signIn/SignIn.tsx";
+import { SignUp } from "./pages/signUp/SignUp.tsx";
 import { AuthProvider } from "./auth/AuthContext.tsx";
 import { MyPastEvents } from "./pages/myEvents/myPastEvents/MyPastEvents.tsx";
 import { MyUpcomingEvents } from "./pages/myEvents/myUpcomingEvents/MyUpcomingEvents.tsx";
 import { MyHostedEvents } from "./pages/myEvents/myHostedEvents/MyHostedEvents.tsx";
 import { MyFavouriteEvents } from "./pages/myEvents/myFavouriteEvents/MyFavouriteEvents.tsx";
+import { SignUpPrueba } from "./pages/signUpPrueba/SignUpPrueba.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
@@ -42,7 +43,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/my-events/past" element={<MyPastEvents />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signprueba" element={<SignUpPrueba />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>

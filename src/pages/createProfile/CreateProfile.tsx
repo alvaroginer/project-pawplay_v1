@@ -28,6 +28,7 @@ import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import "./CreateProfile.css";
 import { useState } from "react";
+import { toast, ToastContainer, Slide } from "react-toastify";
 
 export const CreateProfile = () => {
   const [formData, setFormData] = useState({
@@ -62,6 +63,7 @@ export const CreateProfile = () => {
       alert("Please complete all fields and upload an image.");
     } else {
       await pushNewProfile();
+      toast.success("Profile created");
     }
   };
 
@@ -229,11 +231,11 @@ export const CreateProfile = () => {
         </div>
         <div className="create-profile__button-container">
           <Button
-            size="large"
             className="primary"
             children="Publish profile"
             onClick={handleSubmit}
           />
+          <ToastContainer transition={Slide} />
         </div>
       </div>
     </div>
