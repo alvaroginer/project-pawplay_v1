@@ -28,7 +28,7 @@ import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer, Slide } from "react-toastify";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
@@ -60,7 +60,6 @@ export const Event = () => {
     if (!hasJoined) {
       await eventSignUp(loggedProfile.id, eventData.id);
       setHasJoined(true);
-      toast("hola");
     } else {
       await eventUnregister(loggedProfile.id, eventData.id);
       setHasJoined(false);
