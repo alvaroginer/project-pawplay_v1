@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 //import { AuthContext } from "../../auth/AuthContext";
 import { InfoCategoryProps } from "../../types";
 //import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
@@ -14,30 +14,9 @@ export const InfoCategory = ({
   editable,
   selectData,
   updateFunction,
-}: EventCategoryProps) => {
+}: InfoCategoryProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
-  //const { loggedProfile, updateAuthContext } = useContext(AuthContext);
-
-  // const updateProfileInfo = async (inputData: string) => {
-  //   setCategoryValue(inputData);
-  //   if (reference.dbCategory === "age") {
-  //     const dataToNumber = Number(inputData);
-  //     await updateProfileCategoryDB(
-  //       loggedProfile.id,
-  //       reference.dbCategory,
-  //       dataToNumber
-  //     );
-  //   } else {
-  //     await updateProfileCategoryDB(
-  //       loggedProfile.id,
-  //       reference.dbCategory,
-  //       inputData
-  //     );
-  //   }
-  //   await updateAuthContext();
-  //   toast(`${reference.title} updated!`);
-  // };
 
   const handleEditType = () => {
     if (editable === "string") {
@@ -115,7 +94,7 @@ export const InfoCategory = ({
                     return;
                   }
 
-                  updateProfileInfo(categoryValue); // actualiza en base de datos
+                  updateFunction(categoryValue); // actualiza en base de datos
                   setIsEditable(false); // cierra el modo edición
                 }}
               >

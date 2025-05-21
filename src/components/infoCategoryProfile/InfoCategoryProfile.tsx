@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { InfoCategoryProps } from "../../types";
-import { updateEventCategoryDB } from "../../dataBase/services/updateFunctions";
+import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
 import { InfoCategory } from "../infoCategory/InfoCategory";
 import "./InfoCategory.css";
@@ -12,17 +12,17 @@ export const EventCategory = (props: InfoCategoryProps) => {
   //const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
   const { loggedProfile, updateAuthContext } = useContext(AuthContext);
 
-  const updateEventInfo = async (inputData: string) => {
+  const updateProfileInfo = async (inputData: string) => {
     //setCategoryValue(inputData);
-    if (reference.dbCategory === "places") {
+    if (reference.dbCategory === "age") {
       const dataToNumber = Number(inputData);
-      await updateEventCategoryDB(
+      await updateProfileCategoryDB(
         loggedProfile.id,
         reference.dbCategory,
         dataToNumber
       );
     } else {
-      await updateEventCategoryDB(
+      await updateProfileCategoryDB(
         loggedProfile.id,
         reference.dbCategory,
         inputData
@@ -34,7 +34,7 @@ export const EventCategory = (props: InfoCategoryProps) => {
 
   return (
     <>
-      <InfoCategory {...props} updateFunction={updateEventInfo} />
+      <InfoCategory {...props} updateFunction={updateProfileInfo} />
     </>
   );
 };

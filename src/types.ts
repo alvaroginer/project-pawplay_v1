@@ -9,7 +9,7 @@ export interface EventData {
   profileIdCreator: string;
   profileIdAsisstant: string[];
   eventTitle: string;
-  eventPhoto: string | null;
+  eventPhoto?: string;
   eventDescription: string;
   dateTime: Timestamp;
   location: string;
@@ -106,7 +106,6 @@ export interface NavMenuProps {
 }
 
 // -----> Input
-
 export interface InputProps {
   label?: string;
   name: string;
