@@ -65,21 +65,21 @@ export const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="modal">
-        <div className="modal__image-container">
+    <div className="login">
+      <div className="login__modal">
+        <div className="login__image-container">
           <img
             src={dogImage || "/placeholder.svg"}
             alt="Perro con gafas trabajando en un portátil"
-            className="modal__image"
+            className="login__image"
           />
         </div>
-        <div className="modal__content">
-          <h1 className="modal__title">PawPlay</h1>
-          <h2 className="modal__subtitle">Become a PawPlayer</h2>
+        <div className="login__content">
+          <h1 className="login__title">PawPlay</h1>
+          <h2 className="login__subtitle">Become a PawPlayer</h2>
 
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form__group">
+          <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="login__form-group">
               <Input
                 label="Email"
                 placeholder="Put your email"
@@ -114,7 +114,7 @@ export const Login = () => {
               />
               <a
                 href="#"
-                className="form__forgot-link"
+                className="login__forgot-link"
                 // onClick={(e) => {
                 //   e.preventDefault();
                 //   if (!isLoading) setShowForgotPassword(true);
@@ -124,39 +124,25 @@ export const Login = () => {
               </a>
             </div>
 
-            <div className="form__group">
-              <div>
-                <Button className="">Login</Button>
+            <div className="login__secondary-info">
+              <div className="login__button-wrapper">
+                <Button className="auth">Login</Button>
               </div>
-              <button
-                type="submit"
-                className="form__button"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="spinner">
-                    <div className="spinner__circle"></div>
-                  </div>
-                ) : (
-                  "Login"
-                )}
-              </button>
+
+              <Link to="/signin" className=" form__sign-in-link">
+                <span className="login__or-text">or</span> Sign Up
+              </Link>
+              <p className="login__policy">
+                by become a paw player you agree to our{" "}
+                <a href="#" className="login__link">
+                  Terms of Services
+                </a>{" "}
+                and{" "}
+                <a href="#" className="login__link">
+                  Privacy Policy
+                </a>
+              </p>
             </div>
-
-            <Link to="/signin" className=" form__sign-in-link">
-              <span className="or-text">or</span> Sign In
-            </Link>
-
-            <p className="form__policy">
-              by become a paw player you agree to our{" "}
-              <a href="#" className="form__link">
-                Terms of Services
-              </a>{" "}
-              and{" "}
-              <a href="#" className="form__link">
-                Privacy Policy
-              </a>
-            </p>
           </form>
         </div>
       </div>
