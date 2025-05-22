@@ -34,6 +34,10 @@ ButtonProps) => {
       buttonType = "btn--auth";
       break;
 
+    case "send":
+      buttonType = "btn--send";
+      break;
+
     default:
       buttonType = "";
       break;
