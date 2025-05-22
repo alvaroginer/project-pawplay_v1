@@ -116,6 +116,21 @@
     background-color: var(--color-blue-active);
   }
 }
+
+.btn--send {
+  padding: var(--space-8) var(--space-22);
+  background-color: #997c66;
+  color: var(--color-white);
+  font-size: var(--font-14);
+
+  &:hover {
+    background-color: #876c59;
+  }
+
+  &:active {
+    background-color: #735847;
+  }
+}
 /*cambiar tsx boton
 /*.btn--small {
   padding: 10px 24px;
