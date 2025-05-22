@@ -13,8 +13,9 @@ interface FormFieldProps {
   selectData?: InputProps["selectData"];
   control: Control<any>;
   rules?: RegisterOptions;
-  errors: string;
+  errors: string | undefined;
   charLimit?: number;
+  required?: boolean | string;
 }
 
 export const FormField = ({

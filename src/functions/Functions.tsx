@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -8,6 +10,13 @@ export const transformToCamelCase = (str: string) => {
       return index === 0 ? word.toLowerCase() : word.toUpperCase();
     })
     .replace(/\s+/g, "");
+};
+
+export const transformToTimeStampDate = (date: string) => {
+  const [day, month, year] = date.split("/").map(Number);
+  const finalDate = new Date(year, month - 1, day);
+  const timestampDate = Timestamp.fromDate(finalDate);
+  return timestampDate;
 };
 
 export const normalizeTime = (i: Date) => {
@@ -33,4 +42,27 @@ export const normalizePlaces = (num: number) => {
   } else {
     return `${num}`;
   }
+};
+
+export const transformFileToDataUrl = async (
+  file: File
+): Promise<string | null> => {
+  if (file.size > 250 * 1024) {
+    alert("La imagen no puede superar los 250 KB");
+    return null;
+  }
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      resolve(reader.result as string);
+    };
+
+    reader.onerror = () => {
+      reject(new Error("Error al leer el archivo"));
+    };
+
+    reader.readAsDataURL(file);
+  });
 };

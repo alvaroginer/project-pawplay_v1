@@ -6,13 +6,17 @@ import {
   CreateEventProps,
   EventData,
 } from "../../types";
+import {
+  transformToTimeStampDate,
+  transformFileToDataUrl,
+} from "../../functions/Functions";
 import { Button } from "../../components/button/Button";
 import { FormField } from "../../components/formField/FormField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createEventDb } from "../../dataBase/services/createFunctions";
 import { toast } from "react-toastify";
-import { useContext } from "react";
-// import { Button } from "../../components/button/Button";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import title from "../../imgs/eventPage/title.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import time from "../../imgs/eventPage/time.svg";
@@ -21,45 +25,47 @@ import tag from "../../imgs/eventPage/tag.svg";
 import allowedBreeds from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
 import description from "../../imgs/profilePage/description.svg";
-
 import "./CreateEvent.css";
-import { useState } from "react";
-import { AuthContext } from "../../auth/AuthContext";
-const {
-  register,
-  handleSubmit,
-  setError,
-  formState: { errors },
-} = useForm<CreateEventProps>();
 
 export const CreateEvent = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    location: "",
-    activityType: "",
-    description: "",
-    time: "",
-    day: "",
-    availability: "",
-    organisator: "",
-    allowedBreeds: "",
-  });
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<CreateEventProps>();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const { loggedProfile } = useContext(AuthContext);
 
+  const handleImageFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return null;
+
+    const dataUrl = await transformFileToDataUrl(file);
+    if (dataUrl === null) {
+      setError("eventPhoto", {
+        type: "manual",
+        message: "The image must not exceed 250 KB.",
+      });
+    }
+    return dataUrl;
+  };
+
   const onSubmit: SubmitHandler<CreateEventProps> = async (formData) => {
+    if (loggedProfile === null) return;
+
     try {
       //Creamos objeto de evento combinando los datos
       const newEventData: EventData = {
         id: "",
-        userUid: loggedProfile.uid,
+        userUid: loggedProfile.userUid,
         profileIdCreator: loggedProfile.id,
         profileIdAsisstant: [],
         eventTitle: formData.eventTitle,
-        eventPhoto: formData.eventPhoto,
+        eventPhoto: handleImageFile(formData.eventPhoto),
         eventDescription: formData.eventDescription,
-        dateTime: "",
+        dateTime: transformToTimeStampDate(formData.day),
         location: formData.location,
         places: Number(formData.places),
         size: formData.size,
@@ -121,88 +127,106 @@ export const CreateEvent = () => {
         </div>
         <div className='create-event__form'>
           <FormField
+            control={control}
             iconSrc={title}
             iconAlt='Event title icon'
             label='Title'
             placeholder='Title of the event'
             editable='string'
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
+            rules={{
+              required: "Title is necessary",
+              pattern: {
+                value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
+                message: "Only letters (2–20 characters)",
+              },
+            }}
+            errors={errors.eventTitle && errors.eventTitle.message}
           />
           <FormField
+            control={control}
             iconSrc={calendar}
             iconAlt='Event day icon'
             label='Day'
-            placeholder='Month / Day / Year'
+            placeholder='Day / Month / Year'
             editable='string'
-            // onChange={(e) => setFormData({ ...formData, day: e.target.value })}
+            rules={{
+              required: "Day date is necessary",
+              pattern: {
+                value: /^([0][1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+                message: "Day / Month / Year",
+              },
+            }}
+            errors={errors.day && errors.day.message}
           />
           <FormField
+            control={control}
             iconSrc={time}
             iconAlt='Event start icon'
             label='Start time'
             placeholder='Start time'
             editable='select'
-            // onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             selectData={eventTime}
-            value={formData.time}
+            required='Start time is necessary'
+            errors={errors.time && errors.time.message}
           />
           <FormField
+            control={control}
             iconSrc={location}
             iconAlt='Event location icon'
             label='Location'
             placeholder='Put the adress of the event'
             editable='string'
-            // onChange={(e) =>
-            //   setFormData({ ...formData, location: e.target.value })
-            // }
+            required='Location is necessary'
+            errors={errors.location && errors.location.message}
           />
           <FormField
+            control={control}
             iconSrc={tag}
             iconAlt='Event activity icon'
             label='Type of activity'
             placeholder='Select the type of activity'
             editable='select'
-            // onChange={(e) =>
-            //   setFormData({ ...formData, activityType: e.target.value })
-            // }
             selectData={typeOfActivity}
-            value={formData.activityType}
+            required='Activity type is necessary'
+            errors={errors.activity && errors.activity.message}
           />
           <FormField
+            control={control}
             iconSrc={allowedBreeds}
             iconAlt='Event allowed breeds icon'
             label='Allowed breeds'
             placeholder='Select allowed breeds'
             editable='select'
-            // onChange={(e) =>
-            //   setFormData({ ...formData, allowedBreeds: e.target.value })
-            // }
             selectData={dogBreedsType}
-            value={formData.allowedBreeds}
+            required='Allowed breeds is necessary'
+            errors={errors.breeds && errors.breeds.message}
           />
           <FormField
+            control={control}
             iconSrc={availability}
             iconAlt='Event availability icon'
             label='Availability'
             placeholder='Select the maxium places for the event'
             editable='select'
-            // onChange={(e) =>
-            //   setFormData({ ...formData, availability: e.target.value })
-            // }
             selectData={maximumPlaces}
-            value={formData.availability}
+            required='Set the maximum places'
+            errors={errors.places && errors.places.message}
           />
           <FormField
+            control={control}
             iconSrc={description}
             iconAlt='Event description icon'
             label='Description'
             placeholder='Description of the event'
             editable='string'
-            // onChange={(e) =>
-            //   setFormData({ ...formData, description: e.target.value })
-            // }
+            rules={{
+              required: "Description is necessary",
+              pattern: {
+                value: /^.{100,}$/,
+                message: "Day / Month / Year",
+              },
+            }}
+            errors={errors.eventDescription && errors.eventDescription.message}
           />
           <div className='create-event__button-container'>
             <Button size='large' className='primary' children='Publish event' />
