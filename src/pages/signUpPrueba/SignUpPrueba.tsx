@@ -8,6 +8,7 @@ import { collection, setDoc, doc } from "firebase/firestore";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../../dataBase/firebase";
 import dogImage from "../../imgs/loginImage.png";
+import arrow from "../../imgs/profilePage/arrow-left.svg";
 import { Button } from "../../components/button/Button";
 import "./SignUpPrueba.css";
 
@@ -100,6 +101,14 @@ export const SignUpPrueba = () => {
 
   return (
     <div className="login">
+      <div className="login__arrow-container">
+        <img
+          className="login__arow"
+          src={arrow}
+          alt="Icon to return"
+          onClick={() => navigate(-1)}
+        />
+      </div>
       <div className="login__modal">
         <div className="login__image-container">
           <img

@@ -1,12 +1,27 @@
 .login {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow-y: hidden;
   overflow-x: hidden;
   margin-inline: -16px;
   background-color: var(--color-brown);
+}
+
+.login__arrow-container {
+  display: flex;
+  justify-content: flex-start; /* Alinea a la izquierda */
+  max-width: var(--space-1000);
+  width: 100%;
+  margin-bottom: var(--space-24);
+}
+
+.login__arow {
+  cursor: pointer;
+  width: 24px; /* Ajusta al tamaño que necesites */
+  height: 24px;
 }
 
 /* login */

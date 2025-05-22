@@ -11,6 +11,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
+import arrow from "../../imgs/profilePage/arrow-left.svg";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,6 +67,14 @@ export const Login = () => {
 
   return (
     <div className="login">
+      <div className="login__arrow-container">
+        <img
+          className="login__arow"
+          src={arrow}
+          alt="Icon to return"
+          onClick={() => navigate(-1)}
+        />
+      </div>
       <div className="login__modal">
         <div className="login__image-container">
           <img
