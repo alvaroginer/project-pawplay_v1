@@ -133,7 +133,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
               </svg>
               {/* <img src={footprint} alt='Dog Footprint' /> */}
             </button>
-            <DotsMenu className="especific-align">
+            <DotsMenu className="especific-align__event-card">
               <p className="profile-page__option">Edit event</p>
               <p className="profile-page__option">Cancel attendance</p>
             </DotsMenu>
