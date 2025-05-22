@@ -8,6 +8,7 @@ import { collection, setDoc, doc } from "firebase/firestore";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../../dataBase/firebase";
 import dogImage from "../../imgs/loginImage.png";
+import arrow from "../../imgs/profilePage/arrow-left.svg";
 import "./SignUp.css";
 
 export const SignUp = () => {
@@ -99,6 +100,14 @@ export const SignUp = () => {
 
   return (
     <div className="signin-container">
+      <div className="login__arrow-container">
+        <img
+          className="login__arow"
+          src={arrow}
+          alt="Icon to return"
+          onClick={() => navigate(-1)}
+        />
+      </div>
       <main className="signin">
         <div className="signin__card">
           <div className="signin__image-container">

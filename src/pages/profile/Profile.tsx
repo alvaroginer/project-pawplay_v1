@@ -19,6 +19,8 @@ import {
   getOneProfile,
   getOneUser,
 } from "../../dataBase/services/readFunctions";
+import { useNavigate } from "react-router";
+
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -35,6 +37,7 @@ export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { loggedProfile, user } = useContext(AuthContext);
 
@@ -89,6 +92,7 @@ export const Profile = () => {
             src={arrow}
             alt="Icon arrow to go back"
             className="profile-page__back-icon"
+            onClick={() => navigate(-1)}
           />
           <DotsMenu className="">
             <p className="profile-page__option" onClick={toggleDeleteModal}>
@@ -111,6 +115,7 @@ export const Profile = () => {
                 src={arrow}
                 alt="Icon arrow to go back"
                 className="profile-page__back-icon"
+                onClick={() => navigate(-1)}
               />
               <DotsMenu className="">
                 <p className="profile-page__option" onClick={toggleDeleteModal}>

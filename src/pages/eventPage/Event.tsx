@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
@@ -68,6 +68,8 @@ export const Event = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
   // Falta comprobar que el perfil está completo para poder apuntarse
 
@@ -77,9 +79,9 @@ export const Event = () => {
     return (
       <>
         <div className="event--header">
-          <NavLink to="" className="btn--icon">
-            <img src={arrow} alt="Return Icon" />
-          </NavLink>
+          <div className="btn--icon">
+            <img src={arrow} alt="Return Icon" onClick={() => navigate(-1)} />
+          </div>
           <div className="event--header__buttons">
             <button className="btn--icon margin--right__10">
               <img src={share} alt="Share Icon" />
