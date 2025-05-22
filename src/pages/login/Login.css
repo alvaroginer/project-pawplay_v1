@@ -8,6 +8,7 @@
   overflow-x: hidden;
   margin-inline: -16px;
   background-color: var(--color-brown);
+  padding: 0 var(--space-16);
 }
 
 .login__arrow-container {
