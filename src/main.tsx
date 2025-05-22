@@ -44,7 +44,7 @@ createRoot(document.getElementById("root")!).render(
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/signprueba" element={<SignUpPrueba />} />
+        <Route path="/singupprueba" element={<SignUpPrueba />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>
