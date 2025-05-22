@@ -6,6 +6,9 @@ import { ProfileData, EventData } from "../../types";
 import { db } from "../../dataBase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { DotsMenu } from "../dotsMenu/DotsMenu";
+import { WarningModal } from "../modals/warningModal/WarningModal";
+import { getAuth } from "firebase/auth";
+
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/profileCard/bone.svg";
@@ -14,10 +17,11 @@ import bone from "../../imgs/profileCard/bone.svg";
 
 export const ProfileCard = ({ eventId }: { eventId: string }) => {
   const [profileData, setProfileData] = useState<ProfileData>();
+  const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
   const [createdEventsByProfile, setCreatedEventsByProfile] =
     useState<EventData[]>();
   const navigate = useNavigate();
-
+  const currentUser = getAuth().currentUser;
   useEffect(() => {
     console.log("se ejecuta el useEffect en el componente de profileCrad");
     const fecthProfile = async () => {
@@ -44,6 +48,10 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     fetchQuerySnap();
   }, [eventId]);
 
+  const toggleDeleteModal = () => {
+    setisDeleteModalOpen(!isDeleteModalOpen);
+  };
+
   const handleCardClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest(".dots-menu--container")) return;
@@ -62,17 +70,18 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
             src={profileData.profilePhoto ? profileData.profilePhoto : dogUser}
             alt="Profile Image"
           />
-          <div
-            className="dots-menu--container"
-            onClick={(e) => {
-              e.stopPropagation(); // evita que el evento llegue al Link
-              e.preventDefault(); // importante para prevenir navegación
-            }}
-          >
-            <DotsMenu className="">
-              <p className="profile-page__option">Delete profile</p>
-            </DotsMenu>
-          </div>
+          {currentUser?.uid === profileData.userUid && (
+            <div
+              className="dots-menu--container"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <DotsMenu className="especific-align__event-card">
+                <p className="profile-page__option" onClick={toggleDeleteModal}>
+                  Delete profile
+                </p>
+              </DotsMenu>
+            </div>
+          )}
         </div>
         <div className="profile--card__info">
           <p className="profile--card__name">
@@ -92,6 +101,13 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
             <p className="profile--card__label">Events created</p>
           </div>
         </div>
+        {isDeleteModalOpen && (
+          <WarningModal
+            modalText="Are you sure you want to delete this lovely dog profile?"
+            buttonText="Yes, I am sure"
+            onClose={() => setisDeleteModalOpen(false)}
+          />
+        )}
       </div>
     );
   }
