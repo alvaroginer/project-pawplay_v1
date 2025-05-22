@@ -15,7 +15,7 @@ import ruler from "../../imgs/profilePage/ruler.svg";
 import dog from "../../imgs/profilePage/dog.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
-import "./CreateProfileNew.css";
+import "./CreateProfile.css";
 import { useState } from "react";
 
 export const CreateProfile = () => {
