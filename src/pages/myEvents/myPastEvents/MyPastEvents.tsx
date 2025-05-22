@@ -11,6 +11,7 @@ export const MyPastEvents = () => {
   const { loggedProfile } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchPastEvents = async () => {
       const pastEventsSnap = await getPastEvents(loggedProfile.id);
       setPastEvents(pastEventsSnap);

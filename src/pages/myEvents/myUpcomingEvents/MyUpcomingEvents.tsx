@@ -11,6 +11,7 @@ export const MyUpcomingEvents = () => {
   const { loggedProfile } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchUpcomingEvents = async () => {
       const upcomingEventsSnap = await getUpcomingEvents(loggedProfile.id);
       setUpcomingEvents(upcomingEventsSnap);

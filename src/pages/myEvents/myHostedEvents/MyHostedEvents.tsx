@@ -11,6 +11,7 @@ export const MyHostedEvents = () => {
   const { loggedProfile } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchHostedEvents = async () => {
       const hostedEventsSnap = await getHostedEvents(loggedProfile.id);
       setHostedEvents(hostedEventsSnap);

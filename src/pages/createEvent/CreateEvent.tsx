@@ -5,6 +5,7 @@ import {
   typeOfActivity,
   CreateEventProps,
   EventData,
+  ImageFileInput,
 } from "../../types";
 import {
   transformToTimeStampDate,
@@ -28,25 +29,39 @@ import description from "../../imgs/profilePage/description.svg";
 import "./CreateEvent.css";
 
 export const CreateEvent = () => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const { loggedProfile } = useContext(AuthContext);
   const {
     control,
+    register,
     handleSubmit,
     setError,
     formState: { errors },
   } = useForm<CreateEventProps>();
 
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const { loggedProfile } = useContext(AuthContext);
+  const handleImageFile = async (inputData: ImageFileInput) => {
+    const file = inputData.image[0];
 
-  const handleImageFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    //Comprobamos que no esté vacío
     if (!file) return null;
 
-    const dataUrl = await transformFileToDataUrl(file);
+    if (inputData.image.length > 1) {
+      setError("eventPhoto", {
+        type: "manual",
+        message: "Upload only one file",
+      });
+      return null;
+    }
+
+    //Hacemos que se visualice en el selector
+    setSelectedImage(file);
+
+    //La pasamos a dataUrl
+    const dataUrl = await transformFileToDataUrl(file, setError, "eventPhoto");
     if (dataUrl === null) {
       setError("eventPhoto", {
         type: "manual",
-        message: "The image must not exceed 250 KB.",
+        message: "An error ocurred by uploading the image. Try again.",
       });
     }
     return dataUrl;
@@ -56,6 +71,10 @@ export const CreateEvent = () => {
     if (loggedProfile === null) return;
 
     try {
+      if (!formData.eventPhoto) return;
+      const imageUrl = await handleImageFile({ image: formData.eventPhoto });
+      if (!imageUrl) return;
+
       //Creamos objeto de evento combinando los datos
       const newEventData: EventData = {
         id: "",
@@ -63,7 +82,7 @@ export const CreateEvent = () => {
         profileIdCreator: loggedProfile.id,
         profileIdAsisstant: [],
         eventTitle: formData.eventTitle,
-        eventPhoto: handleImageFile(formData.eventPhoto),
+        eventPhoto: imageUrl,
         eventDescription: formData.eventDescription,
         dateTime: transformToTimeStampDate(formData.day),
         location: formData.location,
@@ -100,15 +119,10 @@ export const CreateEvent = () => {
               </div>
             )}
             <input
+              {...register("eventPhoto", { required: "Image is required" })}
               id='file-input'
               type='file'
-              accept='image/*'
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  setSelectedImage(file);
-                }
-              }}
+              accept='image/webp,image/jpeg,image/png'
               className='create-profile__file-input'
             />
             {selectedImage && (

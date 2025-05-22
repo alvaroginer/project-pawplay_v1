@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EventCategoryProps } from "../../types";
+import { EventCategoryBigProps } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategoryBig.css";
 import { Input } from "../input/Input";
@@ -9,12 +9,12 @@ export const EventCategoryBig = ({
   reference,
   info,
   editable,
-}: EventCategoryProps) => {
+}: EventCategoryBigProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
 
   const handleEditType = () => {
-    if (editable === "string") {
+    if (editable === true) {
       return (
         <Input
           name={reference.dbCategory}
@@ -58,7 +58,7 @@ export const EventCategoryBig = ({
             </p>
           )}
 
-          {editable !== "" &&
+          {editable &&
             (isEditable ? (
               <svg
                 xmlns='http://www.w3.org/2000/svg'

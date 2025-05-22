@@ -1,25 +1,20 @@
-import { db } from "../../dataBase/firebase";
-import {
-  collection,
-  addDoc,
-  doc,
-  arrayUnion,
-  updateDoc,
-} from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth } from "firebase/auth";
-
 import {
   dogBreedsType,
   dogSizesType,
   dogGenderType,
   dogAgeType,
+  CreateProfileProps,
+  ImageFileInput,
+  ProfileData,
 } from "../../types";
-
+import { createProfileDb } from "../../dataBase/services/createFunctions";
 import { FormField } from "../../components/formField/FormField";
 import { Button } from "../../components/button/Button";
-
-import account from "../../imgs/profilePage/account-outline.svg";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState, useContext } from "react";
+import { transformFileToDataUrl } from "../../functions/Functions";
+import { AuthContext } from "../../auth/AuthContext";
+import { toast } from "react-toastify";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
 import medal from "../../imgs/profilePage/medal-outline.svg";
 import ruler from "../../imgs/profilePage/ruler.svg";
@@ -27,215 +22,213 @@ import dog from "../../imgs/profilePage/dog.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import "./CreateProfile.css";
-import { useState } from "react";
 
 export const CreateProfile = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    breed: "",
-    ownerName: "",
-    age: "",
-    gender: "",
-    size: "",
-    description: "",
-  });
-
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const auth = getAuth();
+  const { user } = useContext(AuthContext);
+  const {
+    control,
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<CreateProfileProps>();
 
-  const handleSubmit = async () => {
-    if (!auth.currentUser) {
-      alert("Debes estar autenticado para crear un perfil.");
-      return;
+  const handleImageFile = async (inputData: ImageFileInput) => {
+    const file = inputData.image[0];
+
+    //Comprobamos que no esté vacío
+    if (!file) return null;
+
+    if (inputData.image.length > 1) {
+      setError("profilePhoto", {
+        type: "manual",
+        message: "Upload only one file",
+      });
+      return null;
     }
 
-    if (
-      formData.name === "" ||
-      formData.breed === "" ||
-      formData.ownerName === "" ||
-      formData.age === "" ||
-      formData.gender === "" ||
-      formData.size === "" ||
-      formData.description === "" ||
-      !selectedImage
-    ) {
-      alert("Please complete all fields and upload an image.");
-    } else {
-      await pushNewProfile();
+    //Hacemos que se visualice en el selector
+    setSelectedImage(file);
+
+    //La pasamos a dataUrl
+    const dataUrl = await transformFileToDataUrl(
+      file,
+      setError,
+      "profilePhoto"
+    );
+    if (dataUrl === null) {
+      setError("profilePhoto", {
+        type: "manual",
+        message: "An error ocurred by uploading the image. Try again.",
+      });
     }
+    return dataUrl;
   };
 
-  const uploadProfileImage = async (imageFile: File, profileId: string) => {
-    const storage = getStorage();
-    const imageRef = ref(storage, `profileImages/${profileId}`);
-    await uploadBytes(imageRef, imageFile);
-    return await getDownloadURL(imageRef);
-  };
+  const onSubmit: SubmitHandler<CreateProfileProps> = async (formData) => {
+    if (!user) return;
 
-  const pushNewProfile = async () => {
     try {
-      const profilesCollectionRef = collection(db, "profiles");
-      const docRef = await addDoc(profilesCollectionRef, {
-        profileName: formData.name,
+      if (!formData.profilePhoto) return;
+      const imageUrl = await handleImageFile({ image: formData.profilePhoto });
+      if (!imageUrl) return;
+
+      const newProfileData: ProfileData = {
+        userUid: user.uid,
+        id: "",
+        profileName: formData.profileName,
+        profilePhoto: imageUrl,
+        profileBio: formData.profileBio,
+        age: formData.age,
         breed: formData.breed,
-        age: Number(formData.age),
-        sex: formData.gender,
         size: formData.size,
-        profileBio: formData.description,
-        profilePhoto: "",
-      });
+        gender: formData.gender,
+        likedEvents: [],
+      };
 
-      const userId = getAuth().currentUser?.uid;
-      if (!userId) throw new Error("No authenticated user found");
+      await createProfileDb(newProfileData);
 
-      const userDocRef = doc(db, "users", userId);
-
-      await updateDoc(userDocRef, {
-        profiles: arrayUnion(docRef.id),
-      });
-
-      if (selectedImage) {
-        const imageUrl = await uploadProfileImage(selectedImage, docRef.id);
-        const profileDocRef = doc(db, "profiles", docRef.id);
-        await updateDoc(profileDocRef, { profilePhoto: imageUrl });
-      }
-
-      alert("Perfil creado con éxito");
-    } catch (error) {
-      console.error("Error adding profile:", error);
+      toast(
+        `Congratulations, you created a dog profile for ${formData.profileName}`
+      );
+    } catch (error: any) {
+      console.log(`Firebase error (${error.code}): ${error.message}`);
     }
   };
 
   return (
-    <div className="create-profile">
-      <div className="create-profile__image-section">
-        <div className="create-profile__image-wrapper">
-          {!selectedImage && (
-            <div className="create-profile__upload-instructions">
-              <p>{"Upload an image of your dog"}</p>
+    <div className='create-profile'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='create-profile__image-section'>
+          <div className='create-profile__image-wrapper'>
+            {!selectedImage && (
+              <div className='create-profile__upload-instructions'>
+                <p>{"Upload an image of your dog"}</p>
+                <label
+                  htmlFor='file-input'
+                  className='create-profile__upload-button'
+                >
+                  Choose a file
+                </label>
+              </div>
+            )}
+            <input
+              {...register("profilePhoto", { required: "Image is required" })}
+              id='file-input'
+              type='file'
+              accept='image/webp,image/jpeg,image/png'
+              className='create-profile__file-input'
+            />
+            {selectedImage && (
               <label
-                htmlFor="file-input"
-                className="create-profile__upload-button"
+                htmlFor='file-input'
+                className='create-profile__image-label'
               >
-                Choose a file
+                <img
+                  src={URL.createObjectURL(selectedImage)}
+                  alt='Preview'
+                  className='create-profile__image-preview'
+                />
               </label>
-            </div>
-          )}
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                setSelectedImage(file);
-              }
-            }}
-            className="create-profile__file-input"
-          />
-          {selectedImage && (
-            <label htmlFor="file-input" className="create-profile__image-label">
-              <img
-                src={URL.createObjectURL(selectedImage)}
-                alt="Preview"
-                className="create-profile__image-preview"
-              />
-            </label>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-      <div className="create-profile__form">
-        <div className="create-profile__field-group no-padding-top">
-          <FormField
-            iconSrc={dog}
-            iconAlt="Dog name icon"
-            label="Dog's name"
-            placeholder="Write the name of your dog"
-            editable="string"
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
+        <div className='create-profile__form'>
+          <div className='create-profile__field-group no-padding-top'>
+            <FormField
+              control={control}
+              iconSrc={dog}
+              iconAlt='Dog name icon'
+              label="Dog's name"
+              placeholder='Write the name of your dog'
+              editable='string'
+              rules={{
+                required: "Dog name is necessary",
+                pattern: {
+                  value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
+                  message: "Only letters (2–20 characters)",
+                },
+              }}
+              errors={errors.profileName && errors.profileName.message}
+            />
+          </div>
+          <div className='create-profile__field-group'>
+            <FormField
+              control={control}
+              iconSrc={medal}
+              iconAlt='Dog breed icon'
+              label='Breed'
+              placeholder='Select the breed of your dog'
+              editable='select'
+              selectData={dogBreedsType}
+              required='The breed of your dog is required'
+              errors={errors.breed && errors.breed.message}
+            />
+          </div>
+          <div className='create-profile__field-group'>
+            <FormField
+              control={control}
+              iconSrc={timer}
+              iconAlt='Dog age icon'
+              label='Age'
+              placeholder='Select the age of your dog'
+              editable='select'
+              selectData={dogAgeType}
+              required='The age of your dog is required'
+              errors={errors.age && errors.age.message}
+            />
+            <FormField
+              control={control}
+              iconSrc={gender}
+              iconAlt='Dog gender icon'
+              label='Gender'
+              placeholder="Select your dog's gender"
+              editable='select'
+              selectData={dogGenderType}
+              required='The gender of your dog is required'
+              errors={errors.gender && errors.gender.message}
+            />
+            <FormField
+              control={control}
+              iconSrc={ruler}
+              iconAlt='Dog size icon'
+              label='Size'
+              placeholder='Select the size of your dog'
+              editable='select'
+              selectData={dogSizesType}
+              required='The size of your dog is required'
+              errors={errors.size && errors.size.message}
+            />
+          </div>
+          <div className='create-profile__field-group'>
+            <FormField
+              control={control}
+              iconSrc={description}
+              iconAlt='Dog description icon'
+              label='Description'
+              placeholder='Description of your dog'
+              editable='string'
+              rules={{
+                required: "Description is necessary",
+                pattern: {
+                  value: /^.{100,}$/,
+                  message: "Day / Month / Year",
+                },
+              }}
+              errors={errors.profileBio && errors.profileBio.message}
+            />
+          </div>
+          <div className='create-profile__button-container'>
+            <Button
+              size='large'
+              className='primary'
+              children='Publish profile'
+              onClick={handleSubmit}
+            />
+          </div>
         </div>
-        <div className="create-profile__field-group">
-          <FormField
-            iconSrc={medal}
-            iconAlt="Dog breed icon"
-            label="Breed"
-            placeholder="Select the breed of your dog"
-            editable="select"
-            onChange={(e) =>
-              setFormData({ ...formData, breed: e.target.value })
-            }
-            selectData={dogBreedsType}
-            value={formData.breed}
-          />
-        </div>
-        <div className="create-profile__field-group">
-          <FormField
-            iconSrc={account}
-            iconAlt="Owner name icon"
-            label="Owner's name"
-            placeholder="Write your name"
-            editable="string"
-            onChange={(e) =>
-              setFormData({ ...formData, ownerName: e.target.value })
-            }
-          />
-        </div>
-        <div className="create-profile__field-group">
-          <FormField
-            iconSrc={timer}
-            iconAlt="Dog age icon"
-            label="Age"
-            placeholder="Select the age of your dog"
-            editable="select"
-            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-            selectData={dogAgeType}
-            value={formData.age}
-          />
-          <FormField
-            iconSrc={gender}
-            iconAlt="Dog gender icon"
-            label="Gender"
-            placeholder="Select your dog's gender"
-            editable="select"
-            onChange={(e) =>
-              setFormData({ ...formData, gender: e.target.value })
-            }
-            selectData={dogGenderType}
-            value={formData.gender}
-          />
-          <FormField
-            iconSrc={ruler}
-            iconAlt="Dog size icon"
-            label="Size"
-            placeholder="Select the size of your dog"
-            editable="select"
-            onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-            selectData={dogSizesType}
-            value={formData.size}
-          />
-        </div>
-        <div className="create-profile__field-group">
-          <FormField
-            iconSrc={description}
-            iconAlt="Dog description icon"
-            label="Description"
-            placeholder="Description of your dog"
-            editable="string"
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-          />
-        </div>
-        <div className="create-profile__button-container">
-          <Button
-            size="large"
-            className="primary"
-            children="Publish profile"
-            onClick={handleSubmit}
-          />
-        </div>
-      </div>
+      </form>
     </div>
   );
 };

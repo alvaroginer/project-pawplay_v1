@@ -1,5 +1,5 @@
 import { NavLink, useParams } from "react-router";
-import { EventCategory } from "../../components/infoCategory/InfoCategory";
+import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Button } from "../../components/button/Button";
 
@@ -54,7 +54,7 @@ export const Event = () => {
   }, [paramsStr]);
 
   const handleHasJoined = async () => {
-    if (eventData === null) return;
+    if (eventData === null || loggedProfile === null) return;
 
     if (!hasJoined) {
       await eventSignUp(loggedProfile.id, eventData.id);
@@ -73,112 +73,112 @@ export const Event = () => {
   } else {
     return (
       <>
-        <div className="event--header">
-          <NavLink to="" className="btn--icon">
-            <img src={arrow} alt="Return Icon" />
+        <div className='event--header'>
+          <NavLink to='' className='btn--icon'>
+            <img src={arrow} alt='Return Icon' />
           </NavLink>
-          <div className="event--header__buttons">
-            <button className="btn--icon margin--right__10">
-              <img src={share} alt="Share Icon" />
+          <div className='event--header__buttons'>
+            <button className='btn--icon margin--right__10'>
+              <img src={share} alt='Share Icon' />
             </button>
-            <button className="btn--icon">
-              <img src={footprintBlack} alt="Paw-Like Icon" />
+            <button className='btn--icon'>
+              <img src={footprintBlack} alt='Paw-Like Icon' />
             </button>
           </div>
         </div>
-        <div className="event--img-container">
+        <div className='event--img-container'>
           <img
             src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-            alt=""
+            alt=''
           />
         </div>
-        <h3 className="event--title">{eventData.eventTitle}</h3>
-        <div className="event--container">
-          <main className="event--container__categories">
-            <EventCategory
+        <h3 className='event--title'>{eventData.eventTitle}</h3>
+        <div className='event--container'>
+          <main className='event--container__categories'>
+            <InfoCategoryEvent
               img={calendar}
               reference={{
                 title: "Day",
                 dbCategory: "dateTime",
               }}
               info={normalizeDate(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={time}
               reference={{
                 title: "Start time",
                 dbCategory: "dateTime",
               }}
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={location}
               reference={{
                 title: "Location",
                 dbCategory: "location",
               }}
               info={eventData.location}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={tag}
               reference={{
                 title: "Activity",
                 dbCategory: "activity",
               }}
               info={eventData.activity}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={dog}
               reference={{
                 title: "Allowed breeds",
                 dbCategory: "breeds",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={availability}
               reference={{
                 title: "Availability",
                 dbCategory: "profileIdAsisstant",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=""
+              editable=''
             />
-            <EventCategory
+            <InfoCategoryEvent
               img={description}
               reference={{
                 title: "Description",
                 dbCategory: "eventDescription",
               }}
               info={eventData.eventDescription}
-              editable=""
+              editable=''
             />
           </main>
-          <aside className="event--container__sidebar">
-            <h3 className="event--profile-title">Know your organisator</h3>
-            <div className="profile-card">
+          <aside className='event--container__sidebar'>
+            <h3 className='event--profile-title'>Know your organisator</h3>
+            <div className='profile-card'>
               <ProfileCard eventId={eventData.profileIdCreator} />
             </div>
-            <div className="event--modal">
+            <div className='event--modal'>
               {hasJoined ? (
-                <Button onClick={handleHasJoined} className="terciary">
+                <Button onClick={handleHasJoined} className='terciary'>
                   Cancel assistance
                 </Button>
               ) : (
-                <Button onClick={handleHasJoined} className="primary">
+                <Button onClick={handleHasJoined} className='primary'>
                   Join Us
                 </Button>
               )}
             </div>
           </aside>
         </div>
-        <div className="event--events-container">
-          <h3 className="event--profile-title">Similar Events</h3>
+        <div className='event--events-container'>
+          <h3 className='event--profile-title'>Similar Events</h3>
         </div>
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}

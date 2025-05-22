@@ -122,7 +122,7 @@ export interface InputProps {
   helpText?: string;
   charLimit?: number;
   editable: "string" | "select" | "";
-  selectData?: string[];
+  selectData?: SelectDataType;
 }
 
 // -----> Forgot Password Modal
@@ -158,6 +158,9 @@ export interface InfoCategoryProps {
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
+}
+
+export interface UpdateInfoCategoryProps extends InfoCategoryProps {
   updateFunction: (referenceId: string) => void;
 }
 
@@ -175,21 +178,32 @@ export interface FormLayoutProps {
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
-
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
-export interface CreateEventProps {
-  eventPhoto: string | null;
-  eventTitle: string;
-  location: string;
-  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
-  eventDescription: string;
-  time: string;
-  day: string;
+export interface ImageFileInput {
+  image: FileList;
+}
+
+export interface CreateEventProps
+  extends Omit<
+    EventData,
+    | "id"
+    | "userUid"
+    | "profileIdCreator"
+    | "profileIdAsisstant"
+    | "eventPhoto"
+    | "places"
+    | "dateTime"
+  > {
+  eventPhoto: FileList;
   places: string;
-  breeds: string;
-  size: "Small" | "Medium" | "Big" | "Any";
+  day: string;
+  time: string;
+}
+
+export interface CreateProfileProps
+  extends Omit<ProfileData, "userUid" | "id" | "likedEvents" | "profilePhoto"> {
+  profilePhoto: FileList;
 }
 
 export interface Field {
@@ -382,3 +396,5 @@ export const eventTime = [
   "23:00",
   "23:30",
 ];
+
+export const imageAllowedTypes = ["image/webp", "image/jpeg", "image/png"];

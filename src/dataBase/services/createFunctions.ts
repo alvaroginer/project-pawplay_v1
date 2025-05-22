@@ -1,6 +1,6 @@
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
-import { EventData } from "../../types";
+import { EventData, ProfileData } from "../../types";
 
 /* -----> Events */
 // Create events in database
@@ -13,5 +13,19 @@ export const createEventDb = async (eventData: EventData) => {
   console.log(
     "Event created in FireBase with the following data",
     eventDataWithRef
+  );
+};
+
+/* -----> Profiles */
+// Create profiles in database
+export const createProfileDb = async (profileData: ProfileData) => {
+  const profileRef = collection(db, "profiles");
+  const newProfileRef = doc(profileRef);
+  const profileDataWithRef = { ...profileData, id: newProfileRef.id };
+
+  await setDoc(newProfileRef, profileDataWithRef);
+  console.log(
+    "Event created in FireBase with the following data",
+    profileDataWithRef
   );
 };

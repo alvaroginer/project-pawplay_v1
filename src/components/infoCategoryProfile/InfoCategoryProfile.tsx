@@ -6,14 +6,13 @@ import { toast } from "react-toastify";
 import { InfoCategory } from "../infoCategory/InfoCategory";
 import "./InfoCategory.css";
 
-export const EventCategory = (props: InfoCategoryProps) => {
+export const InfoCategoryProfile = (props: InfoCategoryProps) => {
   const { reference } = props;
-  //const [isEditable, setIsEditable] = useState<boolean>(false);
-  //const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
   const { loggedProfile, updateAuthContext } = useContext(AuthContext);
 
   const updateProfileInfo = async (inputData: string) => {
-    //setCategoryValue(inputData);
+    if (!loggedProfile) return;
+
     if (reference.dbCategory === "age") {
       const dataToNumber = Number(inputData);
       await updateProfileCategoryDB(

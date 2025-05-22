@@ -11,6 +11,7 @@ export const MyFavouriteEvents = () => {
   const { loggedProfile } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchFavouriteEvents = async () => {
       const favouriteEventsSnap = await getFavouriteEvents(
         loggedProfile.likedEvents

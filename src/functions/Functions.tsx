@@ -1,4 +1,6 @@
 import { Timestamp } from "firebase/firestore";
+import { imageAllowedTypes } from "../types";
+import { UseFormSetError } from "react-hook-form";
 
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -45,10 +47,23 @@ export const normalizePlaces = (num: number) => {
 };
 
 export const transformFileToDataUrl = async (
-  file: File
+  file: File,
+  setError: UseFormSetError<any>,
+  fieldName: "eventPhoto" | "profilePhoto"
 ): Promise<string | null> => {
+  if (!imageAllowedTypes.includes(file.type)) {
+    setError(fieldName, {
+      type: "manual",
+      message: "The image must not exceed 250 KB.",
+    });
+    return null;
+  }
+
   if (file.size > 250 * 1024) {
-    alert("La imagen no puede superar los 250 KB");
+    setError(fieldName, {
+      type: "manual",
+      message: "The image must not exceed 250 KB.",
+    });
     return null;
   }
 

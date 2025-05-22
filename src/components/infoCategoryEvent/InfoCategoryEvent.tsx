@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { InfoCategory } from "../infoCategory/InfoCategory";
 import "./InfoCategory.css";
 
-export const EventCategory = (props: InfoCategoryProps) => {
+export const InfoCategoryEvent = (props: InfoCategoryProps) => {
   const { reference } = props;
   //const [isEditable, setIsEditable] = useState<boolean>(false);
   //const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
