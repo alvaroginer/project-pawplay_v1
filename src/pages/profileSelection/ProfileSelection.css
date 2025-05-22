@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   gap: var(--space-36);
   justify-content: space-between;
-  max-width: 1300px;
+  /* max-width: 1300px; */
 }
 
 .profile-selection__info {
@@ -29,7 +29,11 @@
   gap: var(--space-12);
 }
 
-/* Footer abajo probelmas para mantenerlo, solución de momento temporal */
+@media screen and (width >= 1600px) {
+  .profile-selection {
+    justify-content: center;
+  }
+}
 
 @media screen and (width <= 360px) {
   .profiles-container {

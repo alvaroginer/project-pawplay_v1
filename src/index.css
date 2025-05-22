@@ -23,6 +23,7 @@
   --color-light-blue: hsl(213, 100%, 93%);
   --color-blue: hsl(213, 49%, 49%);
   --color-blue-hover: hsl(213, 48%, 45%);
+  --color-blue-active: hsl(213, 48%, 40%);
   --color-blue-disabled: hsl(213, 30%, 60%);
   --color-blue-500: hsl(213, 100%, 93%);
   --color-blue-800: rgb(99, 116, 128);
@@ -32,6 +33,7 @@
   --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
+
   --color-gray-800: hsl(206, 7%, 45%);
   --color-gray: hsl(200, 10%, 77%);
   --color-gray-600: hsl(201, 9%, 71%);
@@ -47,6 +49,9 @@
   --color-brown: hsla(32, 40%, 61%, 1);
   --color-brown-light: hsla(29, 90%, 76%, 1);
 
+  /* Green */
+  --color-green: hsl(104, 93%, 36%);
+
   /* -----> Spacing */
   --space-1: 1px;
   --space-2: 2px;
@@ -61,7 +66,11 @@
   --space-20: 20px;
   --space-22: 22px;
   --space-24: 24px;
+
+  --space-25: 25px;
+
   --space-26: 26px;
+
   --space-30: 30px;
   --space-32: 32px;
   --space-34: 34px;
@@ -89,9 +98,6 @@
   --radius-sm: var(--space-4);
   --radius-md: var(--space-14);
   --radius-full: var(--space-50);
-
-  /* -----> Padding */
-  --body-inline-padding: clamp(16px, 10.79vw, 178px);
 
   /* -----> Clamp */
   --clamp-16-18: clamp(16px, 1vw, 18px);
@@ -170,6 +176,14 @@ body {
 /* Position */
 .position-relative {
   position: relative;
+}
+
+.position-relative--right {
+  right: 0;
+}
+
+.position-relative--left {
+  left: 0;
 }
 
 /* -----> Displays */
@@ -304,6 +318,10 @@ body {
   margin-bottom: var(--space-24);
 }
 
+.margin--bt__200 {
+  margin-bottom: var(--space-200);
+}
+
 /* -----> Border-radius */
 .border-radius__12 {
   border-radius: var(--space-12);
@@ -333,38 +351,14 @@ body {
   align-items: center;
 }
 
-.filter-container--filters {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* o center, según cómo lo quieras */
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-bottom: var(--space-34);
-  padding: var(--space-16);
-}
-
-.filter-container--buttons {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: var(--space-14);
-  /* scrollbar-width: none; Firefox */
-  width: 100%;
-}
-
 /* .filter-container--buttons::-webkit-scrollbar {
   display: none; 
 } */
 
-.filter-container--buttons button {
-  flex-shrink: 0;
-}
-
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
   margin-top: var(--space-113);
-  margin-bottom: var(--space-34);
+  margin-bottom: var(--space-30);
   padding: var(--space-12);
   border-style: solid;
   border-width: var(--space-1);
@@ -378,13 +372,19 @@ body {
   }
 }
 
-.filter-button {
-  flex-shrink: 0;
+.filter-button--container {
   display: flex;
+  justify-content: flex-end;
+  width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
+  margin-bottom: var(--space-30);
+}
+
+.filter-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   cursor: pointer;
-  margin-top: var(--space-22);
-  text-align: right;
 }
 
 .filter-button p {
@@ -423,7 +423,7 @@ body {
 /* Media Queries */
 @media screen and (width>= 500px) {
   body {
-    padding-inline: var(--body-inline-padding);
+    padding-inline: var(--space-24);
   }
 }
 
@@ -450,6 +450,20 @@ body {
 @media (min-width: 837px) {
   .filter-container--buttons {
     overflow-x: visible;
+  }
+}
+
+@media screen and (min-width: 995px) {
+  .filter-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-30);
+  }
+
+  .filter-button--container {
+    margin: 0;
+    margin-top: 85px;
+    width: fit-content;
   }
 }
 

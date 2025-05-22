@@ -1,3 +1,14 @@
+import { db } from "../../dataBase/firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  arrayUnion,
+  updateDoc,
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth } from "firebase/auth";
+
 import {
   dogBreedsType,
   dogSizesType,
@@ -17,6 +28,7 @@ import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import "./CreateProfile.css";
 import { useState } from "react";
+import { toast, ToastContainer, Slide } from "react-toastify";
 
 export const CreateProfile = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +42,71 @@ export const CreateProfile = () => {
   });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const auth = getAuth();
+
+  const handleSubmit = async () => {
+    if (!auth.currentUser) {
+      alert("Debes estar autenticado para crear un perfil.");
+      return;
+    }
+
+    if (
+      formData.name === "" ||
+      formData.breed === "" ||
+      formData.ownerName === "" ||
+      formData.age === "" ||
+      formData.gender === "" ||
+      formData.size === "" ||
+      formData.description === "" ||
+      !selectedImage
+    ) {
+      alert("Please complete all fields and upload an image.");
+    } else {
+      await pushNewProfile();
+      toast.success("Profile created");
+    }
+  };
+
+  const uploadProfileImage = async (imageFile: File, profileId: string) => {
+    const storage = getStorage();
+    const imageRef = ref(storage, `profileImages/${profileId}`);
+    await uploadBytes(imageRef, imageFile);
+    return await getDownloadURL(imageRef);
+  };
+
+  const pushNewProfile = async () => {
+    try {
+      const profilesCollectionRef = collection(db, "profiles");
+      const docRef = await addDoc(profilesCollectionRef, {
+        profileName: formData.name,
+        breed: formData.breed,
+        age: Number(formData.age),
+        sex: formData.gender,
+        size: formData.size,
+        profileBio: formData.description,
+        profilePhoto: "",
+      });
+
+      const userId = getAuth().currentUser?.uid;
+      if (!userId) throw new Error("No authenticated user found");
+
+      const userDocRef = doc(db, "users", userId);
+
+      await updateDoc(userDocRef, {
+        profiles: arrayUnion(docRef.id),
+      });
+
+      if (selectedImage) {
+        const imageUrl = await uploadProfileImage(selectedImage, docRef.id);
+        const profileDocRef = doc(db, "profiles", docRef.id);
+        await updateDoc(profileDocRef, { profilePhoto: imageUrl });
+      }
+
+      alert("Perfil creado con éxito");
+    } catch (error) {
+      console.error("Error adding profile:", error);
+    }
+  };
 
   return (
     <div className="create-profile">
@@ -73,7 +150,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group no-padding-top">
           <FormField
             iconSrc={dog}
-            iconAlt=""
+            iconAlt="Dog name icon"
             label="Dog's name"
             placeholder="Write the name of your dog"
             editable="string"
@@ -83,7 +160,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={medal}
-            iconAlt=""
+            iconAlt="Dog breed icon"
             label="Breed"
             placeholder="Select the breed of your dog"
             editable="select"
@@ -97,7 +174,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={account}
-            iconAlt=""
+            iconAlt="Owner name icon"
             label="Owner's name"
             placeholder="Write your name"
             editable="string"
@@ -109,7 +186,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={timer}
-            iconAlt=""
+            iconAlt="Dog age icon"
             label="Age"
             placeholder="Select the age of your dog"
             editable="select"
@@ -119,7 +196,7 @@ export const CreateProfile = () => {
           />
           <FormField
             iconSrc={gender}
-            iconAlt=""
+            iconAlt="Dog gender icon"
             label="Gender"
             placeholder="Select your dog's gender"
             editable="select"
@@ -131,7 +208,7 @@ export const CreateProfile = () => {
           />
           <FormField
             iconSrc={ruler}
-            iconAlt=""
+            iconAlt="Dog size icon"
             label="Size"
             placeholder="Select the size of your dog"
             editable="select"
@@ -143,7 +220,7 @@ export const CreateProfile = () => {
         <div className="create-profile__field-group">
           <FormField
             iconSrc={description}
-            iconAlt=""
+            iconAlt="Dog description icon"
             label="Description"
             placeholder="Description of your dog"
             editable="string"
@@ -153,7 +230,12 @@ export const CreateProfile = () => {
           />
         </div>
         <div className="create-profile__button-container">
-          <Button size="large" className="primary" children="Create profile" />
+          <Button
+            className="primary"
+            children="Publish profile"
+            onClick={handleSubmit}
+          />
+          <ToastContainer transition={Slide} />
         </div>
       </div>
     </div>

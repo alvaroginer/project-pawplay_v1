@@ -1,4 +1,5 @@
 import { EventCategory } from "../../components/eventCategory/EventCategory";
+import { EventCategoryBig } from "../../components/eventCategoryBig/EventCategoryBig";
 import { Accordion } from "../../components/accordion/Accordion";
 import {
   dogBreedsType,
@@ -8,14 +9,18 @@ import {
   ProfileData,
   UserData,
 } from "../../types";
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
+import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
+import { useNavigate } from "react-router";
+
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -25,14 +30,14 @@ import star from "../../imgs/profilePage/star-outline.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
-import dots from "../../imgs/eventCard/dots.svg";
+import dogIcon from "../../imgs/profilePage/dog.svg";
 import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
-  const [isOptionsMenuOpen, setisOptionsMenuOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { loggedProfile, user } = useContext(AuthContext);
 
@@ -43,13 +48,11 @@ export const Profile = () => {
     const fetchProfile = async () => {
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", profileIdParamsStr);
+      if (profileSnap === null) {
         return;
       }
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
 
-      setProfileInfo(typedProfileSnap);
+      setProfileInfo(profileSnap);
     };
 
     fetchProfile();
@@ -63,20 +66,15 @@ export const Profile = () => {
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (!userSnap.exists()) {
-        console.error("El perfil no existe con id:", profileInfo.userUid);
+      if (userSnap === null) {
         return;
       }
-      const typedUserSnap: UserData = userSnap.data() as UserData;
-      setUserInfo(typedUserSnap);
+
+      setUserInfo(userSnap);
     };
 
     fetchUser();
   }, [loggedProfile, profileInfo]);
-
-  const toggleOptionsMenu = () => {
-    setisOptionsMenuOpen(!isOptionsMenuOpen);
-  };
 
   const toggleDeleteModal = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
@@ -94,22 +92,13 @@ export const Profile = () => {
             src={arrow}
             alt="Icon arrow to go back"
             className="profile-page__back-icon"
+            onClick={() => navigate(-1)}
           />
-          <div className="profile-page__dots-container">
-            <img
-              src={dots}
-              alt="Dots icon for options"
-              onClick={toggleOptionsMenu}
-              className="dots"
-            />
-            {isOptionsMenuOpen && (
-              <div className="profile-page__options-container">
-                <p className="profile-page__option" onClick={toggleDeleteModal}>
-                  Delete profile
-                </p>
-              </div>
-            )}
-          </div>
+          <DotsMenu className="">
+            <p className="profile-page__option" onClick={toggleDeleteModal}>
+              Delete profile
+            </p>
+          </DotsMenu>
         </div>
         <div className="profile-page">
           <div className="profile-page__image-container">
@@ -119,45 +108,58 @@ export const Profile = () => {
               className="profile-page__image"
             />
           </div>
+
           <div className="profile-page__details-container">
             <div className="profile-page__actions2">
               <img
                 src={arrow}
                 alt="Icon arrow to go back"
                 className="profile-page__back-icon"
+                onClick={() => navigate(-1)}
               />
-              <div className="profile-page__dots-container">
-                <img
-                  src={dots}
-                  alt="Dots icon for options"
-                  onClick={toggleOptionsMenu}
-                  className="dots"
-                />
-                {isOptionsMenuOpen && (
-                  <div className="profile-page__options-container">
-                    <p
-                      className="profile-page__option"
-                      onClick={toggleDeleteModal}
-                    >
-                      Delete profile
-                    </p>
-                  </div>
-                )}
-              </div>
+              <DotsMenu className="">
+                <p className="profile-page__option" onClick={toggleDeleteModal}>
+                  Delete profile
+                </p>
+              </DotsMenu>
             </div>
             <div className="profile-page__info">
-              <p className="profile-page__info-name">Robert's profile</p>
+              <p className="profile-page__info-name">
+                {loggedProfile.id === profileInfo.id
+                  ? `My profile`
+                  : `${capitalizeFirstLetter(
+                      profileInfo.profileName
+                    )}'s profile`}
+              </p>
               <div className="profile-page__info_container">
+                {loggedProfile.id === profileInfo.id && (
+                  <EventCategory
+                    img={dogIcon}
+                    reference={{
+                      title: "Dog's Name",
+                      dbCategory: "profileName",
+                    }}
+                    info={loggedProfile.profileName}
+                    // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
+                    editable={""}
+                  />
+                )}
                 <EventCategory
                   img={star}
-                  title={"Rating"}
+                  reference={{
+                    title: "Rating",
+                    dbCategory: "rating",
+                  }}
                   info={`4.5`}
                   // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
                   editable={""}
                 />
                 <EventCategory
                   img={medal}
-                  title={"Breed"}
+                  reference={{
+                    title: "Breed",
+                    dbCategory: "breed",
+                  }}
                   info={profileInfo.breed}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogBreedsType}
@@ -166,7 +168,10 @@ export const Profile = () => {
               <div className="profile-page__info_container">
                 <EventCategory
                   img={account}
-                  title="Owner's name"
+                  reference={{
+                    title: "Owner's Name",
+                    dbCategory: "ownerName",
+                  }}
                   info={
                     loggedProfile.id === profileInfo.id
                       ? `${user.name} ${user.lastName}`
@@ -180,30 +185,42 @@ export const Profile = () => {
               <div className="profile-page__info_container">
                 <EventCategory
                   img={timer}
-                  title={"Age"}
+                  reference={{
+                    title: "Age",
+                    dbCategory: "age",
+                  }}
                   info={`${profileInfo.age}`}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogAgeType}
                 />
                 <EventCategory
                   img={gender}
-                  title={"Gender"}
+                  reference={{
+                    title: "Gender",
+                    dbCategory: "gender",
+                  }}
                   info={profileInfo.gender}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogGenderType}
                 />
                 <EventCategory
                   img={ruler}
-                  title={"Size"}
+                  reference={{
+                    title: "Size",
+                    dbCategory: "size",
+                  }}
                   info={profileInfo.size}
                   editable={loggedProfile.id === profileInfo.id ? "select" : ""}
                   selectData={dogSizesType}
                 />
               </div>
-              <div className="profile-page__info_container">
-                <EventCategory
+              <div className="profile-page__info_container margin--bt__200">
+                <EventCategoryBig
                   img={description}
-                  title={"Description"}
+                  reference={{
+                    title: "Description",
+                    dbCategory: "profileBio",
+                  }}
                   info={
                     profileInfo.profileBio // Texto completo
                   }

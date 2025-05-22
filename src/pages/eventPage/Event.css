@@ -94,16 +94,14 @@ button.btn--icon.margin--right__10 {
 @media (min-width: 1035px) {
   .event--container {
     display: flex;
+    justify-content: center;
     align-items: flex-start;
-    gap: var(--space-20);
-  }
-
-  .event--container__categories {
-    flex-grow: 1;
+    gap: var(--space-155);
   }
 
   .event--container__sidebar {
     min-width: auto;
+    margin-top: 160px;
   }
 
   .event--profile-title {
