@@ -4,7 +4,7 @@ import { InfoCategoryProps } from "../../types";
 import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
 import { InfoCategory } from "../infoCategory/InfoCategory";
-import "./InfoCategory.css";
+import "./InfoCategoryProfile.css";
 
 export const InfoCategoryProfile = (props: InfoCategoryProps) => {
   const { reference } = props;

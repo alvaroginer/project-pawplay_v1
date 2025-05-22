@@ -188,7 +188,7 @@ export const CreateEvent = () => {
             iconSrc={location}
             iconAlt='Event location icon'
             label='Location'
-            placeholder='Put the adress of the event'
+            placeholder='Put the address of the event'
             editable='string'
             required='Location is necessary'
             errors={errors.location && errors.location.message}
