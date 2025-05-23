@@ -77,6 +77,7 @@ export const Accordion = ({
     const fetchEvents = async () => {
       switch (eventTypes) {
         case "upcoming events":
+          if (!profileId) return;
           {
             const upcomingEvents = await getUpcomingEventsLimited(profileId);
             setCardsContent(upcomingEvents);
@@ -85,6 +86,8 @@ export const Accordion = ({
           break;
 
         case "favourite events":
+          if (!likedEvents) return;
+
           {
             const favouriteEvents = await getFavouriteEventsLimited(
               likedEvents
@@ -95,6 +98,8 @@ export const Accordion = ({
           break;
 
         case "hosted events":
+          if (!profileId) return;
+
           {
             const hostedEvents = await getHostedEventsLimited(profileId);
             setCardsContent(hostedEvents);
@@ -103,6 +108,8 @@ export const Accordion = ({
           break;
 
         case "past events":
+          if (!profileId) return;
+
           {
             const pastEvents = await getPastEventsLimited(profileId);
             setCardsContent(pastEvents);
@@ -145,7 +152,7 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
-              {cardsContent && cardsContent.length > 0 && (
+              {cardsContent && cardsContent.length > 0 && !similarEvents && (
                 <Link
                   to={`/my-events/${urlNav}`}
                   className="accordion__view-all-link"

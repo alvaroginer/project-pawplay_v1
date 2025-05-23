@@ -223,6 +223,7 @@ export const Event = () => {
         <div className="event--events-container">
           <Accordion
             text={"Similar Events"}
+            profileId=""
             defaultOpen={true}
             similarEvents={similarEvents}
           />
