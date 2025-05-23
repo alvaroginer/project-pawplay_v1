@@ -14,6 +14,7 @@ export const createEventDb = async (eventData: EventData) => {
     "Event created in FireBase with the following data",
     eventDataWithRef
   );
+  return eventDataWithRef.id;
 };
 
 /* -----> Profiles */
@@ -28,4 +29,5 @@ export const createProfileDb = async (profileData: ProfileData) => {
     "Event created in FireBase with the following data",
     profileDataWithRef
   );
+  return profileDataWithRef.id;
 };

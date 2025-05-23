@@ -62,7 +62,7 @@ select:invalid {
 
 .input--help-text__container {
   width: 100%;
-  display: block;
+  display: flex;
 }
 
 .input--help-text {

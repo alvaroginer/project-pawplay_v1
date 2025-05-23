@@ -5,7 +5,7 @@ import {
   typeOfActivity,
   CreateEventProps,
   EventData,
-  ImageFileInput,
+  dogSizesType,
 } from "../../types";
 import {
   transformToTimeStampDate,
@@ -16,6 +16,7 @@ import { FormField } from "../../components/formField/FormField";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createEventDb } from "../../dataBase/services/createFunctions";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import title from "../../imgs/eventPage/title.svg";
@@ -26,6 +27,7 @@ import tag from "../../imgs/eventPage/tag.svg";
 import allowedBreeds from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
 import description from "../../imgs/profilePage/description.svg";
+import ruler from "../../imgs/profilePage/ruler.svg";
 import "./CreateEvent.css";
 
 export const CreateEvent = () => {
@@ -33,32 +35,16 @@ export const CreateEvent = () => {
   const { loggedProfile } = useContext(AuthContext);
   const {
     control,
-    register,
     handleSubmit,
     setError,
     formState: { errors },
   } = useForm<CreateEventProps>();
+  const navigate = useNavigate();
 
-  const handleImageFile = async (inputData: ImageFileInput) => {
-    const file = inputData.image[0];
-
-    //Comprobamos que no esté vacío
-    if (!file) return null;
-
-    if (inputData.image.length > 1) {
-      setError("eventPhoto", {
-        type: "manual",
-        message: "Upload only one file",
-      });
-      return null;
-    }
-
-    //Hacemos que se visualice en el selector
-    setSelectedImage(file);
-
+  const handleImageFile = async (file: File) => {
     //La pasamos a dataUrl
     const dataUrl = await transformFileToDataUrl(file, setError, "eventPhoto");
-    if (dataUrl === null) {
+    if (dataUrl === undefined) {
       setError("eventPhoto", {
         type: "manual",
         message: "An error ocurred by uploading the image. Try again.",
@@ -69,12 +55,25 @@ export const CreateEvent = () => {
 
   const onSubmit: SubmitHandler<CreateEventProps> = async (formData) => {
     console.log("Datos en el form", formData);
+    console.log("Errores en el form", errors);
     if (loggedProfile === null) return;
 
     try {
-      if (!formData.eventPhoto) return;
-      const imageUrl = await handleImageFile({ image: formData.eventPhoto });
+      //Comprobamos que no esté vacío
+      if (!selectedImage) {
+        setError("eventPhoto", {
+          type: "manual",
+          message: "You must upload an image.",
+        });
+        return;
+      }
+
+      console.log("esto es la imagen en el form", formData.eventPhoto);
+      const imageUrl = await handleImageFile(selectedImage);
       if (!imageUrl) return;
+
+      const validDate = transformToTimeStampDate(formData.day, setError);
+      if (!validDate) return;
 
       //Creamos objeto de evento combinando los datos
       const newEventData: EventData = {
@@ -85,19 +84,22 @@ export const CreateEvent = () => {
         eventTitle: formData.eventTitle,
         eventPhoto: imageUrl,
         eventDescription: formData.eventDescription,
-        dateTime: transformToTimeStampDate(formData.day),
+        dateTime: validDate,
         location: formData.location,
         places: Number(formData.places),
         size: formData.size,
         activity: formData.activity,
         breeds: formData.breeds,
       };
+      console.log("datos del evento", newEventData);
 
       //Cragamos los datos en la base de datos
-      await createEventDb(newEventData);
+      const eventId = await createEventDb(newEventData);
 
       //Creamos un tostify cuando el evento se sube correctamente
       toast(`Congratulations, you created the event ${formData.eventTitle}`);
+
+      navigate(`/event/${eventId}`);
     } catch (error: any) {
       console.log(`Firebase error (${error.code}): ${error.message}`);
     }
@@ -120,11 +122,16 @@ export const CreateEvent = () => {
               </div>
             )}
             <input
-              {...register("eventPhoto", { required: "Image is required" })}
               id='file-input'
               type='file'
               accept='image/webp,image/jpeg,image/png'
               className='create-profile__file-input'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files && e.target.files[0]) {
+                  setSelectedImage(e.target.files[0]);
+                }
+              }}
+              name='eventPhoto'
             />
             {selectedImage && (
               <label
@@ -140,6 +147,9 @@ export const CreateEvent = () => {
             )}
           </div>
         </div>
+        <p className='create-event__error-text'>
+          {errors.eventPhoto && errors.eventPhoto.message}
+        </p>
         <div className='create-event__form'>
           <FormField
             control={control}
@@ -157,6 +167,7 @@ export const CreateEvent = () => {
             }}
             errors={errors.eventTitle?.message}
             charLimit={20}
+            name='eventTitle'
           />
           <FormField
             control={control}
@@ -173,6 +184,7 @@ export const CreateEvent = () => {
               },
             }}
             errors={errors.day && errors.day.message}
+            name='day'
           />
           <FormField
             control={control}
@@ -186,6 +198,7 @@ export const CreateEvent = () => {
               required: "This field is necessary",
             }}
             errors={errors.time && errors.time.message}
+            name='time'
           />
           <FormField
             control={control}
@@ -198,6 +211,7 @@ export const CreateEvent = () => {
               required: "This field is necessary",
             }}
             errors={errors.location && errors.location.message}
+            name='location'
           />
           <FormField
             control={control}
@@ -211,6 +225,7 @@ export const CreateEvent = () => {
               required: "This field is necessary",
             }}
             errors={errors.activity && errors.activity.message}
+            name='activity'
           />
           <FormField
             control={control}
@@ -224,6 +239,21 @@ export const CreateEvent = () => {
               required: "This field is necessary",
             }}
             errors={errors.breeds && errors.breeds.message}
+            name='breeds'
+          />
+          <FormField
+            control={control}
+            iconSrc={ruler}
+            iconAlt='Dog size icon'
+            label='Allowed size'
+            placeholder='Select allowed size'
+            editable='select'
+            selectData={dogSizesType}
+            rules={{
+              required: "This field is necessary",
+            }}
+            errors={errors.size && errors.size.message}
+            name='size'
           />
           <FormField
             control={control}
@@ -237,6 +267,7 @@ export const CreateEvent = () => {
               required: "This field is necessary",
             }}
             errors={errors.places && errors.places.message}
+            name='places'
           />
           <FormField
             control={control}
@@ -249,10 +280,11 @@ export const CreateEvent = () => {
               required: "Description is necessary",
               pattern: {
                 value: /^.{100,}$/,
-                message: "Day / Month / Year",
+                message: "Write a description of minimum 100 characters",
               },
             }}
             errors={errors.eventDescription && errors.eventDescription.message}
+            name='eventDescription'
           />
           <div className='create-event__button-container'>
             <Button size='large' className='primary' children='Publish event' />

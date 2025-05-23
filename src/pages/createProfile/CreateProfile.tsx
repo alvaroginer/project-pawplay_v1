@@ -4,7 +4,6 @@ import {
   dogGenderType,
   dogAgeType,
   CreateProfileProps,
-  ImageFileInput,
   ProfileData,
 } from "../../types";
 import { createProfileDb } from "../../dataBase/services/createFunctions";
@@ -13,6 +12,7 @@ import { Button } from "../../components/button/Button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState, useContext } from "react";
 import { transformFileToDataUrl } from "../../functions/Functions";
+import { useNavigate } from "react-router";
 import { AuthContext } from "../../auth/AuthContext";
 import { toast } from "react-toastify";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -28,29 +28,13 @@ export const CreateProfile = () => {
   const { user } = useContext(AuthContext);
   const {
     control,
-    register,
     handleSubmit,
     setError,
     formState: { errors },
   } = useForm<CreateProfileProps>();
+  const navigate = useNavigate();
 
-  const handleImageFile = async (inputData: ImageFileInput) => {
-    const file = inputData.image[0];
-
-    //Comprobamos que no esté vacío
-    if (!file) return null;
-
-    if (inputData.image.length > 1) {
-      setError("profilePhoto", {
-        type: "manual",
-        message: "Upload only one file",
-      });
-      return null;
-    }
-
-    //Hacemos que se visualice en el selector
-    setSelectedImage(file);
-
+  const handleImageFile = async (file: File) => {
     //La pasamos a dataUrl
     const dataUrl = await transformFileToDataUrl(
       file,
@@ -70,8 +54,16 @@ export const CreateProfile = () => {
     if (!user) return;
 
     try {
-      if (!formData.profilePhoto) return;
-      const imageUrl = await handleImageFile({ image: formData.profilePhoto });
+      if (!selectedImage) {
+        setError("profilePhoto", {
+          type: "manual",
+          message: "You must upload an image.",
+        });
+        return;
+      }
+
+      console.log("esto es la imagen en el form", formData.profilePhoto);
+      const imageUrl = await handleImageFile(selectedImage);
       if (!imageUrl) return;
 
       const newProfileData: ProfileData = {
@@ -87,11 +79,13 @@ export const CreateProfile = () => {
         likedEvents: [],
       };
 
-      await createProfileDb(newProfileData);
+      const profileId = await createProfileDb(newProfileData);
 
       toast(
         `Congratulations, you created a dog profile for ${formData.profileName}`
       );
+
+      navigate(`/event/${profileId}`);
     } catch (error: any) {
       console.log(`Firebase error (${error.code}): ${error.message}`);
     }
@@ -114,11 +108,16 @@ export const CreateProfile = () => {
               </div>
             )}
             <input
-              {...register("profilePhoto", { required: "Image is required" })}
               id='file-input'
               type='file'
               accept='image/webp,image/jpeg,image/png'
               className='create-profile__file-input'
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files && e.target.files[0]) {
+                  setSelectedImage(e.target.files[0]);
+                }
+              }}
+              name='profilePhoto'
             />
             {selectedImage && (
               <label
@@ -151,6 +150,7 @@ export const CreateProfile = () => {
                 },
               }}
               errors={errors.profileName && errors.profileName.message}
+              name='profileName'
             />
           </div>
           <div className='create-profile__field-group'>
@@ -164,6 +164,7 @@ export const CreateProfile = () => {
               selectData={dogBreedsType}
               required='The breed of your dog is required'
               errors={errors.breed && errors.breed.message}
+              name='breed'
             />
           </div>
           <div className='create-profile__field-group'>
@@ -177,6 +178,7 @@ export const CreateProfile = () => {
               selectData={dogAgeType}
               required='The age of your dog is required'
               errors={errors.age && errors.age.message}
+              name='age'
             />
             <FormField
               control={control}
@@ -188,6 +190,7 @@ export const CreateProfile = () => {
               selectData={dogGenderType}
               required='The gender of your dog is required'
               errors={errors.gender && errors.gender.message}
+              name='gender'
             />
             <FormField
               control={control}
@@ -199,6 +202,7 @@ export const CreateProfile = () => {
               selectData={dogSizesType}
               required='The size of your dog is required'
               errors={errors.size && errors.size.message}
+              name='size'
             />
           </div>
           <div className='create-profile__field-group'>
@@ -217,6 +221,7 @@ export const CreateProfile = () => {
                 },
               }}
               errors={errors.profileBio && errors.profileBio.message}
+              name='profileBio'
             />
           </div>
           <div className='create-profile__button-container'>

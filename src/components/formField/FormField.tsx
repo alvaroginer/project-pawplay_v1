@@ -1,7 +1,6 @@
 import { Controller, Control, RegisterOptions } from "react-hook-form";
 import { Input } from "../input/Input";
 import { InputProps } from "../../types";
-import { transformToCamelCase } from "../../functions/Functions";
 import "./FormField.css";
 
 interface FormFieldProps {
@@ -16,6 +15,7 @@ interface FormFieldProps {
   errors?: string;
   charLimit?: number;
   required?: boolean | string;
+  name: string;
 }
 
 export const FormField = ({
@@ -29,9 +29,8 @@ export const FormField = ({
   rules,
   errors,
   charLimit,
+  name,
 }: FormFieldProps) => {
-  const name = transformToCamelCase(label); // Generamos el name a partir del label
-
   return (
     <div className='profile-field'>
       <div className='profile-field__img'>

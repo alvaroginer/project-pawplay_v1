@@ -40,3 +40,9 @@
 .create-event__button-container {
   margin: 40px auto auto auto;
 }
+
+.create-event__error-text {
+  margin: 0;
+  font-size: var(--font-16);
+  color: var(--color-red);
+}

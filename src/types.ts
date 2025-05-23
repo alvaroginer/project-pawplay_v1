@@ -180,10 +180,6 @@ export interface FormLayoutProps {
   formData: { [key: string]: string };
 }
 
-export interface ImageFileInput {
-  image: FileList;
-}
-
 export interface CreateEventProps
   extends Omit<
     EventData,
@@ -195,7 +191,7 @@ export interface CreateEventProps
     | "places"
     | "dateTime"
   > {
-  eventPhoto: FileList;
+  eventPhoto: File;
   places: string;
   day: string;
   time: string;
@@ -203,7 +199,7 @@ export interface CreateEventProps
 
 export interface CreateProfileProps
   extends Omit<ProfileData, "userUid" | "id" | "likedEvents" | "profilePhoto"> {
-  profilePhoto: FileList;
+  profilePhoto: File;
 }
 
 export interface Field {
@@ -276,7 +272,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
-  "Other",
+  "Any",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
