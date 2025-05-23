@@ -34,7 +34,7 @@ export const EventCategoryBig = ({
       );
     }
     await updateAuthContext();
-    toast(`${reference.title} updated!`);
+    toast.success(`${reference.title} updated!`);
   };
 
   const handleEditType = () => {
