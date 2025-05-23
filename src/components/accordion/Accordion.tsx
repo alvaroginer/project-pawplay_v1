@@ -19,6 +19,7 @@ export const Accordion = ({
   defaultOpen = false,
   likedEvents,
   profileId,
+  similarEvents,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
   const [cardsContent, setCardsContent] = useState<EventData[]>();
@@ -69,6 +70,10 @@ export const Accordion = ({
   }, [showAccordion]);
 
   useEffect(() => {
+    if (similarEvents) {
+      setCardsContent(similarEvents);
+      return;
+    }
     const fetchEvents = async () => {
       switch (eventTypes) {
         case "upcoming events":
@@ -107,7 +112,7 @@ export const Accordion = ({
       }
     };
     fetchEvents();
-  }, [eventTypes, likedEvents, profileId]);
+  }, [eventTypes, likedEvents, profileId, similarEvents]);
 
   const handleClick = () => {
     setShowAccordion(!showAccordion);
