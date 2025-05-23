@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
+import { Accordion } from "../../components/accordion/Accordion";
 import { Button } from "../../components/button/Button";
 
 import { getOneEvent } from "../../dataBase/services/readFunctions";
@@ -14,6 +15,8 @@ import {
   eventSignUp,
   eventUnregister,
 } from "../../dataBase/services/updateFunctions";
+import { db } from "../../dataBase/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { AuthContext } from "../../auth/AuthContext";
 import { useEffect, useState, useContext } from "react";
 import "./Event.css";
@@ -33,6 +36,7 @@ import { toast, ToastContainer, Slide } from "react-toastify";
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [hasJoined, setHasJoined] = useState<boolean>();
+  const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const { loggedProfile } = useContext(AuthContext);
 
   //Params para la url
@@ -69,6 +73,34 @@ export const Event = () => {
   };
 
   const navigate = useNavigate();
+
+  //Función para filtrar lo eventos similares
+  useEffect(() => {
+    if (!eventData) return;
+
+    const fetchSimilarEvents = async () => {
+      const allEvents = await getEvents();
+
+      const filteredEvents = allEvents.filter((event) => {
+        return (
+          event.activity === eventData.activity && event.id !== eventData.id
+        );
+      });
+
+      setSimilarEvents(filteredEvents);
+    };
+
+    fetchSimilarEvents();
+  }, [eventData]);
+
+  //Función para coger de firebase todos los eventos
+  const getEvents = async () => {
+    const eventsCol = collection(db, "events");
+    const eventSnaphot = await getDocs(eventsCol);
+    const eventList = eventSnaphot.docs.map((doc) => doc.data());
+    const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
+    return typedEvents;
+  };
 
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
   // Falta comprobar que el perfil está completo para poder apuntarse
@@ -188,7 +220,12 @@ export const Event = () => {
           </aside>
         </div>
         <div className="event--events-container">
-          <h3 className="event--profile-title">Similar Events</h3>
+          <Accordion
+            text={"Similar Events"}
+            profileId=""
+            defaultOpen={true}
+            similarEvents={similarEvents}
+          />
         </div>
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}

@@ -144,13 +144,15 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes:
+  eventTypes?:
     | "upcoming events"
     | "hosted events"
     | "favourite events"
-    | "past events";
-  profileId: string;
-  likedEvents: string[];
+    | "past events"
+    | "similar events";
+  profileId?: string;
+  likedEvents?: string[];
+  similarEvents?: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }
