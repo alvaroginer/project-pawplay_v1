@@ -14,8 +14,6 @@
   &:hover {
     outline-width: var(--space-2);
     outline-offset: -2px;
-
-    /* border-width: var(--space-2); */
   }
 }
 
@@ -62,10 +60,16 @@ select:invalid {
   opacity: 0.5;
 }
 
+.input--help-text__container {
+  width: 100%;
+  display: block;
+}
+
 .input--help-text {
-  position: absolute;
-  right: 0;
+  width: 100%;
+  display: block;
   margin: 0;
+  height: var(--space-16);
   font-weight: var(--font-regular);
   font-size: var(--font-12);
 }

@@ -13,7 +13,7 @@ interface FormFieldProps {
   selectData?: InputProps["selectData"];
   control: Control<any>;
   rules?: RegisterOptions;
-  errors: string | undefined;
+  errors?: string;
   charLimit?: number;
   required?: boolean | string;
 }

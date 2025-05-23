@@ -30,7 +30,7 @@ export const Input = React.forwardRef<
   };
 
   return (
-    <div className='position-relative'>
+    <>
       <label className='label' htmlFor={name}>
         {label}
       </label>
@@ -41,7 +41,7 @@ export const Input = React.forwardRef<
           type={type ? `${type}` : "text"}
           placeholder={placeholder}
           name={name}
-          value={value}
+          value={value ? value : ""}
           onChange={onChange}
           className={`input ${className || ""}`}
           disabled={disabled}
@@ -52,9 +52,11 @@ export const Input = React.forwardRef<
           ref={ref as React.Ref<HTMLSelectElement>}
           id={name}
           name={name}
-          value={value}
+          value={value ? value : ""}
           onChange={onChange}
-          className={`input ${className || ""}`}
+          className={`input ${helpText ? "input--error" : ""} ${
+            className || ""
+          }`}
           disabled={disabled}
         >
           <option value='' disabled hidden>
@@ -67,22 +69,19 @@ export const Input = React.forwardRef<
           ))}
         </select>
       )}
-
       <div className='input--help-text__container'>
         {helpText && (
-          <p className='input--help-text input--help-text__error position-relative--left'>
-            {helpText}
-          </p>
+          <p className='input--help-text input--help-text__error'>{helpText}</p>
         )}
 
         {charLimit && (
           <p
-            className={`input--help-text position-relative--right ${
+            className={`input--help-text text-align-right  ${
               inputContent.length > charLimit ? "input--help-text__error" : ""
             }`}
           >{`${inputContent.length}/${charLimit}`}</p>
         )}
       </div>
-    </div>
+    </>
   );
 });

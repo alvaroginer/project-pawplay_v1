@@ -32,7 +32,8 @@
 .create-event__form {
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 4vw, 50px);
+  justify-content: flex-start;
+  gap: calc(clamp(40px, 4vw, 50px) - 16px);
   margin-top: var(--space-80);
 }
 

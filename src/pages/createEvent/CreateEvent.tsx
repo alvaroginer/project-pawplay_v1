@@ -68,6 +68,7 @@ export const CreateEvent = () => {
   };
 
   const onSubmit: SubmitHandler<CreateEventProps> = async (formData) => {
+    console.log("Datos en el form", formData);
     if (loggedProfile === null) return;
 
     try {
@@ -109,7 +110,7 @@ export const CreateEvent = () => {
           <div className='create-event__image-wrapper'>
             {!selectedImage && (
               <div className='create-event__upload-instructions'>
-                <p>{"Upload an image of your dog"}</p>
+                <p>{"Upload an image of the event"}</p>
                 <label
                   htmlFor='file-input'
                   className='create-profile__upload-button'
@@ -154,7 +155,8 @@ export const CreateEvent = () => {
                 message: "Only letters (2–20 characters)",
               },
             }}
-            errors={errors.eventTitle && errors.eventTitle.message}
+            errors={errors.eventTitle?.message}
+            charLimit={20}
           />
           <FormField
             control={control}
@@ -180,7 +182,9 @@ export const CreateEvent = () => {
             placeholder='Start time'
             editable='select'
             selectData={eventTime}
-            required='Start time is necessary'
+            rules={{
+              required: "This field is necessary",
+            }}
             errors={errors.time && errors.time.message}
           />
           <FormField
@@ -190,7 +194,9 @@ export const CreateEvent = () => {
             label='Location'
             placeholder='Put the address of the event'
             editable='string'
-            required='Location is necessary'
+            rules={{
+              required: "This field is necessary",
+            }}
             errors={errors.location && errors.location.message}
           />
           <FormField
@@ -201,7 +207,9 @@ export const CreateEvent = () => {
             placeholder='Select the type of activity'
             editable='select'
             selectData={typeOfActivity}
-            required='Activity type is necessary'
+            rules={{
+              required: "This field is necessary",
+            }}
             errors={errors.activity && errors.activity.message}
           />
           <FormField
@@ -212,7 +220,9 @@ export const CreateEvent = () => {
             placeholder='Select allowed breeds'
             editable='select'
             selectData={dogBreedsType}
-            required='Allowed breeds is necessary'
+            rules={{
+              required: "This field is necessary",
+            }}
             errors={errors.breeds && errors.breeds.message}
           />
           <FormField
@@ -223,7 +233,9 @@ export const CreateEvent = () => {
             placeholder='Select the maxium places for the event'
             editable='select'
             selectData={maximumPlaces}
-            required='Set the maximum places'
+            rules={{
+              required: "This field is necessary",
+            }}
             errors={errors.places && errors.places.message}
           />
           <FormField
