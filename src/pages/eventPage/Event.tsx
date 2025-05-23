@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
-import { EventCard } from "../../components/eventCard/EventCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { Button } from "../../components/button/Button";
 
