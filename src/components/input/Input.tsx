@@ -1,7 +1,12 @@
+import React from "react";
+import { useState } from "react";
 import { InputProps } from "../../types";
 import "./Input.css";
 
-export const Input = (props: InputProps) => {
+export const Input = React.forwardRef<
+  HTMLInputElement | HTMLSelectElement,
+  InputProps
+>((props, ref) => {
   const {
     label,
     placeholder,
@@ -13,13 +18,25 @@ export const Input = (props: InputProps) => {
     type,
     editable,
     selectData,
+    helpText,
+    charLimit,
   } = props;
+  const [inputContent, setInputContent] = useState<string>("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputContent(newValue);
+    onChange?.(e);
+  };
 
   return (
-    <>
-      <label htmlFor={name}>{label}</label>
+    <div className='position-relative'>
+      <label className='label' htmlFor={name}>
+        {label}
+      </label>
       {editable === "string" ? (
         <input
+          ref={ref as React.Ref<HTMLInputElement>}
           id={name}
           type={type ? `${type}` : "text"}
           placeholder={placeholder}
@@ -28,10 +45,11 @@ export const Input = (props: InputProps) => {
           onChange={onChange}
           className={`input ${className || ""}`}
           disabled={disabled}
+          onInput={handleInputChange}
         />
       ) : (
         <select
-          required
+          ref={ref as React.Ref<HTMLSelectElement>}
           id={name}
           name={name}
           value={value}
@@ -39,7 +57,7 @@ export const Input = (props: InputProps) => {
           className={`input ${className || ""}`}
           disabled={disabled}
         >
-          <option value="" disabled hidden>
+          <option value='' disabled hidden>
             {placeholder}
           </option>
           {selectData?.map((option, index) => (
@@ -49,6 +67,22 @@ export const Input = (props: InputProps) => {
           ))}
         </select>
       )}
-    </>
+
+      <div className='input--help-text__container'>
+        {helpText && (
+          <p className='input--help-text input--help-text__error position-relative--left'>
+            {helpText}
+          </p>
+        )}
+
+        {charLimit && (
+          <p
+            className={`input--help-text position-relative--right ${
+              inputContent.length > charLimit ? "input--help-text__error" : ""
+            }`}
+          >{`${inputContent.length}/${charLimit}`}</p>
+        )}
+      </div>
+    </div>
   );
-};
+});

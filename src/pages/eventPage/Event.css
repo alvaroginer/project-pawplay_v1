@@ -18,6 +18,9 @@
 }
 
 .event--events-container {
+  width: 100%;
+  max-width: 1075px; /* o el tamaño que estés usando */
+  margin: 0 auto;
   margin-top: var(--space-80);
   margin-bottom: var(--space-100);
 }
@@ -94,20 +97,14 @@ button.btn--icon.margin--right__10 {
 @media (min-width: 1035px) {
   .event--container {
     display: flex;
+    justify-content: center;
     align-items: flex-start;
-    gap: var(--space-20);
-  }
-
-  .event--container__categories {
-    flex-grow: 1;
+    gap: var(--space-155);
   }
 
   .event--container__sidebar {
     min-width: auto;
-  }
-
-  .event--profile-title {
-    margin-top: 0;
+    margin-top: 160px;
   }
 
   .event--modal {

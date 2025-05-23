@@ -1,3 +1,4 @@
+import React from "react";
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
@@ -14,8 +15,8 @@ export interface EventData {
   hour: number;
   location: string;
   places: number;
-  size: "small" | "medium" | "big" | "any";
-  activity: "outdoors" | "social event" | "private property" | "walks";
+  size: "Small" | "Medium" | "Big" | "Any";
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
   breeds: string;
 }
 
@@ -28,8 +29,8 @@ export interface ProfileData {
   profileBio: string;
   age: number | null;
   breed: string;
-  size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female" | "not specify";
+  size: "Small" | "Medium" | "Big" | "Any" | null;
+  gender: "Male" | "Female" | "Not specify" | null;
   likedEvents: string[];
 }
 
@@ -56,18 +57,16 @@ export interface RatingProps {
 }
 
 // -----> Form Data
-export interface FormData {
+export interface SignInData {
   name: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface FormErrors {
-  name?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
+export interface LogInData {
+  email: string;
+  password: string;
 }
 
 /* ----- Components Props and Hooks Props ----- */
@@ -76,7 +75,7 @@ export interface FormErrors {
 export interface ButtonProps {
   className: string;
   children: ReactNode;
-  size: "large" | "medium" | "small";
+  //size: "large" | "medium" | "small";
   onClick?: (value: any) => void;
 }
 
@@ -107,22 +106,32 @@ export interface NavMenuProps {
   onClick: (value: boolean) => void;
 }
 
+// -----> Dots Menu
+
+export interface DotsMenuProps {
+  children: ReactNode;
+  className: string;
+}
+
 // -----> Input
 
 export interface InputProps {
   label?: string;
+  name: string;
   placeholder?: string;
-  name?: string;
   value?: string;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  className?: string; // Permite pasar clases adicionales
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  className?: string;
   disabled?: boolean;
   error?: string;
   type?: string;
-  editable?: "string" | "select" | "";
-  selectData?: SelectDataType;
+  helpText?: string;
+  charLimit?: number;
+  editable: "string" | "select" | "";
+  selectData?: string[] | number[];
 }
 
 // -----> Forgot Password Modal
@@ -135,21 +144,28 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes:
+  eventTypes?:
     | "upcoming events"
     | "hosted events"
     | "favourite events"
-    | "past events";
-  profileId: string;
-  likedEvents: string[];
+    | "past events"
+    | "similar events";
+  profileId?: string;
+  likedEvents?: string[];
+  similarEvents?: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }
 
 // -----> Event Page & Profile Page
+interface dbProfileCategory {
+  title: string;
+  dbCategory: string;
+}
+
 export interface EventCategoryProps {
   img?: string;
-  title: string;
+  reference: dbProfileCategory;
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
@@ -157,7 +173,7 @@ export interface EventCategoryProps {
 
 export interface EventCategoryBigProps {
   img: string;
-  title: string;
+  reference: dbProfileCategory;
   info: string;
   editable: boolean;
 }
@@ -193,7 +209,8 @@ type SelectDataType =
   | typeof dogAgeType
   | typeof dogBreedsType
   | typeof typeOfActivity
-  | typeof maximumPlaces;
+  | typeof maximumPlaces
+  | typeof eventTime;
 
 // TypeOfActivity
 export const typeOfActivity = [
@@ -201,6 +218,7 @@ export const typeOfActivity = [
   "Outdoors",
   "Walks",
   "Private property",
+  "Any",
 ];
 
 // MaximumPlaces
@@ -218,13 +236,31 @@ export const maximumPlaces = [
   "10",
   "11",
   "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+  "24",
+  "25",
+  "26",
+  "27",
+  "28",
+  "29",
+  "30",
 ];
 
 // Sizes
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
 
 // Gender
-export const dogGenderType = ["Male", "Female", "Other"];
+export const dogGenderType = ["Male", "Female", "Not specify"];
 
 // Age
 export const dogAgeType = [
@@ -291,4 +327,55 @@ export const dogBreedsType = [
   "West Highland White Terrier",
   "Whippet",
   "Yorkshire Terrier",
+];
+
+export const eventTime = [
+  "00:00",
+  "00:30",
+  "01:00",
+  "01:30",
+  "02:00",
+  "02:30",
+  "03:00",
+  "03:30",
+  "04:00",
+  "04:30",
+  "05:00",
+  "05:30",
+  "06:00",
+  "06:30",
+  "07:00",
+  "07:30",
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
+  "23:00",
+  "23:30",
 ];

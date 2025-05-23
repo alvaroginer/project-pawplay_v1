@@ -1,6 +1,7 @@
 .btn {
   outline: none;
-  padding: 14px 24px;
+  padding: 10px 24px;
+  font-size: var(--font-14);
   background-color: var(--button-color-main);
   color: var(--color-black);
   border-width: var(--space-1);
@@ -8,7 +9,6 @@
   border-color: transparent;
   border-radius: var(--space-50);
   font-family: var(--font-family);
-  font-size: var(--font-20);
   font-weight: var(--font-regular);
   transition: all ease-in 0.15s;
 
@@ -102,7 +102,37 @@
   }
 }
 
-.btn--small {
+.btn--auth {
+  padding: var(--space-8) var(--space-22);
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  font-size: var(--font-14);
+
+  &:hover {
+    background-color: var(--color-blue-hover);
+  }
+
+  &:active {
+    background-color: var(--color-blue-active);
+  }
+}
+
+.btn--send {
+  padding: var(--space-8) var(--space-22);
+  background-color: #997c66;
+  color: var(--color-white);
+  font-size: var(--font-14);
+
+  &:hover {
+    background-color: #876c59;
+  }
+
+  &:active {
+    background-color: #735847;
+  }
+}
+/*cambiar tsx boton
+/*.btn--small {
   padding: 10px 24px;
   font-size: var(--font-14);
 }
@@ -115,4 +145,18 @@
 .btn--large {
   padding: 10px 24px;
   font-size: var(--font-20);
+}
+*/
+
+@media (width>= 900px) {
+  .btn {
+    padding: 10px 24px;
+    font-size: var(--font-16);
+  }
+}
+@media (width>= 1200px) {
+  .btn {
+    padding: 10px 24px;
+    font-size: var(--font-20);
+  }
 }

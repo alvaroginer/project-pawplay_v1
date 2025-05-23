@@ -5,8 +5,10 @@ export const capitalizeFirstLetter = (str: string) => {
 export const normalizeTime = (i: Date) => {
   const hours: number = i.getHours();
   const minutes: number = i.getMinutes();
+  const paddedHours = hours < 10 ? `0${hours}` : hours;
+  const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-  return `${hours < 10 ? `0${hours}` : 0}:${minutes < 10 ? `0${minutes}` : 0}h`;
+  return `${paddedHours}:${paddedMinutes}h`;
 };
 
 export const normalizeDate = (i: Date) => {

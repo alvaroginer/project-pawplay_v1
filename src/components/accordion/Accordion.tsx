@@ -7,7 +7,7 @@ import {
   getHostedEventsLimited,
   getPastEventsLimited,
   getUpcomingEventsLimited,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
 
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
@@ -19,6 +19,7 @@ export const Accordion = ({
   defaultOpen = false,
   likedEvents,
   profileId,
+  similarEvents,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
   const [cardsContent, setCardsContent] = useState<EventData[]>();
@@ -69,9 +70,14 @@ export const Accordion = ({
   }, [showAccordion]);
 
   useEffect(() => {
+    if (similarEvents) {
+      setCardsContent(similarEvents);
+      return;
+    }
     const fetchEvents = async () => {
       switch (eventTypes) {
         case "upcoming events":
+          if (!profileId) return;
           {
             const upcomingEvents = await getUpcomingEventsLimited(profileId);
             setCardsContent(upcomingEvents);
@@ -80,6 +86,8 @@ export const Accordion = ({
           break;
 
         case "favourite events":
+          if (!likedEvents) return;
+
           {
             const favouriteEvents = await getFavouriteEventsLimited(
               likedEvents
@@ -90,6 +98,8 @@ export const Accordion = ({
           break;
 
         case "hosted events":
+          if (!profileId) return;
+
           {
             const hostedEvents = await getHostedEventsLimited(profileId);
             setCardsContent(hostedEvents);
@@ -98,6 +108,8 @@ export const Accordion = ({
           break;
 
         case "past events":
+          if (!profileId) return;
+
           {
             const pastEvents = await getPastEventsLimited(profileId);
             setCardsContent(pastEvents);
@@ -107,7 +119,7 @@ export const Accordion = ({
       }
     };
     fetchEvents();
-  }, [eventTypes, likedEvents, profileId]);
+  }, [eventTypes, likedEvents, profileId, similarEvents]);
 
   const handleClick = () => {
     setShowAccordion(!showAccordion);
@@ -140,15 +152,15 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
+              {cardsContent && cardsContent.length > 0 && !similarEvents && (
+                <Link
+                  to={`/my-events/${urlNav}`}
+                  className="accordion__view-all-link"
+                >
+                  <ViewMoreCard />
+                </Link>
+              )}
             </div>
-            {cardsContent && cardsContent.length > 0 && (
-              <Link
-                to={`/my-events/${urlNav})`}
-                className="accordion__view-all-link"
-              >
-                <ViewMoreCard />
-              </Link>
-            )}
           </>
         )}
       </div>

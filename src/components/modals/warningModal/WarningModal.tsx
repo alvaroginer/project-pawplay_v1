@@ -1,6 +1,7 @@
 import { Button } from "../../button/Button";
 import "./WarningModal.css";
 import closeIcon from "../../../imgs/close-thick.svg";
+import { Link } from "react-router";
 
 type WarningModalProps = {
   onClose: () => void;
@@ -22,10 +23,11 @@ export const WarningModal = ({
 
         <div className="modal-content">
           <p className="modal-text">{modalText}</p>
-
-          <div className="button-container">
-            <Button className="primary">{buttonText}</Button>
-          </div>
+          <Link to="/signin">
+            <div className="button-container">
+              <Button className="primary">{buttonText}</Button>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

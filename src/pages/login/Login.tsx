@@ -1,62 +1,42 @@
-import { useState, useContext, type FormEvent } from "react";
+import { useState, useContext } from "react";
+import { Input } from "../../components/input/Input";
+import { Button } from "../../components/button/Button";
 import { AuthContext } from "../../auth/AuthContext";
-import { validateEmail, validatePassword } from "../../utils/validation";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
-import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+//import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
+import { LogInData } from "../../types";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
+import arrow from "../../imgs/profilePage/arrow-left.svg";
 
 export const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
-  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // const auth = useContext(AuthContext);
-  // if (!auth) throw new Error("AuthContext must be used within an AuthProvider");
-  // const { login } = auth;
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LogInData>();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Validar campos antes de enviar
-    let isValid = true;
-
-    // Validar email
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
-      isValid = false;
-    } else {
-      setEmailError("");
-    }
-
-    // Validar contraseña
-    if (!validatePassword(password)) {
-      setPasswordError("Password must be at least 8 characters long");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (!isValid) return;
-
+  const onSubmit: SubmitHandler<LogInData> = async (formData) => {
     setIsLoading(true); // Activar el spinner
+    console.log(formData);
 
     // Simulamos una carga de 2 segundos
     try {
-      // Aquí iría la lógica real de autenticación
+      // Lógica real de autenticación
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        email,
-        password
+        formData.email,
+        formData.password
       );
       const user = userCredential.user;
       const uid = user.uid;
@@ -72,122 +52,117 @@ export const Login = () => {
       // Desactivar el spinner después de la carga
       setIsLoading(false);
       navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-      setIsLoading(false);
+    } catch (error: any) {
+      if (error.code === "auth/invalid-credential") {
+        console.log(`Firebase error (${error.code}): ${error.message}`);
+
+        setError("email", {
+          type: "manual",
+          message: `Invalid email or password.`,
+        });
+        setIsLoading(false);
+      }
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="modal">
-        <div className="modal__image-container">
+    <div className="login">
+      <div className="login__arrow-container">
+        <img
+          className="login__arow"
+          src={arrow}
+          alt="Icon to return"
+          onClick={() => navigate(-1)}
+        />
+      </div>
+      <div className="login__modal">
+        <div className="login__image-container">
           <img
             src={dogImage || "/placeholder.svg"}
             alt="Perro con gafas trabajando en un portátil"
-            className="modal__image"
+            className="login__image"
           />
         </div>
-        <div className="modal__content">
-          <h1 className="modal__title">PawPlay</h1>
-          <h2 className="modal__subtitle">Become a PawPlayer</h2>
+        <div className="login__content">
+          <h1 className="login__title">PawPlay</h1>
+          <h2 className="login__subtitle">Become a PawPlayer</h2>
 
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form__group">
-              <label htmlFor="email" className="form__label">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className={`form__input ${
-                  emailError ? "form__input--error" : ""
-                }`}
+          <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="login__form-group">
+              <Input
+                label="Email"
                 placeholder="Put your email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (emailError && validateEmail(e.target.value)) {
-                    setEmailError("");
-                  }
-                }}
-                required
+                className={`${errors.email ? "form__input--error" : ""}`}
+                editable="string"
                 disabled={isLoading}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
+                helpText={errors.email && errors.email.message}
+                type="email"
               />
-              {emailError && <span className="form__error">{emailError}</span>}
-            </div>
-
-            <div className="form__group">
-              <label htmlFor="password" className="form__label">
-                Password
-              </label>
-              <input
+              <Input
                 type="password"
-                id="password"
-                className={`form__input ${
-                  passwordError ? "form__input--error" : ""
-                }`}
-                placeholder="Put a strong password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if (passwordError && validatePassword(e.target.value)) {
-                    setPasswordError("");
-                  }
-                }}
-                required
+                label="Password"
+                placeholder="Put your password"
+                className={` ${errors.password ? "form__input--error" : ""}`}
                 disabled={isLoading}
+                editable="string"
+                {...register("password", {
+                  required: "Password is required",
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                    message: "Invalid Password",
+                  },
+                })}
+                helpText={errors.password && errors.password.message}
               />
-              {passwordError && (
-                <span className="form__error">{passwordError}</span>
-              )}
               <a
                 href="#"
-                className="form__forgot-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (!isLoading) setShowForgotPassword(true);
-                }}
+                className="login__forgot-link"
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   if (!isLoading) setShowForgotPassword(true);
+                // }}
               >
                 Forgot password?
               </a>
             </div>
 
-            <button type="submit" className="form__button" disabled={isLoading}>
-              {isLoading ? (
-                <div className="spinner">
-                  <div className="spinner__circle"></div>
-                </div>
-              ) : (
-                "Login"
-              )}
-            </button>
+            <div className="login__secondary-info">
+              <div className="login__button-wrapper">
+                <Button className="auth">Login</Button>
+              </div>
 
-            <Link to="/signin" className=" form__sign-in-link">
-              <span className="or-text">or</span> Sign In
-            </Link>
-
-            <p className="form__policy">
-              by become a paw player you agree to our{" "}
-              <a href="#" className="form__link">
-                Terms of Services
-              </a>{" "}
-              and{" "}
-              <a href="#" className="form__link">
-                Privacy Policy
-              </a>
-            </p>
+              <Link to="/signin" className=" form__sign-in-link">
+                <span className="login__or-text">or</span> Sign Up
+              </Link>
+              <p className="login__policy">
+                by become a paw player you agree to our{" "}
+                <a href="#" className="login__link">
+                  Terms of Services
+                </a>{" "}
+                and{" "}
+                <a href="#" className="login__link">
+                  Privacy Policy
+                </a>
+              </p>
+            </div>
           </form>
         </div>
       </div>
 
-      {showForgotPassword && (
+      {/* {showForgotPassword && (
         <ForgotPasswordModal
           email={email}
           onEmailChange={setEmail}
           onClose={() => setShowForgotPassword(false)}
         />
-      )}
+      )} */}
     </div>
   );
 };
