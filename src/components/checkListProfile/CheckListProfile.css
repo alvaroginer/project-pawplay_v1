@@ -117,6 +117,10 @@ progress[value]::-webkit-progress-value {
   color: var(--color-gray);
 }
 
+.checklist__item-title--checked {
+  color: var(--color-black);
+}
+
 .checklist__arrow-icon {
   width: 16px;
   height: 17px;

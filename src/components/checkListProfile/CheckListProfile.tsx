@@ -87,7 +87,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Owner's name</p>
+                  <p
+                    className={`checklist__item-title ${
+                      user.name && user.lastName
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Owner's name
+                  </p>
                 </div>
                 {!user.name && !user.lastName && (
                   <svg
@@ -126,7 +134,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Dog's name</p>
+                  <p
+                    className={`checklist__item-title ${
+                      loggedProfile.profileName !== ""
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Dog's name
+                  </p>
                 </div>
                 {loggedProfile.profileName === "" && (
                   <svg
@@ -165,7 +181,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Picture</p>
+                  <p
+                    className={`checklist__item-title ${
+                      loggedProfile.profilePhoto !== ""
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Picture
+                  </p>
                 </div>
                 {loggedProfile.profilePhoto === "" && (
                   <svg
@@ -204,7 +228,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Breed</p>
+                  <p
+                    className={`checklist__item-title ${
+                      dogBreedsType.includes(loggedProfile.breed)
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Breed
+                  </p>
                 </div>
                 {!dogBreedsType.includes(loggedProfile.breed) && (
                   <svg
@@ -243,7 +275,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Age</p>
+                  <p
+                    className={`checklist__item-title ${
+                      dogAgeType.includes(loggedProfile.age)
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Age
+                  </p>
                 </div>
                 {!dogAgeType.includes(loggedProfile.age) && (
                   <svg
@@ -282,7 +322,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Gender</p>
+                  <p
+                    className={`checklist__item-title ${
+                      dogGenderType.includes(loggedProfile.gender)
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Gender
+                  </p>
                 </div>
                 {!dogGenderType.includes(loggedProfile.gender) && (
                   <svg
@@ -321,7 +369,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Size</p>
+                  <p
+                    className={`checklist__item-title ${
+                      dogSizesType.includes(loggedProfile.size)
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Size
+                  </p>
                 </div>
                 {!dogSizesType.includes(loggedProfile.size) && (
                   <svg
@@ -360,7 +416,15 @@ export const CheckListProfile = () => {
                       fill=""
                     />
                   </svg>
-                  <p className="checklist__item-title">Description</p>
+                  <p
+                    className={`checklist__item-title ${
+                      loggedProfile.profileBio !== ""
+                        ? "checklist__item-title--checked"
+                        : ""
+                    }`}
+                  >
+                    Description
+                  </p>
                 </div>
                 {loggedProfile.profileBio === "" && (
                   <svg
