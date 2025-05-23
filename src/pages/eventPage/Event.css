@@ -18,6 +18,9 @@
 }
 
 .event--events-container {
+  width: 100%;
+  max-width: 1075px; /* o el tamaño que estés usando */
+  margin: 0 auto;
   margin-top: var(--space-80);
   margin-bottom: var(--space-100);
 }
