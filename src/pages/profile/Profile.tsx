@@ -140,8 +140,10 @@ export const Profile = () => {
                       dbCategory: "profileName",
                     }}
                     info={loggedProfile.profileName}
-                    // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                    editable={""}
+                    editable={
+                      loggedProfile.id === profileInfo.id ? "string" : ""
+                    }
+                    // editable={""}
                   />
                 )}
                 <EventCategory
@@ -215,17 +217,21 @@ export const Profile = () => {
                 />
               </div>
               <div className="profile-page__info_container margin--bt__200">
-                <EventCategoryBig
-                  img={description}
-                  reference={{
-                    title: "Description",
-                    dbCategory: "profileBio",
-                  }}
-                  info={
-                    profileInfo.profileBio // Texto completo
-                  }
-                  editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                />
+                {loggedProfile.id === profileInfo.id && (
+                  <EventCategoryBig
+                    img={description}
+                    reference={{
+                      title: "Description",
+                      dbCategory: "profileBio",
+                    }}
+                    info={
+                      profileInfo.profileBio // Texto completo
+                    }
+                    editable={
+                      loggedProfile.id === profileInfo.id ? "string" : ""
+                    }
+                  />
+                )}
               </div>
               <div className="accordion-container">
                 {loggedProfile.id === profileInfo.id && (
