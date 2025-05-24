@@ -9,10 +9,11 @@ export const WarningModal = ({
   modalText,
   buttonText,
   children,
+  className = "",
 }: WarningModalProps) => {
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
+      <div className={`modal-container ${className}`}>
         <button className="close-button" aria-label="Cerrar">
           <img
             src={closeIcon}

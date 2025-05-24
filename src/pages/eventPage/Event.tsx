@@ -170,6 +170,31 @@ export const Event = () => {
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
   // Falta comprobar que el perfil está completo para poder apuntarse
 
+  const fakeProfiles: ProfileData[] = [
+    {
+      id: "1",
+      userUid: "user123",
+      profilePhoto: "https://via.placeholder.com/100",
+      profileName: "Bobby",
+      profileBio: "Friendly pup ready for a walk!",
+      age: 3,
+      breed: "Labrador",
+      gender: "Male",
+      size: "Big",
+    },
+    {
+      id: "2",
+      userUid: "user456",
+      profilePhoto: "https://via.placeholder.com/100",
+      profileName: "Luna",
+      profileBio: "Loves to explore new parks.",
+      age: 2,
+      breed: "Beagle",
+      gender: "Female",
+      size: "Medium",
+    },
+  ];
+
   if (!eventData) {
     return null;
   } else {
@@ -297,9 +322,10 @@ export const Event = () => {
             modalText="Select the pup who's ready for an adventure."
             buttonText="Join event"
             onClose={() => setisDeleteModalOpen(false)}
+            className="color-white"
           >
-            {profiles.map((profile) => (
-              <ProfileCardHorizontal key={profile.id} profileId={profile.id} />
+            {fakeProfiles.map((profile) => (
+              <ProfileCardHorizontal key={profile.id} mockData={profile} />
             ))}
           </WarningModal>
         )}

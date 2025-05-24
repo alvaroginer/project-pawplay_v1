@@ -31,7 +31,7 @@ export interface ProfileData {
   breed: string;
   size: "Small" | "Medium" | "Big" | "Any" | null;
   gender: "Male" | "Female" | "Not specify" | null;
-  likedEvents: string[];
+  likedEvents?: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -147,6 +147,7 @@ export type WarningModalProps = {
   modalText: string;
   buttonText: string;
   children?: ReactNode;
+  className?: string;
 };
 
 // -----> Accordion
