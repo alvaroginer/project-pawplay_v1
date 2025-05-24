@@ -64,6 +64,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (firebaseUser) => {
+      console.log("Auth state changed. Firebase user:", firebaseUser);
+
       if (firebaseUser) {
         const storedUserString = localStorage.getItem("user");
         const storedUser: AuthLocalStorageProps | null = storedUserString
@@ -75,6 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setLoggedProfile(storedUser.loggedProfile);
         }
       } else {
+        console.log("No authenticated user.");
         setUser(null);
         setLoggedProfile(null);
       }

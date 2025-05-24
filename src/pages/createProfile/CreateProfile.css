@@ -24,6 +24,12 @@
   height: 100%;
 }
 
+.create-profile__image--text-error {
+  margin: 0;
+  font-size: var(--font-16);
+  color: var(--color-red);
+}
+
 .create-profile__upload-instructions {
   display: flex;
   flex-direction: column;

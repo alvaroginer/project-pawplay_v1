@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { imageAllowedTypes } from "../types";
 import { UseFormSetError } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -22,7 +23,7 @@ export const transformToTimeStampDate = (
   const finalDate = new Date(year, month - 1, day);
   const expirationThreshold = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-  if (finalDate > expirationThreshold) {
+  if (finalDate < expirationThreshold) {
     setError("day", {
       type: "manual",
       message: "The event must be scheduled at least 24 hours in advance.",
@@ -67,8 +68,9 @@ export const transformFileToDataUrl = async (
   if (!imageAllowedTypes.includes(file.type)) {
     setError(fieldName, {
       type: "manual",
-      message: "The image must not exceed 250 KB.",
+      message: "Only images in WEBP, JPEG or PNG format are allowed.",
     });
+    toast("Only images in WEBP, JPEG or PNG format are allowed.");
     return null;
   }
 
@@ -77,6 +79,7 @@ export const transformFileToDataUrl = async (
       type: "manual",
       message: "The image must not exceed 250 KB.",
     });
+    toast("The image must not exceed 250 KB.");
     return null;
   }
 

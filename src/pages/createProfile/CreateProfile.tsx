@@ -92,148 +92,162 @@ export const CreateProfile = () => {
   };
 
   return (
-    <div className='create-profile'>
+    <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='create-profile__image-section'>
-          <div className='create-profile__image-wrapper'>
-            {!selectedImage && (
-              <div className='create-profile__upload-instructions'>
-                <p>{"Upload an image of your dog"}</p>
+        <div className='create-profile'>
+          <div className='create-profile__image-section'>
+            <div className='create-profile__image-wrapper'>
+              {!selectedImage && (
+                <div className='create-profile__upload-instructions'>
+                  <p>{"Upload an image of your dog"}</p>
+                  <label
+                    htmlFor='file-input'
+                    className='create-profile__upload-button'
+                  >
+                    Choose a file
+                  </label>
+                </div>
+              )}
+              <input
+                id='file-input'
+                type='file'
+                accept='image/webp,image/jpeg,image/png'
+                className='create-profile__file-input'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setSelectedImage(e.target.files[0]);
+                  }
+                }}
+                name='profilePhoto'
+              />
+              {selectedImage && (
                 <label
                   htmlFor='file-input'
-                  className='create-profile__upload-button'
+                  className='create-profile__image-label'
                 >
-                  Choose a file
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt='Preview'
+                    className='create-profile__image-preview'
+                  />
                 </label>
-              </div>
-            )}
-            <input
-              id='file-input'
-              type='file'
-              accept='image/webp,image/jpeg,image/png'
-              className='create-profile__file-input'
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                if (e.target.files && e.target.files[0]) {
-                  setSelectedImage(e.target.files[0]);
-                }
-              }}
-              name='profilePhoto'
-            />
-            {selectedImage && (
-              <label
-                htmlFor='file-input'
-                className='create-profile__image-label'
-              >
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt='Preview'
-                  className='create-profile__image-preview'
-                />
-              </label>
-            )}
+              )}
+            </div>
+            <p className='create-profile__image--text-error'>
+              {errors.profilePhoto && errors.profilePhoto.message}
+            </p>
           </div>
-        </div>
-        <div className='create-profile__form'>
-          <div className='create-profile__field-group no-padding-top'>
-            <FormField
-              control={control}
-              iconSrc={dog}
-              iconAlt='Dog name icon'
-              label="Dog's name"
-              placeholder='Write the name of your dog'
-              editable='string'
-              rules={{
-                required: "Dog name is necessary",
-                pattern: {
-                  value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
-                  message: "Only letters (2–20 characters)",
-                },
-              }}
-              errors={errors.profileName && errors.profileName.message}
-              name='profileName'
-            />
-          </div>
-          <div className='create-profile__field-group'>
-            <FormField
-              control={control}
-              iconSrc={medal}
-              iconAlt='Dog breed icon'
-              label='Breed'
-              placeholder='Select the breed of your dog'
-              editable='select'
-              selectData={dogBreedsType}
-              required='The breed of your dog is required'
-              errors={errors.breed && errors.breed.message}
-              name='breed'
-            />
-          </div>
-          <div className='create-profile__field-group'>
-            <FormField
-              control={control}
-              iconSrc={timer}
-              iconAlt='Dog age icon'
-              label='Age'
-              placeholder='Select the age of your dog'
-              editable='select'
-              selectData={dogAgeType}
-              required='The age of your dog is required'
-              errors={errors.age && errors.age.message}
-              name='age'
-            />
-            <FormField
-              control={control}
-              iconSrc={gender}
-              iconAlt='Dog gender icon'
-              label='Gender'
-              placeholder="Select your dog's gender"
-              editable='select'
-              selectData={dogGenderType}
-              required='The gender of your dog is required'
-              errors={errors.gender && errors.gender.message}
-              name='gender'
-            />
-            <FormField
-              control={control}
-              iconSrc={ruler}
-              iconAlt='Dog size icon'
-              label='Size'
-              placeholder='Select the size of your dog'
-              editable='select'
-              selectData={dogSizesType}
-              required='The size of your dog is required'
-              errors={errors.size && errors.size.message}
-              name='size'
-            />
-          </div>
-          <div className='create-profile__field-group'>
-            <FormField
-              control={control}
-              iconSrc={description}
-              iconAlt='Dog description icon'
-              label='Description'
-              placeholder='Description of your dog'
-              editable='string'
-              rules={{
-                required: "Description is necessary",
-                pattern: {
-                  value: /^.{100,}$/,
-                  message: "Day / Month / Year",
-                },
-              }}
-              errors={errors.profileBio && errors.profileBio.message}
-              name='profileBio'
-            />
-          </div>
-          <div className='create-profile__button-container'>
-            <Button
-              size='large'
-              className='primary'
-              children='Publish profile'
-              onClick={handleSubmit}
-            />
+          <div className='create-profile__form'>
+            <div className='create-profile__field-group no-padding-top'>
+              <FormField
+                control={control}
+                iconSrc={dog}
+                iconAlt='Dog name icon'
+                label="Dog's name"
+                placeholder='Write the name of your dog'
+                editable='string'
+                rules={{
+                  required: "Dog name is necessary",
+                  pattern: {
+                    value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
+                    message: "Only letters (2–20 characters)",
+                  },
+                }}
+                errors={errors.profileName && errors.profileName.message}
+                name='profileName'
+              />
+            </div>
+            <div className='create-profile__field-group'>
+              <FormField
+                control={control}
+                iconSrc={medal}
+                iconAlt='Dog breed icon'
+                label='Breed'
+                placeholder='Select the breed of your dog'
+                editable='select'
+                selectData={dogBreedsType}
+                rules={{
+                  required: "The breed of your dog is required",
+                }}
+                errors={errors.breed && errors.breed.message}
+                name='breed'
+                charLimit={20}
+              />
+            </div>
+            <div className='create-profile__field-group'>
+              <FormField
+                control={control}
+                iconSrc={timer}
+                iconAlt='Dog age icon'
+                label='Age'
+                placeholder='Select the age of your dog'
+                editable='select'
+                selectData={dogAgeType}
+                rules={{
+                  required: "The age of your dog is required",
+                }}
+                errors={errors.age && errors.age.message}
+                name='age'
+              />
+              <FormField
+                control={control}
+                iconSrc={gender}
+                iconAlt='Dog gender icon'
+                label='Gender'
+                placeholder="Select your dog's gender"
+                editable='select'
+                selectData={dogGenderType}
+                rules={{
+                  required: "The gender of your dog is required",
+                }}
+                errors={errors.gender && errors.gender.message}
+                name='gender'
+              />
+              <FormField
+                control={control}
+                iconSrc={ruler}
+                iconAlt='Dog size icon'
+                label='Size'
+                placeholder='Select the size of your dog'
+                editable='select'
+                selectData={dogSizesType}
+                rules={{
+                  required: "The size of your dog is required",
+                }}
+                errors={errors.size && errors.size.message}
+                name='size'
+              />
+            </div>
+            <div className='create-profile__field-group'>
+              <FormField
+                control={control}
+                iconSrc={description}
+                iconAlt='Dog description icon'
+                label='Description'
+                placeholder='Description of your dog'
+                editable='string'
+                rules={{
+                  required: "Description is necessary",
+                  pattern: {
+                    value: /^.{100,}$/,
+                    message: "Day / Month / Year",
+                  },
+                }}
+                errors={errors.profileBio && errors.profileBio.message}
+                name='profileBio'
+              />
+            </div>
+            <div className='create-profile__button-container'>
+              <Button
+                size='large'
+                className='primary'
+                children='Publish profile'
+                onClick={handleSubmit}
+              />
+            </div>
           </div>
         </div>
       </form>
-    </div>
+    </>
   );
 };

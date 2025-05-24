@@ -63,6 +63,7 @@ select:invalid {
 .input--help-text__container {
   width: 100%;
   display: flex;
+  min-height: var(--space-16);
 }
 
 .input--help-text {

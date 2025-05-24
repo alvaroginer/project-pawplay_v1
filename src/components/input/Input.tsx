@@ -23,10 +23,12 @@ export const Input = React.forwardRef<
   } = props;
   const [inputContent, setInputContent] = useState<string>("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setInputContent(newValue);
-    onChange?.(e);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const val = e.target.value;
+    setInputContent(val);
+    onChange?.(e); // delegamos al onChange que venga de RHF (ya sea register o Controller)
   };
 
   return (
@@ -41,11 +43,10 @@ export const Input = React.forwardRef<
           type={type ? `${type}` : "text"}
           placeholder={placeholder}
           name={name}
-          value={value ? value : ""}
-          onChange={onChange}
+          value={value ?? undefined}
+          onChange={handleChange}
           className={`input ${className || ""}`}
           disabled={disabled}
-          onInput={handleInputChange}
         />
       ) : (
         <select
@@ -53,7 +54,7 @@ export const Input = React.forwardRef<
           id={name}
           name={name}
           value={value ? value : ""}
-          onChange={onChange}
+          onChange={handleChange}
           className={`input ${helpText ? "input--error" : ""} ${
             className || ""
           }`}
