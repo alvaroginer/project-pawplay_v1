@@ -24,25 +24,40 @@
   cursor: pointer;
 }
 
-.checklist-progressbar {
-  width: 100%;
+.checklist-container__progressbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
   margin-bottom: var(--space-24);
 }
 
+.checklist-progressbar {
+  width: 100%;
+  height: 8px;
+}
+
 progress[value] {
-  /* Reset the default appearance */
   -webkit-appearance: none;
   appearance: none;
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: #eee;
+  background-color: var(--color-gray-400);
   border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #6a5acd;
+  background-color: var(--color-berry);
   border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
+}
+
+/* Firefox */
+progress[value]::-moz-progress-bar {
+  background-color: var(--color-berry);
+  border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
 }
 
 .checklist__chevron {

@@ -109,11 +109,14 @@ export const CheckListProfile = () => {
           <p className="checklist__description">
             Complete your profile to unlock all features.
           </p>
-          <progress
-            max="100"
-            value="80"
-            className="checklist-progressbar"
-          ></progress>
+          <div className="checklist-container__progressbar">
+            <progress
+              max="100"
+              value={progress}
+              className="checklist-progressbar"
+            ></progress>
+            <div className="checklist-progressbar__label">80%</div>
+          </div>
           <div className="checklist__items-container">
             {checklistItems.map((item) => {
               return (
