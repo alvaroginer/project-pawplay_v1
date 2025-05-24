@@ -22,6 +22,7 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     useState<EventData[]>();
   const navigate = useNavigate();
   const currentUser = getAuth().currentUser;
+
   useEffect(() => {
     console.log("se ejecuta el useEffect en el componente de profileCrad");
     const fecthProfile = async () => {

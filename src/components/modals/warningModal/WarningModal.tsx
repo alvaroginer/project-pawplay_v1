@@ -18,7 +18,11 @@ export const WarningModal = ({
     <div className="modal-overlay">
       <div className="modal-container">
         <button className="close-button" aria-label="Cerrar">
-          <img src={closeIcon} alt="" onClick={onClose} />
+          <img
+            src={closeIcon}
+            alt="Button for close the modal"
+            onClick={onClose}
+          />
         </button>
 
         <div className="modal-content">
