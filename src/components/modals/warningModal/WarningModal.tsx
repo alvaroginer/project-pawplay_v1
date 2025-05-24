@@ -2,17 +2,13 @@ import { Button } from "../../button/Button";
 import "./WarningModal.css";
 import closeIcon from "../../../imgs/close-thick.svg";
 import { Link } from "react-router";
-
-type WarningModalProps = {
-  onClose: () => void;
-  modalText: string;
-  buttonText: string;
-};
+import { WarningModalProps } from "../../../types";
 
 export const WarningModal = ({
   onClose,
   modalText,
   buttonText,
+  children,
 }: WarningModalProps) => {
   return (
     <div className="modal-overlay">
@@ -27,6 +23,7 @@ export const WarningModal = ({
 
         <div className="modal-content">
           <p className="modal-text">{modalText}</p>
+          <div>{children}</div>
           <Link to="/signin">
             <div className="button-container">
               <Button className="primary">{buttonText}</Button>

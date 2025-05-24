@@ -3,6 +3,7 @@ import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { Button } from "../../components/button/Button";
+import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 
 import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
@@ -38,6 +39,7 @@ export const Event = () => {
   const [hasJoined, setHasJoined] = useState<boolean>();
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const { loggedProfile } = useContext(AuthContext);
+  const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
 
   //Params para la url
   const { eventId } = useParams();
@@ -58,17 +60,21 @@ export const Event = () => {
     fetchEvent();
   }, [paramsStr]);
 
+  const toggleDeleteModal = () => {
+    setisDeleteModalOpen(!isDeleteModalOpen);
+  };
+
   const handleHasJoined = async () => {
     if (eventData === null) return;
 
     if (!hasJoined) {
       await eventSignUp(loggedProfile.id, eventData.id);
       setHasJoined(true);
-      toast.success("You've successfully joined the event!");
+      // toast.success("You've successfully joined the event!");
     } else {
       await eventUnregister(loggedProfile.id, eventData.id);
       setHasJoined(false);
-      toast.success("You've left the event.");
+      // toast.success("You've left the event.");
     }
   };
 
@@ -207,11 +213,11 @@ export const Event = () => {
             </div>
             <div className="event--modal">
               {hasJoined ? (
-                <Button onClick={handleHasJoined} className="terciary">
+                <Button onClick={toggleDeleteModal} className="terciary">
                   Cancel assistance
                 </Button>
               ) : (
-                <Button onClick={handleHasJoined} className="primary">
+                <Button onClick={toggleDeleteModal} className="primary">
                   Join Us
                 </Button>
               )}
@@ -227,6 +233,15 @@ export const Event = () => {
             similarEvents={similarEvents}
           />
         </div>
+        {isDeleteModalOpen && (
+          <WarningModal
+            modalText="Select the pup who's ready for an adventure."
+            buttonText="Join event"
+            onClose={() => setisDeleteModalOpen(false)}
+          >
+            <p>hola</p>
+          </WarningModal>
+        )}
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}
       </>

@@ -141,6 +141,14 @@ export interface ForgotPasswordModalProps {
   onClose: () => void;
 }
 
+// -----> Warning Modal
+export type WarningModalProps = {
+  onClose: () => void;
+  modalText: string;
+  buttonText: string;
+  children?: ReactNode;
+};
+
 // -----> Accordion
 export interface AccordionProps {
   text: string;
