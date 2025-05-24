@@ -4,7 +4,7 @@ import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { Button } from "../../components/button/Button";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
-
+import { ProfileCardHorizontal } from "../../components/profileCardHorizontal/ProfileCardHorizontal";
 import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
 import {
@@ -12,12 +12,14 @@ import {
   normalizeTime,
   normalizePlaces,
 } from "../../functions/Functions";
+import { ProfileData } from "../../types";
 import {
   eventSignUp,
   eventUnregister,
 } from "../../dataBase/services/updateFunctions";
 import { db } from "../../dataBase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { AuthContext } from "../../auth/AuthContext";
 import { useEffect, useState, useContext } from "react";
 import "./Event.css";
@@ -40,6 +42,8 @@ export const Event = () => {
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const { loggedProfile } = useContext(AuthContext);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  // Estado para guardar los perfiles encontrados
+  const [profiles, setProfiles] = useState<ProfileData[]>([]);
 
   //Params para la url
   const { eventId } = useParams();
@@ -107,6 +111,61 @@ export const Event = () => {
     const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
     return typedEvents;
   };
+
+  // Obtenemos el usuario actual desde Firebase Auth
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  // Si el usuario está logueado, obtenemos su UID
+  const userId = currentUser ? currentUser.uid : null;
+
+  // Efecto que se ejecuta una vez que tenemos el userId
+  useEffect(() => {
+    if (!userId) {
+      // Si no hay usuario logueado, salimos del efecto
+      console.log("No user is logged in.");
+      return;
+    }
+
+    // Función asíncrona para obtener los perfiles del usuario logueado
+    const fetchProfiles = async () => {
+      // Paso 1: Buscar al usuario actual en la colección "users"
+      const usersCol = collection(db, "users");
+      const userQuery = query(usersCol, where("id", "==", userId)); // Comparamos por el campo "id" del documento
+      const userSnapshot = await getDocs(userQuery); // Ejecutamos la consulta
+
+      if (userSnapshot.empty) {
+        // Si no se encuentra el usuario, mostramos un error
+        console.error("User not found");
+        return;
+      }
+
+      // Obtenemos el documento del usuario
+      const userDoc = userSnapshot.docs[0];
+      // Extraemos el array de IDs de perfiles asociados a ese usuario
+      const profilesIds = userDoc.data().profiles;
+
+      // Paso 2: Obtener los documentos de perfil que coincidan con esos IDs
+      const profilesCol = collection(db, "profiles");
+      const profilesQuery = query(profilesCol, where("id", "in", profilesIds));
+      const profilesSnapshot = await getDocs(profilesQuery);
+
+      // Convertimos los documentos obtenidos a objetos tipo ProfileData
+      const profilesList: ProfileData[] = profilesSnapshot.docs.map((doc) => {
+        const data = doc.data(); // Obtenemos los datos del documento
+        return {
+          ...data, // Copiamos todos los datos originales
+          id: doc.id, // Aseguramos que el ID esté presente (en caso de que no esté incluido en los datos)
+        } as ProfileData; // Especificamos que este objeto es del tipo ProfileData
+      });
+
+      console.log(profilesList); // Mostramos los perfiles por consola
+      setProfiles(profilesList); // Guardamos los perfiles en el estado
+    };
+
+    // Llamamos a la función para obtener los perfiles
+    fetchProfiles();
+  }, [userId]);
 
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
   // Falta comprobar que el perfil está completo para poder apuntarse
@@ -239,11 +298,12 @@ export const Event = () => {
             buttonText="Join event"
             onClose={() => setisDeleteModalOpen(false)}
           >
-            <p>hola</p>
+            {profiles.map((profile) => (
+              <ProfileCardHorizontal key={profile.id} profileId={profile.id} />
+            ))}
           </WarningModal>
         )}
         {/* Falta el mapa */}
-        {/* Falta el apartado de Similar Events */}
       </>
     );
   }

@@ -3,8 +3,7 @@ import { ProfileData } from "../../types";
 import { useState, useEffect } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
-import dogUser from "../../assets/dogUser.png"; // asegúrate de tener esta imagen por defecto
-
+import dogUser from "../../imgs/dogUser.jpg";
 import "./ProfileCardHorizontal.css";
 
 export const ProfileCardHorizontal = ({ profileId }: { profileId: string }) => {
