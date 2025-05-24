@@ -64,6 +64,7 @@ export const CheckListProfile = () => {
   const total = checklistItems.length;
   const completed = checklistItems.filter((item) => item.completed).length;
   const progress = (completed / total) * 100;
+  const progressPercentage = Math.round((completed / total) * 100);
 
   return (
     <>
@@ -115,7 +116,9 @@ export const CheckListProfile = () => {
               value={progress}
               className="checklist-progressbar"
             ></progress>
-            <div className="checklist-progressbar__label">80%</div>
+            <div className="checklist-progressbar__label">
+              {progressPercentage}%
+            </div>
           </div>
           <div className="checklist__items-container">
             {checklistItems.map((item) => {

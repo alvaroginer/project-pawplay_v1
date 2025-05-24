@@ -53,6 +53,10 @@ progress[value]::-webkit-progress-value {
   transition: width 0.3s ease-in-out;
 }
 
+.checklist-progressbar__label {
+  font-size: var(--font-14);
+}
+
 /* Firefox */
 progress[value]::-moz-progress-bar {
   background-color: var(--color-berry);
@@ -128,7 +132,7 @@ progress[value]::-moz-progress-bar {
 }
 
 .checklist__item-title {
-  font-size: var(--space-16);
+  font-size: var(--font-16);
   color: var(--color-gray);
 }
 
