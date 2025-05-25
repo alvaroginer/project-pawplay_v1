@@ -42,41 +42,41 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     fetchQuerySnap();
   }, [eventId]);
 
-  if (!profileData) {
-    return null;
-  } else {
-    return (
-      <Link to={`/profile/${eventId}`}>
-        <div className='profile--card'>
-          <div className='profile--card__image-container'>
-            <img
-              className='profile--card__image'
-              src={
-                profileData.profilePhoto ? profileData.profilePhoto : dogUser
-              }
-              alt='Profile Image'
-            />
+  return (
+    <Link to={`/profile/${eventId}`}>
+      <div className='profile--card'>
+        <div className='profile--card__image-container'>
+          <img
+            className='profile--card__image'
+            src={profileData?.profilePhoto ? profileData.profilePhoto : dogUser}
+            alt='Profile Image'
+          />
+        </div>
+        <div className='profile--card__info'>
+          <p
+            className={`profile--card__name ${
+              !profileData?.profileName && "profile--card__uncompleted"
+            }`}
+          >
+            {profileData?.profileName
+              ? capitalizeFirstLetter(profileData.profileName)
+              : "Field incompleted"}
+          </p>
+          <div className='profile--card__block-rating'>
+            <div className='profile--card__rating'>
+              <img className='profile--card__icon' src={bone} alt='' />
+              <p className='profile--card__value'>{0}</p>
+            </div>
+            <p className='profile--card__label'>Rating</p>
           </div>
-          <div className='profile--card__info'>
-            <p className='profile--card__name'>
-              {capitalizeFirstLetter(profileData.profileName)}
+          <div className='profile--card__block-events'>
+            <p className='profile--card__value'>
+              {createdEventsByProfile && createdEventsByProfile.length}
             </p>
-            <div className='profile--card__block-rating'>
-              <div className='profile--card__rating'>
-                <img className='profile--card__icon' src={bone} alt='' />
-                <p className='profile--card__value'>{0}</p>
-              </div>
-              <p className='profile--card__label'>Rating</p>
-            </div>
-            <div className='profile--card__block-events'>
-              <p className='profile--card__value'>
-                {createdEventsByProfile && createdEventsByProfile.length}
-              </p>
-              <p className='profile--card__label'>Events created</p>
-            </div>
+            <p className='profile--card__label'>Events created</p>
           </div>
         </div>
-      </Link>
-    );
-  }
+      </div>
+    </Link>
+  );
 };

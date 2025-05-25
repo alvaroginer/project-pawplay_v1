@@ -14,6 +14,7 @@ import { useState, useContext } from "react";
 import { transformFileToDataUrl } from "../../functions/Functions";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../auth/AuthContext";
+import { updateUserProfiles } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
 import medal from "../../imgs/profilePage/medal-outline.svg";
@@ -25,7 +26,8 @@ import "./CreateProfile.css";
 
 export const CreateProfile = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const { user } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user, login } = useContext(AuthContext);
   const {
     control,
     handleSubmit,
@@ -52,6 +54,7 @@ export const CreateProfile = () => {
 
   const onSubmit: SubmitHandler<CreateProfileProps> = async (formData) => {
     if (!user) return;
+    setIsLoading(true);
 
     try {
       if (!selectedImage) {
@@ -59,12 +62,16 @@ export const CreateProfile = () => {
           type: "manual",
           message: "You must upload an image.",
         });
+        setIsLoading(false);
+        toast(`It's necessary to upload an image`);
         return;
       }
 
-      console.log("esto es la imagen en el form", formData.profilePhoto);
       const imageUrl = await handleImageFile(selectedImage);
-      if (!imageUrl) return;
+      if (!imageUrl) {
+        setIsLoading(false);
+        return;
+      }
 
       const newProfileData: ProfileData = {
         userUid: user.uid,
@@ -80,12 +87,14 @@ export const CreateProfile = () => {
       };
 
       const profileId = await createProfileDb(newProfileData);
+      await updateUserProfiles(user.uid, profileId);
+      login(user, { ...newProfileData, id: profileId });
 
       toast(
-        `Congratulations, you created a dog profile for ${formData.profileName}`
+        `Congratulations! You’ve created the profile for ${formData.profileName} and are now logged in.`
       );
 
-      navigate(`/event/${profileId}`);
+      navigate(`/profile/${profileId}`);
     } catch (error: any) {
       console.log(`Firebase error (${error.code}): ${error.message}`);
     }
@@ -118,7 +127,6 @@ export const CreateProfile = () => {
                     setSelectedImage(e.target.files[0]);
                   }
                 }}
-                name='profilePhoto'
               />
               {selectedImage && (
                 <label
@@ -149,12 +157,13 @@ export const CreateProfile = () => {
                 rules={{
                   required: "Dog name is necessary",
                   pattern: {
-                    value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
-                    message: "Only letters (2–20 characters)",
+                    value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,30}$/,
+                    message: "Only letters (2–30 characters)",
                   },
                 }}
                 errors={errors.profileName && errors.profileName.message}
                 name='profileName'
+                charLimit={30}
               />
             </div>
             <div className='create-profile__field-group'>
@@ -171,7 +180,6 @@ export const CreateProfile = () => {
                 }}
                 errors={errors.breed && errors.breed.message}
                 name='breed'
-                charLimit={20}
               />
             </div>
             <div className='create-profile__field-group'>
@@ -230,7 +238,7 @@ export const CreateProfile = () => {
                   required: "Description is necessary",
                   pattern: {
                     value: /^.{100,}$/,
-                    message: "Day / Month / Year",
+                    message: "Write a description of minimum 100 characters",
                   },
                 }}
                 errors={errors.profileBio && errors.profileBio.message}
@@ -238,12 +246,14 @@ export const CreateProfile = () => {
               />
             </div>
             <div className='create-profile__button-container'>
-              <Button
-                size='large'
-                className='primary'
-                children='Publish profile'
-                onClick={handleSubmit}
-              />
+              <Button size='large' className='primary' onClick={handleSubmit}>
+                Publish profile
+                {isLoading && (
+                  <div className='spinner'>
+                    <div className='spinner__circle'></div>
+                  </div>
+                )}
+              </Button>
             </div>
           </div>
         </div>

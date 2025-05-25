@@ -41,6 +41,10 @@
   font-weight: var(--font-medium);
 }
 
+.profile--card__uncompleted {
+  color: var(--color-berry-active);
+}
+
 .profile--card__block-rating {
   display: flex;
   flex-direction: column;

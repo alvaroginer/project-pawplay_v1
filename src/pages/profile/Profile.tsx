@@ -115,7 +115,11 @@ export const Profile = () => {
         <div className='profile-page'>
           <div className='profile-page__image-container'>
             <img
-              src={dogUser}
+              src={
+                loggedProfile.profilePhoto
+                  ? loggedProfile.profilePhoto
+                  : dogUser
+              }
               alt='Profile picture of the dog'
               className='profile-page__image'
             />

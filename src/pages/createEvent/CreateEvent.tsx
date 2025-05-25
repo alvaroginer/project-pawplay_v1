@@ -65,6 +65,7 @@ export const CreateEvent = () => {
           type: "manual",
           message: "You must upload an image.",
         });
+        toast(`It's necessary to upload an image`);
         return;
       }
 
