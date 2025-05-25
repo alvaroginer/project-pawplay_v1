@@ -9,9 +9,13 @@ import "./ProfileCardHorizontal.css";
 export const ProfileCardHorizontal = ({
   profileId,
   mockData,
+  selected,
+  onToggle,
 }: {
   profileId?: string;
   mockData?: ProfileData;
+  selected?: boolean;
+  onToggle?: () => void;
 }) => {
   const [profileData, setProfileData] = useState<ProfileData>();
 
@@ -53,7 +57,7 @@ export const ProfileCardHorizontal = ({
     <div>
       {profileData && (
         <div className="profile-card-horizontal__container">
-          <input type="checkbox" />
+          <input type="checkbox" checked={selected} onChange={onToggle} />
           <div className="profile-card-horizontal__info">
             <img
               className="profile--card__image small-image"

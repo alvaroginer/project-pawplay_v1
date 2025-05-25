@@ -4,12 +4,22 @@
   gap: var(--space-20);
   padding: var(--space-8) var(--space-10);
   background-color: var(--color-white);
+  width: 300px;
+  border-radius: 12px;
+  margin-bottom: var(--space-12);
+
+  &:hover {
+    background-color: var(--color-berry-100);
+  }
+
+  &:active {
+    background-color: var(--color-berry-100);
+  }
 }
 .profile-card-horizontal__info {
   display: flex;
   align-items: center;
   gap: var(--space-14);
-  margin-bottom: var(--space-12);
 }
 
 .small-image {

@@ -15,6 +15,7 @@
   --color-berry-active: hsla(318, 91%, 23%, 1);
   --color-berry-disabled: rgb(147, 120, 138);
   --color-berry-200: hsla(323, 67%, 80%, 1);
+  --color-berry-100: hsla(323, 71%, 91%, 1);
 
   /* White */
   --color-white: hsla(0, 0%, 100%, 1);

@@ -125,8 +125,6 @@ export const Accordion = ({
     setShowAccordion(!showAccordion);
   };
 
-  console.log(cardsContent);
-
   return (
     <>
       <div

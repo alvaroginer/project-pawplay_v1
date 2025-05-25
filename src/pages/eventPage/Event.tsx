@@ -44,6 +44,7 @@ export const Event = () => {
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
   // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
+  const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
 
   //Params para la url
   const { eventId } = useParams();
@@ -68,6 +69,20 @@ export const Event = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
 
+  //Funcion para añadir el perfil asl useState o quitarlo
+  const toggleProfileSelection = (profileId: string) => {
+    setSelectedProfiles((prev) => {
+      if (prev.includes(profileId)) {
+        // Si ya está seleccionado, lo quitamos
+        return prev.filter((id) => id !== profileId);
+      } else {
+        // Si no está seleccionado, lo añadimos
+        return [...prev, profileId];
+      }
+    });
+  };
+
+  //Función para apuntar a un usuario o desapuntarlo del evento
   const handleHasJoined = async () => {
     if (eventData === null) return;
 
@@ -195,6 +210,15 @@ export const Event = () => {
     },
   ];
 
+  // Funcion para saber si el user tiene un profile o más de uno
+  const handleJoinClick = async () => {
+    if (eventData === null) return;
+    if (profiles.length === 1) {
+      await eventSignUp(profiles[0].id, eventData.id);
+      setHasJoined(true);
+    } else setisDeleteModalOpen(true);
+  };
+
   if (!eventData) {
     return null;
   } else {
@@ -301,7 +325,7 @@ export const Event = () => {
                   Cancel assistance
                 </Button>
               ) : (
-                <Button onClick={toggleDeleteModal} className="primary">
+                <Button onClick={handleJoinClick} className="primary">
                   Join Us
                 </Button>
               )}
@@ -322,10 +346,23 @@ export const Event = () => {
             modalText="Select the pup who's ready for an adventure."
             buttonText="Join event"
             onClose={() => setisDeleteModalOpen(false)}
+            // onConfirm={handleJoinMultipleProfiles}
             className="color-white"
           >
             {fakeProfiles.map((profile) => (
-              <ProfileCardHorizontal key={profile.id} mockData={profile} />
+              <div
+                onClick={() => {
+                  console.log(setSelectedProfileId);
+                  setSelectedProfileId(profile.id);
+                }}
+              >
+                <ProfileCardHorizontal
+                  key={profile.id}
+                  mockData={profile}
+                  selected={selectedProfiles.includes(profile.id)}
+                  onToggle={() => toggleProfileSelection(profile.id)}
+                />
+              </div>
             ))}
           </WarningModal>
         )}
