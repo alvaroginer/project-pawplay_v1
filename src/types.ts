@@ -148,6 +148,7 @@ export type WarningModalProps = {
   buttonText: string;
   children?: ReactNode;
   className?: string;
+  onConfirm?: () => void;
 };
 
 // -----> Accordion

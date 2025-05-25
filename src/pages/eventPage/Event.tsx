@@ -21,7 +21,7 @@ import { db } from "../../dataBase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { AuthContext } from "../../auth/AuthContext";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -34,7 +34,7 @@ import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
-import { toast, ToastContainer, Slide } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
@@ -50,26 +50,21 @@ export const Event = () => {
   const { eventId } = useParams();
   const paramsStr: string = eventId ?? "";
 
-  useEffect(() => {
-    //Fetching Event info
-    const fetchEvent = async () => {
-      const eventSnap = await getOneEvent(paramsStr);
-
-      if (eventSnap === null) {
-        setEventData(null);
-        return;
-      }
-
-      setEventData(eventSnap);
-    };
-    fetchEvent();
+  //Fetching Event info
+  const fetchEvent = useCallback(async () => {
+    const eventSnap = await getOneEvent(paramsStr);
+    if (eventSnap === null) {
+      setEventData(null);
+      return;
+    }
+    setEventData(eventSnap);
   }, [paramsStr]);
 
-  const toggleDeleteModal = () => {
-    setisDeleteModalOpen(!isDeleteModalOpen);
-  };
+  useEffect(() => {
+    fetchEvent();
+  }, [fetchEvent]);
 
-  //Funcion para añadir el perfil asl useState o quitarlo
+  //Funcion para añadir el perfil al useState o quitarlo
   const toggleProfileSelection = (profileId: string) => {
     setSelectedProfiles((prev) => {
       if (prev.includes(profileId)) {
@@ -82,18 +77,58 @@ export const Event = () => {
     });
   };
 
-  //Función para apuntar a un usuario o desapuntarlo del evento
-  const handleHasJoined = async () => {
+  //Función para apuntar varios perfiles seleccionados al evento
+  const handleJoinMultipleProfiles = async () => {
     if (eventData === null) return;
+    if (selectedProfiles.length <= 1) return;
 
-    if (!hasJoined) {
-      await eventSignUp(loggedProfile.id, eventData.id);
-      setHasJoined(true);
-      // toast.success("You've successfully joined the event!");
-    } else {
-      await eventUnregister(loggedProfile.id, eventData.id);
+    try {
+      if (!hasJoined) {
+        await Promise.all(
+          selectedProfiles.map((profileId) =>
+            eventSignUp(profileId, eventData.id)
+          )
+        );
+        setHasJoined(true);
+        toast.success("Selected profiles joined the event!");
+      } else {
+        await Promise.all(
+          selectedProfiles.map((profileId) =>
+            eventUnregister(profileId, eventData.id)
+          )
+        );
+        setHasJoined(false);
+        toast.success("Selected profiles left the event.");
+      }
+
+      setisDeleteModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while updating attendance.");
+    }
+  };
+
+  //Funcion para cancelar asistencia
+  const handleCancelAssistance = async () => {
+    if (!eventData || profiles.length === 0) return;
+
+    try {
+      const joinedProfiles = profiles.filter((profile) =>
+        eventData.profileIdAsisstant?.includes(profile.id)
+      );
+
+      await Promise.all(
+        joinedProfiles.map((profile) =>
+          eventUnregister(profile.id, eventData.id)
+        )
+      );
+
       setHasJoined(false);
-      // toast.success("You've left the event.");
+      toast.success("You've cancelled your attendance.");
+      fetchEvent(); // Vuelve a cargar los datos del evento
+    } catch (error) {
+      console.error(error);
+      toast.error("Error cancelling attendance.");
     }
   };
 
@@ -182,9 +217,6 @@ export const Event = () => {
     fetchProfiles();
   }, [userId]);
 
-  // Falta volver a leer el evento una vez modificado el que te hayas apuntado
-  // Falta comprobar que el perfil está completo para poder apuntarse
-
   const fakeProfiles: ProfileData[] = [
     {
       id: "1",
@@ -216,8 +248,12 @@ export const Event = () => {
     if (profiles.length === 1) {
       await eventSignUp(profiles[0].id, eventData.id);
       setHasJoined(true);
+      toast.success("Your pup has joined the event!");
     } else setisDeleteModalOpen(true);
   };
+
+  // Falta volver a leer el evento una vez modificado el que te hayas apuntado
+  // Falta comprobar que el perfil está completo para poder apuntarse
 
   if (!eventData) {
     return null;
@@ -321,7 +357,7 @@ export const Event = () => {
             </div>
             <div className="event--modal">
               {hasJoined ? (
-                <Button onClick={toggleDeleteModal} className="terciary">
+                <Button onClick={handleCancelAssistance} className="terciary">
                   Cancel assistance
                 </Button>
               ) : (
@@ -329,7 +365,6 @@ export const Event = () => {
                   Join Us
                 </Button>
               )}
-              <ToastContainer transition={Slide} />
             </div>
           </aside>
         </div>
@@ -346,23 +381,16 @@ export const Event = () => {
             modalText="Select the pup who's ready for an adventure."
             buttonText="Join event"
             onClose={() => setisDeleteModalOpen(false)}
-            // onConfirm={handleJoinMultipleProfiles}
+            onConfirm={handleJoinMultipleProfiles}
             className="color-white"
           >
             {fakeProfiles.map((profile) => (
-              <div
-                onClick={() => {
-                  console.log(setSelectedProfileId);
-                  setSelectedProfileId(profile.id);
-                }}
-              >
-                <ProfileCardHorizontal
-                  key={profile.id}
-                  mockData={profile}
-                  selected={selectedProfiles.includes(profile.id)}
-                  onToggle={() => toggleProfileSelection(profile.id)}
-                />
-              </div>
+              <ProfileCardHorizontal
+                key={profile.id}
+                mockData={profile}
+                selected={selectedProfiles.includes(profile.id)}
+                onToggle={() => toggleProfileSelection(profile.id)}
+              />
             ))}
           </WarningModal>
         )}
