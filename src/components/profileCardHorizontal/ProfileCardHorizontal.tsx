@@ -56,7 +56,9 @@ export const ProfileCardHorizontal = ({
   return (
     <div>
       {profileData && (
-        <div className="profile-card-horizontal__container">
+        <div
+          className={`profile-card-horizontal ${selected ? "selected" : ""}`}
+        >
           <input type="checkbox" checked={selected} onChange={onToggle} />
           <div className="profile-card-horizontal__info">
             <img
