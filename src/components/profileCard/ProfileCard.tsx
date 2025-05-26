@@ -84,8 +84,14 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
           )}
         </div>
         <div className='profile--card__info'>
-          <p className='profile--card__name'>
-            {capitalizeFirstLetter(profileData.profileName)}
+          <p
+            className={`profile--card__name ${
+              profileData.profileName ? "" : "profile--card__uncompleted"
+            }`}
+          >
+            {profileData.profileName
+              ? capitalizeFirstLetter(profileData.profileName)
+              : "Field incompleted"}
           </p>
           <div className='profile--card__block-rating'>
             <div className='profile--card__rating'>
