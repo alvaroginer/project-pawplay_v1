@@ -1,4 +1,5 @@
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { RatingProps } from "../../types";
 import { db } from "../firebase";
 
 /* -----> User Updates */
@@ -23,17 +24,18 @@ export const updateProfileCategoryDB = async (
   });
 };
 
-// Give like to an event
-export const likeEvent = async (profileId: string, eventId: string) => {
-  await updateDoc(doc(db, "profiles", profileId), {
-    likedEvents: arrayUnion(eventId),
+export const ratingProfile = async (profileRating: RatingProps) => {
+  await updateDoc(doc(db, "profiles", profileRating.fromProfileId), {
+    rating: arrayUnion(profileRating),
   });
 };
 
-// Give dislike to an event
-export const disLikeEvent = async (profileId: string, eventId: string) => {
-  await updateDoc(doc(db, "profiles", profileId), {
-    likedEvents: arrayRemove(eventId),
+export const editRatingProfile = async (
+  profileRating: RatingProps,
+  completeRating: RatingProps[]
+) => {
+  await updateDoc(doc(db, "profiles", profileRating.fromProfileId), {
+    rating: [...completeRating, profileRating],
   });
 };
 
@@ -60,5 +62,19 @@ export const eventSignUp = async (profileId: string, eventId: string) => {
 export const eventUnregister = async (profileId: string, eventId: string) => {
   await updateDoc(doc(db, "events", eventId), {
     profileIdAsisstant: arrayRemove(profileId),
+  });
+};
+
+// Give like to an event
+export const likeEvent = async (profileId: string, eventId: string) => {
+  await updateDoc(doc(db, "profiles", profileId), {
+    likedEvents: arrayUnion(eventId),
+  });
+};
+
+// Give dislike to an event
+export const disLikeEvent = async (profileId: string, eventId: string) => {
+  await updateDoc(doc(db, "profiles", profileId), {
+    likedEvents: arrayRemove(eventId),
   });
 };
