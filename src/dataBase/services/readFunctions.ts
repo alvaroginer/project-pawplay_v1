@@ -8,7 +8,12 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { EventData, ProfileData, UserData } from "../../types";
+import {
+  EventData,
+  ProfileData,
+  UserData,
+  completeProfileRating,
+} from "../../types";
 
 /* -----> Users */
 // Get all users from database
@@ -214,4 +219,20 @@ export const getPastEventsLimited = async (profileId: string) => {
     (doc) => doc.data() as EventData
   );
   return typedQuerySnap;
+};
+
+/* -----> Rating */
+// Get a single rating
+export const getOneProfileRating = async (profileId: string) => {
+  const querySnap = await getDoc(doc(db, "ratings", profileId));
+
+  if (!querySnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: completeProfileRating =
+    querySnap.data() as completeProfileRating;
+
+  return typedEventSnap;
 };

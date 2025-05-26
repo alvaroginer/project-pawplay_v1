@@ -50,7 +50,11 @@ export interface EventsProfileProps {
 }
 
 // -----> Data of a Rating
-export interface RatingProps {
+export interface completeProfileRating {
+  rating: oneRatingProps[];
+}
+
+export interface oneRatingProps {
   fromProfileId: string;
   value: number;
 }

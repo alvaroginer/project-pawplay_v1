@@ -1,6 +1,8 @@
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { RatingProps } from "../../types";
+import { oneRatingProps } from "../../types";
 import { db } from "../firebase";
+import { getOneProfileRating } from "./readFunctions";
+import { createCompleteProfileRating } from "./createFunctions";
 
 /* -----> User Updates */
 export const updateUserProfiles = async (
@@ -24,15 +26,24 @@ export const updateProfileCategoryDB = async (
   });
 };
 
-export const ratingProfile = async (profileRating: RatingProps) => {
-  await updateDoc(doc(db, "profiles", profileRating.fromProfileId), {
-    rating: arrayUnion(profileRating),
-  });
+export const ratingProfile = async (
+  eventCreatorId: string,
+  profileRating: oneRatingProps
+) => {
+  const isRating = await getOneProfileRating(eventCreatorId);
+
+  if (!isRating) {
+    await createCompleteProfileRating(eventCreatorId, profileRating);
+  } else {
+    await updateDoc(doc(db, "profiles", profileRating.fromProfileId), {
+      rating: arrayUnion(profileRating),
+    });
+  }
 };
 
 export const editRatingProfile = async (
-  profileRating: RatingProps,
-  completeRating: RatingProps[]
+  profileRating: oneRatingProps,
+  completeRating: oneRatingProps[]
 ) => {
   await updateDoc(doc(db, "profiles", profileRating.fromProfileId), {
     rating: [...completeRating, profileRating],

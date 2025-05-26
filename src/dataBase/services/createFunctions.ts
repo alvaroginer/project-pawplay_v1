@@ -1,6 +1,6 @@
 import { collection, setDoc, doc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
-import { EventData, ProfileData } from "../../types";
+import { EventData, oneRatingProps, ProfileData } from "../../types";
 
 /* -----> Events */
 // Create events in database
@@ -30,4 +30,18 @@ export const createProfileDb = async (profileData: ProfileData) => {
     profileDataWithRef
   );
   return profileDataWithRef.id;
+};
+
+/* -----> Rating */
+// Create a rating in database
+export const createCompleteProfileRating = async (
+  eventCreatorId: string,
+  profileRating: oneRatingProps
+) => {
+  const ratingRef = collection(db, "ratings", eventCreatorId);
+  const newRatingRef = doc(ratingRef);
+  const ratingDataWithRef = { rating: [profileRating] };
+
+  await setDoc(newRatingRef, ratingDataWithRef);
+  console.log("Rating object created", ratingDataWithRef);
 };
