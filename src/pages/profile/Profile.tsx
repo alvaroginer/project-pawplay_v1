@@ -10,6 +10,7 @@ import {
 } from "../../types";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
+import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
@@ -17,6 +18,8 @@ import {
   getOneProfile,
   getOneUser,
 } from "../../dataBase/services/readFunctions";
+import { useNavigate } from "react-router";
+
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -26,15 +29,14 @@ import star from "../../imgs/profilePage/star-outline.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
-import dots from "../../imgs/eventCard/dots.svg";
 import dogIcon from "../../imgs/profilePage/dog.svg";
 import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
-  const [isOptionsMenuOpen, setisOptionsMenuOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { loggedProfile, user } = useContext(AuthContext);
 
@@ -73,10 +75,6 @@ export const Profile = () => {
     fetchUser();
   }, [loggedProfile, profileInfo]);
 
-  const toggleOptionsMenu = () => {
-    setisOptionsMenuOpen(!isOptionsMenuOpen);
-  };
-
   const toggleDeleteModal = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -95,22 +93,13 @@ export const Profile = () => {
             src={arrow}
             alt='Icon arrow to go back'
             className='profile-page__back-icon'
+            onClick={() => navigate(-1)}
           />
-          <div className='profile-page__dots-container'>
-            <img
-              src={dots}
-              alt='Dots icon for options'
-              onClick={toggleOptionsMenu}
-              className='dots'
-            />
-            {isOptionsMenuOpen && (
-              <div className='profile-page__options-container'>
-                <p className='profile-page__option' onClick={toggleDeleteModal}>
-                  Delete profile
-                </p>
-              </div>
-            )}
-          </div>
+          <DotsMenu className=''>
+            <p className='profile-page__option' onClick={toggleDeleteModal}>
+              Delete profile
+            </p>
+          </DotsMenu>
         </div>
         <div className='profile-page'>
           <div className='profile-page__image-container'>
@@ -131,26 +120,13 @@ export const Profile = () => {
                 src={arrow}
                 alt='Icon arrow to go back'
                 className='profile-page__back-icon'
+                onClick={() => navigate(-1)}
               />
-
-              <div className='profile-page__dots-container'>
-                <img
-                  src={dots}
-                  alt='Dots icon for options'
-                  onClick={toggleOptionsMenu}
-                  className='dots'
-                />
-                {isOptionsMenuOpen && (
-                  <div className='profile-page__options-container'>
-                    <p
-                      className='profile-page__option'
-                      onClick={toggleDeleteModal}
-                    >
-                      Delete profile
-                    </p>
-                  </div>
-                )}
-              </div>
+              <DotsMenu className=''>
+                <p className='profile-page__option' onClick={toggleDeleteModal}>
+                  Delete profile
+                </p>
+              </DotsMenu>
             </div>
             <div className='profile-page__info'>
               <p className='profile-page__info-name'>
@@ -169,8 +145,10 @@ export const Profile = () => {
                       dbCategory: "profileName",
                     }}
                     info={loggedProfile.profileName}
-                    // editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                    editable={""}
+                    editable={
+                      loggedProfile.id === profileInfo.id ? "string" : ""
+                    }
+                    // editable={""}
                   />
                 )}
                 <InfoCategoryProfile

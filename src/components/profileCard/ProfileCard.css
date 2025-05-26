@@ -19,6 +19,7 @@
   height: 297px;
   border-radius: var(--space-14);
   margin-bottom: var(--space-14);
+  position: relative;
 }
 
 .profile--card__image {
@@ -26,6 +27,13 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--space-14);
+}
+
+.dots-menu--container {
+  display: flex;
+  position: absolute;
+  top: var(--space-16);
+  right: var(--space-16);
 }
 
 .profile--card__info {

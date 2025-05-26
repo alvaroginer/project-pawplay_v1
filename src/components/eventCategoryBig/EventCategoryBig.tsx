@@ -1,8 +1,11 @@
-import { useState } from "react";
 import { EventCategoryBigProps } from "../../types";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import "./EventCategoryBig.css";
 import { Input } from "../input/Input";
+import { toast } from "react-toastify";
 
 export const EventCategoryBig = ({
   img,
@@ -12,6 +15,29 @@ export const EventCategoryBig = ({
 }: EventCategoryBigProps) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<string>(info ?? "");
+  const { loggedProfile, updateAuthContext } = useContext(AuthContext);
+
+  const updateProfileInfo = async (inputData: string) => {
+    if (!loggedProfile) return;
+
+    setCategoryValue(inputData);
+    if (reference.dbCategory === "age") {
+      const dataToNumber = Number(inputData);
+      await updateProfileCategoryDB(
+        loggedProfile.id,
+        reference.dbCategory,
+        dataToNumber
+      );
+    } else {
+      await updateProfileCategoryDB(
+        loggedProfile.id,
+        reference.dbCategory,
+        inputData
+      );
+    }
+    await updateAuthContext();
+    toast.success(`${reference.title} updated!`);
+  };
 
   const handleEditType = () => {
     if (editable === true) {
@@ -74,6 +100,7 @@ export const EventCategoryBig = ({
                   ) {
                     alert("The text must be between 1 and 300 characters");
                   } else {
+                    updateProfileInfo(categoryValue);
                     setIsEditable(!isEditable);
                   }
                 }}

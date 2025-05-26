@@ -36,6 +36,10 @@
   color: var(--color-pink);
 }
 
+.especific-align__event-card {
+  left: -146px;
+}
+
 .event-card--bottom-section {
   display: flex;
   flex-direction: column;
@@ -90,6 +94,7 @@
 }
 
 .fav-button--container {
+  display: flex;
   position: absolute;
   top: var(--space-16);
   right: var(--space-16);

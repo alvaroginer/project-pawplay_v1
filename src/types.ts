@@ -74,7 +74,7 @@ export interface LogInData {
 export interface ButtonProps {
   className: string;
   children: ReactNode;
-  size: "large" | "medium" | "small";
+  //size: "large" | "medium" | "small";
   onClick?: (value: any) => void;
 }
 
@@ -103,6 +103,13 @@ export interface FilterCategoryProps {
 
 export interface NavMenuProps {
   onClick: (value: boolean) => void;
+}
+
+// -----> Dots Menu
+
+export interface DotsMenuProps {
+  children: ReactNode;
+  className: string;
 }
 
 // -----> Input
@@ -135,13 +142,15 @@ export interface ForgotPasswordModalProps {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes:
+  eventTypes?:
     | "upcoming events"
     | "hosted events"
     | "favourite events"
-    | "past events";
-  profileId: string;
-  likedEvents: string[];
+    | "past events"
+    | "similar events";
+  profileId?: string;
+  likedEvents?: string[];
+  similarEvents?: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }

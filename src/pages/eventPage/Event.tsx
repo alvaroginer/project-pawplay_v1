@@ -1,6 +1,7 @@
-import { NavLink, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
+import { Accordion } from "../../components/accordion/Accordion";
 import { Button } from "../../components/button/Button";
 
 import { getOneEvent } from "../../dataBase/services/readFunctions";
@@ -14,6 +15,8 @@ import {
   eventSignUp,
   eventUnregister,
 } from "../../dataBase/services/updateFunctions";
+import { db } from "../../dataBase/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import { AuthContext } from "../../auth/AuthContext";
 import { useEffect, useState, useContext } from "react";
 import "./Event.css";
@@ -28,10 +31,12 @@ import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
+import { toast, ToastContainer, Slide } from "react-toastify";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [hasJoined, setHasJoined] = useState<boolean>();
+  const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const { loggedProfile } = useContext(AuthContext);
 
   //Params para la url
@@ -59,10 +64,42 @@ export const Event = () => {
     if (!hasJoined) {
       await eventSignUp(loggedProfile.id, eventData.id);
       setHasJoined(true);
+      toast.success("You've successfully joined the event!");
     } else {
       await eventUnregister(loggedProfile.id, eventData.id);
       setHasJoined(false);
+      toast.success("You've left the event.");
     }
+  };
+
+  const navigate = useNavigate();
+
+  //Función para filtrar lo eventos similares
+  useEffect(() => {
+    if (!eventData) return;
+
+    const fetchSimilarEvents = async () => {
+      const allEvents = await getEvents();
+
+      const filteredEvents = allEvents.filter((event) => {
+        return (
+          event.activity === eventData.activity && event.id !== eventData.id
+        );
+      });
+
+      setSimilarEvents(filteredEvents);
+    };
+
+    fetchSimilarEvents();
+  }, [eventData]);
+
+  //Función para coger de firebase todos los eventos
+  const getEvents = async () => {
+    const eventsCol = collection(db, "events");
+    const eventSnaphot = await getDocs(eventsCol);
+    const eventList = eventSnaphot.docs.map((doc) => doc.data());
+    const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
+    return typedEvents;
   };
 
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
@@ -74,9 +111,9 @@ export const Event = () => {
     return (
       <>
         <div className='event--header'>
-          <NavLink to='' className='btn--icon'>
-            <img src={arrow} alt='Return Icon' />
-          </NavLink>
+          <div className='btn--icon'>
+            <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
+          </div>
           <div className='event--header__buttons'>
             <button className='btn--icon margin--right__10'>
               <img src={share} alt='Share Icon' />
@@ -174,11 +211,17 @@ export const Event = () => {
                   Join Us
                 </Button>
               )}
+              <ToastContainer transition={Slide} />
             </div>
           </aside>
         </div>
         <div className='event--events-container'>
-          <h3 className='event--profile-title'>Similar Events</h3>
+          <Accordion
+            text={"Similar Events"}
+            profileId=''
+            defaultOpen={true}
+            similarEvents={similarEvents}
+          />
         </div>
         {/* Falta el mapa */}
         {/* Falta el apartado de Similar Events */}

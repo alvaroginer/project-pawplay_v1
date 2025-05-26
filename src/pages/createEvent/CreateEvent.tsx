@@ -288,7 +288,7 @@ export const CreateEvent = () => {
             name='eventDescription'
           />
           <div className='create-event__button-container'>
-            <Button size='large' className='primary' children='Publish event' />
+            <Button className='primary' children='Publish event' />
           </div>
         </div>
       </form>

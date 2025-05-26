@@ -246,7 +246,7 @@ export const CreateProfile = () => {
               />
             </div>
             <div className='create-profile__button-container'>
-              <Button size='large' className='primary' onClick={handleSubmit}>
+              <Button className='primary' onClick={handleSubmit}>
                 Publish profile
                 {isLoading && (
                   <div className='spinner'>

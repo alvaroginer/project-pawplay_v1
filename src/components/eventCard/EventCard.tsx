@@ -7,12 +7,13 @@ import {
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { WarningModal } from "../modals/warningModal/WarningModal";
+import { DotsMenu } from "../dotsMenu/DotsMenu";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import { useNavigate } from "react-router";
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
-import dots from "../../imgs/eventCard/dots.svg";
+// import dots from "../../imgs/eventCard/dots.svg";
 import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se puede crear la función que calcula el rating
@@ -134,9 +135,10 @@ export const EventCard = ({ event }: { event: EventData }) => {
               </svg>
               {/* <img src={footprint} alt='Dog Footprint' /> */}
             </button>
-            <button className="fav-button">
-              <img src={dots} alt="Dots Icon" />
-            </button>
+            <DotsMenu className="especific-align__event-card">
+              <p className="profile-page__option">Edit event</p>
+              <p className="profile-page__option">Cancel attendance</p>
+            </DotsMenu>
           </div>
         </div>
         <div className="event-card--bottom-section">

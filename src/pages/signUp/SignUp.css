@@ -6,7 +6,6 @@
   align-items: center;
   min-height: 100vh;
   background-color: var(--color-brown-light);
-  margin-inline: -16px;
 }
 
 .signin-container label,
@@ -19,25 +18,17 @@
   font-size: var(--font-14);
 }
 
-.signin {
-  width: 100%;
-  max-width: var(--space-1000);
-  padding: var(--space-16);
-}
-
 .signin__card {
   display: flex;
   background-color: white;
   border-radius: var(--space-8);
   overflow: hidden;
   box-shadow: 0 var(--space-4) var(--space-20) rgba(0, 0, 0, 0.1);
-  width: 100%;
-  min-height: 560px;
 }
 
 .signin__image-container,
 .signin__form-container {
-  flex: 1;
+  max-width: 50%;
 }
 
 .signin__image {
@@ -48,7 +39,7 @@
 }
 
 .signin__form-container {
-  padding: var(--space-50);
+  padding: var(--space-32);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

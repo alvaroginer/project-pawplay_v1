@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
 import { EventData } from "../../../types";
 import { EventCard } from "../../../components/eventCard/EventCard";
 import { AuthContext } from "../../../auth/AuthContext";
@@ -9,6 +10,7 @@ import arrow from "../../../imgs/eventPage/arrow-left.svg";
 export const MyUpcomingEvents = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<EventData[]>();
   const { loggedProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!loggedProfile) return;
@@ -21,14 +23,15 @@ export const MyUpcomingEvents = () => {
 
   return (
     <>
-      <div className='my-events-page'>
+      <div className="my-events-page">
         <img
           src={arrow}
-          alt='Return Icon'
-          className='my-events-page__back-icon'
+          alt="Return Icon"
+          className="my-events-page__back-icon"
+          onClick={() => navigate(-1)}
         />
-        <h1 className='my-events-page__title'>My upcoming events</h1>
-        <div className='my-events-page__events-container'>
+        <h1 className="my-events-page__title">My upcoming events</h1>
+        <div className="my-events-page__events-container">
           {upcomingEvents &&
             upcomingEvents.map((eventData) => {
               return <EventCard key={eventData.id} event={eventData} />;
