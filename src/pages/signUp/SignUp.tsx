@@ -5,6 +5,7 @@ import { SignInData, ProfileData, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { collection, setDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { db } from "../../dataBase/firebase";
 import dogImage from "../../imgs/loginImage.png";
@@ -64,10 +65,7 @@ export const SignUp = () => {
         profileName: "",
         profilePhoto: "",
         profileBio: "",
-        age: null,
         breed: "",
-        size: null,
-        gender: null,
         likedEvents: [],
       };
 
@@ -78,6 +76,7 @@ export const SignUp = () => {
 
       console.log("User created with UID:", uidKey);
       console.log("Profile created with ID:", newProfileRef);
+      toast(`Hi ${userData.name}, welcome to PawPlay`);
     } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         console.log(`Firebase error (${error.code}): ${error.message}`);

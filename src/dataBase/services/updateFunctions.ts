@@ -1,6 +1,16 @@
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase";
 
+/* -----> User Updates */
+export const updateUserProfiles = async (
+  userUid: string,
+  newProfileId: string
+) => {
+  await updateDoc(doc(db, "users", userUid), {
+    profiles: arrayUnion(newProfileId),
+  });
+};
+
 /* -----> Profile Updates */
 // Profile Updates for string or number types
 export const updateProfileCategoryDB = async (

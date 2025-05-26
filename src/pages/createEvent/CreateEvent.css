@@ -32,10 +32,17 @@
 .create-event__form {
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 4vw, 50px);
+  justify-content: flex-start;
+  gap: calc(clamp(40px, 4vw, 50px) - 16px);
   margin-top: var(--space-80);
 }
 
 .create-event__button-container {
   margin: 40px auto auto auto;
+}
+
+.create-event__error-text {
+  margin: 0;
+  font-size: var(--font-16);
+  color: var(--color-red);
 }
