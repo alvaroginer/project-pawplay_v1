@@ -20,31 +20,34 @@ export const Header = () => {
 
   return (
     <>
-      <div className="headbar">
-        <NavLink to="">
-          <img src={logo} alt="PawPlay Logo" />
+      <div className='headbar'>
+        <NavLink to=''>
+          <img src={logo} alt='PawPlay Logo' />
         </NavLink>
-        <div className="header--nav-container">
-          <NavLink to="">
-            <Button className="primary">Create event</Button>
+        <div className='header--nav-container'>
+          <NavLink to='/create-event'>
+            <Button size='small' className='primary'>
+              Create event
+            </Button>
           </NavLink>
           {user ? (
             <NavLink
               to={`/profile/${loggedProfile.id}`}
-              className="navigation-menu--button__sign-in"
+              className='navigation-menu--button__sign-in'
             >
-              <img src={profileUserImg} alt="Profile Icon" />
+              <img src={profileUserImg} alt='Profile Icon' />
             </NavLink>
           ) : (
-            <NavLink to="signin" className="navigation-menu--button__sign-in">
+            <NavLink to='signin' className='navigation-menu--button__sign-in'>
               Sign In
             </NavLink>
           )}
-          <button className="navigation-menu--button">
-            <img src={menu} alt="Menu Icon" onClick={handleNavMenuDisplay} />
+          <button className='navigation-menu--button'>
+            <img src={menu} alt='Menu Icon' onClick={handleNavMenuDisplay} />
           </button>
         </div>
       </div>
+
       {navigationMenuDisplay && (
         <NavigationMenu onClick={handleNavMenuDisplay} />
       )}

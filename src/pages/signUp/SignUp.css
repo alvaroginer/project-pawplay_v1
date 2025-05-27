@@ -61,7 +61,7 @@
 .signin__form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-34);
+  gap: var(--space-18);
 }
 
 .signin__form-group {

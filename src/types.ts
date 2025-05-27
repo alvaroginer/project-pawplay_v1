@@ -4,34 +4,33 @@ import type { Timestamp } from "firebase/firestore"
 
 // -----> Data of a created Event
 export interface EventData {
-  id: string
-  userUid: string
-  profileIdCreator: string
-  profileIdAsisstant: string[]
-  eventTitle: string
-  eventPhoto: string | null
-  eventDescription: string
-  dateTime: Timestamp
-  hour: number
-  location: string
-  places: number
-  size: "small" | "medium" | "big" | "any"
-  activity: "outdoors" | "social event" | "private property" | "walks"
-  breeds: string
+  id: string;
+  userUid: string;
+  profileIdCreator: string;
+  profileIdAsisstant: string[];
+  eventTitle: string;
+  eventPhoto?: string;
+  eventDescription: string;
+  dateTime: Timestamp;
+  location: string;
+  places: number;
+  size: "Small" | "Medium" | "Big" | "Any";
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
+  breeds: string;
 }
 
 // -----> Data of a Profile
 export interface ProfileData {
-  userUid: string
-  id: string
-  profileName: string
-  profilePhoto: string
-  profileBio: string
-  age: number | null
-  breed: string
-  size: "small" | "medium" | "big" | "any"
-  gender: "male" | "female" | "not specify"
-  likedEvents: string[]
+  userUid: string;
+  id: string;
+  profileName: string;
+  profilePhoto: string;
+  profileBio: string;
+  age?: number;
+  breed: string;
+  size?: "Small" | "Medium" | "Big" | "Any";
+  gender?: "Male" | "Female" | "Not specify";
+  likedEvents: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -51,9 +50,13 @@ export interface EventsProfileProps {
 }
 
 // -----> Data of a Rating
-export interface RatingProps {
-  fromProfileId: string
-  value: number
+export interface completeProfileRating {
+  rating: oneRatingProps[];
+}
+
+export interface oneRatingProps {
+  fromProfileId: string;
+  value: number;
 }
 
 // -----> Form Data
@@ -103,19 +106,23 @@ export interface NavMenuProps {
 }
 
 // -----> Input
-
 export interface InputProps {
-  label?: string
-  placeholder?: string
-  name?: string
-  value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
-  className?: string // Permite pasar clases adicionales
-  disabled?: boolean
-  error?: string
-  type?: string
-  editable?: "string" | "select" | ""
-  selectData?: SelectDataType
+  label?: string;
+  name: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  className?: string;
+  disabled?: boolean;
+  error?: string;
+  type?: string;
+  helpText?: string;
+  charLimit?: number;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
 }
 
 // -----> Forgot Password Modal
@@ -136,12 +143,21 @@ export interface AccordionProps {
 }
 
 // -----> Event Page & Profile Page
-export interface EventCategoryProps {
-  img?: string
-  title: string
-  info?: string
-  editable: "string" | "select" | ""
-  selectData?: SelectDataType
+interface dbProfileCategory {
+  title: string;
+  dbCategory: string;
+}
+
+export interface InfoCategoryProps {
+  img?: string;
+  reference: dbProfileCategory;
+  info?: string;
+  editable: "string" | "select" | "";
+  selectData?: SelectDataType;
+}
+
+export interface UpdateInfoCategoryProps extends InfoCategoryProps {
+  updateFunction: (referenceId: string) => void;
 }
 
 export interface EventCategoryBigProps {
@@ -154,12 +170,32 @@ export interface EventCategoryBigProps {
 // -----> FormLayout
 
 export interface FormLayoutProps {
-  imageTitle: string
-  title: string
-  fields: InputProps[]
-  formData: { [key: string]: string }
+  imageTitle: string;
+  title: string;
+  fields: InputProps[];
+  formData: { [key: string]: string };
+}
 
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+export interface CreateEventProps
+  extends Omit<
+    EventData,
+    | "id"
+    | "userUid"
+    | "profileIdCreator"
+    | "profileIdAsisstant"
+    | "eventPhoto"
+    | "places"
+    | "dateTime"
+  > {
+  eventPhoto: File;
+  places: string;
+  day: string;
+  time: string;
+}
+
+export interface CreateProfileProps
+  extends Omit<ProfileData, "userUid" | "id" | "likedEvents" | "profilePhoto"> {
+  profilePhoto: File;
 }
 
 export interface Field {
@@ -186,7 +222,29 @@ type SelectDataType =
 export const typeOfActivity = ["Social events", "Outdoors", "Walks", "Private property"]
 
 // MaximumPlaces
-export const maximumPlaces = ["Any", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+export const maximumPlaces = [
+  "Any",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+];
 
 // Sizes
 export const dogSizesType = ["Small", "Medium", "Big", "Any"]
@@ -199,7 +257,7 @@ export const dogAgeType = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
 
 // Breeds
 export const dogBreedsType = [
-  "Other",
+  "Any",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
@@ -257,5 +315,57 @@ export const dogBreedsType = [
   "West Highland White Terrier",
   "Whippet",
   "Yorkshire Terrier",
-]
+];
 
+export const eventTime = [
+  "00:00",
+  "00:30",
+  "01:00",
+  "01:30",
+  "02:00",
+  "02:30",
+  "03:00",
+  "03:30",
+  "04:00",
+  "04:30",
+  "05:00",
+  "05:30",
+  "06:00",
+  "06:30",
+  "07:00",
+  "07:30",
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
+  "23:00",
+  "23:30",
+];
+
+export const imageAllowedTypes = ["image/webp", "image/jpeg", "image/png"];

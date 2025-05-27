@@ -13,6 +13,7 @@ export const MyHostedEvents = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchHostedEvents = async () => {
       const hostedEventsSnap = await getHostedEvents(loggedProfile.id);
       setHostedEvents(hostedEventsSnap);

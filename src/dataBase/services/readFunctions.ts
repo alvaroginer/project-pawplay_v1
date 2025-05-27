@@ -8,10 +8,15 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { EventData, ProfileData, UserData } from "../../types";
+import {
+  EventData,
+  ProfileData,
+  UserData,
+  completeProfileRating,
+} from "../../types";
 
 /* -----> Users */
-// Get users from database
+// Get all users from database
 export const getUsers = async () => {
   const usersCol = collection(db, "users");
   const userSnaphot = await getDocs(usersCol);
@@ -35,7 +40,7 @@ export const getOneUser = async (userId: string) => {
 };
 
 /* -----> Profiles */
-// Get profiles from database
+// Get all profiles from database
 export const getProfiles = async () => {
   const profilesCol = collection(db, "profiles");
   const profilesSnaphot = await getDocs(profilesCol);
@@ -61,8 +66,27 @@ export const getOneProfile = async (profileId: string) => {
   return typedProfileSnap;
 };
 
+// Get all the profiles created by a single user
+export const getUserProfiles = async (profileUserUid: string) => {
+  const ref = collection(db, "profiles");
+  console.log(profileUserUid);
+  const q = query(ref, where("userUid", "==", profileUserUid));
+  const querySnap = await getDocs(q);
+  console.log(querySnap);
+
+  if (querySnap.empty) {
+    console.warn(`No profiles found`);
+    return null;
+  }
+
+  const typedQuerySnap: ProfileData[] = querySnap.docs.map(
+    (doc) => doc.data() as ProfileData
+  );
+  return typedQuerySnap;
+};
+
 /* -----> Events */
-// Get events from database
+// Get all events from database
 export const getEvents = async () => {
   const eventsCol = collection(db, "events");
   const eventSnaphot = await getDocs(eventsCol);
@@ -195,4 +219,20 @@ export const getPastEventsLimited = async (profileId: string) => {
     (doc) => doc.data() as EventData
   );
   return typedQuerySnap;
+};
+
+/* -----> Rating */
+// Get a single rating
+export const getOneProfileRating = async (profileId: string) => {
+  const querySnap = await getDoc(doc(db, "ratings", profileId));
+
+  if (!querySnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: completeProfileRating =
+    querySnap.data() as completeProfileRating;
+
+  return typedEventSnap;
 };

@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   width: 360px;
-  height: 56px;
+  height: 48px;
   padding: 16px;
   background-color: var(--color-white);
   box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
@@ -24,25 +24,44 @@
   cursor: pointer;
 }
 
-.checklist-progressbar {
-  width: 100%;
+.checklist-container__progressbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
   margin-bottom: var(--space-24);
 }
 
+.checklist-progressbar {
+  width: 100%;
+  height: 8px;
+}
+
 progress[value] {
-  /* Reset the default appearance */
   -webkit-appearance: none;
   appearance: none;
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: #eee;
+  background-color: var(--color-gray-400);
   border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #6a5acd;
+  background-color: var(--color-berry);
   border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
+}
+
+.checklist-progressbar__label {
+  font-size: var(--font-14);
+}
+
+/* Firefox */
+progress[value]::-moz-progress-bar {
+  background-color: var(--color-berry);
+  border-radius: var(--space-100);
+  transition: width 0.3s ease-in-out;
 }
 
 .checklist__chevron {
@@ -113,8 +132,12 @@ progress[value]::-webkit-progress-value {
 }
 
 .checklist__item-title {
-  font-size: var(--space-16);
+  font-size: var(--font-16);
   color: var(--color-gray);
+}
+
+.checklist__item-title--checked {
+  color: var(--color-black);
 }
 
 .checklist__arrow-icon {
@@ -122,10 +145,10 @@ progress[value]::-webkit-progress-value {
   height: 17px;
 }
 
-@media screen and (width <= 1034px) {
+@media screen and (max-width: 652px) {
   .checklist {
     position: fixed;
-    bottom: 93px;
+    bottom: 84.8px;
     right: 0;
     width: 100%;
   }
