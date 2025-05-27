@@ -60,7 +60,7 @@
 }
 
 .footer__link:hover {
-  text-decoration: underline;
+  text-decoration: underline; /*si no queremos que salga underline al poner el cursor ponemos none*/
 }
 
 .footer__social-links {
@@ -166,7 +166,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 0 80px;
+    padding: 0;
   }
 
   .footer__legal-links {
@@ -174,7 +174,7 @@
     gap: 10px;
     margin-bottom: 0;
     justify-content: flex-start;
-    padding-left: 50px;
+    padding-left: 0;
   }
 
   .footer__legal-link {
@@ -183,7 +183,7 @@
 
   .footer__copyright {
     text-align: right;
-    padding-right: 60px;
+    padding-right: 0;
     margin-top: -15px;
   }
 }
