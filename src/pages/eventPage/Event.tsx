@@ -41,7 +41,8 @@ export const Event = () => {
   const [hasJoined, setHasJoined] = useState<boolean>();
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const { loggedProfile } = useContext(AuthContext);
-  const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  const [isSelectProfileModalOpen, setIsSelectProfileModalOpen] =
+    useState<boolean>(false);
   // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
   const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
@@ -101,7 +102,7 @@ export const Event = () => {
         toast.success("Selected profiles left the event.");
       }
 
-      setisDeleteModalOpen(false);
+      setIsSelectProfileModalOpen(false);
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong while updating attendance.");
@@ -249,7 +250,7 @@ export const Event = () => {
       await eventSignUp(profiles[0].id, eventData.id);
       setHasJoined(true);
       toast.success("Your pup has joined the event!");
-    } else setisDeleteModalOpen(true);
+    } else setIsSelectProfileModalOpen(true);
   };
 
   // Falta volver a leer el evento una vez modificado el que te hayas apuntado
@@ -376,11 +377,11 @@ export const Event = () => {
             similarEvents={similarEvents}
           />
         </div>
-        {isDeleteModalOpen && (
+        {isSelectProfileModalOpen && (
           <WarningModal
             modalText="Select the pup who's ready for an adventure."
             buttonText="Join event"
-            onClose={() => setisDeleteModalOpen(false)}
+            onClose={() => setIsSelectProfileModalOpen(false)}
             onConfirm={handleJoinMultipleProfiles}
             className="color-white"
           >
