@@ -9,10 +9,9 @@ export interface EventData {
   profileIdCreator: string;
   profileIdAsisstant: string[];
   eventTitle: string;
-  eventPhoto: string | null;
+  eventPhoto?: string;
   eventDescription: string;
   dateTime: Timestamp;
-  hour: number;
   location: string;
   places: number;
   size: "Small" | "Medium" | "Big" | "Any";
@@ -27,11 +26,12 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number | null;
+  age?: number;
   breed: string;
-  size: "Small" | "Medium" | "Big" | "Any" | null;
-  gender: "Male" | "Female" | "Not specify" | null;
-  likedEvents?: string[];
+
+  size?: "Small" | "Medium" | "Big" | "Any";
+  gender?: "Male" | "Female" | "Not specify";
+  likedEvents: string[];
 }
 
 // -----> Data of a User, mainly acces data and profileIds
@@ -51,7 +51,11 @@ export interface EventsProfileProps {
 }
 
 // -----> Data of a Rating
-export interface RatingProps {
+export interface completeProfileRating {
+  rating: oneRatingProps[];
+}
+
+export interface oneRatingProps {
   fromProfileId: string;
   value: number;
 }
@@ -114,7 +118,6 @@ export interface DotsMenuProps {
 }
 
 // -----> Input
-
 export interface InputProps {
   label?: string;
   name: string;
@@ -131,7 +134,7 @@ export interface InputProps {
   helpText?: string;
   charLimit?: number;
   editable: "string" | "select" | "";
-  selectData?: string[] | number[];
+  selectData?: SelectDataType;
 }
 
 // -----> Forgot Password Modal
@@ -185,12 +188,18 @@ export interface EventUnregisterProps {
   setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface EventCategoryProps {
+
+export interface InfoCategoryProps {
+
   img?: string;
   reference: dbProfileCategory;
   info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
+}
+
+export interface UpdateInfoCategoryProps extends InfoCategoryProps {
+  updateFunction: (referenceId: string) => void;
 }
 
 export interface EventCategoryBigProps {
@@ -207,8 +216,28 @@ export interface FormLayoutProps {
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
+}
 
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+export interface CreateEventProps
+  extends Omit<
+    EventData,
+    | "id"
+    | "userUid"
+    | "profileIdCreator"
+    | "profileIdAsisstant"
+    | "eventPhoto"
+    | "places"
+    | "dateTime"
+  > {
+  eventPhoto: File;
+  places: string;
+  day: string;
+  time: string;
+}
+
+export interface CreateProfileProps
+  extends Omit<ProfileData, "userUid" | "id" | "likedEvents" | "profilePhoto"> {
+  profilePhoto: File;
 }
 
 export interface Field {
@@ -266,16 +295,6 @@ export const maximumPlaces = [
   "18",
   "19",
   "20",
-  "21",
-  "22",
-  "23",
-  "24",
-  "25",
-  "26",
-  "27",
-  "28",
-  "29",
-  "30",
 ];
 
 // Sizes
@@ -291,7 +310,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
-  "Other",
+  "Any",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
@@ -401,3 +420,5 @@ export const eventTime = [
   "23:00",
   "23:30",
 ];
+
+export const imageAllowedTypes = ["image/webp", "image/jpeg", "image/png"];

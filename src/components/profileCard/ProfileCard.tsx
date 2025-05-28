@@ -64,48 +64,54 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     return null;
   } else {
     return (
-      <div className="profile--card" onClick={handleCardClick}>
-        <div className="profile--card__image-container">
+      <div className='profile--card' onClick={handleCardClick}>
+        <div className='profile--card__image-container'>
           <img
-            className="profile--card__image"
+            className='profile--card__image'
             src={profileData.profilePhoto ? profileData.profilePhoto : dogUser}
-            alt="Profile Image"
+            alt='Profile Image'
           />
           {currentUser?.uid === profileData.userUid && (
             <div
-              className="dots-menu--container"
+              className='dots-menu--container'
               onClick={(e) => e.stopPropagation()}
             >
-              <DotsMenu className="especific-align__event-card">
-                <p className="profile-page__option" onClick={toggleDeleteModal}>
+              <DotsMenu className='especific-align__event-card'>
+                <p className='profile-page__option' onClick={toggleDeleteModal}>
                   Delete profile
                 </p>
               </DotsMenu>
             </div>
           )}
         </div>
-        <div className="profile--card__info">
-          <p className="profile--card__name">
-            {capitalizeFirstLetter(profileData.profileName)}
+        <div className='profile--card__info'>
+          <p
+            className={`profile--card__name ${
+              profileData.profileName ? "" : "profile--card__uncompleted"
+            }`}
+          >
+            {profileData.profileName
+              ? capitalizeFirstLetter(profileData.profileName)
+              : "Field incompleted"}
           </p>
-          <div className="profile--card__block-rating">
-            <div className="profile--card__rating">
-              <img className="profile--card__icon" src={bone} alt="" />
-              <p className="profile--card__value">{0}</p>
+          <div className='profile--card__block-rating'>
+            <div className='profile--card__rating'>
+              <img className='profile--card__icon' src={bone} alt='' />
+              <p className='profile--card__value'>{0}</p>
             </div>
-            <p className="profile--card__label">Rating</p>
+            <p className='profile--card__label'>Rating</p>
           </div>
-          <div className="profile--card__block-events">
-            <p className="profile--card__value">
+          <div className='profile--card__block-events'>
+            <p className='profile--card__value'>
               {createdEventsByProfile && createdEventsByProfile.length}
             </p>
-            <p className="profile--card__label">Events created</p>
+            <p className='profile--card__label'>Events created</p>
           </div>
         </div>
         {isDeleteModalOpen && (
           <WarningModal
-            modalText="Are you sure you want to delete this lovely dog profile?"
-            buttonText="Yes, I am sure"
+            modalText='Are you sure you want to delete this lovely dog profile?'
+            buttonText='Yes, I am sure'
             onClose={() => setisDeleteModalOpen(false)}
           />
         )}

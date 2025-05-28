@@ -8,10 +8,15 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { EventData, ProfileData, UserData } from "../../types";
+import {
+  EventData,
+  ProfileData,
+  UserData,
+  completeProfileRating,
+} from "../../types";
 
 /* -----> Users */
-// Get users from database
+// Get all users from database
 export const getUsers = async () => {
   const usersCol = collection(db, "users");
   const userSnaphot = await getDocs(usersCol);
@@ -35,7 +40,7 @@ export const getOneUser = async (userId: string) => {
 };
 
 /* -----> Profiles */
-// Get profiles from database
+// Get all profiles from database
 export const getProfiles = async () => {
   const profilesCol = collection(db, "profiles");
   const profilesSnaphot = await getDocs(profilesCol);
@@ -70,6 +75,7 @@ export const getProfilesFromUser = async (userUid: string) => {
     console.error(`No profiles with userUid ${userUid}`);
     return null;
   }
+
   const typedQuerySnap: ProfileData[] = querySnap.docs.map(
     (doc) => doc.data() as ProfileData
   );
@@ -77,7 +83,7 @@ export const getProfilesFromUser = async (userUid: string) => {
 };
 
 /* -----> Events */
-// Get events from database
+// Get all events from database
 export const getEvents = async () => {
   const eventsCol = collection(db, "events");
   const eventSnaphot = await getDocs(eventsCol);
@@ -212,6 +218,7 @@ export const getPastEventsLimited = async (profileId: string) => {
   return typedQuerySnap;
 };
 
+
 // Get 5 Similar Events
 export const getSimilarEventsLimited = async (eventActivity: string) => {
   const ref = collection(db, "events");
@@ -226,4 +233,20 @@ export const getSimilarEventsLimited = async (eventActivity: string) => {
     (doc) => doc.data() as EventData
   );
   return typedQuerySnap;
+
+/* -----> Rating */
+// Get a single rating
+export const getOneProfileRating = async (profileId: string) => {
+  const querySnap = await getDoc(doc(db, "ratings", profileId));
+
+  if (!querySnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: completeProfileRating =
+    querySnap.data() as completeProfileRating;
+
+  return typedEventSnap;
+
 };

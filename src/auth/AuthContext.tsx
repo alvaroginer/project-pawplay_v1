@@ -28,9 +28,15 @@ interface AuthLocalStorageProps {
   loggedProfile: ProfileData | null;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  loggedProfile: null,
+  isProfileCompleted: false,
+  login: () => {},
+  logout: () => {},
+  updateAuthContext: () => {},
+  hasCompletedProfile: () => false,
+});
 
 const hasCompletedProfile = (profile: ProfileData | null): boolean => {
   if (
@@ -58,6 +64,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (firebaseUser) => {
+      console.log("Auth state changed. Firebase user:", firebaseUser);
+
       if (firebaseUser) {
         const storedUserString = localStorage.getItem("user");
         const storedUser: AuthLocalStorageProps | null = storedUserString
@@ -69,6 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setLoggedProfile(storedUser.loggedProfile);
         }
       } else {
+        console.log("No authenticated user.");
         setUser(null);
         setLoggedProfile(null);
       }
