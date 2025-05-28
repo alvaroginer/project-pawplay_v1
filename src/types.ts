@@ -28,6 +28,7 @@ export interface ProfileData {
   profileBio: string;
   age?: number;
   breed: string;
+
   size?: "Small" | "Medium" | "Big" | "Any";
   gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];
@@ -143,6 +144,16 @@ export interface ForgotPasswordModalProps {
   onClose: () => void;
 }
 
+// -----> Warning Modal
+export type WarningModalProps = {
+  onClose: () => void;
+  modalText: string;
+  buttonText: string;
+  children?: ReactNode;
+  className?: string;
+  onConfirm?: () => void;
+};
+
 // -----> Accordion
 export interface AccordionProps {
   text: string;
@@ -165,7 +176,21 @@ interface dbProfileCategory {
   dbCategory: string;
 }
 
+export interface EventSignupProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface EventUnregisterProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
 export interface InfoCategoryProps {
+
   img?: string;
   reference: dbProfileCategory;
   info?: string;

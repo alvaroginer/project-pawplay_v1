@@ -93,6 +93,9 @@ button.btn--icon.margin--right__10 {
   border-top: var(--space-1) solid var(--color-gray-300);
 }
 
+.color-white {
+  background-color: var(--color-white);
+}
 /* MEDIA QUERY */
 @media (min-width: 1035px) {
   .event--container {

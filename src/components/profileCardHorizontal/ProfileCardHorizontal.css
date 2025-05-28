@@ -1,0 +1,34 @@
+.profile-card-horizontal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+  padding: var(--space-8) var(--space-10);
+  background-color: var(--color-white);
+  width: 300px;
+  border-radius: 12px;
+  margin-bottom: var(--space-12);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--color-berry-100);
+  }
+}
+
+.profile-card-horizontal.selected {
+  background-color: var(--color-berry-100);
+}
+
+.profile-card-horizontal__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-14);
+}
+
+.profile--card__image.small-image {
+  height: 74px;
+  width: 74px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-berry);
+}

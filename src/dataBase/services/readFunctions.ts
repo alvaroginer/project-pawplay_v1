@@ -66,16 +66,13 @@ export const getOneProfile = async (profileId: string) => {
   return typedProfileSnap;
 };
 
-// Get all the profiles created by a single user
-export const getUserProfiles = async (profileUserUid: string) => {
+// Get all profiles from one user
+export const getProfilesFromUser = async (userUid: string) => {
   const ref = collection(db, "profiles");
-  console.log(profileUserUid);
-  const q = query(ref, where("userUid", "==", profileUserUid));
+  const q = query(ref, where("userUid", "==", userUid));
   const querySnap = await getDocs(q);
-  console.log(querySnap);
-
-  if (querySnap.empty) {
-    console.warn(`No profiles found`);
+  if (!querySnap) {
+    console.error(`No profiles with userUid ${userUid}`);
     return null;
   }
 
@@ -221,6 +218,22 @@ export const getPastEventsLimited = async (profileId: string) => {
   return typedQuerySnap;
 };
 
+
+// Get 5 Similar Events
+export const getSimilarEventsLimited = async (eventActivity: string) => {
+  const ref = collection(db, "events");
+  const q = query(ref, where("activity", "==", eventActivity), limit(5));
+  const querySnap = await getDocs(q);
+
+  if (!querySnap) {
+    console.error("No similar events found ");
+    return null;
+  }
+  const typedQuerySnap: EventData[] = querySnap.docs.map(
+    (doc) => doc.data() as EventData
+  );
+  return typedQuerySnap;
+
 /* -----> Rating */
 // Get a single rating
 export const getOneProfileRating = async (profileId: string) => {
@@ -235,4 +248,5 @@ export const getOneProfileRating = async (profileId: string) => {
     querySnap.data() as completeProfileRating;
 
   return typedEventSnap;
+
 };

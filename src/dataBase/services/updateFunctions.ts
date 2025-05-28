@@ -74,6 +74,7 @@ export const eventUnregister = async (profileId: string, eventId: string) => {
   await updateDoc(doc(db, "events", eventId), {
     profileIdAsisstant: arrayRemove(profileId),
   });
+  console.log(`Profile ${profileId} unregistered from event ${eventId}`);
 };
 
 // Give like to an event

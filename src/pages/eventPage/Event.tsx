@@ -1,9 +1,11 @@
 import { useNavigate, useParams } from "react-router";
+import { EventCategory } from "../../components/eventCategory/EventCategory";
+import { EventSignup } from "./EventSignup";
+import { EventUnregister } from "./EventUnregister";
 import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
+
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
-import { Button } from "../../components/button/Button";
-
 import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
 import {
@@ -11,14 +13,11 @@ import {
   normalizeTime,
   normalizePlaces,
 } from "../../functions/Functions";
-import {
-  eventSignUp,
-  eventUnregister,
-} from "../../dataBase/services/updateFunctions";
-import { db } from "../../dataBase/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { AuthContext } from "../../auth/AuthContext";
+import { ProfileData } from "../../types";
 import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
+import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -31,32 +30,33 @@ import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
-import { toast, ToastContainer, Slide } from "react-toastify";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
-  const [hasJoined, setHasJoined] = useState<boolean>();
+  const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
-  const { loggedProfile } = useContext(AuthContext);
+
+  // Estado para guardar los perfiles encontrados
+  const [profiles, setProfiles] = useState<ProfileData[]>([]);
+
+  const { user } = useContext(AuthContext);
 
   //Params para la url
   const { eventId } = useParams();
   const paramsStr: string = eventId ?? "";
 
   useEffect(() => {
-    //Fetching Event info
     const fetchEvent = async () => {
       const eventSnap = await getOneEvent(paramsStr);
-
       if (eventSnap === null) {
         setEventData(null);
         return;
       }
-
       setEventData(eventSnap);
     };
     fetchEvent();
   }, [paramsStr]);
+
 
   const handleHasJoined = async () => {
     if (eventData === null || loggedProfile === null) return;
@@ -72,38 +72,46 @@ export const Event = () => {
     }
   };
 
+
   const navigate = useNavigate();
 
-  //Función para filtrar lo eventos similares
+  //Efecto que se ejecuta para encontrar los perfiles del user
   useEffect(() => {
-    if (!eventData) return;
+    if (!user) {
+      // Si no hay usuario logueado, salimos del efecto
+      console.error("No user is logged in");
+      return;
+    }
 
+    // Función asíncrona para obtener los perfiles del usuario logueado
+    const fetchProfiles = async () => {
+      const profilesFromDb = await getProfilesFromUser(user.uid);
+
+      if (!profilesFromDb) return;
+
+      setProfiles(profilesFromDb); // Guardamos los perfiles en el estado
+    };
+
+    // Llamamos a la función para obtener los perfiles
+    fetchProfiles();
+  }, [user]);
+
+  useEffect(() => {
     const fetchSimilarEvents = async () => {
-      const allEvents = await getEvents();
+      if (!eventData) return;
 
-      const filteredEvents = allEvents.filter((event) => {
-        return (
-          event.activity === eventData.activity && event.id !== eventData.id
-        );
-      });
+      const similarEventsDb = await getSimilarEventsLimited(eventData.activity);
 
-      setSimilarEvents(filteredEvents);
+      if (!similarEventsDb) return;
+
+      setSimilarEvents(similarEventsDb);
     };
 
     fetchSimilarEvents();
   }, [eventData]);
 
-  //Función para coger de firebase todos los eventos
-  const getEvents = async () => {
-    const eventsCol = collection(db, "events");
-    const eventSnaphot = await getDocs(eventsCol);
-    const eventList = eventSnaphot.docs.map((doc) => doc.data());
-    const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
-    return typedEvents;
-  };
-
-  // Falta volver a leer el evento una vez modificado el que te hayas apuntado
   // Falta comprobar que el perfil está completo para poder apuntarse
+
 
   if (!eventData) {
     return null;
@@ -139,6 +147,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeDate(eventData.dateTime.toDate())}
+
               editable=''
             />
             <InfoCategoryEvent
@@ -157,6 +166,7 @@ export const Event = () => {
                 dbCategory: "location",
               }}
               info={eventData.location}
+
               editable=''
             />
             <InfoCategoryEvent
@@ -166,6 +176,7 @@ export const Event = () => {
                 dbCategory: "activity",
               }}
               info={eventData.activity}
+
               editable=''
             />
             <InfoCategoryEvent
@@ -193,39 +204,44 @@ export const Event = () => {
                 dbCategory: "eventDescription",
               }}
               info={eventData.eventDescription}
-              editable=''
+              editable=""
             />
           </main>
-          <aside className='event--container__sidebar'>
-            <h3 className='event--profile-title'>Know your organisator</h3>
-            <div className='profile-card'>
-              <ProfileCard eventId={eventData.profileIdCreator} />
-            </div>
-            <div className='event--modal'>
-              {hasJoined ? (
-                <Button onClick={handleHasJoined} className='terciary'>
-                  Cancel assistance
-                </Button>
-              ) : (
-                <Button onClick={handleHasJoined} className='primary'>
-                  Join Us
-                </Button>
-              )}
-              <ToastContainer transition={Slide} />
-            </div>
-          </aside>
         </div>
-        <div className='event--events-container'>
-          <Accordion
-            text={"Similar Events"}
-            profileId=''
-            defaultOpen={true}
-            similarEvents={similarEvents}
-          />
-        </div>
-        {/* Falta el mapa */}
-        {/* Falta el apartado de Similar Events */}
-      </>
-    );
-  }
+
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <div className="profile-card">
+            <ProfileCard eventId={eventData.profileIdCreator} />
+          </div>
+          <div className="event--modal">
+            {hasJoined ? (
+              <EventUnregister
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            ) : (
+              <EventSignup
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            )}
+          </div>
+        </aside>
+      </div>
+      <div className="event--events-container">
+        <Accordion
+          text={"Similar Events"}
+          profileId=""
+          defaultOpen={true}
+          similarEvents={similarEvents}
+        />
+      </div>
+
+      {/* Falta el mapa */}
+    </>
+  );
+
 };
