@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router";
 import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { EventSignup } from "./EventSignup";
+import { EventUnregister } from "./EventUnregister";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
-import { Button } from "../../components/button/Button";
 import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
 import {
@@ -12,7 +12,6 @@ import {
   normalizePlaces,
 } from "../../functions/Functions";
 import { ProfileData } from "../../types";
-import { eventUnregister } from "../../dataBase/services/updateFunctions";
 import { db } from "../../dataBase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
@@ -29,11 +28,10 @@ import time from "../../imgs/eventPage/time.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import dog from "../../imgs/eventPage/dog-side.svg";
 import availability from "../../imgs/eventPage/availability.svg";
-import { toast } from "react-toastify";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
-  const [hasJoined, setHasJoined] = useState<boolean>();
+  const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
 
   // Estado para guardar los perfiles encontrados
@@ -56,30 +54,6 @@ export const Event = () => {
   useEffect(() => {
     fetchEvent();
   }, [fetchEvent]);
-
-  //Funcion para cancelar asistencia
-  const handleCancelAssistance = async () => {
-    if (!eventData || profiles.length === 0) return;
-
-    try {
-      const joinedProfiles = profiles.filter((profile) =>
-        eventData.profileIdAsisstant?.includes(profile.id)
-      );
-
-      await Promise.all(
-        joinedProfiles.map((profile) =>
-          eventUnregister(profile.id, eventData.id)
-        )
-      );
-
-      setHasJoined(false);
-      toast.success("You've cancelled your attendance.");
-      fetchEvent(); // Vuelve a cargar los datos del evento
-    } catch (error) {
-      console.error(error);
-      toast.error("Error cancelling attendance.");
-    }
-  };
 
   const navigate = useNavigate();
 
@@ -271,11 +245,18 @@ export const Event = () => {
             </div>
             <div className="event--modal">
               {hasJoined ? (
-                <Button onClick={handleCancelAssistance} className="terciary">
-                  Cancel assistance
-                </Button>
+                <EventUnregister
+                  eventData={eventData}
+                  profiles={profiles}
+                  setHasJoined={setHasJoined}
+                  fetchEvent={fetchEvent}
+                />
               ) : (
-                <EventSignup eventData={eventData} profiles={profiles} />
+                <EventSignup
+                  eventData={eventData}
+                  profiles={profiles}
+                  setHasJoined={setHasJoined}
+                />
               )}
             </div>
           </aside>

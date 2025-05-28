@@ -176,6 +176,14 @@ interface dbProfileCategory {
 export interface EventSignupProps {
   eventData: EventData | null;
   profiles: ProfileData[];
+  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface EventUnregisterProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchEvent: () => Promise<void>;
 }
 
 export interface EventCategoryProps {

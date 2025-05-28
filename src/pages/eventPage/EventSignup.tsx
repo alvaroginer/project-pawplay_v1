@@ -2,17 +2,16 @@ import { Button } from "../../components/button/Button";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 import { ProfileCardHorizontal } from "../../components/profileCardHorizontal/ProfileCardHorizontal";
 import { ProfileData } from "../../types";
-import {
-  eventSignUp,
-  eventUnregister,
-} from "../../dataBase/services/updateFunctions";
+import { eventSignUp } from "../../dataBase/services/updateFunctions";
 import { EventSignupProps } from "../../types";
 import { useState } from "react";
-import "./EventSignup.css";
 import { toast } from "react-toastify";
 
-export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
-  const [hasJoined, setHasJoined] = useState<boolean>();
+export const EventSignup = ({
+  eventData,
+  profiles,
+  setHasJoined,
+}: EventSignupProps) => {
   const [isSelectProfileModalOpen, setIsSelectProfileModalOpen] =
     useState<boolean>(false);
   const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
@@ -47,9 +46,11 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
     setSelectedProfiles((prev) => {
       if (prev.includes(profileId)) {
         // Si ya está seleccionado, lo quitamos
+        console.log("desapuntado");
         return prev.filter((id) => id !== profileId);
       } else {
         // Si no está seleccionado, lo añadimos
+        console.log("apuntado");
         return [...prev, profileId];
       }
     });
@@ -58,27 +59,16 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
   //Función para apuntar varios perfiles seleccionados al evento
   const handleJoinMultipleProfiles = async () => {
     if (eventData === null) return;
-    if (selectedProfiles.length <= 1) return;
+    if (selectedProfiles.length === 0) return;
 
     try {
-      if (!hasJoined) {
-        await Promise.all(
-          selectedProfiles.map((profileId) =>
-            eventSignUp(profileId, eventData.id)
-          )
-        );
-        setHasJoined(true);
-        toast.success("Selected profiles joined the event!");
-      } else {
-        await Promise.all(
-          selectedProfiles.map((profileId) =>
-            eventUnregister(profileId, eventData.id)
-          )
-        );
-        setHasJoined(false);
-        toast.success("Selected profiles left the event.");
-      }
-
+      await Promise.all(
+        selectedProfiles.map((profileId) =>
+          eventSignUp(profileId, eventData.id)
+        )
+      );
+      setHasJoined(true);
+      toast.success("Selected profiles joined the event!");
       setIsSelectProfileModalOpen(false);
     } catch (error) {
       console.error(error);
