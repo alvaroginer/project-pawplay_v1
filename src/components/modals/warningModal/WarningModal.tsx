@@ -25,7 +25,7 @@ export const WarningModal = ({
         <div className="modal-content">
           <p className="modal-text">{modalText}</p>
           <div>{children}</div>
-          <Link to="/signin">
+          <Link to="/signup">
             <div className="button-container">
               <Button className="primary">{buttonText}</Button>
             </div>

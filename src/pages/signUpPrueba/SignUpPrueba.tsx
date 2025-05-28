@@ -205,7 +205,7 @@ export const SignUpPrueba = () => {
                 <Button className="auth">Sing Up</Button>
               </div>
 
-              <Link to="/signin" className=" form__sign-in-link">
+              <Link to="/signup" className=" form__sign-in-link">
                 <span className="login__or-text">or</span> Log in
               </Link>
               <p className="login__policy">

@@ -81,34 +81,34 @@ export const Login = () => {
   };
 
   return (
-    <div className='login'>
-      <div className='login__arrow-container'>
+    <div className="login">
+      <div className="login__arrow-container">
         <img
-          className='login__arow'
+          className="login__arow"
           src={arrow}
-          alt='Icon to return'
+          alt="Icon to return"
           onClick={() => navigate(-1)}
         />
       </div>
-      <div className='login__modal'>
-        <div className='login__image-container'>
+      <div className="login__modal">
+        <div className="login__image-container">
           <img
             src={dogImage || "/placeholder.svg"}
-            alt='Perro con gafas trabajando en un portátil'
-            className='login__image'
+            alt="Perro con gafas trabajando en un portátil"
+            className="login__image"
           />
         </div>
-        <div className='login__content'>
-          <h1 className='login__title'>PawPlay</h1>
-          <h2 className='login__subtitle'>Become a PawPlayer</h2>
+        <div className="login__content">
+          <h1 className="login__title">PawPlay</h1>
+          <h2 className="login__subtitle">Become a PawPlayer</h2>
 
-          <form className='login__form' onSubmit={handleSubmit(onSubmit)}>
-            <div className='login__form-group'>
+          <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="login__form-group">
               <Input
-                label='Email'
-                placeholder='Put your email'
+                label="Email"
+                placeholder="Put your email"
                 className={`${errors.email ? "form__input--error" : ""}`}
-                editable='string'
+                editable="string"
                 disabled={isLoading}
                 {...register("email", {
                   required: "Email is required",
@@ -118,15 +118,15 @@ export const Login = () => {
                   },
                 })}
                 helpText={errors.email && errors.email.message}
-                type='email'
+                type="email"
               />
               <Input
-                type='password'
-                label='Password'
-                placeholder='Put your password'
+                type="password"
+                label="Password"
+                placeholder="Put your password"
                 className={` ${errors.password ? "form__input--error" : ""}`}
                 disabled={isLoading}
-                editable='string'
+                editable="string"
                 {...register("password", {
                   required: "Password is required",
                   pattern: {
@@ -137,8 +137,8 @@ export const Login = () => {
                 helpText={errors.password && errors.password.message}
               />
               <a
-                href='#'
-                className='login__forgot-link'
+                href="#"
+                className="login__forgot-link"
                 // onClick={(e) => {
                 //   e.preventDefault();
                 //   if (!isLoading) setShowForgotPassword(true);
@@ -148,21 +148,21 @@ export const Login = () => {
               </a>
             </div>
 
-            <div className='login__secondary-info'>
-              <div className='login__button-wrapper'>
-                <Button className='auth'>Login</Button>
+            <div className="login__secondary-info">
+              <div className="login__button-wrapper">
+                <Button className="auth">Login</Button>
               </div>
 
-              <Link to='/signin' className=' form__sign-in-link'>
-                <span className='login__or-text'>or</span> Sign Up
+              <Link to="/signup" className=" form__sign-in-link">
+                <span className="login__or-text">or</span> Sign Up
               </Link>
-              <p className='login__policy'>
+              <p className="login__policy">
                 by become a paw player you agree to our{" "}
-                <a href='#' className='login__link'>
+                <a href="#" className="login__link">
                   Terms of Services
                 </a>{" "}
                 and{" "}
-                <a href='#' className='login__link'>
+                <a href="#" className="login__link">
                   Privacy Policy
                 </a>
               </p>
