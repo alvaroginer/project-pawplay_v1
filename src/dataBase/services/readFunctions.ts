@@ -61,6 +61,21 @@ export const getOneProfile = async (profileId: string) => {
   return typedProfileSnap;
 };
 
+// Get all profiles from one user
+export const getProfilesFromUser = async (userUid: string) => {
+  const ref = collection(db, "profiles");
+  const q = query(ref, where("userUid", "==", userUid));
+  const querySnap = await getDocs(q);
+  if (!querySnap) {
+    console.error(`No profiles with userUid ${userUid}`);
+    return null;
+  }
+  const typedQuerySnap: ProfileData[] = querySnap.docs.map(
+    (doc) => doc.data() as ProfileData
+  );
+  return typedQuerySnap;
+};
+
 /* -----> Events */
 // Get events from database
 export const getEvents = async () => {
@@ -191,6 +206,22 @@ export const getPastEventsLimited = async (profileId: string) => {
     limit(4)
   );
   const querySnap = await getDocs(q);
+  const typedQuerySnap: EventData[] = querySnap.docs.map(
+    (doc) => doc.data() as EventData
+  );
+  return typedQuerySnap;
+};
+
+// Get 5 Similar Events
+export const getSimilarEventsLimited = async (eventActivity: string) => {
+  const ref = collection(db, "events");
+  const q = query(ref, where("activity", "==", eventActivity), limit(5));
+  const querySnap = await getDocs(q);
+
+  if (!querySnap) {
+    console.error("No similar events found ");
+    return null;
+  }
   const typedQuerySnap: EventData[] = querySnap.docs.map(
     (doc) => doc.data() as EventData
   );

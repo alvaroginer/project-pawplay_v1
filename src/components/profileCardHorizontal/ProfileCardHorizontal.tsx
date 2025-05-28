@@ -64,8 +64,8 @@ export const ProfileCardHorizontal = ({
           <div className="profile-card-horizontal__info">
             <img
               className="profile--card__image small-image"
-              // src={profileData.profilePhoto ?? dogUser}
-              src={dogUser}
+              src={profileData.profilePhoto ?? dogUser}
+              // src={dogUser}
               alt="Profile"
             />
             <p>{capitalizeFirstLetter(profileData.profileName)}</p>
