@@ -173,6 +173,11 @@ interface dbProfileCategory {
   dbCategory: string;
 }
 
+export interface EventSignupProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+}
+
 export interface EventCategoryProps {
   img?: string;
   reference: dbProfileCategory;
