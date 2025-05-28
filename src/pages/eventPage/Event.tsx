@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from "react-router";
-import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { EventSignup } from "./EventSignup";
 import { EventUnregister } from "./EventUnregister";
 import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
-
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { getOneEvent } from "../../dataBase/services/readFunctions";
@@ -57,22 +55,6 @@ export const Event = () => {
     fetchEvent();
   }, [paramsStr]);
 
-
-  const handleHasJoined = async () => {
-    if (eventData === null || loggedProfile === null) return;
-
-    if (!hasJoined) {
-      await eventSignUp(loggedProfile.id, eventData.id);
-      setHasJoined(true);
-      toast.success("You've successfully joined the event!");
-    } else {
-      await eventUnregister(loggedProfile.id, eventData.id);
-      setHasJoined(false);
-      toast.success("You've left the event.");
-    }
-  };
-
-
   const navigate = useNavigate();
 
   //Efecto que se ejecuta para encontrar los perfiles del user
@@ -112,34 +94,33 @@ export const Event = () => {
 
   // Falta comprobar que el perfil está completo para poder apuntarse
 
-
   if (!eventData) {
     return null;
   } else {
     return (
       <>
-        <div className='event--header'>
-          <div className='btn--icon'>
-            <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
+        <div className="event--header">
+          <div className="btn--icon">
+            <img src={arrow} alt="Return Icon" onClick={() => navigate(-1)} />
           </div>
-          <div className='event--header__buttons'>
-            <button className='btn--icon margin--right__10'>
-              <img src={share} alt='Share Icon' />
+          <div className="event--header__buttons">
+            <button className="btn--icon margin--right__10">
+              <img src={share} alt="Share Icon" />
             </button>
-            <button className='btn--icon'>
-              <img src={footprintBlack} alt='Paw-Like Icon' />
+            <button className="btn--icon">
+              <img src={footprintBlack} alt="Paw-Like Icon" />
             </button>
           </div>
         </div>
-        <div className='event--img-container'>
+        <div className="event--img-container">
           <img
             src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-            alt=''
+            alt=""
           />
         </div>
-        <h3 className='event--title'>{eventData.eventTitle}</h3>
-        <div className='event--container'>
-          <main className='event--container__categories'>
+        <h3 className="event--title">{eventData.eventTitle}</h3>
+        <div className="event--container">
+          <main className="event--container__categories">
             <InfoCategoryEvent
               img={calendar}
               reference={{
@@ -147,8 +128,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeDate(eventData.dateTime.toDate())}
-
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={time}
@@ -157,7 +137,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={location}
@@ -166,8 +146,7 @@ export const Event = () => {
                 dbCategory: "location",
               }}
               info={eventData.location}
-
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={tag}
@@ -176,8 +155,7 @@ export const Event = () => {
                 dbCategory: "activity",
               }}
               info={eventData.activity}
-
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={dog}
@@ -186,7 +164,7 @@ export const Event = () => {
                 dbCategory: "breeds",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={availability}
@@ -195,7 +173,7 @@ export const Event = () => {
                 dbCategory: "profileIdAsisstant",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={description}
@@ -230,18 +208,17 @@ export const Event = () => {
             )}
           </div>
         </aside>
-      </div>
-      <div className="event--events-container">
-        <Accordion
-          text={"Similar Events"}
-          profileId=""
-          defaultOpen={true}
-          similarEvents={similarEvents}
-        />
-      </div>
+        <div className="event--events-container">
+          <Accordion
+            text={"Similar Events"}
+            profileId=""
+            defaultOpen={true}
+            similarEvents={similarEvents}
+          />
+        </div>
 
-      {/* Falta el mapa */}
-    </>
-  );
-
+        {/* Falta el mapa */}
+      </>
+    );
+  }
 };

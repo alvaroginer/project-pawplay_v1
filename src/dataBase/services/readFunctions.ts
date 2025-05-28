@@ -218,7 +218,6 @@ export const getPastEventsLimited = async (profileId: string) => {
   return typedQuerySnap;
 };
 
-
 // Get 5 Similar Events
 export const getSimilarEventsLimited = async (eventActivity: string) => {
   const ref = collection(db, "events");
@@ -233,7 +232,7 @@ export const getSimilarEventsLimited = async (eventActivity: string) => {
     (doc) => doc.data() as EventData
   );
   return typedQuerySnap;
-
+};
 /* -----> Rating */
 // Get a single rating
 export const getOneProfileRating = async (profileId: string) => {
@@ -248,5 +247,4 @@ export const getOneProfileRating = async (profileId: string) => {
     querySnap.data() as completeProfileRating;
 
   return typedEventSnap;
-
 };
