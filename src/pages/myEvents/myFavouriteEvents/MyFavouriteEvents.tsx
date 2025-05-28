@@ -13,6 +13,7 @@ export const MyFavouriteEvents = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchFavouriteEvents = async () => {
       const favouriteEventsSnap = await getFavouriteEvents(
         loggedProfile.likedEvents

@@ -6,12 +6,13 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";
 //import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
-import { LogInData } from "../../types";
+import { LogInData, UserData } from "../../types";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
+import { getOneProfile } from "../../dataBase/services/readFunctions";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,8 +43,22 @@ export const Login = () => {
       const uid = user.uid;
 
       const userSnap = await getDoc(doc(db, "users", uid));
-      //Falta logear el perfil, habrá que seleccionar el último que se esocgió
-      login(userSnap.data());
+
+      if (!userSnap.exists()) {
+        console.warn("User not found");
+        return;
+      }
+
+      const userData = userSnap.data() as UserData;
+
+      const firstProfileSnap = await getOneProfile(userData.uid);
+      if (!firstProfileSnap) {
+        console.warn("Profile not found");
+        return;
+      }
+
+      //Falta logear el perfil, habrá que seleccionar el último que se escogió
+      login(userData, firstProfileSnap);
 
       //Actualizar useState/useContext de LogIn
       console.log("Login successful!");
@@ -92,7 +107,7 @@ export const Login = () => {
               <Input
                 label="Email"
                 placeholder="Put your email"
-                className={`${errors.email ? "form__input--error" : ""}`}
+                className={`${errors.email ? "input--error" : ""}`}
                 editable="string"
                 disabled={isLoading}
                 {...register("email", {
@@ -109,7 +124,7 @@ export const Login = () => {
                 type="password"
                 label="Password"
                 placeholder="Put your password"
-                className={` ${errors.password ? "form__input--error" : ""}`}
+                className={` ${errors.password ? "input--error" : ""}`}
                 disabled={isLoading}
                 editable="string"
                 {...register("password", {
@@ -138,7 +153,7 @@ export const Login = () => {
                 <Button className="auth">Login</Button>
               </div>
 
-              <Link to="/signin" className=" form__sign-in-link">
+              <Link to="/signup" className=" form__sign-in-link">
                 <span className="login__or-text">or</span> Sign Up
               </Link>
               <p className="login__policy">

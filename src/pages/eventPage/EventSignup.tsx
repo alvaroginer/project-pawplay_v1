@@ -1,7 +1,6 @@
 import { Button } from "../../components/button/Button";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 import { ProfileCardHorizontal } from "../../components/profileCardHorizontal/ProfileCardHorizontal";
-import { ProfileData } from "../../types";
 import { eventSignUp } from "../../dataBase/services/updateFunctions";
 import { EventSignupProps } from "../../types";
 import { useState } from "react";
@@ -16,30 +15,30 @@ export const EventSignup = ({
     useState<boolean>(false);
   const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
 
-  const fakeProfiles: ProfileData[] = [
-    {
-      id: "1",
-      userUid: "user123",
-      profilePhoto: "https://via.placeholder.com/100",
-      profileName: "Bobby",
-      profileBio: "Friendly pup ready for a walk!",
-      age: 3,
-      breed: "Labrador",
-      gender: "Male",
-      size: "Big",
-    },
-    {
-      id: "2",
-      userUid: "user456",
-      profilePhoto: "https://via.placeholder.com/100",
-      profileName: "Luna",
-      profileBio: "Loves to explore new parks.",
-      age: 2,
-      breed: "Beagle",
-      gender: "Female",
-      size: "Medium",
-    },
-  ];
+  // const fakeProfiles: ProfileData[] = [
+  //   {
+  //     id: "1",
+  //     userUid: "user123",
+  //     profilePhoto: "https://via.placeholder.com/100",
+  //     profileName: "Bobby",
+  //     profileBio: "Friendly pup ready for a walk!",
+  //     age: 3,
+  //     breed: "Labrador",
+  //     gender: "Male",
+  //     size: "Big",
+  //   },
+  //   {
+  //     id: "2",
+  //     userUid: "user456",
+  //     profilePhoto: "https://via.placeholder.com/100",
+  //     profileName: "Luna",
+  //     profileBio: "Loves to explore new parks.",
+  //     age: 2,
+  //     breed: "Beagle",
+  //     gender: "Female",
+  //     size: "Medium",
+  //   },
+  // ];
 
   //Funcion para añadir el perfil al useState o quitarlo
   const toggleProfileSelection = (profileId: string) => {
@@ -58,7 +57,7 @@ export const EventSignup = ({
 
   //Función para apuntar varios perfiles seleccionados al evento
   const handleJoinMultipleProfiles = async () => {
-    if (eventData === null) return;
+    if (!eventData) return;
     if (selectedProfiles.length === 0) return;
 
     try {
@@ -68,7 +67,9 @@ export const EventSignup = ({
         )
       );
       setHasJoined(true);
-      toast.success("Selected profiles joined the event!");
+      toast.success(
+        `You joined the event with ${selectedProfiles.length} profiles`
+      );
       setIsSelectProfileModalOpen(false);
     } catch (error) {
       console.error(error);
@@ -78,10 +79,10 @@ export const EventSignup = ({
 
   // Funcion para saber si el user tiene un profile o más de uno
   const handleJoinClick = async () => {
-    if (eventData === null) return;
-    if (fakeProfiles.length === 1) {
-      //Cambiar fakeProfiles por profiles
+    if (!eventData) return;
+    if (profiles.length === 1) {
       await eventSignUp(profiles[0].id, eventData.id);
+      console.log(`Profile with id: ${profiles[0].id}`);
       setHasJoined(true);
       toast.success("Your pup has joined the event!");
     } else setIsSelectProfileModalOpen(true);
@@ -100,7 +101,7 @@ export const EventSignup = ({
           onConfirm={handleJoinMultipleProfiles}
           className="color-white"
         >
-          {fakeProfiles.map((profile) => (
+          {profiles.map((profile) => (
             <ProfileCardHorizontal
               key={profile.id}
               mockData={profile}

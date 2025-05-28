@@ -13,6 +13,7 @@ export const MyUpcomingEvents = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchUpcomingEvents = async () => {
       const upcomingEventsSnap = await getUpcomingEvents(loggedProfile.id);
       setUpcomingEvents(upcomingEventsSnap);

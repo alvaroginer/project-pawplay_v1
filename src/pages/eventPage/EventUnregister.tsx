@@ -7,7 +7,6 @@ export const EventUnregister = ({
   eventData,
   profiles,
   setHasJoined,
-  fetchEvent,
 }: EventUnregisterProps) => {
   //Funcion para cancelar asistencia
   const handleCancelAssistance = async () => {
@@ -25,8 +24,7 @@ export const EventUnregister = ({
       );
 
       setHasJoined(false);
-      toast.success("You've cancelled your attendance.");
-      fetchEvent(); // Vuelve a cargar los datos del evento
+      toast.success("You've cancelled your attendance with all your profiles.");
     } catch (error) {
       console.error(error);
       toast.error("Error cancelling attendance.");

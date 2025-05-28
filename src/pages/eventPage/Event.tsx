@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
-import { EventCategory } from "../../components/eventCategory/EventCategory";
 import { EventSignup } from "./EventSignup";
 import { EventUnregister } from "./EventUnregister";
+import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { getOneEvent } from "../../dataBase/services/readFunctions";
@@ -12,10 +12,10 @@ import {
   normalizePlaces,
 } from "../../functions/Functions";
 import { ProfileData } from "../../types";
-import { db } from "../../dataBase/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
+import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -37,110 +37,61 @@ export const Event = () => {
   // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
 
+  const { user } = useContext(AuthContext);
+
   //Params para la url
   const { eventId } = useParams();
   const paramsStr: string = eventId ?? "";
 
-  //Fetching Event info
-  const fetchEvent = useCallback(async () => {
-    const eventSnap = await getOneEvent(paramsStr);
-    if (eventSnap === null) {
-      setEventData(null);
-      return;
-    }
-    setEventData(eventSnap);
-  }, [paramsStr]);
-
   useEffect(() => {
+    const fetchEvent = async () => {
+      const eventSnap = await getOneEvent(paramsStr);
+      if (eventSnap === null) {
+        setEventData(null);
+        return;
+      }
+      setEventData(eventSnap);
+    };
     fetchEvent();
-  }, [fetchEvent]);
+  }, [paramsStr]);
 
   const navigate = useNavigate();
 
-  //Función para filtrar lo eventos similares
-  useEffect(() => {
-    if (!eventData) return;
-
-    const fetchSimilarEvents = async () => {
-      const allEvents = await getEvents();
-
-      const filteredEvents = allEvents.filter((event) => {
-        return (
-          event.activity === eventData.activity && event.id !== eventData.id
-        );
-      });
-
-      setSimilarEvents(filteredEvents);
-    };
-
-    fetchSimilarEvents();
-  }, [eventData]);
-
-  //Función para coger de firebase todos los eventos
-  const getEvents = async () => {
-    const eventsCol = collection(db, "events");
-    const eventSnaphot = await getDocs(eventsCol);
-    const eventList = eventSnaphot.docs.map((doc) => doc.data());
-    const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
-    return typedEvents;
-  };
-
-  // Obtenemos el usuario actual desde Firebase Auth
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
-
-  // Si el usuario está logueado, obtenemos su UID
-  const userId = currentUser ? currentUser.uid : null;
-
   //Efecto que se ejecuta para encontrar los perfiles del user
   useEffect(() => {
-    if (!userId) {
+    if (!user) {
       // Si no hay usuario logueado, salimos del efecto
-      console.log("No user is logged in.");
+      console.error("No user is logged in");
       return;
     }
 
     // Función asíncrona para obtener los perfiles del usuario logueado
     const fetchProfiles = async () => {
-      // Paso 1: Buscar al usuario actual en la colección "users"
-      const usersCol = collection(db, "users");
-      const userQuery = query(usersCol, where("id", "==", userId)); // Comparamos por el campo "id" del documento
-      const userSnapshot = await getDocs(userQuery); // Ejecutamos la consulta
+      const profilesFromDb = await getProfilesFromUser(user.uid);
 
-      if (userSnapshot.empty) {
-        // Si no se encuentra el usuario, mostramos un error
-        console.error("User not found");
-        return;
-      }
+      if (!profilesFromDb) return;
 
-      // Obtenemos el documento del usuario
-      const userDoc = userSnapshot.docs[0];
-      // Extraemos el array de IDs de perfiles asociados a ese usuario
-      const profilesIds = userDoc.data().profiles;
-
-      // Paso 2: Obtener los documentos de perfil que coincidan con esos IDs
-      const profilesCol = collection(db, "profiles");
-      const profilesQuery = query(profilesCol, where("id", "in", profilesIds));
-      const profilesSnapshot = await getDocs(profilesQuery);
-
-      // Convertimos los documentos obtenidos a objetos tipo ProfileData
-      const profilesList: ProfileData[] = profilesSnapshot.docs.map((doc) => {
-        const data = doc.data(); // Obtenemos los datos del documento
-        return {
-          ...data, // Copiamos todos los datos originales
-          id: doc.id, // Aseguramos que el ID esté presente (en caso de que no esté incluido en los datos)
-        } as ProfileData; // Especificamos que este objeto es del tipo ProfileData
-      });
-
-      console.log(profilesList); // Mostramos los perfiles por consola
-      setProfiles(profilesList); // Guardamos los perfiles en el estado
+      setProfiles(profilesFromDb); // Guardamos los perfiles en el estado
     };
 
     // Llamamos a la función para obtener los perfiles
     fetchProfiles();
-  }, [userId]);
+  }, [user]);
 
-  // Falta volver a leer el evento una vez modificado el que te hayas apuntado
+  useEffect(() => {
+    const fetchSimilarEvents = async () => {
+      if (!eventData) return;
+
+      const similarEventsDb = await getSimilarEventsLimited(eventData.activity);
+
+      if (!similarEventsDb) return;
+
+      setSimilarEvents(similarEventsDb);
+    };
+
+    fetchSimilarEvents();
+  }, [eventData]);
+
   // Falta comprobar que el perfil está completo para poder apuntarse
 
   if (!eventData) {
@@ -167,100 +118,96 @@ export const Event = () => {
             alt=""
           />
         </div>
+        <h3 className="event--title">{eventData.eventTitle}</h3>
         <div className="event--container">
-          <div className="event--container__left">
-            <h3 className="event--title">{eventData.eventTitle}</h3>
-
-            <main className="event--container__categories">
-              <EventCategory
-                img={calendar}
-                reference={{
-                  title: "Day",
-                  dbCategory: "dateTime",
-                }}
-                info={normalizeDate(eventData.dateTime.toDate())}
-                editable=""
-              />
-              <EventCategory
-                img={time}
-                reference={{
-                  title: "Start time",
-                  dbCategory: "hour",
-                }}
-                info={normalizeTime(new Date(eventData.hour))}
-                editable=""
-              />
-              <EventCategory
-                img={location}
-                reference={{
-                  title: "Location",
-                  dbCategory: "location",
-                }}
-                info={eventData.location}
-                editable=""
-              />
-              <EventCategory
-                img={tag}
-                reference={{
-                  title: "Activity",
-                  dbCategory: "activity",
-                }}
-                info={eventData.activity}
-                editable=""
-              />
-              <EventCategory
-                img={dog}
-                reference={{
-                  title: "Allowed breeds",
-                  dbCategory: "places",
-                }}
-                info={eventData.breeds}
-                editable=""
-              />
-              <EventCategory
-                img={availability}
-                reference={{
-                  title: "Availability",
-                  dbCategory: "places",
-                }}
-                info={normalizePlaces(eventData.places)}
-                editable=""
-              />
-              <EventCategory
-                img={description}
-                reference={{
-                  title: "Description",
-                  dbCategory: "eventDescription",
-                }}
-                info={eventData.eventDescription}
-                editable=""
-              />
-            </main>
-          </div>
-
-          <aside className="event--container__sidebar">
-            <h3 className="event--profile-title">Know your organisator</h3>
-            <div className="profile-card">
-              <ProfileCard eventId={eventData.profileIdCreator} />
-            </div>
-            <div className="event--modal">
-              {hasJoined ? (
-                <EventUnregister
-                  eventData={eventData}
-                  profiles={profiles}
-                  setHasJoined={setHasJoined}
-                  fetchEvent={fetchEvent}
-                />
-              ) : (
-                <EventSignup
-                  eventData={eventData}
-                  profiles={profiles}
-                  setHasJoined={setHasJoined}
-                />
-              )}
-            </div>
-          </aside>
+          <main className="event--container__categories">
+            <InfoCategoryEvent
+              img={calendar}
+              reference={{
+                title: "Day",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeDate(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={time}
+              reference={{
+                title: "Start time",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeTime(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={location}
+              reference={{
+                title: "Location",
+                dbCategory: "location",
+              }}
+              info={eventData.location}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={tag}
+              reference={{
+                title: "Activity",
+                dbCategory: "activity",
+              }}
+              info={eventData.activity}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={dog}
+              reference={{
+                title: "Allowed breeds",
+                dbCategory: "breeds",
+              }}
+              info={normalizePlaces(eventData.places)}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={availability}
+              reference={{
+                title: "Availability",
+                dbCategory: "profileIdAsisstant",
+              }}
+              info={normalizePlaces(eventData.places)}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={description}
+              reference={{
+                title: "Description",
+                dbCategory: "eventDescription",
+              }}
+              info={eventData.eventDescription}
+              editable=""
+            />
+          </main>
         </div>
+
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <div className="profile-card">
+            <ProfileCard eventId={eventData.profileIdCreator} />
+          </div>
+          <div className="event--modal">
+            {hasJoined ? (
+              <EventUnregister
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            ) : (
+              <EventSignup
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            )}
+          </div>
+        </aside>
         <div className="event--events-container">
           <Accordion
             text={"Similar Events"}

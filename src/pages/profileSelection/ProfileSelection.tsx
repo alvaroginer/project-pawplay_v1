@@ -1,94 +1,38 @@
-// import { ProfileCard } from "../../components/profileCard/ProfileCard";
-import "./ProfileSelection.css";
-// import { useEffect, useState } from "react";
-// import { db } from "../../dataBase/firebase";
-// import { collection, getDocs, query, where } from "firebase/firestore";
-// import { getAuth } from "firebase/auth";
-// import { ProfileData } from "../../types";
-import bone from "../../imgs/profileCard/bone.svg";
+import { ProfileCard } from "../../components/profileCard/ProfileCard";
+import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
 import { AddDogButton } from "../../components/addDogButton/AddDogButton";
+import { ProfileData } from "../../types";
+import { toast } from "react-toastify";
 
-// Componente principal que muestra los perfiles disponibles del usuario actual
+import "./ProfileSelection.css";
+
 export const ProfileSelection = () => {
-  const mockProfiles = [
-    {
-      userUid: "user-123",
-      id: "profile-1",
-      profileName: "Luna",
-      profilePhoto: "https://placedog.net/400?id=1",
-      ratingNum: "4",
-      ratingText: "Rating",
-      eventNum: "7",
-      eventText: "Events created",
-    },
-    {
-      userUid: "user-456",
-      id: "profile-2",
-      profileName: "Rocky",
-      profilePhoto: "https://placedog.net/400?id=2",
-      ratingNum: "4",
-      ratingText: "Rating",
-      eventNum: "7",
-      eventText: "Events created",
-    },
-  ];
-  // // Estado para guardar los perfiles encontrados
-  // const [profiles, setProfiles] = useState<ProfileData[]>([]);
+  const [userProfiles, setUserProfiles] = useState<ProfileData[]>();
+  const { user } = useContext(AuthContext);
 
-  // // Obtenemos el usuario actual desde Firebase Auth
-  // const auth = getAuth();
-  // const currentUser = auth.currentUser;
+  useEffect(() => {
+    if (!user) return;
 
-  // // Si el usuario está logueado, obtenemos su UID
-  // const userId = currentUser ? currentUser.uid : null;
+    const fetchUserProfiles = async () => {
+      const profilesQuery: ProfileData[] | null = await getProfilesFromUser(
+        user.uid
+      );
 
-  // // Efecto que se ejecuta una vez que tenemos el userId
-  // useEffect(() => {
-  //   if (!userId) {
-  //     // Si no hay usuario logueado, salimos del efecto
-  //     console.log("No user is logged in.");
-  //     return;
-  //   }
+      if (!profilesQuery) {
+        toast(
+          "Ups, there was an error with the profiles, please reload the page"
+        );
+        return;
+      }
 
-  //   // Función asíncrona para obtener los perfiles del usuario logueado
-  //   const fetchProfiles = async () => {
-  //     // Paso 1: Buscar al usuario actual en la colección "users"
-  //     const usersCol = collection(db, "users");
-  //     const userQuery = query(usersCol, where("id", "==", userId)); // Comparamos por el campo "id" del documento
-  //     const userSnapshot = await getDocs(userQuery); // Ejecutamos la consulta
+      setUserProfiles(profilesQuery);
+    };
+    fetchUserProfiles();
+  }, [user]);
 
-  //     if (userSnapshot.empty) {
-  //       // Si no se encuentra el usuario, mostramos un error
-  //       console.error("User not found");
-  //       return;
-  //     }
-
-  //     // Obtenemos el documento del usuario
-  //     const userDoc = userSnapshot.docs[0];
-  //     // Extraemos el array de IDs de perfiles asociados a ese usuario
-  //     const profilesIds = userDoc.data().profiles;
-
-  //     // Paso 2: Obtener los documentos de perfil que coincidan con esos IDs
-  //     const profilesCol = collection(db, "profiles");
-  //     const profilesQuery = query(profilesCol, where("id", "in", profilesIds));
-  //     const profilesSnapshot = await getDocs(profilesQuery);
-
-  //     // Convertimos los documentos obtenidos a objetos tipo ProfileData
-  //     const profilesList: ProfileData[] = profilesSnapshot.docs.map((doc) => {
-  //       const data = doc.data(); // Obtenemos los datos del documento
-  //       return {
-  //         ...data, // Copiamos todos los datos originales
-  //         id: doc.id, // Aseguramos que el ID esté presente (en caso de que no esté incluido en los datos)
-  //       } as ProfileData; // Especificamos que este objeto es del tipo ProfileData
-  //     });
-
-  //     console.log(profilesList); // Mostramos los perfiles por consola
-  //     setProfiles(profilesList); // Guardamos los perfiles en el estado
-  //   };
-
-  //   // Llamamos a la función para obtener los perfiles
-  //   fetchProfiles();
-  // }, [userId]); // Este efecto se ejecuta cuando cambia el userId
+  if (!userProfiles) return;
 
   return (
     <div className="profile-selection">
@@ -101,36 +45,8 @@ export const ProfileSelection = () => {
         </p>
       </div>
       <div className="profile-selection__profiles-container">
-        {/* {profiles.map((profile, index) => (
-          <ProfileCard
-            key={index}
-            eventId={profile.id} 
-          />
-        ))}  */}
-        {mockProfiles.map((profile) => (
-          <div key={profile.id} className="profile--card">
-            <div className="profile--card__image-container">
-              <img
-                className="profile--card__image"
-                src={profile.profilePhoto}
-                alt="Profile Image"
-              />
-            </div>
-            <div className="profile--card__info">
-              <p className="profile--card__name">{profile.profileName}</p>
-              <div className="profile--card__block-rating">
-                <div className="profile--card__rating">
-                  <img className="profile--card__icon" src={bone} alt="" />
-                  <p className="profile--card__value">{profile.ratingNum}</p>
-                </div>
-                <p className="profile--card__label">Rating</p>
-              </div>
-              <div className="profile--card__block-events">
-                <p className="profile--card__value">{profile.eventNum}</p>
-                <p className="profile--card__label">Events created</p>
-              </div>
-            </div>
-          </div>
+        {userProfiles.map((profile, index) => (
+          <ProfileCard key={index} eventId={profile.id} />
         ))}
         <AddDogButton />
       </div>

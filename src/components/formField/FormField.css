@@ -1,5 +1,6 @@
 .profile-field {
   display: flex;
+  width: 100%;
 }
 
 .profile-field__content {

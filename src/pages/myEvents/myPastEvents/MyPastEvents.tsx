@@ -13,6 +13,7 @@ export const MyPastEvents = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchPastEvents = async () => {
       const pastEventsSnap = await getPastEvents(loggedProfile.id);
       setPastEvents(pastEventsSnap);

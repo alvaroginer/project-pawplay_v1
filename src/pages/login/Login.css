@@ -107,14 +107,6 @@
   gap: var(--space-20);
 }
 
-.form__input--error {
-  border-color: var(--color-red);
-}
-
-.form__input--error:focus {
-  box-shadow: 0 0 0 1px var(--color-red);
-}
-
 .login__forgot-link {
   font-size: var(--font-12);
   font-weight: var(--font-regular);

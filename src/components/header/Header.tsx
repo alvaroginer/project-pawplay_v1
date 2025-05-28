@@ -25,10 +25,10 @@ export const Header = () => {
           <img src={logo} alt="PawPlay Logo" />
         </NavLink>
         <div className="header--nav-container">
-          <NavLink to="">
+          <NavLink to="/create-event">
             <Button className="primary">Create event</Button>
           </NavLink>
-          {user ? (
+          {user && loggedProfile ? (
             <NavLink
               to={`/profile/${loggedProfile.id}`}
               className="navigation-menu--button__sign-in"
@@ -36,7 +36,7 @@ export const Header = () => {
               <img src={profileUserImg} alt="Profile Icon" />
             </NavLink>
           ) : (
-            <NavLink to="signin" className="navigation-menu--button__sign-in">
+            <NavLink to="signup" className="navigation-menu--button__sign-in">
               Sign In
             </NavLink>
           )}
@@ -45,6 +45,7 @@ export const Header = () => {
           </button>
         </div>
       </div>
+
       {navigationMenuDisplay && (
         <NavigationMenu onClick={handleNavMenuDisplay} />
       )}
