@@ -79,8 +79,8 @@ export interface LogInData {
 export interface ButtonProps {
   className: string;
   children: ReactNode;
-  //size: "large" | "medium" | "small";
   onClick?: (value: any) => void;
+  disabled: boolean;
 }
 
 // -----> Sidebar
@@ -188,9 +188,7 @@ export interface EventUnregisterProps {
   setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 export interface InfoCategoryProps {
-
   img?: string;
   reference: dbProfileCategory;
   info?: string;

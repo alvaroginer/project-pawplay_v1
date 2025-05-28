@@ -11,6 +11,7 @@ import { db } from "../../dataBase/firebase";
 import dogImage from "../../imgs/loginImage.png";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import "./SignUp.css";
+import { Button } from "../../components/button/Button";
 
 export const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -126,7 +127,7 @@ export const SignUp = () => {
                   <Input
                     label="Your name"
                     placeholder="Put your name"
-                    className={errors.name ? "signin__input--error" : ""}
+                    className={errors.name ? "input--error" : ""}
                     editable="string"
                     charLimit={20}
                     {...register("name", {
@@ -144,7 +145,7 @@ export const SignUp = () => {
                     label="Your last name"
                     placeholder="Put your last name"
                     editable="string"
-                    className={errors.lastName ? "signin__input--error" : ""}
+                    className={errors.lastName ? "input--error" : ""}
                     {...register("lastName", {
                       required: "Last name is required",
                       pattern: {
@@ -162,7 +163,7 @@ export const SignUp = () => {
                     type="email"
                     placeholder="Put your email"
                     editable="string"
-                    className={errors.email ? "signin__input--error" : ""}
+                    className={errors.email ? "input--error" : ""}
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -179,7 +180,7 @@ export const SignUp = () => {
                     type="password"
                     placeholder="Put a strong password"
                     editable="string"
-                    className={errors.password ? "signin__input--error" : ""}
+                    className={errors.password ? "input--error" : ""}
                     {...register("password", {
                       required: "Password is required",
                       pattern: {
@@ -192,11 +193,9 @@ export const SignUp = () => {
                     helpText={errors.password && errors.password.message}
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="form__button"
-                  disabled={isSubmitting}
-                >
+
+                <Button className="auth" disabled={isSubmitting}>
+                  {" "}
                   {isSubmitting ? (
                     <div className="spinner">
                       <div className="spinner__circle"></div>
@@ -204,7 +203,7 @@ export const SignUp = () => {
                   ) : (
                     "Sign Up"
                   )}
-                </button>
+                </Button>
               </form>
             </div>
 

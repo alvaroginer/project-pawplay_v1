@@ -107,7 +107,7 @@ export const Login = () => {
               <Input
                 label="Email"
                 placeholder="Put your email"
-                className={`${errors.email ? "form__input--error" : ""}`}
+                className={`${errors.email ? "input--error" : ""}`}
                 editable="string"
                 disabled={isLoading}
                 {...register("email", {
@@ -124,7 +124,7 @@ export const Login = () => {
                 type="password"
                 label="Password"
                 placeholder="Put your password"
-                className={` ${errors.password ? "form__input--error" : ""}`}
+                className={` ${errors.password ? "input--error" : ""}`}
                 disabled={isLoading}
                 editable="string"
                 {...register("password", {
