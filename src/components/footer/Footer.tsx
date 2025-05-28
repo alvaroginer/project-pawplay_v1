@@ -17,6 +17,7 @@ export const Footer = () => {
     "/singup",
     "/contact",
   ];
+
   const shouldShowChecklist =
     user && !isProfileCompleted && !excludedRoutes.includes(location.pathname);
 

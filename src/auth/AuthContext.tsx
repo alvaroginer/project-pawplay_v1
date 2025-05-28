@@ -38,14 +38,18 @@ const hasCompletedProfile = (profile: ProfileData | null): boolean => {
     !profile.profileName ||
     !profile.breed ||
     !profile.gender ||
-    !profile.size
-  )
+    !profile.size ||
+    !profile.profilePhoto ||
+    !profile.profileBio ||
+    profile.age === undefined
+  ) {
     return false;
-  return Boolean(
-    profile.profileName.length > 0 &&
-      dogBreedsType.includes(profile.breed) &&
-      dogGenderType.includes(profile.gender) &&
-      dogSizesType.includes(profile.size)
+  }
+
+  return (
+    dogBreedsType.includes(profile.breed) &&
+    dogGenderType.includes(profile.gender) &&
+    dogSizesType.includes(profile.size)
   );
 };
 
