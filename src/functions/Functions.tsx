@@ -74,12 +74,12 @@ export const transformFileToDataUrl = async (
     return null;
   }
 
-  if (file.size > 250 * 1024) {
+  if (file.size > 550 * 1024) {
     setError(fieldName, {
       type: "manual",
-      message: "The image must not exceed 250 KB.",
+      message: "The image must not exceed 550 KB.",
     });
-    toast("The image must not exceed 250 KB.");
+    toast("The image must not exceed 550 KB.");
     return null;
   }
 
