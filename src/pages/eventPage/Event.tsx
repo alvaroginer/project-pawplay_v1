@@ -163,7 +163,7 @@ export const Event = () => {
                 title: "Allowed breeds",
                 dbCategory: "breeds",
               }}
-              info={normalizePlaces(eventData.places)}
+              info={eventData.breeds}
               editable=""
             />
             <InfoCategoryEvent

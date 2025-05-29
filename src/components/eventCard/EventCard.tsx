@@ -10,20 +10,38 @@ import { WarningModal } from "../modals/warningModal/WarningModal";
 import { DotsMenu } from "../dotsMenu/DotsMenu";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import { useNavigate } from "react-router";
+import { deleteOneEvent } from "../../dataBase/services/deleteFunctions";
+import { toast } from "react-toastify";
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
 // import dots from "../../imgs/eventCard/dots.svg";
 import bone from "../../imgs/profileCard/bone.svg";
+import { Button } from "../button/Button";
 
-// Ya se puede crear la función que calcula el rating
+interface isWarningModalProps {
+  warningSignUp: boolean;
+  warningDelete: boolean;
+}
 
 export const EventCard = ({ event }: { event: EventData }) => {
   //Destructuring props
-  const { eventPhoto, eventTitle, dateTime, location, activity, id } = event;
+  const {
+    eventPhoto,
+    eventTitle,
+    dateTime,
+    location,
+    activity,
+    id,
+    profileIdCreator,
+    profileIdAsisstant,
+  } = event;
 
   //useState and useContext variable declaration
-  const [isWarningModal, setIsWarningModal] = useState<boolean>(false);
+  const [isWarningModal, setIsWarningModal] = useState<isWarningModalProps>({
+    warningSignUp: false,
+    warningDelete: false,
+  });
   const [isLike, setIsLike] = useState<boolean>();
   const { user, loggedProfile, updateAuthContext } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -40,11 +58,50 @@ export const EventCard = ({ event }: { event: EventData }) => {
     fectchLikeData();
   }, [loggedProfile, id]);
 
+  const handleModalWarning = () => {
+    if (isWarningModal.warningSignUp) {
+      return (
+        <WarningModal
+          modalText="Paws up! You need to log in before you can join the pack."
+          buttonText="Sign or Log in"
+          onClose={handleEventCardClick}
+        />
+      );
+    }
+
+    if (isWarningModal.warningDelete) {
+      return (
+        <WarningModal
+          modalText="Are you sure you want to delete this event?"
+          onClose={handleEventCardClick}
+        >
+          <div className="display--flex space--around gap__4">
+            <Button className="primary" onClick={handleDeleteProfile}>
+              Yes
+            </Button>
+            <Button
+              className="primary--outlined"
+              onClick={() =>
+                setIsWarningModal({
+                  ...isWarningModal,
+                  warningDelete: false,
+                })
+              }
+            >
+              No
+            </Button>
+          </div>
+        </WarningModal>
+      );
+    }
+  };
+
   const handleEventCardClick = () => {
     if (user) {
       navigate(`/event/${id}`);
+      return;
     } else {
-      setIsWarningModal(!isWarningModal);
+      setIsWarningModal({ ...isWarningModal, warningSignUp: true });
     }
   };
 
@@ -62,15 +119,25 @@ export const EventCard = ({ event }: { event: EventData }) => {
     await updateAuthContext();
   };
 
+  const handleDeleteProfile = async () => {
+    try {
+      await deleteOneEvent(id);
+      setIsWarningModal({
+        ...isWarningModal,
+        warningDelete: false,
+      });
+      navigate("/");
+    } catch {
+      toast.error("An error occurred! We couldn't delete your event");
+    }
+  };
+
+  if (!loggedProfile) return;
+
   return (
     <>
-      {isWarningModal && !user && (
-        <WarningModal
-          modalText="Paws up! You need to log in before you can join the pack."
-          buttonText="Sign or Log in"
-          onClose={handleEventCardClick}
-        />
-      )}
+      {(isWarningModal.warningSignUp || isWarningModal.warningDelete) &&
+        handleModalWarning()}
       <div
         className="event-card grid-cell margin--bt__24"
         onClick={handleEventCardClick}
@@ -135,10 +202,25 @@ export const EventCard = ({ event }: { event: EventData }) => {
               </svg>
               {/* <img src={footprint} alt='Dog Footprint' /> */}
             </button>
-            <DotsMenu className="especific-align__event-card">
-              <p className="profile-page__option">Edit event</p>
-              <p className="profile-page__option">Cancel attendance</p>
-            </DotsMenu>
+            {loggedProfile.id === profileIdCreator && (
+              <DotsMenu className="especific-align__event-card">
+                <p className="profile-page__option">Edit event</p>
+                {profileIdAsisstant.includes(loggedProfile.id) && (
+                  <p className="profile-page__option">Cancel attendance</p>
+                )}
+                <p
+                  className="profile-page__option"
+                  onClick={() =>
+                    setIsWarningModal({
+                      ...isWarningModal,
+                      warningDelete: true,
+                    })
+                  }
+                >
+                  Delete event
+                </p>
+              </DotsMenu>
+            )}
           </div>
         </div>
         <div className="event-card--bottom-section">
