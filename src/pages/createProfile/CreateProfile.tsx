@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../../auth/AuthContext";
 import { updateUserProfiles } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
 import medal from "../../imgs/profilePage/medal-outline.svg";
 import ruler from "../../imgs/profilePage/ruler.svg";
@@ -37,19 +38,40 @@ export const CreateProfile = () => {
   const navigate = useNavigate();
 
   const handleImageFile = async (file: File) => {
-    //La pasamos a dataUrl
-    const dataUrl = await transformFileToDataUrl(
-      file,
-      setError,
-      "profilePhoto"
-    );
-    if (dataUrl === null) {
-      setError("profilePhoto", {
-        type: "manual",
-        message: "An error ocurred by uploading the image. Try again.",
-      });
+    const options = {
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      ); // smaller than maxSizeMB
+
+      //La pasamos a dataUrl
+      const dataUrl = await transformFileToDataUrl(
+        compressedFile,
+        setError,
+        "profilePhoto"
+      );
+
+      //Comprobamos que no haya habido ningún error al pasar la imagen a url
+      if (dataUrl === undefined) {
+        setError("profilePhoto", {
+          type: "manual",
+          message: "An error ocurred by uploading the image. Try again.",
+        });
+      }
+      return dataUrl;
+    } catch (error) {
+      console.log(error);
     }
-    return dataUrl;
   };
 
   const onSubmit: SubmitHandler<CreateProfileProps> = async (formData) => {

@@ -80,7 +80,7 @@ export interface ButtonProps {
   className: string;
   children: ReactNode;
   onClick?: (value: any) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 // -----> Sidebar
