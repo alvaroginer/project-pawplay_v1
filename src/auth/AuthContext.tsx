@@ -97,6 +97,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     setUser(null);
+    setLoggedProfile(null);
   };
 
   const updateAuthContext = async () => {

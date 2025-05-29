@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../auth/AuthContext";
+import imageCompression from "browser-image-compression";
 import title from "../../imgs/eventPage/title.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";
 import time from "../../imgs/eventPage/time.svg";
@@ -32,6 +33,7 @@ import "./CreateEvent.css";
 
 export const CreateEvent = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { loggedProfile } = useContext(AuthContext);
   const {
     control,
@@ -42,15 +44,41 @@ export const CreateEvent = () => {
   const navigate = useNavigate();
 
   const handleImageFile = async (file: File) => {
-    //La pasamos a dataUrl
-    const dataUrl = await transformFileToDataUrl(file, setError, "eventPhoto");
-    if (dataUrl === undefined) {
-      setError("eventPhoto", {
-        type: "manual",
-        message: "An error ocurred by uploading the image. Try again.",
-      });
+    // Bajamos el peso de la imagen hasta 500mb con la librería de browser reducer
+    const options = {
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    try {
+      const compressedFile = await imageCompression(file, options);
+      console.log(
+        "compressedFile instanceof Blob",
+        compressedFile instanceof Blob
+      ); // true
+      console.log(
+        `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+      ); // smaller than maxSizeMB
+
+      //La pasamos a dataUrl
+      const dataUrl = await transformFileToDataUrl(
+        compressedFile,
+        setError,
+        "eventPhoto"
+      );
+
+      //Comprobamos que no haya habido ningún error al pasar la imagen a url
+      if (dataUrl === undefined) {
+        setError("eventPhoto", {
+          type: "manual",
+          message: "An error ocurred by uploading the image. Try again.",
+        });
+      }
+      return dataUrl;
+    } catch (error) {
+      console.log(error);
     }
-    return dataUrl;
   };
 
   const onSubmit: SubmitHandler<CreateEventProps> = async (formData) => {
@@ -59,6 +87,9 @@ export const CreateEvent = () => {
     if (loggedProfile === null) return;
 
     try {
+      //Aparece el spinner
+      setIsLoading(true);
+
       //Comprobamos que no esté vacío
       if (!selectedImage) {
         setError("eventPhoto", {
@@ -66,15 +97,22 @@ export const CreateEvent = () => {
           message: "You must upload an image.",
         });
         toast(`It's necessary to upload an image`);
+        setIsLoading(false);
         return;
       }
 
       console.log("esto es la imagen en el form", formData.eventPhoto);
       const imageUrl = await handleImageFile(selectedImage);
-      if (!imageUrl) return;
+      if (!imageUrl) {
+        setIsLoading(false);
+        return;
+      }
 
       const validDate = transformToTimeStampDate(formData.day, setError);
-      if (!validDate) return;
+      if (!validDate) {
+        setIsLoading(false);
+        return;
+      }
 
       //Creamos objeto de evento combinando los datos
       const newEventData: EventData = {
@@ -94,8 +132,11 @@ export const CreateEvent = () => {
       };
       console.log("datos del evento", newEventData);
 
-      //Cragamos los datos en la base de datos
+      //Cargamos los datos en la base de datos
       const eventId = await createEventDb(newEventData);
+
+      // Quitamos el spinner
+      setIsLoading(false);
 
       //Creamos un tostify cuando el evento se sube correctamente
       toast(`Congratulations, you created the event ${formData.eventTitle}`);
@@ -288,7 +329,14 @@ export const CreateEvent = () => {
             name='eventDescription'
           />
           <div className='create-event__button-container'>
-            <Button className='primary' children='Publish event' />
+            <Button className='primary'>
+              Publish event
+              {isLoading && (
+                <div className='spinner'>
+                  <div className='spinner__circle'></div>
+                </div>
+              )}
+            </Button>
           </div>
         </div>
       </form>
