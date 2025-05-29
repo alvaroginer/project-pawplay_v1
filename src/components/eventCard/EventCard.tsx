@@ -76,7 +76,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
           onClose={handleEventCardClick}
         >
           <div className="display--flex space--around gap__4">
-            <Button className="primary" onClick={handleDeleteProfile}>
+            <Button className="primary" onClick={handleDeleteEvent}>
               Yes
             </Button>
             <Button
@@ -119,7 +119,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
     await updateAuthContext();
   };
 
-  const handleDeleteProfile = async () => {
+  const handleDeleteEvent = async () => {
     try {
       await deleteOneEvent(id);
       setIsWarningModal({

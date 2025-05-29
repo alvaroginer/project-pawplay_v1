@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export const deleteOneEvent = async (eventId: string) => {
   try {
     await deleteDoc(doc(db, "events", eventId));
-    toast("Your event was succesfully deleted");
+    toast.success("Your event was succesfully deleted");
   } catch {
     console.error(`Event with ID:${eventId} was not deleted`);
   }
@@ -17,7 +17,7 @@ export const deleteOneEvent = async (eventId: string) => {
 export const deleteOneProfile = async (profileId: string) => {
   try {
     await deleteDoc(doc(db, "profiles", profileId));
-    toast("Your profile was succesfully deleted");
+    toast.success("Your profile was succesfully deleted");
   } catch {
     console.error(`Profile with ID:${profileId} was not deleted`);
   }
