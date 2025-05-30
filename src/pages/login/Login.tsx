@@ -152,7 +152,6 @@ export const Login = () => {
               <div className="login__button-wrapper">
                 <Button className="auth">Login</Button>
               </div>
-
               <Link to="/signup" className=" form__sign-in-link">
                 <span className="login__or-text">or</span> Sign Up
               </Link>
