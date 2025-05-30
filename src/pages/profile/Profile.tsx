@@ -237,7 +237,7 @@ export const Profile = () => {
                   dbCategory: "profileBio",
                 }}
                 info={profileInfo.profileBio}
-                editable={loggedProfile.id === profileInfo.id ? "select" : ""}
+                editable={isProfileCreator ? "string" : ""}
               />
             </div>
             <div className="accordion-container">
