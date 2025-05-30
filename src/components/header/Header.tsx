@@ -37,7 +37,7 @@ export const Header = () => {
             </NavLink>
           ) : (
             <NavLink to="signup" className="navigation-menu--button__sign-in">
-              Sign In
+              Sign Up
             </NavLink>
           )}
           <button className="navigation-menu--button">

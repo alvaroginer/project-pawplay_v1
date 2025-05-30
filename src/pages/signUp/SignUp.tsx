@@ -100,7 +100,7 @@ export const SignUp = () => {
 
   return (
     <div className="signin-container">
-      <div className="login__arrow-container">
+      <div className="signup__arrow-container">
         <img
           className="login__arow"
           src={arrow}
@@ -193,30 +193,7 @@ export const SignUp = () => {
                     helpText={errors.password && errors.password.message}
                   />
                 </div>
-
-                <Button className="auth" disabled={isSubmitting}>
-                  {" "}
-                  {isSubmitting ? (
-                    <div className="spinner">
-                      <div className="spinner__circle"></div>
-                    </div>
-                  ) : (
-                    "Sign Up"
-                  )}
-                </Button>
               </form>
-            </div>
-
-            <div className="signin__actions">
-              <div className="signin__login">
-                <p>
-                  <span>or</span>{" "}
-                  <Link to="/login" className="signin__login-link">
-                    Log in
-                  </Link>
-                </p>
-              </div>
-
               <footer className="signin__footer">
                 <p className="signin__footer-text">
                   By become a paw player you agree to our{" "}
@@ -229,6 +206,30 @@ export const SignUp = () => {
                   </Link>
                 </p>
               </footer>
+
+              <div className="button__container">
+                <Button className="auth" disabled={isSubmitting}>
+                  {" "}
+                  {isSubmitting ? (
+                    <div className="spinner">
+                      <div className="spinner__circle"></div>
+                    </div>
+                  ) : (
+                    "Sign Up"
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="signin__actions">
+              <div className="signin__login">
+                <p>
+                  <span>or</span>{" "}
+                  <Link to="/login" className="signin__login-link">
+                    Log in
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
