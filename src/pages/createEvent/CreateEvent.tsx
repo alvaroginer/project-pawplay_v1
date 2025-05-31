@@ -108,7 +108,11 @@ export const CreateEvent = () => {
         return;
       }
 
-      const validDate = transformToTimeStampDate(formData.day, setError);
+      const validDate = transformToTimeStampDate(
+        formData.day,
+        formData.time,
+        setError
+      );
       if (!validDate) {
         setIsLoading(false);
         return;

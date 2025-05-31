@@ -148,7 +148,7 @@ export interface ForgotPasswordModalProps {
 export type WarningModalProps = {
   onClose: () => void;
   modalText: string;
-  buttonText: string;
+  buttonText?: string;
   children?: ReactNode;
   className?: string;
   onConfirm?: () => void;
