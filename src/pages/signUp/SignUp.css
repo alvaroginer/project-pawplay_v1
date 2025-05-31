@@ -1,144 +1,11 @@
-/* Signin Component */
-
-.signin-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: var(--color-brown-light);
-}
-
-.signin-container label,
-.signin__label,
-.signin__login p,
-.signin__title,
-.signin__subtitle,
 .signin__footer-text {
   margin: 0;
   font-size: var(--font-14);
 }
 
-.signin__card {
-  display: flex;
-  background-color: white;
-  border-radius: var(--space-8);
-  overflow: hidden;
-  box-shadow: 0 var(--space-4) var(--space-20) rgba(0, 0, 0, 0.1);
-}
-
-.signin__image-container,
-.signin__form-container {
-  max-width: 50%;
-}
-
-.signin__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.signin__form-container {
-  padding: var(--space-32);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.signin__title {
-  font-size: var(--font-36);
-  font-weight: var(--font-regular);
-  text-align: center;
-  margin-bottom: var(--space-50);
-}
-
-.signin__subtitle {
-  font-size: var(--font-20);
-  font-weight: var(--font-medium);
-  margin-bottom: var(--space-25);
-}
-
-.signin__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-18);
-}
-
-.signin__form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.form__button {
-  margin: 0;
-  margin-bottom: var(--space-25);
-  font-size: var(--font-14);
-  padding: var(--space-10) var(--space-24);
-}
-
-.signin__forgot-password {
-  align-self: flex-end;
-  font-size: var(--font-14);
-  color: var(--color-gray);
-  margin-top: var(--space-4);
-}
-
-.signin__button-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: var(--space-24) 0 var(--space-12);
-}
-
-.signin__button {
-  background-color: var(--color-blue);
-  color: white;
-  border: none;
-  border-radius: var(--radius-full);
-  padding: var(--space-4) var(--space-24);
-  font-family: var(--font-family--logo);
-  font-size: var(--font-20);
-  font-weight: var(--font-regular);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--space-100);
-  height: var(--space-40);
-  margin: 0;
-}
-
-.signin__button-text {
-  white-space: nowrap;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-.signin__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.signin__login {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  font-size: var(--font-14);
-  color: var(--color-gray);
-  margin-bottom: var(--space-25);
-}
-
-.signin__login-link {
-  font-size: var(--font-14);
-  color: var(--color-gray);
-}
-
 .signin__footer {
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .signin__footer-text {
@@ -152,69 +19,12 @@
   font-size: var(--font-12);
 }
 
-/* Media Queries - móvil */
-
-@media screen and (max-width: 768px) {
-  .signin {
-    padding: var(--space-16);
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-  }
-
-  .signin__card {
-    flex-direction: column;
-    max-width: 450px;
-    margin: 0 auto;
-    min-height: auto;
-  }
-
-  .signin__image-container {
-    display: none;
-  }
-
-  .signin__form-group {
-    margin-bottom: var(--space-8);
-  }
-
-  .signin__button {
-    width: 10rem;
-    height: var(--space-48);
-    margin: var(--space-24) auto var(--space-16);
-  }
-
-  .signin__button-container {
-    margin: var(--space-16) 0 var(--space-8);
-  }
+.signin__login {
+  color: var(--color-gray);
+  margin: auto;
 }
 
-/* Media Query corregida para pantallas mayores a 500px */
-@media screen and (min-width: 500px) {
-  .signin-container {
-    margin-inline: calc(-1 * var(--space-24));
-  }
-}
-
-/* Media Queries - pantallas muy pequeñas */
-@media screen and (max-width: 375px) {
-  .signin__form-container {
-    padding: var(--space-25);
-  }
-
-  .signin__title {
-    font-size: var(--font-32);
-  }
-
-  .signin__subtitle {
-    font-size: var(--font-18);
-  }
-
-  .signin__form-group {
-    margin-bottom: var(--space-2);
-  }
-
-  .signin__button {
-    width: 112px;
-    height: var(--space-36);
-  }
+.signin__login-link {
+  font-size: var(--font-14);
+  color: var(--color-gray);
 }
