@@ -96,6 +96,135 @@ export const Event = () => {
 
   if (!eventData) {
     return null;
+<<<<<<< HEAD
+  }
+  return (
+    <>
+      <div className='event--header'>
+        <div className='btn--icon'>
+          <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
+        </div>
+        <div className='event--header__buttons'>
+          <button className='btn--icon margin--right__10'>
+            <img src={share} alt='Share Icon' />
+          </button>
+          <button className='btn--icon'>
+            <img src={footprintBlack} alt='Paw-Like Icon' />
+          </button>
+        </div>
+      </div>
+      <div className='event--img-container'>
+        <img
+          src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
+          alt=''
+        />
+      </div>
+      <div className='event--container'>
+        <div className='event--info'>
+          <h3 className='event--title'>{eventData.eventTitle}</h3>
+          <main className='event--container__categories'>
+            <InfoCategoryEvent
+              img={calendar}
+              reference={{
+                title: "Day",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeDate(eventData.dateTime.toDate())}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={time}
+              reference={{
+                title: "Start time",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeTime(eventData.dateTime.toDate())}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={location}
+              reference={{
+                title: "Location",
+                dbCategory: "location",
+              }}
+              info={eventData.location}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={tag}
+              reference={{
+                title: "Activity",
+                dbCategory: "activity",
+              }}
+              info={eventData.activity}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={dog}
+              reference={{
+                title: "Allowed breeds",
+                dbCategory: "breeds",
+              }}
+              info={normalizePlaces(eventData.places)}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={availability}
+              reference={{
+                title: "Availability",
+                dbCategory: "profileIdAsisstant",
+              }}
+              info={normalizePlaces(eventData.places)}
+              editable=''
+            />
+            <InfoCategoryEvent
+              img={description}
+              reference={{
+                title: "Description",
+                dbCategory: "eventDescription",
+              }}
+              info={eventData.eventDescription}
+              editable=''
+            />
+          </main>
+        </div>
+        <aside className='event--container__sidebar'>
+          <h3 className='event--profile-title'>Know your organisator</h3>
+          <div className='profile-card'>
+            <ProfileCard eventId={eventData.profileIdCreator} />
+          </div>
+          <div className='event--modal'>
+            {hasJoined ? (
+              <EventUnregister
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            ) : (
+              <EventSignup
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            )}
+          </div>
+        </aside>
+      </div>
+
+      <div className='event--events-container'>
+        <Accordion
+          text={"Similar Events"}
+          profileId=''
+          defaultOpen={true}
+          similarEvents={similarEvents}
+        />
+      </div>
+
+      {/* Falta el mapa */}
+    </>
+  );
+};
+=======
   } else {
     return (
       <>
@@ -118,98 +247,96 @@ export const Event = () => {
             alt=""
           />
         </div>
+        <h3 className="event--title">{eventData.eventTitle}</h3>
         <div className="event--container">
-          <div className="event--info">
-            <h3 className="event--title">{eventData.eventTitle}</h3>
-            <main className="event--container__categories">
-              <InfoCategoryEvent
-                img={calendar}
-                reference={{
-                  title: "Day",
-                  dbCategory: "dateTime",
-                }}
-                info={normalizeDate(eventData.dateTime.toDate())}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={time}
-                reference={{
-                  title: "Start time",
-                  dbCategory: "dateTime",
-                }}
-                info={normalizeTime(eventData.dateTime.toDate())}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={location}
-                reference={{
-                  title: "Location",
-                  dbCategory: "location",
-                }}
-                info={eventData.location}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={tag}
-                reference={{
-                  title: "Activity",
-                  dbCategory: "activity",
-                }}
-                info={eventData.activity}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={dog}
-                reference={{
-                  title: "Allowed breeds",
-                  dbCategory: "breeds",
-                }}
-                info={normalizePlaces(eventData.places)}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={availability}
-                reference={{
-                  title: "Availability",
-                  dbCategory: "profileIdAsisstant",
-                }}
-                info={normalizePlaces(eventData.places)}
-                editable=""
-              />
-              <InfoCategoryEvent
-                img={description}
-                reference={{
-                  title: "Description",
-                  dbCategory: "eventDescription",
-                }}
-                info={eventData.eventDescription}
-                editable=""
-              />
-            </main>
-          </div>
-          <aside className="event--container__sidebar">
-            <h3 className="event--profile-title">Know your organisator</h3>
-            <div className="profile-card">
-              <ProfileCard eventId={eventData.profileIdCreator} />
-            </div>
-            <div className="event--modal">
-              {hasJoined ? (
-                <EventUnregister
-                  eventData={eventData}
-                  profiles={profiles}
-                  setHasJoined={setHasJoined}
-                />
-              ) : (
-                <EventSignup
-                  eventData={eventData}
-                  profiles={profiles}
-                  setHasJoined={setHasJoined}
-                />
-              )}
-            </div>
-          </aside>
+          <main className="event--container__categories">
+            <InfoCategoryEvent
+              img={calendar}
+              reference={{
+                title: "Day",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeDate(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={time}
+              reference={{
+                title: "Start time",
+                dbCategory: "dateTime",
+              }}
+              info={normalizeTime(eventData.dateTime.toDate())}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={location}
+              reference={{
+                title: "Location",
+                dbCategory: "location",
+              }}
+              info={eventData.location}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={tag}
+              reference={{
+                title: "Activity",
+                dbCategory: "activity",
+              }}
+              info={eventData.activity}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={dog}
+              reference={{
+                title: "Allowed breeds",
+                dbCategory: "breeds",
+              }}
+              info={eventData.breeds}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={availability}
+              reference={{
+                title: "Availability",
+                dbCategory: "profileIdAsisstant",
+              }}
+              info={normalizePlaces(eventData.places)}
+              editable=""
+            />
+            <InfoCategoryEvent
+              img={description}
+              reference={{
+                title: "Description",
+                dbCategory: "eventDescription",
+              }}
+              info={eventData.eventDescription}
+              editable=""
+            />
+          </main>
         </div>
 
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <div className="profile-card">
+            <ProfileCard eventId={eventData.profileIdCreator} />
+          </div>
+          <div className="event--modal">
+            {hasJoined ? (
+              <EventUnregister
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            ) : (
+              <EventSignup
+                eventData={eventData}
+                profiles={profiles}
+                setHasJoined={setHasJoined}
+              />
+            )}
+          </div>
+        </aside>
         <div className="event--events-container">
           <Accordion
             text={"Similar Events"}
@@ -224,3 +351,4 @@ export const Event = () => {
     );
   }
 };
+>>>>>>> 1da64f51c37e9297d41e0431b5f175424f50319f
