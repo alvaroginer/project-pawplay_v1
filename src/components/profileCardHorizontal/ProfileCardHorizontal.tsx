@@ -19,22 +19,6 @@ export const ProfileCardHorizontal = ({
 }) => {
   const [profileData, setProfileData] = useState<ProfileData>();
 
-  //   useEffect(() => {
-  //     const fecthProfile = async () => {
-  //       const profileSnap = await getDoc(doc(db, "profiles", profileId));
-
-  //       if (!profileSnap.exists()) {
-  //         console.warn(`Perfil con ID ${profileId} no encontrado.`);
-  //         return;
-  //       }
-
-  //       const typedProfile = profileSnap.data() as ProfileData;
-  //       setProfileData(typedProfile);
-  //     };
-
-  //     fecthProfile();
-  //   }, [profileId]);
-
   useEffect(() => {
     if (mockData) {
       setProfileData(mockData);
@@ -60,15 +44,21 @@ export const ProfileCardHorizontal = ({
           onClick={onToggle}
           className={`profile-card-horizontal ${selected ? "selected" : ""}`}
         >
-          <input type="checkbox" checked={selected} />
-          <div className="profile-card-horizontal__info">
+          <input type='checkbox' checked={selected} />
+          <div className='profile-card-horizontal__info'>
             <img
-              className="profile--card__image small-image"
-              src={profileData.profilePhoto ?? dogUser}
+              className='profile--card__image small-image'
+              src={
+                !profileData.profilePhoto ? dogUser : profileData.profilePhoto
+              }
               // src={dogUser}
-              alt="Profile"
+              alt='Profile'
             />
-            <p>{capitalizeFirstLetter(profileData.profileName)}</p>
+            <p>
+              {!profileData.profileName
+                ? "Not defined"
+                : capitalizeFirstLetter(profileData.profileName)}
+            </p>
           </div>
         </div>
       )}

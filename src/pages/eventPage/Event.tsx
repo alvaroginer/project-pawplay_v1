@@ -31,13 +31,13 @@ import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
-  const [hasJoined, setHasJoined] = useState<boolean>(false);
+  //const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
 
   // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
 
-  const { user } = useContext(AuthContext);
+  const { user, loggedProfile } = useContext(AuthContext);
 
   //Params para la url
   const { eventId } = useParams();
@@ -94,9 +94,12 @@ export const Event = () => {
 
   // Falta comprobar que el perfil está completo para poder apuntarse
 
-  if (!eventData) {
+  if (!eventData || !loggedProfile) {
     return null;
   }
+
+  const hasJoined = eventData.profileIdAsisstant.includes(loggedProfile.id);
+
   return (
     <>
       <div className='event--header'>
@@ -194,17 +197,9 @@ export const Event = () => {
           </div>
           <div className='event--modal'>
             {hasJoined ? (
-              <EventUnregister
-                eventData={eventData}
-                profiles={profiles}
-                setHasJoined={setHasJoined}
-              />
+              <EventUnregister eventData={eventData} profiles={profiles} />
             ) : (
-              <EventSignup
-                eventData={eventData}
-                profiles={profiles}
-                setHasJoined={setHasJoined}
-              />
+              <EventSignup eventData={eventData} profiles={profiles} />
             )}
           </div>
         </aside>
