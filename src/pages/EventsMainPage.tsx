@@ -35,7 +35,7 @@ export const EventsMainPage = () => {
     eventsList.forEach((eventCard) => {
       const { activity, breeds, size } = eventCard;
 
-      if (!breedsList[breeds] && breeds !== "") {
+      if (!breedsList[breeds] && breeds !== "Any") {
         breedsList = { ...breedsList, [breeds]: false };
       }
 
@@ -151,28 +151,30 @@ export const EventsMainPage = () => {
 
   return (
     <>
-      <div className='filter-container'>
-        <input
-          type='text'
-          className='searchbar'
-          placeholder='Search the event you want to go'
-        />
-        <div className='filter-button--container'>
-          <div
-            className='filter-button'
-            onClick={() => handleSidebarDisplay(sidebarDisplay)}
-          >
-            <p>Filters</p>
-            <img src={filter} alt='Filter Icon' />
+      <div className='main-events-container'>
+        <main className='item__100'>
+          <div className='filter-container'>
+            <input
+              type='text'
+              className='searchbar'
+              placeholder='Search the event you want to go'
+            />
+            <div className='filter-button--container'>
+              <div
+                className='filter-button'
+                onClick={() => handleSidebarDisplay(sidebarDisplay)}
+              >
+                <p>Filters</p>
+                <img src={filter} alt='Filter Icon' />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className='events-container'>
-        <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
-          {filteredEventList.map((event: EventData) => {
-            return <EventCard key={event.id} event={event} />;
-          })}
-        </section>
+          <div className='grid'>
+            {filteredEventList.map((event: EventData) => {
+              return <EventCard key={event.id} event={event} />;
+            })}
+          </div>
+        </main>
         {sidebarDisplay && (
           <Sidebar
             exitAnimation={exitAnimation}

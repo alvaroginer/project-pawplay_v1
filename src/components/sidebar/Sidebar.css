@@ -59,7 +59,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-36);
+  margin-bottom: var(--space-16);
 }
 
 .filter-sidebar--button-container {
@@ -77,11 +77,12 @@
   .filter-sidebar {
     height: 100%;
     position: static;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    margin-top: 0;
-    max-width: calc(var(--space-200) * 2);
+    padding: var(--space-20);
+    border-radius: var(--space-14);
+    margin-top: var(--space-113);
+    margin-left: var(--space-20);
+    max-width: var(--space-250);
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     flex: 0 0 25%;
   }
