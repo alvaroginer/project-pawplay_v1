@@ -17,10 +17,12 @@ export const transformToCamelCase = (str: string) => {
 
 export const transformToTimeStampDate = (
   date: string,
+  time: string,
   setError: UseFormSetError<any>
 ) => {
   const [day, month, year] = date.split("/").map(Number);
-  const finalDate = new Date(year, month - 1, day);
+  const [hours, minutes] = time.split(":").map(Number);
+  const finalDate = new Date(year, month - 1, day, hours, minutes);
   const expirationThreshold = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
   if (finalDate < expirationThreshold) {
