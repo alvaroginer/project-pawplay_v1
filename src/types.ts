@@ -89,18 +89,24 @@ export interface SidebarProps {
   exitAnimation: boolean;
   onClick: (sidebarDisplay: boolean) => void;
   onChange: (category: string) => void;
+  setDate: React.Dispatch<React.SetStateAction<DateFilterProps>>;
+  dateFilterParams: DateFilterProps;
 }
 
 export interface FilterProps {
   activities: Record<string, boolean>;
   breeds: Record<string, boolean>;
   size: Record<string, boolean>;
-  date: Date | null;
+}
+
+export interface DateFilterProps {
+  startDate: Date;
+  endDate: Date | null;
 }
 
 export interface FilterCategoryProps {
   title: string;
-  categories?: Record<string, boolean>;
+  categories: Record<string, boolean>;
   onChange: (value: string) => void;
   children?: ReactNode;
 }

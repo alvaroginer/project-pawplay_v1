@@ -2,9 +2,8 @@ import { EventCard } from "../components/eventCard/EventCard";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
-import { EventData, FilterProps } from "../types";
+import { DateFilterProps, EventData, FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/readFunctions";
-import { sameDay } from "../functions/Functions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -13,7 +12,10 @@ export const EventsMainPage = () => {
     activities: {},
     breeds: {},
     size: {},
-    date: null,
+  });
+  const [dateFilterParams, setDateFilterParams] = useState<DateFilterProps>({
+    startDate: new Date(),
+    endDate: null,
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
@@ -54,7 +56,6 @@ export const EventsMainPage = () => {
       activities: activityList,
       breeds: breedsList,
       size: sizeList,
-      date: null,
     });
   }, [eventsList]);
 
@@ -63,7 +64,7 @@ export const EventsMainPage = () => {
       Object.values(filterParams.activities).includes(true) ||
       Object.values(filterParams.breeds).includes(true) ||
       Object.values(filterParams.size).includes(true) ||
-      filterParams.date
+      dateFilterParams.endDate
     ) {
       console.log("entra en la primera condción");
 
@@ -83,6 +84,35 @@ export const EventsMainPage = () => {
       console.log("activeActivities", activeActivities);
 
       return eventsList.filter((event, index) => {
+        //Filtramos las fechas
+        const eventDate: number = event.dateTime.toDate().getTime();
+        const startDate: number = new Date(dateFilterParams.startDate).setHours(
+          0,
+          0,
+          0,
+          0
+        );
+
+        if (eventDate < startDate) {
+          console.log("desparece por el startDate");
+          return false;
+        }
+
+        if (dateFilterParams.endDate) {
+          const endDateTimestamp = new Date(dateFilterParams.endDate).setHours(
+            23,
+            59,
+            59,
+            999
+          );
+
+          if (eventDate > endDateTimestamp) {
+            console.log("desaparece por el endDate");
+            return false;
+          }
+        }
+
+        //Filtramso otras categorías
         if (activeSizes.length > 0 && !activeSizes.includes(event.size)) {
           console.log(event.size, index);
           return false;
@@ -101,20 +131,12 @@ export const EventsMainPage = () => {
           return false;
         }
 
-        if (filterParams.date) {
-          const activeDate: boolean = sameDay(
-            event.dateTime.toDate(),
-            filterParams.date
-          );
-          if (!activeDate) return false;
-        }
-
         return true;
       });
     } else {
       return eventsList;
     }
-  }, [filterParams, eventsList]);
+  }, [filterParams, eventsList, dateFilterParams]);
 
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     if (sidebarDisplay === true) {
@@ -160,13 +182,6 @@ export const EventsMainPage = () => {
         },
       }));
     }
-
-    if (category instanceof Date) {
-      setFilterParams((prevFilterParams) => ({
-        ...prevFilterParams,
-        date: category,
-      }));
-    }
   };
 
   return (
@@ -201,6 +216,8 @@ export const EventsMainPage = () => {
             filterParams={filterParams}
             onClick={handleSidebarDisplay}
             onChange={handleFilterParams}
+            setDate={setDateFilterParams}
+            dateFilterParams={dateFilterParams}
           />
         )}
       </div>
