@@ -1,6 +1,6 @@
 import { FilterCategory } from "../filterCategory/FilterCategory";
 import { capitalizeFirstLetter } from "../../functions/Functions";
-import { SidebarProps } from "../../types";
+import { FilterProps, SidebarProps } from "../../types";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "../../index.css";
@@ -36,12 +36,10 @@ export const Sidebar = ({
         </button>
       </div>
       {Object.keys(filterParams).map((category: string) => {
-        if (category === "date") return;
-
         return (
           <FilterCategory
             key={category}
-            categories={filterParams[category]}
+            categories={filterParams[category as keyof FilterProps]}
             title={capitalizeFirstLetter(category)}
             onChange={onChange}
           />
