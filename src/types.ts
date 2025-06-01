@@ -95,13 +95,14 @@ export interface FilterProps {
   activities: Record<string, boolean>;
   breeds: Record<string, boolean>;
   size: Record<string, boolean>;
-  date: Record<number, boolean>;
+  date: Date | null;
 }
 
 export interface FilterCategoryProps {
   title: string;
-  categories: Record<string, boolean>;
-  onChange: (string: string) => void;
+  categories?: Record<string, boolean>;
+  onChange: (value: string) => void;
+  children?: ReactNode;
 }
 
 // -----> Navigation Menu

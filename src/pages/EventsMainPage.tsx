@@ -4,6 +4,7 @@ import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { EventData, FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/readFunctions";
+import { sameDay } from "../functions/Functions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -12,7 +13,7 @@ export const EventsMainPage = () => {
     activities: {},
     breeds: {},
     size: {},
-    date: {},
+    date: null,
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
@@ -28,6 +29,7 @@ export const EventsMainPage = () => {
     fetchEvents();
   }, []);
 
+  //Creamos el filterParams
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
     let breedsList: Record<string, boolean> = {};
@@ -52,7 +54,7 @@ export const EventsMainPage = () => {
       activities: activityList,
       breeds: breedsList,
       size: sizeList,
-      date: {},
+      date: null,
     });
   }, [eventsList]);
 
@@ -60,7 +62,8 @@ export const EventsMainPage = () => {
     if (
       Object.values(filterParams.activities).includes(true) ||
       Object.values(filterParams.breeds).includes(true) ||
-      Object.values(filterParams.size).includes(true)
+      Object.values(filterParams.size).includes(true) ||
+      filterParams.date
     ) {
       console.log("entra en la primera condción");
 
@@ -98,6 +101,14 @@ export const EventsMainPage = () => {
           return false;
         }
 
+        if (filterParams.date) {
+          const activeDate: boolean = sameDay(
+            event.dateTime.toDate(),
+            filterParams.date
+          );
+          if (!activeDate) return false;
+        }
+
         return true;
       });
     } else {
@@ -117,8 +128,10 @@ export const EventsMainPage = () => {
     }
   };
 
-  const handleFilterParams = (category: string) => {
-    if (category in filterParams.activities) {
+  const handleFilterParams = (category: string | Date) => {
+    const categoryIsString = typeof category === "string";
+
+    if (categoryIsString && category in filterParams.activities) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         activities: {
@@ -128,7 +141,7 @@ export const EventsMainPage = () => {
       }));
     }
 
-    if (category in filterParams.breeds) {
+    if (categoryIsString && category in filterParams.breeds) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         breeds: {
@@ -138,13 +151,20 @@ export const EventsMainPage = () => {
       }));
     }
 
-    if (category in filterParams.size) {
+    if (categoryIsString && category in filterParams.size) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         size: {
           ...prevFilterParams.size,
           [category]: !prevFilterParams.size[category],
         },
+      }));
+    }
+
+    if (category instanceof Date) {
+      setFilterParams((prevFilterParams) => ({
+        ...prevFilterParams,
+        date: category,
       }));
     }
   };

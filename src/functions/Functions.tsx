@@ -3,6 +3,7 @@ import { imageAllowedTypes } from "../types";
 import { UseFormSetError } from "react-hook-form";
 import { toast } from "react-toastify";
 
+// -----> Texts
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -15,6 +16,7 @@ export const transformToCamelCase = (str: string) => {
     .replace(/\s+/g, "");
 };
 
+// -----> Dates
 export const transformToTimeStampDate = (
   date: string,
   time: string,
@@ -62,6 +64,15 @@ export const normalizePlaces = (num: number) => {
   }
 };
 
+export const sameDay = (eventDate: Date, dateToCompare: Date) => {
+  return (
+    eventDate.getFullYear() === dateToCompare.getFullYear() &&
+    eventDate.getMonth() === dateToCompare.getMonth() &&
+    eventDate.getDate() === dateToCompare.getDate()
+  );
+};
+
+// -----> Images
 export const transformFileToDataUrl = async (
   file: File,
   setError: UseFormSetError<any>,

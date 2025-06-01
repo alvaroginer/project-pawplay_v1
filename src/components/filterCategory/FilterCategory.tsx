@@ -30,6 +30,7 @@ export const FilterCategory = ({
         </button>
       </div>
       {isOpen &&
+        categories &&
         Object.keys(categories).map((category) => {
           return (
             <div className='filter-category--container' key={category}>
