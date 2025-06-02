@@ -148,7 +148,7 @@ export interface ForgotPasswordModalProps {
 export type WarningModalProps = {
   onClose: () => void;
   modalText: string;
-  buttonText: string;
+  buttonText?: string;
   children?: ReactNode;
   className?: string;
   onConfirm?: () => void;
@@ -179,13 +179,11 @@ interface dbProfileCategory {
 export interface EventSignupProps {
   eventData: EventData | null;
   profiles: ProfileData[];
-  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface EventUnregisterProps {
   eventData: EventData | null;
   profiles: ProfileData[];
-  setHasJoined: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface InfoCategoryProps {

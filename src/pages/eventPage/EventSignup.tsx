@@ -6,39 +6,10 @@ import { EventSignupProps } from "../../types";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export const EventSignup = ({
-  eventData,
-  profiles,
-  setHasJoined,
-}: EventSignupProps) => {
+export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
   const [isSelectProfileModalOpen, setIsSelectProfileModalOpen] =
     useState<boolean>(false);
   const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
-
-  // const fakeProfiles: ProfileData[] = [
-  //   {
-  //     id: "1",
-  //     userUid: "user123",
-  //     profilePhoto: "https://via.placeholder.com/100",
-  //     profileName: "Bobby",
-  //     profileBio: "Friendly pup ready for a walk!",
-  //     age: 3,
-  //     breed: "Labrador",
-  //     gender: "Male",
-  //     size: "Big",
-  //   },
-  //   {
-  //     id: "2",
-  //     userUid: "user456",
-  //     profilePhoto: "https://via.placeholder.com/100",
-  //     profileName: "Luna",
-  //     profileBio: "Loves to explore new parks.",
-  //     age: 2,
-  //     breed: "Beagle",
-  //     gender: "Female",
-  //     size: "Medium",
-  //   },
-  // ];
 
   //Funcion para añadir el perfil al useState o quitarlo
   const toggleProfileSelection = (profileId: string) => {
@@ -66,7 +37,7 @@ export const EventSignup = ({
           eventSignUp(profileId, eventData.id)
         )
       );
-      setHasJoined(true);
+
       toast.success(
         `You joined the event with ${selectedProfiles.length} profiles`
       );
@@ -83,23 +54,22 @@ export const EventSignup = ({
     if (profiles.length === 1) {
       await eventSignUp(profiles[0].id, eventData.id);
       console.log(`Profile with id: ${profiles[0].id}`);
-      setHasJoined(true);
+
       toast.success("Your pup has joined the event!");
     } else setIsSelectProfileModalOpen(true);
   };
 
   return (
     <>
-      <Button onClick={handleJoinClick} className="primary">
+      <Button onClick={handleJoinClick} className='primary'>
         Join Us
       </Button>
       {isSelectProfileModalOpen && (
         <WarningModal
           modalText="Select the pup who's ready for an adventure."
-          buttonText="Join event"
+          buttonText='Join event'
           onClose={() => setIsSelectProfileModalOpen(false)}
-          onConfirm={handleJoinMultipleProfiles}
-          className="color-white"
+          className='color-white'
         >
           {profiles.map((profile) => (
             <ProfileCardHorizontal
@@ -109,6 +79,11 @@ export const EventSignup = ({
               onToggle={() => toggleProfileSelection(profile.id)}
             />
           ))}
+          <div className='display--flex justify-content--center'>
+            <Button className='primary' onClick={handleJoinMultipleProfiles}>
+              Join us
+            </Button>
+          </div>
         </WarningModal>
       )}
       {/* Falta el mapa */}
