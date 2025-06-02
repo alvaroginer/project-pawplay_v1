@@ -12,12 +12,11 @@ import { capitalizeFirstLetter } from "../../functions/Functions";
 import { useNavigate } from "react-router";
 import { deleteOneEvent } from "../../dataBase/services/deleteFunctions";
 import { toast } from "react-toastify";
+import { Button } from "../button/Button";
 import "../../index.css";
 import "./EventCard.css";
 import park from "../../imgs/image-park.jpg";
-// import dots from "../../imgs/eventCard/dots.svg";
 import bone from "../../imgs/profileCard/bone.svg";
-import { Button } from "../button/Button";
 
 interface isWarningModalProps {
   warningSignUp: boolean;
@@ -132,7 +131,8 @@ export const EventCard = ({ event }: { event: EventData }) => {
     }
   };
 
-  if (!loggedProfile) return;
+  //Falla aquí
+  // if (!loggedProfile) return;
 
   return (
     <>
@@ -200,9 +200,8 @@ export const EventCard = ({ event }: { event: EventData }) => {
                   </clipPath>
                 </defs>
               </svg>
-              {/* <img src={footprint} alt='Dog Footprint' /> */}
             </button>
-            {loggedProfile.id === profileIdCreator && (
+            {loggedProfile?.id === profileIdCreator && (
               <DotsMenu className="especific-align__event-card">
                 <p className="profile-page__option">Edit event</p>
                 {profileIdAsisstant.includes(loggedProfile.id) && (
