@@ -66,6 +66,10 @@ select:invalid {
   min-height: var(--space-16);
 }
 
+.input--help-text__container--width__0 {
+  width: 0%;
+}
+
 .input--help-text {
   width: 100%;
   display: block;
