@@ -121,6 +121,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
   const handleDeleteEvent = async () => {
     try {
       await deleteOneEvent(id);
+      //pasar
       setIsWarningModal({
         ...isWarningModal,
         warningDelete: false,
@@ -130,9 +131,6 @@ export const EventCard = ({ event }: { event: EventData }) => {
       toast.error("An error occurred! We couldn't delete your event");
     }
   };
-
-  //Falla aquí
-  // if (!loggedProfile) return;
 
   return (
     <>
