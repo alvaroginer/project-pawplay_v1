@@ -73,6 +73,12 @@
   border-top: var(--space-1) solid var(--color-gray-300);
 }
 
+.filter--datepicker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ----- Datepicker classes ----- */
 .react-datepicker {
   font-family: var(--font-family);

@@ -26,13 +26,13 @@ export const Sidebar = ({
           : "filter-sidebar filter-sidebar__exit"
       }
     >
-      <div className='filter-sidebar--header'>
-        <p className='filter-sidebar--header__text'>Filters</p>
+      <div className="filter-sidebar--header">
+        <p className="filter-sidebar--header__text">Filters</p>
         <button
-          className='filter-sidebar--header__close-button'
+          className="filter-sidebar--header__close-button"
           onClick={() => onClick(true)}
         >
-          <img src={close} alt='Close Icon' />
+          <img src={close} alt="Close Icon" />
         </button>
       </div>
       {Object.keys(filterParams).map((category: string) => {
@@ -45,9 +45,9 @@ export const Sidebar = ({
           />
         );
       })}
-      <div className='filter-category'>
-        <div className='filter-category--header'>
-          <p className='filter-category--title'>Date</p>
+      <div className="filter-category">
+        <div className="filter-category--header">
+          <p className="filter-category--title">Date</p>
           <button
             className={`filter-category--display-button ${isOpen && ""}`}
             onClick={() => setIsOpen(!isOpen)}
@@ -57,28 +57,30 @@ export const Sidebar = ({
                 isOpen && "display--button__image--rotation"
               }`}
               src={chevron}
-              alt='Arrow icon'
+              alt="Arrow icon"
             />
           </button>
         </div>
         {isOpen && (
-          <DatePicker
-            selected={dateFilterParams.startDate}
-            onChange={([start, end]) => {
-              if (start) {
-                setDate({ startDate: start, endDate: end });
-              }
-            }}
-            startDate={dateFilterParams.startDate}
-            endDate={dateFilterParams.endDate}
-            selectsRange
-            inline
-          />
+          <div className="filter--datepicker-container">
+            <DatePicker
+              selected={dateFilterParams.startDate}
+              onChange={([start, end]) => {
+                if (start) {
+                  setDate({ startDate: start, endDate: end });
+                }
+              }}
+              startDate={dateFilterParams.startDate}
+              endDate={dateFilterParams.endDate}
+              selectsRange
+              inline
+            />
+          </div>
         )}
       </div>
-      <div className='filter-sidebar--button-container'>
+      <div className="filter-sidebar--button-container">
         <button
-          className='btn btn--secondary margin--left__20'
+          className="btn btn--secondary margin--left__20"
           onClick={() => onClick(true)}
         >
           Apply
