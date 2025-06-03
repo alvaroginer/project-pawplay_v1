@@ -1,3 +1,7 @@
+.color-brown-light {
+  background-color: var(--color-brown-light);
+}
+
 .signin__footer-text {
   margin: 0;
   font-size: var(--font-14);

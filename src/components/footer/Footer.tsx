@@ -10,7 +10,7 @@ export const Footer = () => {
   const { user, isProfileCompleted } = useContext(AuthContext);
   const location = useLocation();
 
-  const excludedRoutes = [
+  const excludedRoutesCheckListProfile = [
     "/create-profile",
     "/create/event",
     "/login",
@@ -18,13 +18,23 @@ export const Footer = () => {
     "/contact",
   ];
 
+  const excludedRoutesFooter = ["/contact"];
+
   const shouldShowChecklist =
-    user && !isProfileCompleted && !excludedRoutes.includes(location.pathname);
+    user &&
+    !isProfileCompleted &&
+    !excludedRoutesCheckListProfile.includes(location.pathname);
 
   return (
     <>
       {shouldShowChecklist && <CheckListProfile />}
-      <footer className="footer">
+      <footer
+        className={`footer ${
+          excludedRoutesFooter.includes(location.pathname)
+            ? "footer--no-margin"
+            : ""
+        }`}
+      >
         <div className="footer__content">
           <h2 className="footer__title">PawPlay</h2>
           <div className="footer__links">

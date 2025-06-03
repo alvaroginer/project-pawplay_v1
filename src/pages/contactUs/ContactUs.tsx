@@ -33,8 +33,8 @@ export const ContactUs = () => {
   };
 
   return (
-    <div className="login">
-      <div className="login__modal">
+    <div className="login color-brown-dark">
+      <div className="login__modal margin-top">
         <div className="login__image-container">
           <img
             src={dogImage || "/placeholder.svg"}

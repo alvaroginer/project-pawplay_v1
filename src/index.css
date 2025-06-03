@@ -49,6 +49,7 @@
   /* Brown */
   --color-brown: hsla(32, 40%, 61%, 1);
   --color-brown-light: hsla(29, 90%, 76%, 1);
+  --color-brown-dark: hsla(31, 28%, 39%, 1);
 
   /* Green */
   --color-green: hsl(104, 93%, 36%);
