@@ -1,0 +1,272 @@
+.about-us__container {
+  /* margin-top: var(--space-113); */
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  gap: auto;
+  margin: 5rem 0 2rem 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--color-yellow);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.dot--yellow {
+  background-color: var(--color-button-yellow);
+}
+
+.about-tag {
+  display: flex;
+  width: 50%;
+  flex-grow: 1;
+  align-items: center;
+  align-self: start;
+  margin-top: 0.5rem;
+  padding-left: 0;
+}
+
+.main-title-container {
+  width: 50%;
+}
+
+.main-title {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+/* Main Image */
+.main-image-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 150px auto;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Pawpose Section */
+.pawpose-section {
+  max-width: 1200px;
+  margin: 0 auto 150px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+.pawpose-tag {
+  display: flex;
+  align-items: center;
+  grid-column: 1;
+  align-self: start;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.info-items {
+  grid-column: 2;
+  margin-top: 0;
+}
+
+.info-item {
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-black);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.separator {
+  width: 97%;
+  height: 1px;
+  background-color: var(--color-black);
+  margin: 1rem 0 0 0;
+}
+
+.info-text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+/* Team Section */
+.team-section {
+  max-width: 1200px;
+  margin: 0 auto 150px auto;
+  background-color: var(--color-berry-800);
+}
+
+.team-container {
+  background-color: var(--color-team-bg);
+  padding: 5rem 2rem 1.5rem 2rem;
+  position: relative;
+  height: 30rem; /* Aumentado para dar más altura al contenedor */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.team-tag {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 3rem;
+  left: 7%;
+}
+
+.team-members {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* Reducido el espacio entre imágenes */
+  margin: 0 auto;
+  padding-top: 0;
+  width: 90%; /* Reducido el ancho para que las imágenes estén más juntas */
+}
+
+.team-member {
+  width: 35%; /* Aumentado el tamaño de las imágenes */
+  aspect-ratio: 0.9; /* Para cambiar los cards de imagenes*/
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: var(--color-white);
+}
+
+.team-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; /* Ajustado para mostrar más las cabezas */
+}
+
+.label-text--white {
+  color: var(--color-white);
+}
+/* Paw Code Section */
+.pawcode-section {
+  max-width: 1200px;
+  margin: 0 auto 150px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+.pawcode-tag {
+  display: flex;
+  align-items: center;
+  grid-column: 1;
+  align-self: start;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.code-items {
+  grid-column: 2;
+  margin-top: 0;
+}
+
+.code-item {
+  margin-bottom: 2rem;
+}
+
+.code-title {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-black);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.code-text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+/* Fetch Community Section */
+.fetch-community {
+  max-width: 1200px;
+  margin: 0 auto 6rem auto;
+  text-align: center;
+}
+
+.fetch-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-black);
+  margin-bottom: 0.5rem;
+}
+
+.fetch-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  margin-bottom: 2rem;
+}
+
+/* Message Section */
+.message-container {
+  background-color: var(--color-berry-100);
+  padding: var(--space-40);
+  border-radius: 0.5rem;
+  margin: 0 auto 150px auto;
+  max-width: 650px;
+}
+
+.message-text {
+  font-size: var(--space-24);
+  margin: 0;
+}
+
+/* Contact Section */
+.contact-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-text-container {
+  margin-bottom: 1.5rem;
+}
+
+.text-wrapper {
+  margin-bottom: 30px;
+}
+
+.contact-title {
+  font-size: var(--space-40);
+  font-weight: 400;
+  color: var(--color-black);
+  margin: 0;
+}
+
+@media screen and (width <= 800px) {
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-40);
+  }
+
+  .main-title-container {
+    width: 100%;
+  }
+}
