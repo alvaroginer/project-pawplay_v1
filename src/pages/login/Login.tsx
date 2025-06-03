@@ -84,7 +84,7 @@ export const Login = () => {
     <div className="login">
       <div className="login__arrow-container">
         <img
-          className="login__arow"
+          className="login__arrow"
           src={arrow}
           alt="Icon to return"
           onClick={() => navigate(-1)}
