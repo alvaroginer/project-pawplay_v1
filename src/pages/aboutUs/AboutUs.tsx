@@ -4,6 +4,7 @@ import bita from "../../imgs/aboutUs/bita.png";
 import joan from "../../imgs/aboutUs/joan.png";
 import alvaro from "../../imgs/aboutUs/alvaro.png";
 import { Button } from "../../components/button/Button";
+import { Link } from "react-router";
 
 export const AboutUs = () => {
   return (
@@ -62,7 +63,7 @@ export const AboutUs = () => {
       </div>
 
       <div className="team-section">
-        <div className="team-container">
+        <div className="team-section__wrapper">
           <div className="team-tag">
             <span className="dot"></span>
             <span className="label-text label-text--white">Our team</span>
@@ -81,48 +82,48 @@ export const AboutUs = () => {
         </div>
       </div>
 
-      <div className="pawcode-section">
-        <div className="pawcode-tag">
+      <div className="pawpose-section">
+        <div className="pawpose-tag">
           <span className="dot"></span>
           <span className="label-text">The paw code</span>
         </div>
 
-        <div className="code-items">
+        <div className="info-items">
           <div className="code-item">
-            <h3 className="code-title">Paw first</h3>
-            <p className="code-text">
+            <h3 className="info-title">Paw first</h3>
+            <p className="info-text">
               Happy pups, happy people. That's our priority.
             </p>
             <div className="separator"></div>
           </div>
 
           <div className="code-item">
-            <h3 className="code-title">Play together</h3>
-            <p className="code-text">
+            <h3 className="info-title">Play together</h3>
+            <p className="info-text">
               Friendships are better with wagging tails.
             </p>
             <div className="separator"></div>
           </div>
 
           <div className="code-item">
-            <h3 className="code-title">Stay pawsitive</h3>
-            <p className="code-text">
+            <h3 className="info-title">Stay pawsitive</h3>
+            <p className="info-text">
               We believe in good wibes and good doggos.
             </p>
             <div className="separator"></div>
           </div>
 
           <div className="code-item">
-            <h3 className="code-title">Unleash joy</h3>
-            <p className="code-text">
+            <h3 className="info-title">Unleash joy</h3>
+            <p className="info-text">
               Every meetup is a chance for zoomies and fun.
             </p>
             <div className="separator"></div>
           </div>
 
           <div className="code-item">
-            <h3 className="code-title">Fetch pawsibility</h3>
-            <p className="code-text">
+            <h3 className="info-title">Fetch pawsibility</h3>
+            <p className="info-text">
               Building a world where all dogs (and humasn) belong.
             </p>
           </div>
@@ -143,12 +144,12 @@ export const AboutUs = () => {
         <div className="contact-text-container">
           <div className="text-wrapper">
             <p className="contact-title">
-              Want to know more about us or the project?
+              Want to know more about us or the project? Get in touch!
             </p>
-            <p className="contact-title">Get in touch!</p>
           </div>
-
-          <Button className="" children="Contact us" />
+          <Link to={`/contact`}>
+            <Button className="" children="Contact us" />
+          </Link>
         </div>
       </div>
     </div>

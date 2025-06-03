@@ -126,6 +126,7 @@
   --font-32: var(--space-32);
   --font-36: var(--space-36);
   --font-40: var(--space-40);
+  --font-64: var(--space-64);
 
   /* Font-weight */
   --font-extra-light: 200;

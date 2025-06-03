@@ -29,7 +29,7 @@ input::placeholder {
 select {
   padding: 8px;
   appearance: none;
-  background-image: url("../../imgs/chevron-down.png"); /* o usa un inline SVG */
+  background-image: url("../../imgs/chevron-down.png");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 24px;
