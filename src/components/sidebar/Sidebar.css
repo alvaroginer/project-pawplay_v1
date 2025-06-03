@@ -115,6 +115,7 @@
 
 .react-datepicker__day--keyboard-selected {
   color: white;
+  /* background-color: var(--color-berry-100) !important; */
 }
 
 .react-datepicker__day--in-selecting-range {
