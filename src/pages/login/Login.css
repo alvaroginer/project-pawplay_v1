@@ -1,5 +1,5 @@
 .login {
-  /* height: 100vh; */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@
   margin-top: var(--space-50);
 }
 
-.login__arow {
+.login__arrow {
   cursor: pointer;
   width: 24px; /* Ajusta al tamaño que necesites */
   height: 24px;
@@ -67,6 +67,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  margin: auto;
 }
 
 .login__title {
