@@ -26,6 +26,15 @@ input::placeholder {
   line-height: normal;
 }
 
+select {
+  padding: 8px;
+  appearance: none;
+  background-image: url("../../imgs/chevron-down.png"); /* o usa un inline SVG */
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 24px;
+}
+
 select:invalid {
   color: var(--color-gray-800);
   font-family: var(--font-family);

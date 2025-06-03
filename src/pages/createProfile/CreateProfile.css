@@ -3,6 +3,9 @@
   gap: clamp(50px, 5vw, 80px);
   padding-top: var(--space-113);
   margin-bottom: var(--space-292);
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .create-profile__image-section {
@@ -112,6 +115,7 @@
     width: 100%;
     position: static;
     max-height: none;
+    height: clamp(300px, 50vw, 590px);
   }
 
   .create-profile__image-wrapper {
