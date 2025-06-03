@@ -1,5 +1,9 @@
 import { EventData } from "../../types";
-import { normalizeTime, normalizeDate } from "../../functions/Functions";
+import {
+  normalizeTime,
+  normalizeDate,
+  randomRating,
+} from "../../functions/Functions";
 import {
   likeEvent,
   disLikeEvent,
@@ -188,7 +192,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
             </p>
             <div className='event-card--rating'>
               <img src={bone} alt='Bone Icon' />
-              <p>4</p>
+              <p>{randomRating()}</p>
             </div>
           </div>
         </div>

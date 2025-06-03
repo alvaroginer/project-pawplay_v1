@@ -73,6 +73,55 @@
   border-top: var(--space-1) solid var(--color-gray-300);
 }
 
+/* ----- Datepicker classes ----- */
+.react-datepicker {
+  font-family: var(--font-family);
+  border: none;
+  /* border: var(--space-1) var(--color-gray-300);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1); */
+}
+
+.react-datepicker__header {
+  border: none;
+  background-color: white;
+}
+
+.react-datepicker__day {
+  border-radius: 50%;
+}
+
+.react-datepicker__day:hover {
+  color: white;
+}
+
+.react-datepicker__day--selected {
+  background-color: var(--color-berry);
+  border-radius: 50%;
+}
+
+.react-datepicker__day:not([aria-disabled="true"]):hover {
+  border-radius: 50%;
+  background-color: var(--color-berry) !important;
+}
+
+.react-datepicker__day--selected:not([aria-disabled="true"]):hover {
+  background-color: var(--color-berry-hover);
+  border-radius: 50%;
+}
+
+.react-datepicker__day--in-range {
+  background-color: var(--color-berry);
+}
+
+.react-datepicker__day--keyboard-selected {
+  color: white;
+}
+
+.react-datepicker__day--in-selecting-range {
+  color: black;
+  background-color: var(--color-berry-100) !important;
+}
+
 @media (min-width: 995px) {
   .filter-sidebar {
     height: 100%;

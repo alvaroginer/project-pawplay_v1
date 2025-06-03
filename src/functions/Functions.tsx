@@ -111,3 +111,7 @@ export const transformFileToDataUrl = async (
     console.log("image to dataUrl succes");
   });
 };
+
+export const randomRating = (): number => {
+  return Math.floor(Math.random() * 5) + 1;
+};
