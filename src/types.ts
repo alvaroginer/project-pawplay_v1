@@ -7,7 +7,7 @@ export interface EventData {
   id: string;
   userUid: string;
   profileIdCreator: string;
-  profileIdAsisstant: string[];
+  profileIdAsisstant?: string[];
   eventTitle: string;
   eventPhoto?: string;
   eventDescription: string;
@@ -164,15 +164,9 @@ export type WarningModalProps = {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes?:
-    | "upcoming events"
-    | "hosted events"
-    | "favourite events"
-    | "past events"
-    | "similar events";
   profileId?: string;
-  likedEvents?: string[];
-  similarEvents?: EventData[];
+  url?: string;
+  eventsData: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }

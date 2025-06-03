@@ -2,30 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router";
 import { ViewMoreCard } from "../viewMoreCard/ViewMoreCard";
 import { AccordionProps, EventData } from "../../types";
-import {
-  getFavouriteEventsLimited,
-  getHostedEventsLimited,
-  getPastEventsLimited,
-  getUpcomingEventsLimited,
-} from "../../dataBase/services/readFunctions";
-
+import { EventCard } from "../eventCard/EventCard";
 import "./Accordion.css";
 import plus from "../../imgs/plus.svg";
-import { EventCard } from "../eventCard/EventCard";
 
 export const Accordion = ({
   text,
-  eventTypes,
   defaultOpen = false,
-  likedEvents,
-  profileId,
-  similarEvents,
+  eventsData,
+  url,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
-  const [cardsContent, setCardsContent] = useState<EventData[]>();
-  const [urlNav, setUrlNav] = useState<
-    "hosted" | "favourites" | "upcoming" | "past"
-  >();
+  // const [cardsContent, setCardsContent] = useState<EventData[]>();
+  // const [urlNav, setUrlNav] = useState<
+  //   "hosted" | "favourites" | "upcoming" | "past"
+  // >();
 
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
   const mousePressed = useRef(false);
@@ -69,57 +60,57 @@ export const Accordion = ({
     };
   }, [showAccordion]);
 
-  useEffect(() => {
-    if (similarEvents) {
-      setCardsContent(similarEvents);
-      return;
-    }
-    const fetchEvents = async () => {
-      switch (eventTypes) {
-        case "upcoming events":
-          if (!profileId) return;
-          {
-            const upcomingEvents = await getUpcomingEventsLimited(profileId);
-            setCardsContent(upcomingEvents);
-            setUrlNav("upcoming");
-          }
-          break;
+  // useEffect(() => {
+  //   if (similarEvents) {
+  //     setCardsContent(similarEvents);
+  //     return;
+  //   }
+  //   const fetchEvents = async () => {
+  //     switch (eventTypes) {
+  //       case "upcoming events":
+  //         if (!profileId) return;
+  //         {
+  //           const upcomingEvents = await getUpcomingEventsLimited(profileId);
+  //           setCardsContent(upcomingEvents);
+  //           setUrlNav("upcoming");
+  //         }
+  //         break;
 
-        case "favourite events":
-          if (!likedEvents) return;
+  //       case "favourite events":
+  //         if (!likedEvents) return;
 
-          {
-            const favouriteEvents = await getFavouriteEventsLimited(
-              likedEvents
-            );
-            setCardsContent(favouriteEvents);
-            setUrlNav("favourites");
-          }
-          break;
+  //         {
+  //           const favouriteEvents = await getFavouriteEventsLimited(
+  //             likedEvents
+  //           );
+  //           setCardsContent(favouriteEvents);
+  //           setUrlNav("favourites");
+  //         }
+  //         break;
 
-        case "hosted events":
-          if (!profileId) return;
+  //       case "hosted events":
+  //         if (!profileId) return;
 
-          {
-            const hostedEvents = await getHostedEventsLimited(profileId);
-            setCardsContent(hostedEvents);
-            setUrlNav("hosted");
-          }
-          break;
+  //         {
+  //           const hostedEvents = await getHostedEventsLimited(profileId);
+  //           setCardsContent(hostedEvents);
+  //           setUrlNav("hosted");
+  //         }
+  //         break;
 
-        case "past events":
-          if (!profileId) return;
+  //       case "past events":
+  //         if (!profileId) return;
 
-          {
-            const pastEvents = await getPastEventsLimited(profileId);
-            setCardsContent(pastEvents);
-            setUrlNav("past");
-          }
-          break;
-      }
-    };
-    fetchEvents();
-  }, [eventTypes, likedEvents, profileId, similarEvents]);
+  //         {
+  //           const pastEvents = await getPastEventsLimited(profileId);
+  //           setCardsContent(pastEvents);
+  //           setUrlNav("past");
+  //         }
+  //         break;
+  //     }
+  //   };
+  //   fetchEvents();
+  // }, [eventTypes, likedEvents, profileId, similarEvents]);
 
   const handleClick = () => {
     setShowAccordion(!showAccordion);
@@ -143,16 +134,16 @@ export const Accordion = ({
         {showAccordion === true && (
           <>
             <div className="accordion__cards" ref={cardsContainerRef}>
-              {cardsContent && cardsContent.length > 0 ? (
-                cardsContent.map((eventData: EventData) => {
+              {eventsData && eventsData.length > 0 ? (
+                eventsData.map((eventData: EventData) => {
                   return <EventCard key={eventData.id} event={eventData} />;
                 })
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
-              {cardsContent && cardsContent.length > 0 && !similarEvents && (
+              {eventsData && eventsData.length > 0 && (
                 <Link
-                  to={`/my-events/${urlNav}`}
+                  to={`/my-events/${url}`}
                   className="accordion__view-all-link"
                 >
                   <ViewMoreCard />

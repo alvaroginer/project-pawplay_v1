@@ -1,5 +1,4 @@
 import { InfoCategoryProfile } from "../../components/infoCategoryProfile/InfoCategoryProfile";
-import { Accordion } from "../../components/accordion/Accordion";
 import {
   dogBreedsType,
   dogSizesType,
@@ -8,6 +7,10 @@ import {
   ProfileData,
   UserData,
 } from "../../types";
+import { UpcomingEventsAccordion } from "../../components/accordion/upcomingEventsAccordion/UpcomingEventsAccordion";
+import { HostedEventsAccordion } from "../../components/accordion/hostedEventsAccordion/HostedEventsAccordion";
+import { FavouriteEventsAccordion } from "../../components/accordion/favouriteEventsAccordion/FavouriteEventsAccordion";
+import { PastEventsAccordion } from "../../components/accordion/pastEventsAccordion/PastEventsAccordion";
 import { capitalizeFirstLetter } from "../../functions/Functions";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
 import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
@@ -243,34 +246,10 @@ export const Profile = () => {
             <div className="accordion-container">
               {loggedProfile.id === profileInfo.id && (
                 <>
-                  <Accordion
-                    text={"My upcoming events"}
-                    defaultOpen={true}
-                    eventTypes="upcoming events"
-                    profileId={profileInfo.id}
-                    likedEvents={profileInfo.likedEvents}
-                  />
-                  <Accordion
-                    text={"Hosted hangouts"}
-                    defaultOpen={false}
-                    eventTypes="hosted events"
-                    profileId={profileInfo.id}
-                    likedEvents={profileInfo.likedEvents}
-                  />
-                  <Accordion
-                    text={"Favourite Events"}
-                    defaultOpen={false}
-                    eventTypes="favourite events"
-                    profileId={profileInfo.id}
-                    likedEvents={profileInfo.likedEvents}
-                  />
-                  <Accordion
-                    text={"Past adventures"}
-                    defaultOpen={false}
-                    eventTypes="past events"
-                    profileId={profileInfo.id}
-                    likedEvents={profileInfo.likedEvents}
-                  />
+                  <UpcomingEventsAccordion profileId={profileInfo.id} />
+                  <HostedEventsAccordion profileId={profileInfo.id} />
+                  <FavouriteEventsAccordion profileId={profileInfo.id} />
+                  <PastEventsAccordion likedEvents={profileInfo.likedEvents} />
                 </>
               )}
             </div>
