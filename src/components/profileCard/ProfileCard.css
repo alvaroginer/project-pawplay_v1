@@ -50,7 +50,7 @@
 }
 
 .profile--card__uncompleted {
-  color: var(--color-berry-active);
+  color: var(--color-red);
 }
 
 .profile--card__block-rating {
