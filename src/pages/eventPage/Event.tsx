@@ -98,33 +98,33 @@ export const Event = () => {
     return null;
   }
 
-  const hasJoined = eventData.profileIdAsisstant.includes(loggedProfile.id);
+  const hasJoined = eventData?.profileIdAsisstant?.includes(loggedProfile.id);
 
   return (
     <>
-      <div className='event--header'>
-        <div className='btn--icon'>
-          <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
+      <div className="event--header">
+        <div className="btn--icon">
+          <img src={arrow} alt="Return Icon" onClick={() => navigate(-1)} />
         </div>
-        <div className='event--header__buttons'>
-          <button className='btn--icon margin--right__10'>
-            <img src={share} alt='Share Icon' />
+        <div className="event--header__buttons">
+          <button className="btn--icon margin--right__10">
+            <img src={share} alt="Share Icon" />
           </button>
-          <button className='btn--icon'>
-            <img src={footprintBlack} alt='Paw-Like Icon' />
+          <button className="btn--icon">
+            <img src={footprintBlack} alt="Paw-Like Icon" />
           </button>
         </div>
       </div>
-      <div className='event--img-container'>
+      <div className="event--img-container">
         <img
           src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-          alt=''
+          alt=""
         />
       </div>
-      <div className='event--container'>
-        <div className='event--info'>
-          <h3 className='event--title'>{eventData.eventTitle}</h3>
-          <main className='event--container__categories'>
+      <div className="event--container">
+        <div className="event--info">
+          <h3 className="event--title">{eventData.eventTitle}</h3>
+          <main className="event--container__categories">
             <InfoCategoryEvent
               img={calendar}
               reference={{
@@ -132,7 +132,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeDate(eventData.dateTime.toDate())}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={time}
@@ -141,7 +141,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={location}
@@ -150,7 +150,7 @@ export const Event = () => {
                 dbCategory: "location",
               }}
               info={eventData.location}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={tag}
@@ -159,7 +159,7 @@ export const Event = () => {
                 dbCategory: "activity",
               }}
               info={eventData.activity}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={dog}
@@ -168,7 +168,7 @@ export const Event = () => {
                 dbCategory: "breeds",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={availability}
@@ -177,7 +177,7 @@ export const Event = () => {
                 dbCategory: "profileIdAsisstant",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=''
+              editable=""
             />
             <InfoCategoryEvent
               img={description}
@@ -186,16 +186,16 @@ export const Event = () => {
                 dbCategory: "eventDescription",
               }}
               info={eventData.eventDescription}
-              editable=''
+              editable=""
             />
           </main>
         </div>
-        <aside className='event--container__sidebar'>
-          <h3 className='event--profile-title'>Know your organisator</h3>
-          <div className='profile-card'>
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <div className="profile-card">
             <ProfileCard eventId={eventData.profileIdCreator} />
           </div>
-          <div className='event--modal'>
+          <div className="event--modal">
             {hasJoined ? (
               <EventUnregister eventData={eventData} profiles={profiles} />
             ) : (
@@ -205,10 +205,10 @@ export const Event = () => {
         </aside>
       </div>
 
-      <div className='event--events-container'>
+      <div className="event--events-container">
         <Accordion
           text={"Similar Events"}
-          profileId=''
+          profileId=""
           defaultOpen={true}
           similarEvents={similarEvents}
         />

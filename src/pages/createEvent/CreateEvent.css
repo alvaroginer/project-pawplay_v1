@@ -13,7 +13,7 @@
   align-items: center;
   max-width: 1400px;
   width: 100%;
-  height: clamp(190px, 50vw, 590px);
+  height: clamp(300px, 50vw, 590px);
   overflow: hidden;
   margin: 0 auto;
   background-color: var(--color-gray-400);
