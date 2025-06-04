@@ -143,7 +143,9 @@ export const CreateEvent = () => {
       setIsLoading(false);
 
       //Creamos un tostify cuando el evento se sube correctamente
-      toast(`Congratulations, you created the event ${formData.eventTitle}`);
+      toast.success(
+        `Congratulations, you created the event ${formData.eventTitle}`
+      );
 
       navigate(`/event/${eventId}`);
     } catch (error: any) {

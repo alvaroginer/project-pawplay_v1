@@ -21,7 +21,7 @@ export const ProfileSelection = () => {
       );
 
       if (!profilesQuery) {
-        toast(
+        toast.error(
           "Ups, there was an error with the profiles, please reload the page"
         );
         return;

@@ -28,7 +28,7 @@ export const InfoCategoryProfile = (props: InfoCategoryProps) => {
       );
     }
     await updateAuthContext();
-    toast(`${reference.title} updated!`);
+    toast.success(`${reference.title} updated!`);
   };
 
   return (

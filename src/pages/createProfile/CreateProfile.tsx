@@ -112,7 +112,7 @@ export const CreateProfile = () => {
       await updateUserProfiles(user.uid, profileId);
       login(user, { ...newProfileData, id: profileId });
 
-      toast(
+      toast.success(
         `Congratulations! You’ve created the profile for ${formData.profileName} and are now logged in.`
       );
 

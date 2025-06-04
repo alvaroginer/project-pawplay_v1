@@ -23,7 +23,7 @@ export const EventUnregister = ({
 
     try {
       const joinedProfiles = profiles.filter((profile) =>
-        eventData.profileIdAsisstant.includes(profile.id)
+        eventData?.profileIdAsisstant?.includes(profile.id)
       );
 
       await Promise.all(
@@ -47,24 +47,24 @@ export const EventUnregister = ({
 
   return (
     <>
-      <Button onClick={handleIsOpenModal} className='secondary--outlined'>
+      <Button onClick={handleIsOpenModal} className="secondary--outlined">
         Cancel assistance
       </Button>
       {isModalOpen && (
         <WarningModal
-          modalText='Are you sure you want to cancel your assiatance to the event?'
+          modalText="Are you sure you want to cancel your assiatance to the event?"
           onClose={handleIsOpenModal}
         >
-          <div className='display--flex space--around gap__4'>
-            <Button className='primary' onClick={handleCancelAssistance}>
+          <div className="display--flex space--around gap__4">
+            <Button className="primary" onClick={handleCancelAssistance}>
               Yes
               {isLoading && (
-                <div className='spinner'>
-                  <div className='spinner__circle'></div>
+                <div className="spinner">
+                  <div className="spinner__circle"></div>
                 </div>
               )}
             </Button>
-            <Button className='primary--outlined' onClick={handleIsOpenModal}>
+            <Button className="primary--outlined" onClick={handleIsOpenModal}>
               No
             </Button>
           </div>
