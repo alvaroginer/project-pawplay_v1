@@ -17,10 +17,6 @@
   margin-right: 0.5rem;
 }
 
-.dot--yellow {
-  background-color: var(--color-button-yellow);
-}
-
 .about-tag {
   display: flex;
   width: 50%;
@@ -121,18 +117,9 @@
   gap: var(--space-40);
 }
 
-/* .team-container {
-  padding: 5rem 2rem 1.5rem 2rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-} */
-
 .team-tag {
   display: flex;
   align-items: center;
-  /* position: absolute; */
   top: 3rem;
   left: 7%;
 }
@@ -143,12 +130,11 @@
   gap: 40px;
   margin: 0 auto;
   padding-top: 0;
-  /* width: 90%; Reducido el ancho para que las imágenes estén más juntas */
 }
 
 .team-member {
-  width: 35%; /* Aumentado el tamaño de las imágenes */
-  aspect-ratio: 0.9; /* Para cambiar los cards de imagenes*/
+  width: 35%;
+  aspect-ratio: 0.9;
   overflow: hidden;
   border-radius: 0.5rem;
   background-color: var(--color-white);
@@ -185,48 +171,7 @@
   padding-left: 0;
 }
 
-.code-items {
-  grid-column: 2;
-  margin-top: 0;
-}
-
 .code-item {
-  margin-bottom: 2rem;
-}
-
-.code-title {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--color-black);
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.code-text {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--color-text-light);
-  margin: 0;
-}
-
-/* Fetch Community Section */
-.fetch-community {
-  max-width: 1200px;
-  margin: 0 auto 6rem auto;
-  text-align: center;
-}
-
-.fetch-title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--color-black);
-  margin-bottom: 0.5rem;
-}
-
-.fetch-subtitle {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--color-text-light);
   margin-bottom: 2rem;
 }
 
