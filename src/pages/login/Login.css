@@ -1,5 +1,4 @@
 .login {
-
   min-height: 100vh;
 
   display: flex;
@@ -36,7 +35,7 @@
   max-width: var(--space-1000);
   width: 100%;
   border-radius: var(--radius-md);
-  /* overflow: hidden; */
+  overflow: hidden;
   box-shadow: 0 var(--space-4) var(--space-20) rgba(0, 0, 0, 0.1);
   background-color: var(--color-white);
   margin-top: var(--space-20);
@@ -48,7 +47,6 @@
   /* max-height: 100vh; */
 
   /* margin: 0 16px 0 16px; */
-
 }
 
 .login__image-container {
