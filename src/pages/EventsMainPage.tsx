@@ -1,9 +1,13 @@
 import { EventCard } from "../components/eventCard/EventCard";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
+import { AuthContext } from "../auth/AuthContext";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { DateFilterProps, EventData, FilterProps } from "../types";
-import { getEvents } from "../dataBase/services/readFunctions";
+import {
+  getHomePageEvents,
+  getEvents,
+} from "../dataBase/services/readFunctions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -19,17 +23,25 @@ export const EventsMainPage = () => {
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
+  const { loggedProfile } = useContext(AuthContext);
 
   useEffect(() => {
     // Llamada a la base de datos
     const fetchEvents = async () => {
-      const eventsSnap: EventData[] = await getEvents();
-
-      setEventsList(eventsSnap);
+      if (loggedProfile) {
+        const specificEventsSnap: EventData[] = await getHomePageEvents(
+          loggedProfile.id,
+          loggedProfile.likedEvents
+        );
+        setEventsList(specificEventsSnap);
+      } else {
+        const allEventsSnap: EventData[] = await getEvents();
+        setEventsList(allEventsSnap);
+      }
     };
 
     fetchEvents();
-  }, []);
+  }, [loggedProfile]);
 
   //Creamos el filterParams
   useEffect(() => {
