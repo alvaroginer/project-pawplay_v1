@@ -155,7 +155,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
             {loggedProfile?.id === profileIdCreator && (
               <DotsMenu className='especific-align__event-card'>
                 <p className='profile-page__option'>Edit event</p>
-                {profileIdAsisstant.includes(loggedProfile.id) && (
+                {profileIdAsisstant?.includes(loggedProfile.id) && (
                   <p className='profile-page__option'>Cancel attendance</p>
                 )}
                 <p

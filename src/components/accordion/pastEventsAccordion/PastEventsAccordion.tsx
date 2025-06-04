@@ -1,34 +1,35 @@
 import { useState, useEffect } from "react";
 import { EventData } from "../../../types";
-import { getFavouriteEventsLimited } from "../../../dataBase/services/readFunctions";
+import { getPastEventsLimited } from "../../../dataBase/services/readFunctions";
 import { toast } from "react-toastify";
 import { Accordion } from "../Accordion";
 
-export const PastEventsAccordion = ({
-  likedEvents,
-}: {
-  likedEvents: string[];
-}) => {
+export const PastEventsAccordion = ({ profileId }: { profileId: string }) => {
   const [cardsContent, setCardsContent] = useState<EventData[]>();
 
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
-      if (!likedEvents) return;
+      if (!profileId) return;
 
       try {
-        const favouriteEvents = await getFavouriteEventsLimited(likedEvents);
-        setCardsContent(favouriteEvents);
+        const pastEvents = await getPastEventsLimited(profileId);
+        setCardsContent(pastEvents);
       } catch {
-        console.error("Error to upload your past Events");
+        console.error("Error to upload past Events");
         toast.error("Ups! An error ocurred while uploading your past events");
       }
     };
     fetchUpcomingEvents();
-  }, [likedEvents]);
+  }, [profileId]);
 
   if (!cardsContent) return;
 
   return (
-    <Accordion text="Favourite Events" eventsData={cardsContent} url="past" />
+    <Accordion
+      defaultOpen={true}
+      text='Past Events'
+      eventsData={cardsContent}
+      url='past'
+    />
   );
 };

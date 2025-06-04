@@ -1,39 +1,40 @@
 import { useState, useEffect } from "react";
 import { EventData } from "../../../types";
-import { getHostedEventsLimited } from "../../../dataBase/services/readFunctions";
+import { getFavouriteEventsLimited } from "../../../dataBase/services/readFunctions";
 import { toast } from "react-toastify";
 import { Accordion } from "../Accordion";
 
 export const FavouriteEventsAccordion = ({
-  profileId,
+  likedEvents,
 }: {
-  profileId: string;
+  likedEvents: string[];
 }) => {
   const [cardsContent, setCardsContent] = useState<EventData[]>();
 
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
-      if (!profileId) return;
+      if (!likedEvents) return;
 
       try {
-        const hostedEvents = await getHostedEventsLimited(profileId);
-        setCardsContent(hostedEvents);
+        const favouriteEvents = await getFavouriteEventsLimited(likedEvents);
+        setCardsContent(favouriteEvents);
       } catch {
-        console.error("Error to upload hosted Events");
-        toast.error("Ups! An error ocurred while uploading your hosted events");
+        console.error("Error to upload your favourite Events");
+        toast.error(
+          "Ups! An error ocurred while uploading your favourite events"
+        );
       }
     };
     fetchUpcomingEvents();
-  }, [profileId]);
+  }, [likedEvents]);
 
   if (!cardsContent) return;
 
   return (
     <Accordion
-      defaultOpen={true}
-      text="Hosted Events"
+      text='Favourite Events'
       eventsData={cardsContent}
-      url="hosted"
+      url='favourites'
     />
   );
 };

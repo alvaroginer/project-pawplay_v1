@@ -13,10 +13,6 @@ export const Accordion = ({
   url,
 }: AccordionProps) => {
   const [showAccordion, setShowAccordion] = useState<boolean>(defaultOpen);
-  // const [cardsContent, setCardsContent] = useState<EventData[]>();
-  // const [urlNav, setUrlNav] = useState<
-  //   "hosted" | "favourites" | "upcoming" | "past"
-  // >();
 
   const cardsContainerRef = useRef<HTMLDivElement | null>(null);
   const mousePressed = useRef(false);
@@ -60,58 +56,6 @@ export const Accordion = ({
     };
   }, [showAccordion]);
 
-  // useEffect(() => {
-  //   if (similarEvents) {
-  //     setCardsContent(similarEvents);
-  //     return;
-  //   }
-  //   const fetchEvents = async () => {
-  //     switch (eventTypes) {
-  //       case "upcoming events":
-  //         if (!profileId) return;
-  //         {
-  //           const upcomingEvents = await getUpcomingEventsLimited(profileId);
-  //           setCardsContent(upcomingEvents);
-  //           setUrlNav("upcoming");
-  //         }
-  //         break;
-
-  //       case "favourite events":
-  //         if (!likedEvents) return;
-
-  //         {
-  //           const favouriteEvents = await getFavouriteEventsLimited(
-  //             likedEvents
-  //           );
-  //           setCardsContent(favouriteEvents);
-  //           setUrlNav("favourites");
-  //         }
-  //         break;
-
-  //       case "hosted events":
-  //         if (!profileId) return;
-
-  //         {
-  //           const hostedEvents = await getHostedEventsLimited(profileId);
-  //           setCardsContent(hostedEvents);
-  //           setUrlNav("hosted");
-  //         }
-  //         break;
-
-  //       case "past events":
-  //         if (!profileId) return;
-
-  //         {
-  //           const pastEvents = await getPastEventsLimited(profileId);
-  //           setCardsContent(pastEvents);
-  //           setUrlNav("past");
-  //         }
-  //         break;
-  //     }
-  //   };
-  //   fetchEvents();
-  // }, [eventTypes, likedEvents, profileId, similarEvents]);
-
   const handleClick = () => {
     setShowAccordion(!showAccordion);
   };
@@ -123,17 +67,17 @@ export const Accordion = ({
           showAccordion === true ? "accordion--open" : ""
         }`}
       >
-        <div className="accordion__info" onClick={handleClick}>
-          <p className="accordion__title">{text}</p>
+        <div className='accordion__info' onClick={handleClick}>
+          <p className='accordion__title'>{text}</p>
           <img
             src={plus}
-            alt="Icon to expand section"
-            className="accordion__icon"
+            alt='Icon to expand section'
+            className='accordion__icon'
           />
         </div>
         {showAccordion === true && (
           <>
-            <div className="accordion__cards" ref={cardsContainerRef}>
+            <div className='accordion__cards' ref={cardsContainerRef}>
               {eventsData && eventsData.length > 0 ? (
                 eventsData.map((eventData: EventData) => {
                   return <EventCard key={eventData.id} event={eventData} />;
@@ -141,10 +85,10 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
-              {eventsData && eventsData.length > 0 && (
+              {eventsData && eventsData.length > 4 && (
                 <Link
                   to={`/my-events/${url}`}
-                  className="accordion__view-all-link"
+                  className='accordion__view-all-link'
                 >
                   <ViewMoreCard />
                 </Link>
