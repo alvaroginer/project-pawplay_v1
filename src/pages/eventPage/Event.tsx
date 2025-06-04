@@ -93,12 +93,17 @@ export const Event = () => {
   }, [eventData]);
 
   // Falta comprobar que el perfil está completo para poder apuntarse
+  console.log(eventData);
+  console.log(loggedProfile);
 
   if (!eventData || !loggedProfile) {
     return null;
   }
 
-  const hasJoined = eventData?.profileIdAsisstant?.includes(loggedProfile.id);
+
+  const hasJoined = eventData.profileIdAsisstant?.includes(loggedProfile.id);
+
+
 
   return (
     <>
@@ -167,7 +172,9 @@ export const Event = () => {
                 title: "Allowed breeds",
                 dbCategory: "breeds",
               }}
+
               info={eventData.breeds}
+
               editable=""
             />
             <InfoCategoryEvent
@@ -210,7 +217,7 @@ export const Event = () => {
           text={"Similar Events"}
           profileId=""
           defaultOpen={true}
-          similarEvents={similarEvents}
+          eventsData={similarEvents}
         />
       </div>
 

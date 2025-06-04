@@ -7,7 +7,7 @@ export interface EventData {
   id: string;
   userUid: string;
   profileIdCreator: string;
-  profileIdAsisstant: string[];
+  profileIdAsisstant?: string[];
   eventTitle: string;
   eventPhoto?: string;
   eventDescription: string;
@@ -89,19 +89,26 @@ export interface SidebarProps {
   exitAnimation: boolean;
   onClick: (sidebarDisplay: boolean) => void;
   onChange: (category: string) => void;
+  setDate: React.Dispatch<React.SetStateAction<DateFilterProps>>;
+  dateFilterParams: DateFilterProps;
 }
 
 export interface FilterProps {
   activities: Record<string, boolean>;
   breeds: Record<string, boolean>;
   size: Record<string, boolean>;
-  date: Record<number, boolean>;
+}
+
+export interface DateFilterProps {
+  startDate: Date;
+  endDate: Date | null;
 }
 
 export interface FilterCategoryProps {
   title: string;
   categories: Record<string, boolean>;
-  onChange: (string: string) => void;
+  onChange: (value: string) => void;
+  children?: ReactNode;
 }
 
 // -----> Navigation Menu
@@ -157,15 +164,9 @@ export type WarningModalProps = {
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes?:
-    | "upcoming events"
-    | "hosted events"
-    | "favourite events"
-    | "past events"
-    | "similar events";
   profileId?: string;
-  likedEvents?: string[];
-  similarEvents?: EventData[];
+  url?: string;
+  eventsData: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }

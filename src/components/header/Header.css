@@ -34,6 +34,20 @@ a {
   cursor: pointer;
 }
 
+.navigation-menu--profile-image {
+  width: var(--space-30);
+  height: var(--space-30);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.navigation-menu--profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .navigation-menu--button__sign-in {
   margin-right: var(--space-14);
   margin-left: var(--space-40);

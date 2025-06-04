@@ -69,11 +69,8 @@
   --space-20: 20px;
   --space-22: 22px;
   --space-24: 24px;
-
   --space-25: 25px;
-
   --space-26: 26px;
-
   --space-30: 30px;
   --space-32: 32px;
   --space-34: 34px;
@@ -92,6 +89,7 @@
   --space-155: 155px;
   --space-190: 190px;
   --space-200: 200px;
+  --space-250: 250px;
   --space-268: 268px;
   --space-292: 292px;
   --space-328: 328px;
@@ -257,7 +255,7 @@ body {
 }
 
 .item__100 {
-  flex: 0 0 1;
+  flex: 1;
 }
 
 .item__75 {
@@ -353,10 +351,14 @@ body {
   text-align: right;
 }
 
+.main-events-container {
+  display: flex;
+}
+
 .filter-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 }
 
 /* .filter-container--buttons::-webkit-scrollbar {

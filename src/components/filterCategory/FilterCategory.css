@@ -1,15 +1,35 @@
 .filter-category {
-  padding-bottom: var(--space-8);
   border-bottom: var(--space-1) solid var(--color-gray-300);
   margin-bottom: var(--space-16);
+}
+
+.filter-category--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-12);
 }
 
 .filter-category--title {
   font-size: var(--font--16);
   font-weight: var(--font-medium);
   text-align: left;
-  margin-top: 0;
-  margin-bottom: var(--space-12);
+  margin: 0;
+}
+
+.filter-category--display-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filter-category--display-button__image {
+  transition: transform 0.4s ease;
+}
+
+.display--button__image--rotation {
+  transform: rotate(180deg);
 }
 
 .filter-category--container {
@@ -22,8 +42,8 @@
 }
 
 .filter-category--container:hover {
-  outline: solid var(--space-6) var(--color-pink-hover);
-  background-color: var(--color-pink-hover);
+  outline: solid var(--space-6) var(--color-berry-100);
+  background-color: var(--color-berry-100);
 }
 
 .filter-category--text {
@@ -46,12 +66,12 @@
 }
 
 .filter-category--container:hover .filter-category--checkbox {
-  border-color: var(--color-pink);
+  border-color: var(--color-berry);
 }
 
 .filter-category--checkbox:checked {
-  background-color: var(--color-pink);
-  border-color: var(--color-pink);
+  background-color: var(--color-berry);
+  border-color: var(--color-berry);
 }
 
 .filter-category--checkbox:checked::after {
