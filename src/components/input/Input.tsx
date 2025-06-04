@@ -33,7 +33,7 @@ export const Input = React.forwardRef<
 
   return (
     <>
-      <label className='label' htmlFor={name}>
+      <label className="label" htmlFor={name}>
         {label}
       </label>
       {editable === "string" ? (
@@ -60,7 +60,7 @@ export const Input = React.forwardRef<
           }`}
           disabled={disabled}
         >
-          <option value='' disabled hidden>
+          <option value="" disabled hidden>
             {placeholder}
           </option>
           {selectData?.map((option, index) => (
@@ -70,9 +70,13 @@ export const Input = React.forwardRef<
           ))}
         </select>
       )}
-      <div className='input--help-text__container'>
+      <div
+        className={`input--help-text__container ${
+          !helpText && !charLimit && "input--help-text__container--width__0"
+        } `}
+      >
         {helpText && (
-          <p className='input--help-text input--help-text__error'>{helpText}</p>
+          <p className="input--help-text input--help-text__error">{helpText}</p>
         )}
 
         {charLimit && (

@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.footer--no-margin {
+  margin-top: 0;
+}
+
 .footer__content {
   max-width: 1200px;
   margin: 0 auto;

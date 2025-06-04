@@ -99,7 +99,7 @@ export const SignUp = () => {
   console.log("Form errors:", errors);
 
   return (
-    <div className="login">
+    <div className="login color-brown-light">
       <div className="login__arrow-container">
         <img
           className="login__arow"

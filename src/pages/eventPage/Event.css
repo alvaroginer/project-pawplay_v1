@@ -50,9 +50,10 @@ button.btn--icon.margin--right__10 {
 /* IMÁGENES */
 .event--img-container {
   border-radius: var(--space-14);
-  min-height: var(--space-190);
-  max-height: 582px;
+  height: clamp(300px, 50vw, 590px);
+  max-width: 1400px;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .event--img-container img {
@@ -68,7 +69,7 @@ button.btn--icon.margin--right__10 {
 .event--title {
   font-size: clamp(24px, 0.8vw + 0.9rem, 36px);
   font-weight: var(--font-medium);
-  margin-top: var(--space-80);
+  margin-top: clamp(50px, 5vw, 80px);
   margin-bottom: var(--space-50);
 }
 
@@ -96,6 +97,7 @@ button.btn--icon.margin--right__10 {
   padding: var(--space-22) 0;
   background-color: white;
   border-top: var(--space-1) solid var(--color-gray-300);
+  z-index: 30;
 }
 
 .color-white {

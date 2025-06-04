@@ -26,6 +26,15 @@ input::placeholder {
   line-height: normal;
 }
 
+select {
+  padding: 8px;
+  appearance: none;
+  background-image: url("../../imgs/chevron-down.png");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 24px;
+}
+
 select:invalid {
   color: var(--color-gray-800);
   font-family: var(--font-family);
@@ -64,6 +73,10 @@ select:invalid {
   width: 100%;
   display: flex;
   min-height: var(--space-16);
+}
+
+.input--help-text__container--width__0 {
+  width: 0%;
 }
 
 .input--help-text {
