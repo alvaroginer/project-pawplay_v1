@@ -5,8 +5,11 @@ import {
   dogSizesType,
   ProfileData,
   UserData,
-} from "../types";
-import { getOneProfile, getOneUser } from "../dataBase/services/readFunctions";
+} from "../../types";
+import {
+  getOneProfile,
+  getOneUser,
+} from "../../dataBase/services/readFunctions";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 interface AuthContextType {

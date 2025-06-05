@@ -16,7 +16,7 @@ import { WarningModal } from "../../components/modals/warningModal/WarningModal"
 import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,

@@ -9,7 +9,7 @@ import {
   disLikeEvent,
 } from "../../dataBase/services/updateFunctions";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { WarningModal } from "../modals/warningModal/WarningModal";
 import { DotsMenu } from "../dotsMenu/DotsMenu";
 import { capitalizeFirstLetter } from "../../functions/Functions";

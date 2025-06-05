@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { InfoCategoryProps } from "../../types";
 import { updateProfileCategoryDB } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
