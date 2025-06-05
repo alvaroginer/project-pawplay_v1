@@ -85,7 +85,7 @@ export const Accordion = ({
               ) : (
                 <p>Sorry... There are no related events</p>
               )}
-              {eventsData && eventsData.length > 1 && (
+              {eventsData && eventsData.length > 3 && (
                 <Link
                   to={`/my-events/${url}`}
                   className="accordion__view-all-link"
