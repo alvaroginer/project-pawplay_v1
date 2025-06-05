@@ -5,6 +5,7 @@ import { Sidebar } from "../components/sidebar/Sidebar";
 import { DateFilterProps, EventData, FilterProps } from "../types";
 import { getEvents } from "../dataBase/services/readFunctions";
 import filter from "../imgs/filter.svg";
+import { NavLink } from "react-router";
 
 export const EventsMainPage = () => {
   const [eventsList, setEventsList] = useState<EventData[]>([]);
@@ -186,25 +187,25 @@ export const EventsMainPage = () => {
 
   return (
     <>
-      <div className='main-events-container'>
-        <main className='item__100'>
-          <div className='filter-container'>
+      <div className="main-events-container">
+        <main className="item__100">
+          <div className="filter-container">
             <input
-              type='text'
-              className='searchbar'
-              placeholder='Search the event you want to go'
+              type="text"
+              className="searchbar"
+              placeholder="Search the event you want to go"
             />
-            <div className='filter-button--container'>
+            <div className="filter-button--container">
               <div
-                className='filter-button'
+                className="filter-button"
                 onClick={() => handleSidebarDisplay(sidebarDisplay)}
               >
                 <p>Filters</p>
-                <img src={filter} alt='Filter Icon' />
+                <img src={filter} alt="Filter Icon" />
               </div>
             </div>
           </div>
-          <div className='grid'>
+          <div className="grid">
             {filteredEventList.map((event: EventData) => {
               return <EventCard key={event.id} event={event} />;
             })}
@@ -221,9 +222,9 @@ export const EventsMainPage = () => {
           />
         )}
       </div>
-      <div className='create-event-modal'>
-        <Button className='primary'>Create an event</Button>
-      </div>
+      <NavLink className="create-event-modal" to="/create-event">
+        <Button className="primary">Create an event</Button>
+      </NavLink>
     </>
   );
 };
