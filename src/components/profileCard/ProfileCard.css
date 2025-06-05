@@ -15,6 +15,12 @@
   cursor: pointer;
 }
 
+.profile--card--selected {
+  box-shadow: 0px 0px 14px 0px rgba(57, 172, 96, 0.3);
+  border: 1px solid var(--color-white);
+  border-radius: var(--space-12);
+}
+
 .profile--card__image-container {
   height: 297px;
   border-radius: var(--space-14);

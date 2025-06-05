@@ -15,13 +15,25 @@ import bone from "../../imgs/profileCard/bone.svg";
 
 // Ya se pueden crear las funciones que calculan el rating por ejemplo
 
-export const ProfileCard = ({ eventId }: { eventId: string }) => {
+interface ProfileCardProps {
+  eventId: string;
+  profileSelected?: string | null;
+  setProfileSelected?: (id: string) => void;
+}
+
+export const ProfileCard = ({
+  eventId,
+  profileSelected,
+  setProfileSelected,
+}: ProfileCardProps) => {
   const [profileData, setProfileData] = useState<ProfileData>();
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
   const [createdEventsByProfile, setCreatedEventsByProfile] =
     useState<EventData[]>();
   const navigate = useNavigate();
   const currentUser = getAuth().currentUser;
+
+  const isSelected = profileSelected === eventId;
 
   useEffect(() => {
     console.log("se ejecuta el useEffect en el componente de profileCrad");
@@ -53,38 +65,51 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  const handleCardClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.closest(".dots-menu--container")) return;
+  // const handleCardClick = (e: React.MouseEvent) => {
+  //   const target = e.target as HTMLElement;
+  //   if (target.closest(".dots-menu--container")) return;
 
-    navigate(`/profile/${eventId}`);
+  //   setProfileSelected(eventId);
+  //   navigate(`/profile/${eventId}`);
+  //   console.log("handleCardClick");
+  // };
+
+  const handleProfileSelect = (id: string) => {
+    setProfileSelected(id);
+    localStorage.setItem("profileSelected", id);
+    navigate(`/profile/${id}`);
   };
 
   if (!profileData) {
     return null;
   } else {
     return (
-      <div className='profile--card' onClick={handleCardClick}>
-        <div className='profile--card__image-container'>
+      <div
+        className={`profile--card ${
+          isSelected ? "profile--card--selected" : ""
+        }`}
+        onClick={() => handleProfileSelect(eventId)}
+      >
+        <div className="profile--card__image-container">
           <img
-            className='profile--card__image'
+            className="profile--card__image"
             src={profileData.profilePhoto ? profileData.profilePhoto : dogUser}
-            alt='Profile Image'
+            alt="Profile Image"
           />
           {currentUser?.uid === profileData.userUid && (
             <div
-              className='dots-menu--container'
+              className="dots-menu--container"
               onClick={(e) => e.stopPropagation()}
             >
-              <DotsMenu className='especific-align__event-card'>
-                <p className='profile-page__option' onClick={toggleDeleteModal}>
+              <DotsMenu className="especific-align__event-card">
+                <p className="profile-page__option" onClick={toggleDeleteModal}>
                   Delete profile
                 </p>
               </DotsMenu>
             </div>
           )}
         </div>
-        <div className='profile--card__info'>
+        <div className="profile--card__info">
           <p
             className={`profile--card__name ${
               profileData.profileName ? "" : "profile--card__uncompleted"
@@ -94,24 +119,24 @@ export const ProfileCard = ({ eventId }: { eventId: string }) => {
               ? capitalizeFirstLetter(profileData.profileName)
               : "Field incompleted"}
           </p>
-          <div className='profile--card__block-rating'>
-            <div className='profile--card__rating'>
-              <img className='profile--card__icon' src={bone} alt='' />
-              <p className='profile--card__value'>{0}</p>
+          <div className="profile--card__block-rating">
+            <div className="profile--card__rating">
+              <img className="profile--card__icon" src={bone} alt="" />
+              <p className="profile--card__value">{0}</p>
             </div>
-            <p className='profile--card__label'>Rating</p>
+            <p className="profile--card__label">Rating</p>
           </div>
-          <div className='profile--card__block-events'>
-            <p className='profile--card__value'>
+          <div className="profile--card__block-events">
+            <p className="profile--card__value">
               {createdEventsByProfile && createdEventsByProfile.length}
             </p>
-            <p className='profile--card__label'>Events created</p>
+            <p className="profile--card__label">Events created</p>
           </div>
         </div>
         {isDeleteModalOpen && (
           <WarningModal
-            modalText='Are you sure you want to delete this lovely dog profile?'
-            buttonText='Yes, I am sure'
+            modalText="Are you sure you want to delete this lovely dog profile?"
+            buttonText="Yes, I am sure"
             onClose={() => setisDeleteModalOpen(false)}
           />
         )}

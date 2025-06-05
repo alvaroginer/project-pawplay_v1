@@ -10,6 +10,9 @@ import "./ProfileSelection.css";
 
 export const ProfileSelection = () => {
   const [userProfiles, setUserProfiles] = useState<ProfileData[]>();
+  const [profileSelected, setProfileSelected] = useState<string | null>(() => {
+    return localStorage.getItem("profileSelected");
+  });
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -46,7 +49,12 @@ export const ProfileSelection = () => {
       </div>
       <div className="profile-selection__profiles-container">
         {userProfiles.map((profile, index) => (
-          <ProfileCard key={index} eventId={profile.id} />
+          <ProfileCard
+            key={index}
+            eventId={profile.id}
+            profileSelected={profileSelected}
+            setProfileSelected={setProfileSelected}
+          />
         ))}
         <AddDogButton />
       </div>

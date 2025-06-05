@@ -61,15 +61,15 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
 
   return (
     <>
-      <Button onClick={handleJoinClick} className='primary'>
+      <Button onClick={handleJoinClick} className="primary">
         Join Us
       </Button>
       {isSelectProfileModalOpen && (
         <WarningModal
           modalText="Select the pup who's ready for an adventure."
-          buttonText='Join event'
+          buttonText="Join event"
           onClose={() => setIsSelectProfileModalOpen(false)}
-          className='color-white'
+          className="color-white"
         >
           {profiles.map((profile) => (
             <ProfileCardHorizontal
@@ -79,11 +79,11 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
               onToggle={() => toggleProfileSelection(profile.id)}
             />
           ))}
-          <div className='display--flex justify-content--center'>
+          {/* <div className='display--flex justify-content--center'>
             <Button className='primary' onClick={handleJoinMultipleProfiles}>
               Join us
             </Button>
-          </div>
+          </div> */}
         </WarningModal>
       )}
       {/* Falta el mapa */}
