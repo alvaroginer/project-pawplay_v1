@@ -145,7 +145,7 @@ progress[value]::-moz-progress-bar {
   height: 17px;
 }
 
-@media screen and (max-width: 652px) {
+@media screen and (max-width: 1035px) {
   .checklist {
     position: fixed;
     bottom: 84.8px;
@@ -167,4 +167,12 @@ progress[value]::-moz-progress-bar {
     bottom: 101px;
     right: 0;
   }
+}
+
+.checklist--bottom {
+  bottom: 0;
+}
+
+.checklist__expanded.checklist--bottom {
+  bottom: 0;
 }

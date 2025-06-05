@@ -445,10 +445,6 @@ body {
   .scroll-grid {
     grid-auto-columns: 20%;
   }
-
-  .create-event-modal {
-    display: none;
-  }
 }
 
 @media (min-width: 787px) {
@@ -484,5 +480,11 @@ body {
 
   .scroll-grid {
     grid-auto-columns: 15%;
+  }
+}
+
+@media (width > 1035px) {
+  .create-event-modal {
+    display: none;
   }
 }

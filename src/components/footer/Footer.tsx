@@ -10,6 +10,8 @@ export const Footer = () => {
   const { user, isProfileCompleted } = useContext(AuthContext);
   const location = useLocation();
 
+  const pathname = useLocation().pathname;
+
   const excludedRoutesCheckListProfile = [
     "/create-profile",
     "/create/event",
@@ -17,6 +19,12 @@ export const Footer = () => {
     "/singup",
     "/contact",
   ];
+
+  const checklistBottomPosition = ["/profile", "/about"];
+
+  const shouldBeBottomPosition = checklistBottomPosition.some((route) =>
+    pathname.startsWith(route)
+  );
 
   const excludedRoutesFooter = ["/contact"];
 
@@ -27,7 +35,9 @@ export const Footer = () => {
 
   return (
     <>
-      {shouldShowChecklist && <CheckListProfile />}
+      {shouldShowChecklist && (
+        <CheckListProfile positionBottom={shouldBeBottomPosition} />
+      )}
       <footer
         className={`footer ${
           excludedRoutesFooter.includes(location.pathname)

@@ -134,3 +134,20 @@ button.btn--icon.margin--right__10 {
     margin-bottom: var(--space-40);
   }
 }
+
+/* @media screen and (width <= 652px) {
+  .event--modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--space-22) 0;
+    background-color: white;
+    border-top: var(--space-1) solid var(--color-gray-300);
+    z-index: 30;
+  }
+} */
