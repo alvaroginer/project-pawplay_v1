@@ -75,6 +75,7 @@ export const ProfileCard = ({
   // };
 
   const handleProfileSelect = (id: string) => {
+    if (!setProfileSelected) return;
     setProfileSelected(id);
     localStorage.setItem("profileSelected", id);
     navigate(`/profile/${id}`);
@@ -101,7 +102,7 @@ export const ProfileCard = ({
               className="dots-menu--container"
               onClick={(e) => e.stopPropagation()}
             >
-              <DotsMenu className="especific-align__event-card">
+              <DotsMenu className="especific-align__profile-card">
                 <p className="profile-page__option" onClick={toggleDeleteModal}>
                   Delete profile
                 </p>

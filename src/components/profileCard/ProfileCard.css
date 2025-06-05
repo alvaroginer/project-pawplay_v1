@@ -35,6 +35,10 @@
   border-radius: var(--space-14);
 }
 
+.especific-align__profile-card {
+  left: -111px;
+}
+
 .dots-menu--container {
   display: flex;
   position: absolute;
