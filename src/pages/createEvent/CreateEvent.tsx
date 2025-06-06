@@ -18,7 +18,7 @@ import { createEventDb } from "../../dataBase/services/createFunctions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import imageCompression from "browser-image-compression";
 import title from "../../imgs/eventPage/title.svg";
 import calendar from "../../imgs/eventPage/calendar.svg";

@@ -13,7 +13,7 @@ import {
 } from "../../functions/Functions";
 import { ProfileData } from "../../types";
 import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
 import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
 import "./Event.css";
@@ -100,10 +100,7 @@ export const Event = () => {
     return null;
   }
 
-
   const hasJoined = eventData.profileIdAsisstant?.includes(loggedProfile.id);
-
-
 
   return (
     <>
@@ -172,9 +169,7 @@ export const Event = () => {
                 title: "Allowed breeds",
                 dbCategory: "breeds",
               }}
-
               info={eventData.breeds}
-
               editable=""
             />
             <InfoCategoryEvent

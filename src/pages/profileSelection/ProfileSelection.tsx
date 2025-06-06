@@ -1,7 +1,7 @@
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { AddDogButton } from "../../components/addDogButton/AddDogButton";
 import { ProfileData } from "../../types";
 import { toast } from "react-toastify";

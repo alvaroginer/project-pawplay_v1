@@ -16,6 +16,8 @@ interface AuthContextType {
   user: UserData | null;
   loggedProfile: ProfileData | null;
   isProfileCompleted: boolean;
+  isWarningModal: isWarningModalProps;
+  setIsWarningModal: React.Dispatch<React.SetStateAction<isWarningModalProps>>;
   login: (userData: UserData, profileData: ProfileData) => void;
   logout: () => void;
   updateAuthContext: () => void;
@@ -31,10 +33,20 @@ interface AuthLocalStorageProps {
   loggedProfile: ProfileData | null;
 }
 
+type isWarningModalProps = {
+  warningSignUp: boolean;
+  warningDelete: boolean;
+};
+
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   loggedProfile: null,
   isProfileCompleted: false,
+  isWarningModal: {
+    warningSignUp: false,
+    warningDelete: false,
+  },
+  setIsWarningModal: () => {},
   login: () => {},
   logout: () => {},
   updateAuthContext: () => {},
@@ -65,6 +77,10 @@ const hasCompletedProfile = (profile: ProfileData | null): boolean => {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loggedProfile, setLoggedProfile] = useState<ProfileData | null>(null);
+  const [isWarningModal, setIsWarningModal] = useState<isWarningModalProps>({
+    warningSignUp: false,
+    warningDelete: false,
+  });
   const isProfileCompleted = hasCompletedProfile(loggedProfile);
 
   console.log(isProfileCompleted);
@@ -125,6 +141,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         user,
         isProfileCompleted,
         loggedProfile,
+        isWarningModal,
+        setIsWarningModal,
         login,
         logout,
         updateAuthContext,
