@@ -7,22 +7,19 @@
 }
 
 .profile--card {
-  display: flex;
   align-items: center;
   gap: var(--space-30);
-  max-width: var(--space-328);
-  height: var(--space-155);
-  padding: var(--space-20) var(--space-20);
+  width: 292px;
+  padding: var(--space-10);
   background-color: var(--color-white);
-  border-radius: var(--space-14);
-  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  cursor: pointer;
 }
 
 .profile--card__image-container {
-  width: var(--space-133);
-  height: var(--space-120);
+  height: 297px;
   border-radius: var(--space-14);
+  margin-bottom: var(--space-14);
+  position: relative;
 }
 
 .profile--card__image {
@@ -32,32 +29,42 @@
   border-radius: var(--space-14);
 }
 
+.dots-menu--container {
+  display: flex;
+  position: absolute;
+  top: var(--space-16);
+  right: var(--space-16);
+}
+
 .profile--card__info {
   display: flex;
+  padding: 0px 6px;
   flex-direction: column;
-  justify-content: center;
-  flex: 1;
-  height: auto;
+  gap: 10px;
   overflow: hidden;
 }
 
 .profile--card__name {
-  font-size: var(--font-20);
-  padding-bottom: var(--space-4);
+  font-size: var(--font-18);
+  font-weight: var(--font-medium);
+}
+
+.profile--card__uncompleted {
+  color: var(--color-red);
 }
 
 .profile--card__block-rating {
   display: flex;
   flex-direction: column;
-  padding: var(--space-4) 0;
-  border-top: 1px solid hsla(0, 0%, 82%, 1);
+  padding-top: 10px;
+  border-top: 1px solid var(--color-gray-400);
 }
 
 .profile--card__block-events {
   display: flex;
   flex-direction: column;
-  padding-top: var(--space-4);
-  border-top: 1px solid hsla(0, 0%, 82%, 1);
+  padding-top: 10px;
+  border-top: 1px solid var(--color-gray-400);
 }
 
 .profile--card__rating {
@@ -72,33 +79,9 @@
 }
 
 .profile--card__value {
-  font-size: var(--font-18);
+  font-size: var(--font-16);
 }
 
 .profile--card__label {
   font-size: var(--font-12);
-}
-
-@media (max-width: 380px) {
-  .profile--card {
-    padding: var(--space-16) var(--space-16);
-    gap: var(--space-24);
-  }
-
-  .profile--card__image-container {
-    width: var(--space-113);
-    height: var(--space-100);
-  }
-
-  .profile--card__name {
-    font-size: var(--font-18);
-  }
-
-  .profile--card__value {
-    font-size: var(--font-16);
-  }
-
-  .profile--card__label {
-    font-size: var(--font-10);
-  }
 }

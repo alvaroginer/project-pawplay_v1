@@ -1,3 +1,4 @@
+/* ESTRUCTURA GENERAL */
 .event--header {
   display: flex;
   flex-direction: row;
@@ -5,6 +6,31 @@
   padding-top: var(--space-113);
 }
 
+.event--info {
+  display: flex;
+  flex-direction: column;
+}
+
+.event--container__categories {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 4vw, 50px);
+  /* margin-bottom: clamp(60px, 5vw, 80px); */
+}
+
+.event--container__sidebar {
+  min-width: auto; /* solo en media query */
+}
+
+.event--events-container {
+  width: 100%;
+  max-width: 1075px; /* o el tamaño que estés usando */
+  margin: 0 auto;
+  margin-top: var(--space-80);
+  margin-bottom: var(--space-100);
+}
+
+/* BOTONES */
 .event--header button {
   background-color: transparent;
   margin: 0;
@@ -13,24 +39,21 @@
   border: none;
 }
 
-.btn--icon:hover {
-  cursor: pointer;
-}
-
-/* No funciona la clase margin-right */
 button.btn--icon.margin--right__10 {
   margin-right: var(--space-10);
 }
 
-.event--container {
-  position: relative;
+.btn--icon:hover {
+  cursor: pointer;
 }
 
+/* IMÁGENES */
 .event--img-container {
   border-radius: var(--space-14);
-  min-height: var(--space-190);
-  max-height: 582px;
+  height: clamp(300px, 50vw, 590px);
+  max-width: 1400px;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .event--img-container img {
@@ -42,10 +65,11 @@ button.btn--icon.margin--right__10 {
   margin-bottom: inherit;
 }
 
+/* TEXTO / TÍTULOS */
 .event--title {
   font-size: clamp(24px, 0.8vw + 0.9rem, 36px);
   font-weight: var(--font-medium);
-  margin-top: var(--space-80);
+  margin-top: clamp(50px, 5vw, 80px);
   margin-bottom: var(--space-50);
 }
 
@@ -53,9 +77,12 @@ button.btn--icon.margin--right__10 {
   font-size: clamp(22px, 0.8vw + 0.6rem, 26px);
   font-weight: var(--font-regular);
   margin-bottom: var(--space-12);
-  margin-top: var(
-    --space-30
-  ); /* Margen para que cuadre el espacio entre el eventCategory el título */
+  margin-top: var(--space-30);
+}
+
+/* ELEMENTOS ESPECÍFICOS */
+.profile-card {
+  width: 292px;
 }
 
 .event--modal {
@@ -70,30 +97,24 @@ button.btn--icon.margin--right__10 {
   padding: var(--space-22) 0;
   background-color: white;
   border-top: var(--space-1) solid var(--color-gray-300);
+  z-index: 30;
 }
 
-.event--events-container {
-  margin-top: var(--space-80);
-  margin-bottom: var(--space-100);
+.color-white {
+  background-color: var(--color-white);
 }
-
-@media (min-width: 1035px) {
+/* MEDIA QUERY */
+@media (width > 1035px) {
   .event--container {
     display: flex;
+    justify-content: center;
     align-items: flex-start;
-    gap: var(--space-20);
-  }
-
-  .event--container__categories {
-    flex-grow: 1;
+    gap: 150px;
   }
 
   .event--container__sidebar {
-    min-width: var(--space-328);
-  }
-
-  .event--profile-title {
-    margin-top: 0;
+    min-width: auto;
+    margin-top: 160px;
   }
 
   .event--modal {

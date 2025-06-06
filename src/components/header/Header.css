@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-14) var(--space-40);
-  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.08);
   background-color: white;
   z-index: 100;
 }
@@ -32,6 +32,20 @@ a {
 
 .navigation-menu--button:hover {
   cursor: pointer;
+}
+
+.navigation-menu--profile-image {
+  width: var(--space-30);
+  height: var(--space-30);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.navigation-menu--profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .navigation-menu--button__sign-in {

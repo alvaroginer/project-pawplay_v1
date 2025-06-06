@@ -2,9 +2,8 @@ import { EventCard } from "../components/eventCard/EventCard";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
-import { EventData, FilterProps } from "../types";
-import { getEvents } from "../dataBase/services/servicesFunctions";
-import { DocumentData } from "firebase/firestore";
+import { DateFilterProps, EventData, FilterProps } from "../types";
+import { getEvents } from "../dataBase/services/readFunctions";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -13,7 +12,10 @@ export const EventsMainPage = () => {
     activities: {},
     breeds: {},
     size: {},
-    date: {},
+  });
+  const [dateFilterParams, setDateFilterParams] = useState<DateFilterProps>({
+    startDate: new Date(),
+    endDate: null,
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
@@ -21,14 +23,15 @@ export const EventsMainPage = () => {
   useEffect(() => {
     // Llamada a la base de datos
     const fetchEvents = async () => {
-      const eventsDb: DocumentData[] = await getEvents();
-      const typedEvents: EventData[] = eventsDb.map((doc) => doc as EventData);
-      setEventsList(typedEvents);
+      const eventsSnap: EventData[] = await getEvents();
+
+      setEventsList(eventsSnap);
     };
 
     fetchEvents();
   }, []);
 
+  //Creamos el filterParams
   useEffect(() => {
     let activityList: Record<string, boolean> = {};
     let breedsList: Record<string, boolean> = {};
@@ -36,7 +39,7 @@ export const EventsMainPage = () => {
     eventsList.forEach((eventCard) => {
       const { activity, breeds, size } = eventCard;
 
-      if (!breedsList[breeds]) {
+      if (!breedsList[breeds] && breeds !== "Any") {
         breedsList = { ...breedsList, [breeds]: false };
       }
 
@@ -44,7 +47,7 @@ export const EventsMainPage = () => {
         activityList = { ...activityList, [activity]: false };
       }
 
-      if (!sizeList[size]) {
+      if (!sizeList[size] && size !== "Any") {
         sizeList = { ...sizeList, [size]: false };
       }
     });
@@ -53,7 +56,6 @@ export const EventsMainPage = () => {
       activities: activityList,
       breeds: breedsList,
       size: sizeList,
-      date: {},
     });
   }, [eventsList]);
 
@@ -61,7 +63,8 @@ export const EventsMainPage = () => {
     if (
       Object.values(filterParams.activities).includes(true) ||
       Object.values(filterParams.breeds).includes(true) ||
-      Object.values(filterParams.size).includes(true)
+      Object.values(filterParams.size).includes(true) ||
+      dateFilterParams.endDate
     ) {
       console.log("entra en la primera condción");
 
@@ -81,6 +84,35 @@ export const EventsMainPage = () => {
       console.log("activeActivities", activeActivities);
 
       return eventsList.filter((event, index) => {
+        //Filtramos las fechas
+        const eventDate: number = event.dateTime.toDate().getTime();
+        const startDate: number = new Date(dateFilterParams.startDate).setHours(
+          0,
+          0,
+          0,
+          0
+        );
+
+        if (eventDate < startDate) {
+          console.log("desparece por el startDate");
+          return false;
+        }
+
+        if (dateFilterParams.endDate) {
+          const endDateTimestamp = new Date(dateFilterParams.endDate).setHours(
+            23,
+            59,
+            59,
+            999
+          );
+
+          if (eventDate > endDateTimestamp) {
+            console.log("desaparece por el endDate");
+            return false;
+          }
+        }
+
+        //Filtramso otras categorías
         if (activeSizes.length > 0 && !activeSizes.includes(event.size)) {
           console.log(event.size, index);
           return false;
@@ -104,7 +136,7 @@ export const EventsMainPage = () => {
     } else {
       return eventsList;
     }
-  }, [filterParams, eventsList]);
+  }, [filterParams, eventsList, dateFilterParams]);
 
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     if (sidebarDisplay === true) {
@@ -118,8 +150,10 @@ export const EventsMainPage = () => {
     }
   };
 
-  const handleFilterParams = (category: string) => {
-    if (category in filterParams.activities) {
+  const handleFilterParams = (category: string | Date) => {
+    const categoryIsString = typeof category === "string";
+
+    if (categoryIsString && category in filterParams.activities) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         activities: {
@@ -129,7 +163,7 @@ export const EventsMainPage = () => {
       }));
     }
 
-    if (category in filterParams.breeds) {
+    if (categoryIsString && category in filterParams.breeds) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         breeds: {
@@ -139,7 +173,7 @@ export const EventsMainPage = () => {
       }));
     }
 
-    if (category in filterParams.size) {
+    if (categoryIsString && category in filterParams.size) {
       setFilterParams((prevFilterParams) => ({
         ...prevFilterParams,
         size: {
@@ -152,47 +186,43 @@ export const EventsMainPage = () => {
 
   return (
     <>
-      <div className="filter-container">
-        <input
-          type="text"
-          className="searchbar"
-          placeholder="Search the event you want to go"
-        />
-        <div className="filter-container--filters">
-          <div className="filter-container--buttons">
-            <Button className="terciary">Social Event</Button>
-            <Button className="terciary">Outdoors</Button>
-            <Button className="terciary">Walks</Button>
-            <Button className="terciary">Small Dogs</Button>
-            <Button className="terciary">Big Dogs</Button>
-            <Button className="terciary">Any Dogs</Button>
+      <div className='main-events-container'>
+        <main className='item__100'>
+          <div className='filter-container'>
+            <input
+              type='text'
+              className='searchbar'
+              placeholder='Search the event you want to go'
+            />
+            <div className='filter-button--container'>
+              <div
+                className='filter-button'
+                onClick={() => handleSidebarDisplay(sidebarDisplay)}
+              >
+                <p>Filters</p>
+                <img src={filter} alt='Filter Icon' />
+              </div>
+            </div>
           </div>
-          <div
-            className="filter-button"
-            onClick={() => handleSidebarDisplay(sidebarDisplay)}
-          >
-            <p>Filters</p>
-            <img src={filter} alt="Filter Icon" />
+          <div className='grid'>
+            {filteredEventList.map((event: EventData) => {
+              return <EventCard key={event.id} event={event} />;
+            })}
           </div>
-        </div>
-      </div>
-      <div className="events-container">
-        <section className={`grid ${sidebarDisplay ? "item__75" : ""}`}>
-          {filteredEventList.map((event: EventData) => {
-            return <EventCard key={event.id} event={event} />;
-          })}
-        </section>
+        </main>
         {sidebarDisplay && (
           <Sidebar
             exitAnimation={exitAnimation}
             filterParams={filterParams}
             onClick={handleSidebarDisplay}
             onChange={handleFilterParams}
+            setDate={setDateFilterParams}
+            dateFilterParams={dateFilterParams}
           />
         )}
       </div>
-      <div className="create-event-modal">
-        <Button className="primary">Create an event</Button>
+      <div className='create-event-modal'>
+        <Button className='primary'>Create an event</Button>
       </div>
     </>
   );

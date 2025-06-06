@@ -1,5 +1,4 @@
-import { EventCategory } from "../../components/eventCategory/EventCategory";
-import { Accordion } from "../../components/accordion/Accordion";
+import { InfoCategoryProfile } from "../../components/infoCategoryProfile/InfoCategoryProfile";
 import {
   dogBreedsType,
   dogSizesType,
@@ -8,17 +7,24 @@ import {
   ProfileData,
   UserData,
 } from "../../types";
+import { UpcomingEventsAccordion } from "../../components/accordion/upcomingEventsAccordion/UpcomingEventsAccordion";
+import { HostedEventsAccordion } from "../../components/accordion/hostedEventsAccordion/HostedEventsAccordion";
+import { FavouriteEventsAccordion } from "../../components/accordion/favouriteEventsAccordion/FavouriteEventsAccordion";
+import { PastEventsAccordion } from "../../components/accordion/pastEventsAccordion/PastEventsAccordion";
+import { capitalizeFirstLetter } from "../../functions/Functions";
 import { WarningModal } from "../../components/modals/warningModal/WarningModal";
+import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,
-} from "../../dataBase/services/servicesFunctions";
+} from "../../dataBase/services/readFunctions";
+import { useNavigate } from "react-router";
+
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
-import dog from "../../imgs/profilePage/dog.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
 import medal from "../../imgs/profilePage/medal-outline.svg";
 import ruler from "../../imgs/profilePage/ruler.svg";
@@ -26,219 +32,240 @@ import star from "../../imgs/profilePage/star-outline.svg";
 import timer from "../../imgs/profilePage/timer-sand.svg";
 import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
+import dogIcon from "../../imgs/profilePage/dog.svg";
 import "./Profile.css";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
   const [userInfo, setUserInfo] = useState<UserData>();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setisDeleteModalOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   const { loggedProfile, user } = useContext(AuthContext);
 
-  // Params for url
   const { profileId } = useParams();
   const profileIdParamsStr: string = profileId ?? "";
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const profileSnap = await getOneProfile(profileIdParamsStr);
+      if (!loggedProfile) return;
 
-      if (!profileSnap.exists()) {
-        console.error("El perfil no existe con id:", profileIdParamsStr);
+      //Comprobas si el perfil loggeado es el dueño para no tener que cargar desde BBDD
+      if (profileIdParamsStr === loggedProfile.id) {
+        setProfileInfo(loggedProfile);
         return;
       }
-      const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+      const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      setProfileInfo(typedProfileSnap);
+      if (profileSnap === null) {
+        return;
+      }
+
+      setProfileInfo(profileSnap);
     };
 
     fetchProfile();
-  }, [profileIdParamsStr]);
+  }, [profileIdParamsStr, loggedProfile]);
 
   useEffect(() => {
-    if (!profileInfo) return;
+    if (!profileInfo || !loggedProfile) return;
 
     if (loggedProfile.id !== profileInfo.id) return;
 
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (!userSnap.exists()) {
-        console.error("El perfil no existe con id:", profileInfo.userUid);
+      if (userSnap === null) {
         return;
       }
-      const typedUserSnap: UserData = userSnap.data() as UserData;
-      setUserInfo(typedUserSnap);
+
+      setUserInfo(userSnap);
     };
 
     fetchUser();
   }, [loggedProfile, profileInfo]);
 
-  const handleClick = () => {
-    setIsModalOpen(true);
+  const toggleDeleteModal = () => {
+    setisDeleteModalOpen(!isDeleteModalOpen);
   };
 
   console.log(profileInfo);
 
+  if (!loggedProfile || !user) return;
+
   if (!profileInfo) {
     return null;
-  } else {
-    return (
-      <>
-        <div className="profile-page__actions1">
-          <img
-            src={arrow}
-            alt="Icon arrow to go back"
-            className="profile-page__back-icon"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="profile-page__delete-icon"
-            onClick={handleClick}
-          >
-            <path d="M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
-          </svg>
-        </div>
-        <div className="profile-page">
-          <div className="profile-page__image-container">
-            <img
-              src={dogUser}
-              alt="Profile picture of the dog"
-              className="profile-page__image"
-            />
-          </div>
-
-          <div className="profile-page__details-container">
-            <div className="profile-page__actions2">
-              <img
-                src={arrow}
-                alt="Icon arrow to go back"
-                className="profile-page__back-icon"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="profile-page__delete-icon"
-                onClick={handleClick}
-              >
-                <path d="M9 3V4H4V6H5V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
-              </svg>
-            </div>
-            <div className="profile-page__info">
-              <div className="profile-page__info-left">
-                <EventCategory
-                  img={account}
-                  title="Owner's name"
-                  info={
-                    loggedProfile.id === profileInfo.id
-                      ? `${user.name} ${user.lastName}`
-                      : userInfo
-                      ? `${userInfo.name} ${userInfo.lastName}`
-                      : "Unknown owner"
-                  }
-                  editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                />
-
-                <EventCategory
-                  img={dog}
-                  title={"Dog's name"}
-                  info={profileInfo.profileName}
-                  editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                />
-                <EventCategory
-                  img={star}
-                  title={"Rating"}
-                  info={`4.5 Stars`}
-                  editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-                />
-                <EventCategory
-                  img={medal}
-                  title={"Breed"}
-                  info={profileInfo.breed}
-                  editable={loggedProfile.id === profileInfo.id ? "select" : ""}
-                  selectData={dogBreedsType}
-                />
-              </div>
-              <div className="profile-page__info-right">
-                <EventCategory
-                  img={timer}
-                  title={"Age"}
-                  info={`${profileInfo.age}`}
-                  editable={loggedProfile.id === profileInfo.id ? "select" : ""}
-                  selectData={dogAgeType}
-                />
-                <EventCategory
-                  img={gender}
-                  title={"Gender"}
-                  info={profileInfo.gender}
-                  editable={loggedProfile.id === profileInfo.id ? "select" : ""}
-                  selectData={dogGenderType}
-                />
-                <EventCategory
-                  img={ruler}
-                  title={"Size"}
-                  info={profileInfo.size}
-                  editable={loggedProfile.id === profileInfo.id ? "select" : ""}
-                  selectData={dogSizesType}
-                />
-              </div>
-            </div>
-            <div className="profile-page__description">
-              <EventCategory
-                img={description}
-                title={"Description"}
-                info={
-                  profileInfo.profileBio // Texto completo
-                }
-                editable={loggedProfile.id === profileInfo.id ? "string" : ""}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="accordion-container">
-          {loggedProfile.id === profileInfo.id && (
-            <>
-              <Accordion
-                text={"My upcoming events"}
-                defaultOpen={true}
-                eventTypes="upcoming events"
-                profileId={profileInfo.id}
-                likedEvents={profileInfo.likedEvents}
-              />
-              <Accordion
-                text={"Hosted hangouts"}
-                defaultOpen={false}
-                eventTypes="hosted events"
-                profileId={profileInfo.id}
-                likedEvents={profileInfo.likedEvents}
-              />
-              <Accordion
-                text={"Favourite Events"}
-                defaultOpen={false}
-                eventTypes="favourite events"
-                profileId={profileInfo.id}
-                likedEvents={profileInfo.likedEvents}
-              />
-              <Accordion
-                text={"Past adventures"}
-                defaultOpen={false}
-                eventTypes="past events"
-                profileId={profileInfo.id}
-                likedEvents={profileInfo.likedEvents}
-              />
-            </>
-          )}
-        </div>
-        {isModalOpen && (
-          <WarningModal
-            modalText="Are you sure you want to delete this lovely dog profile?"
-            buttonText="Yes, I am sure"
-            onClose={() => setIsModalOpen(false)}
-          />
-        )}
-      </>
-    );
   }
+
+  const isProfileCreator = loggedProfile.id === profileInfo.id;
+
+  return (
+    <>
+      <div className='profile-page__actions1'>
+        <img
+          src={arrow}
+          alt='Icon arrow to go back'
+          className='profile-page__back-icon'
+          onClick={() => navigate(-1)}
+        />
+        {isProfileCreator && (
+          <DotsMenu className=''>
+            <p className='profile-page__option' onClick={toggleDeleteModal}>
+              Delete profile
+            </p>
+          </DotsMenu>
+        )}
+      </div>
+      <div className='profile-page'>
+        <div className='profile-page__image-container'>
+          <img
+            src={
+              loggedProfile.profilePhoto ? loggedProfile.profilePhoto : dogUser
+            }
+            alt='Profile picture of the dog'
+            className='profile-page__image'
+          />
+        </div>
+
+        <div className='profile-page__details-container'>
+          <div className='profile-page__actions2'>
+            <img
+              src={arrow}
+              alt='Icon arrow to go back'
+              className='profile-page__back-icon'
+              onClick={() => navigate(-1)}
+            />
+            {isProfileCreator && (
+              <DotsMenu className=''>
+                <p className='profile-page__option' onClick={toggleDeleteModal}>
+                  Delete profile
+                </p>
+              </DotsMenu>
+            )}
+          </div>
+          <div className='profile-page__info'>
+            <p className='profile-page__info-name'>
+              {isProfileCreator
+                ? `My profile`
+                : `${capitalizeFirstLetter(profileInfo.profileName)}'s profile`}
+            </p>
+            <div className='profile-page__info_container'>
+              {isProfileCreator && (
+                <InfoCategoryProfile
+                  img={dogIcon}
+                  reference={{
+                    title: "Dog's Name",
+                    dbCategory: "profileName",
+                  }}
+                  info={loggedProfile.profileName}
+                  editable={isProfileCreator ? "string" : ""}
+                  // editable={""}
+                />
+              )}
+              <InfoCategoryProfile
+                img={star}
+                reference={{
+                  title: "Rating",
+                  dbCategory: "rating",
+                }}
+                info={`4.5`}
+                // editable={isProfileCreator ? "string" : ""}
+                editable={""}
+              />
+              <InfoCategoryProfile
+                img={medal}
+                reference={{
+                  title: "Breed",
+                  dbCategory: "breed",
+                }}
+                info={profileInfo.breed}
+                editable={isProfileCreator ? "select" : ""}
+                selectData={dogBreedsType}
+              />
+            </div>
+            <div className='profile-page__info_container'>
+              <InfoCategoryProfile
+                img={account}
+                reference={{
+                  title: "Owner's Name",
+                  dbCategory: "ownerName",
+                }}
+                info={
+                  isProfileCreator
+                    ? `${user.name} ${user.lastName}`
+                    : userInfo
+                    ? `${userInfo.name} ${userInfo.lastName}`
+                    : "Unknown owner"
+                }
+                editable={isProfileCreator ? "string" : ""}
+              />
+            </div>
+            <div className='profile-page__info_container'>
+              <InfoCategoryProfile
+                img={timer}
+                reference={{
+                  title: "Age",
+                  dbCategory: "age",
+                }}
+                info={`${profileInfo.age}`}
+                editable={loggedProfile.id === profileInfo.id ? "select" : ""}
+                selectData={dogAgeType}
+              />
+              <InfoCategoryProfile
+                img={gender}
+                reference={{
+                  title: "Gender",
+                  dbCategory: "gender",
+                }}
+                info={profileInfo.gender}
+                editable={loggedProfile.id === profileInfo.id ? "select" : ""}
+                selectData={dogGenderType}
+              />
+              <InfoCategoryProfile
+                img={ruler}
+                reference={{
+                  title: "Size",
+                  dbCategory: "size",
+                }}
+                info={profileInfo.size}
+                editable={loggedProfile.id === profileInfo.id ? "select" : ""}
+                selectData={dogSizesType}
+              />
+            </div>
+            <div className='profile-page__info_container margin--bt__200'>
+              <InfoCategoryProfile
+                img={description}
+                reference={{
+                  title: "Description",
+                  dbCategory: "profileBio",
+                }}
+                info={profileInfo.profileBio}
+                editable={isProfileCreator ? "string" : ""}
+              />
+            </div>
+            <div className='accordion-container'>
+              {loggedProfile.id === profileInfo.id && (
+                <>
+                  <UpcomingEventsAccordion profileId={profileInfo.id} />
+                  <HostedEventsAccordion profileId={profileInfo.id} />
+                  <FavouriteEventsAccordion
+                    likedEvents={profileInfo.likedEvents}
+                  />
+                  <PastEventsAccordion profileId={profileInfo.id} />
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isDeleteModalOpen && (
+        <WarningModal
+          modalText='Are you sure you want to delete this lovely dog profile?'
+          buttonText='Yes, I am sure'
+          onClose={() => setisDeleteModalOpen(false)}
+        />
+      )}
+    </>
+  );
 };

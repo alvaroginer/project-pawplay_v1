@@ -1,16 +1,19 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router";
 import { EventData } from "../../../types";
 import { EventCard } from "../../../components/eventCard/EventCard";
 import { AuthContext } from "../../../auth/AuthContext";
-import { getHostedEvents } from "../../../dataBase/services/servicesFunctions";
+import { getHostedEvents } from "../../../dataBase/services/readFunctions";
 import "../MyEventPage.css";
 import arrow from "../../../imgs/eventPage/arrow-left.svg";
 
 export const MyHostedEvents = () => {
   const [hostedEvents, setHostedEvents] = useState<EventData[]>();
   const { loggedProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!loggedProfile) return;
     const fetchHostedEvents = async () => {
       const hostedEventsSnap = await getHostedEvents(loggedProfile.id);
       setHostedEvents(hostedEventsSnap);
@@ -25,6 +28,7 @@ export const MyHostedEvents = () => {
           src={arrow}
           alt="Return Icon"
           className="my-events-page__back-icon"
+          onClick={() => navigate(-1)}
         />
         <h1 className="my-events-page__title">My hosted events</h1>
         <div className="my-events-page__events-container">

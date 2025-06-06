@@ -5,15 +5,18 @@
   /* -----> Colors */
   /* Yellow */
   --color-yellow: hsl(50, 100%, 55%);
-  --color-yellow-hover: hsl(48, 100%, 63%);
-  --color-yellow-active: hsl(48, 100%, 47%);
+  --color-yellow-hover: hsl(45, 100%, 50%);
+  --color-yellow-active: hsl(45, 100%, 45%);
   --color-yellow-disabled: hsl(50, 100%, 55%, 0.5);
 
-  /* Pink */
-  --color-pink: hsl(355, 100%, 80%);
-  --color-pink-hover: hsl(355, 100%, 85%);
-  --color-pink-active: hsl(355, 100%, 77%);
-  --color-pink-disabled: hsl(355, 100%, 80%, 0.5);
+  /* Berry */
+  --color-berry: hsla(320, 91%, 35%, 1);
+  --color-berry-hover: hsla(318, 92%, 28%, 1);
+  --color-berry-active: hsla(318, 91%, 23%, 1);
+  --color-berry-disabled: rgb(147, 120, 138);
+  --color-berry-200: hsla(323, 67%, 80%, 1);
+  --color-berry-100: hsla(323, 71%, 91%, 1);
+  --color-berry-800: hsla(317, 93%, 16%, 1);
 
   /* White */
   --color-white: hsla(0, 0%, 100%, 1);
@@ -22,19 +25,24 @@
   --color-light-blue: hsl(213, 100%, 93%);
   --color-blue: hsl(213, 49%, 49%);
   --color-blue-hover: hsl(213, 48%, 45%);
+  --color-blue-active: hsl(213, 48%, 40%);
   --color-blue-disabled: hsl(213, 30%, 60%);
   --color-blue-500: hsl(213, 100%, 93%);
   --color-blue-800: rgb(99, 116, 128);
 
   /* Black */
-  --color-black: hsl(0, 0, 0);
+  --color-black: hsl(210, 10%, 12%);
   --color-black-light: hsla(0, 0%, 10%, 1);
 
   /* Gray */
-  --color-gray: hsl(0, 0%, 47%, 1);
-  --color-gray-300: hsl(0, 0%, 64%);
-  --color-gray-200: hsl(0, 0%, 82%);
-  --color-gray-footer: hsl(0, 0%, 97%, 1);
+
+  --color-gray-800: hsl(206, 7%, 45%);
+  --color-gray: hsl(200, 10%, 77%);
+  --color-gray-600: hsl(201, 9%, 71%);
+  --color-gray-400: hsl(196, 12%, 83%);
+  --color-gray-300: hsl(196, 19%, 89%);
+  --color-gray-200: hsl(195, 22%, 93%);
+  --color-gray-100: hsl(195, 29%, 97%);
 
   /* Red */
   --color-red: hsl(0, 93%, 58%);
@@ -42,6 +50,10 @@
   /* Brown */
   --color-brown: hsla(32, 40%, 61%, 1);
   --color-brown-light: hsla(29, 90%, 76%, 1);
+  --color-brown-dark: hsla(31, 28%, 39%, 1);
+
+  /* Green */
+  --color-green: hsl(104, 93%, 36%);
 
   /* -----> Spacing */
   --space-1: 1px;
@@ -57,6 +69,8 @@
   --space-20: 20px;
   --space-22: 22px;
   --space-24: 24px;
+  --space-25: 25px;
+  --space-26: 26px;
   --space-30: 30px;
   --space-32: 32px;
   --space-34: 34px;
@@ -75,6 +89,7 @@
   --space-155: 155px;
   --space-190: 190px;
   --space-200: 200px;
+  --space-250: 250px;
   --space-268: 268px;
   --space-292: 292px;
   --space-328: 328px;
@@ -85,8 +100,10 @@
   --radius-md: var(--space-14);
   --radius-full: var(--space-50);
 
-  /* -----> Padding */
-  --body-inline-padding: clamp(16px, 10.79vw, 178px);
+  /* -----> Clamp */
+  --clamp-16-18: clamp(16px, 1vw, 18px);
+  --clamp-18-20: clamp(18px, 0.8vw + 0.5rem, 20px);
+  --clamp-26-22: clamp(22px, 1.2vw + 18px, 26px);
 
   /* -----> Fonts */
 
@@ -103,8 +120,11 @@
   --font-20: var(--space-20);
   --font-22: var(--space-22);
   --font-24: var(--space-24);
+  --font-26: var(--space-26);
   --font-32: var(--space-32);
   --font-36: var(--space-36);
+  --font-40: var(--space-40);
+  --font-64: var(--space-64);
 
   /* Font-weight */
   --font-extra-light: 200;
@@ -122,10 +142,10 @@
   --button-color-main-disabled: var(--color-yellow-disabled);
 
   /* Secondary */
-  --button-color-secondary: var(--color-pink);
-  --button-color-secondary-hover: var(--color-pink-hover);
-  --button-color-secondary-active: var(--color-pink-active);
-  --button-color-secondary-disabled: var(--color-pink-disabled);
+  --button-color-secondary: var(--color-berry);
+  --button-color-secondary-hover: var(--color-berry-hover);
+  --button-color-secondary-active: var(--color-berry-active);
+  --button-color-secondary-disabled: var(--color-berry-disabled);
 
   /* Terciary */
   --button-color-terciary: var(--color-black);
@@ -160,6 +180,14 @@ body {
   position: relative;
 }
 
+.position-relative--right {
+  right: 0;
+}
+
+.position-relative--left {
+  left: 0;
+}
+
 /* -----> Displays */
 .inline-block {
   display: inline-block;
@@ -176,6 +204,10 @@ body {
 
 .align-itmes__end {
   align-items: flex-end;
+}
+
+.justify-content--center {
+  justify-content: center;
 }
 
 .space--between {
@@ -223,7 +255,7 @@ body {
 }
 
 .item__100 {
-  flex: 0 0 1;
+  flex: 1;
 }
 
 .item__75 {
@@ -292,6 +324,10 @@ body {
   margin-bottom: var(--space-24);
 }
 
+.margin--bt__200 {
+  margin-bottom: var(--space-200);
+}
+
 /* -----> Border-radius */
 .border-radius__12 {
   border-radius: var(--space-12);
@@ -315,44 +351,24 @@ body {
   text-align: right;
 }
 
+.main-events-container {
+  display: flex;
+}
+
 .filter-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.filter-container--filters {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* o center, según cómo lo quieras */
-  width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-bottom: var(--space-34);
-  padding: var(--space-16);
-}
-
-.filter-container--buttons {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: var(--space-14);
-  /* scrollbar-width: none; Firefox */
-  width: 100%;
+  /* align-items: center; */
 }
 
 /* .filter-container--buttons::-webkit-scrollbar {
   display: none; 
 } */
 
-.filter-container--buttons button {
-  flex-shrink: 0;
-}
-
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
   margin-top: var(--space-113);
-  margin-bottom: var(--space-34);
+  margin-bottom: var(--space-30);
   padding: var(--space-12);
   border-style: solid;
   border-width: var(--space-1);
@@ -366,13 +382,19 @@ body {
   }
 }
 
-.filter-button {
-  flex-shrink: 0;
+.filter-button--container {
   display: flex;
+  justify-content: flex-end;
+  width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
+  margin-bottom: var(--space-30);
+}
+
+.filter-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
   cursor: pointer;
-  margin-top: var(--space-22);
-  text-align: right;
 }
 
 .filter-button p {
@@ -411,11 +433,11 @@ body {
 /* Media Queries */
 @media screen and (width>= 500px) {
   body {
-    padding-inline: var(--body-inline-padding);
+    padding-inline: var(--space-24);
   }
 }
 
-@media (min-width: 652px) {
+@media (min-width: 653px) {
   .grid-cell {
     flex: 0 0 50%;
   }
@@ -438,6 +460,20 @@ body {
 @media (min-width: 837px) {
   .filter-container--buttons {
     overflow-x: visible;
+  }
+}
+
+@media screen and (min-width: 995px) {
+  .filter-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-30);
+  }
+
+  .filter-button--container {
+    margin: 0;
+    margin-top: 85px;
+    width: fit-content;
   }
 }
 

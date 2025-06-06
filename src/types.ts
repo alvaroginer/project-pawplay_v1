@@ -1,3 +1,4 @@
+import React from "react";
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
 
@@ -6,16 +7,15 @@ export interface EventData {
   id: string;
   userUid: string;
   profileIdCreator: string;
-  profileIdAsisstant: string[];
+  profileIdAsisstant?: string[];
   eventTitle: string;
-  eventPhoto: string | null;
+  eventPhoto?: string;
   eventDescription: string;
   dateTime: Timestamp;
-  hour: number;
   location: string;
   places: number;
-  size: "small" | "medium" | "big" | "any";
-  activity: "outdoors" | "social event" | "private property" | "walks";
+  size: "Small" | "Medium" | "Big" | "Any";
+  activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";
   breeds: string;
 }
 
@@ -26,10 +26,11 @@ export interface ProfileData {
   profileName: string;
   profilePhoto: string;
   profileBio: string;
-  age: number | null;
+  age?: number;
   breed: string;
-  size: "small" | "medium" | "big" | "any";
-  gender: "male" | "female" | "not specify";
+
+  size?: "Small" | "Medium" | "Big" | "Any";
+  gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];
 }
 
@@ -50,24 +51,26 @@ export interface EventsProfileProps {
 }
 
 // -----> Data of a Rating
-export interface RatingProps {
+export interface completeProfileRating {
+  rating: oneRatingProps[];
+}
+
+export interface oneRatingProps {
   fromProfileId: string;
   value: number;
 }
 
 // -----> Form Data
-export interface FormData {
+export interface SignInData {
   name: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface FormErrors {
-  name?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
+export interface LogInData {
+  email: string;
+  password: string;
 }
 
 /* ----- Components Props and Hooks Props ----- */
@@ -77,6 +80,7 @@ export interface ButtonProps {
   className: string;
   children: ReactNode;
   onClick?: (value: any) => void;
+  disabled?: boolean;
 }
 
 // -----> Sidebar
@@ -85,19 +89,26 @@ export interface SidebarProps {
   exitAnimation: boolean;
   onClick: (sidebarDisplay: boolean) => void;
   onChange: (category: string) => void;
+  setDate: React.Dispatch<React.SetStateAction<DateFilterProps>>;
+  dateFilterParams: DateFilterProps;
 }
 
 export interface FilterProps {
   activities: Record<string, boolean>;
   breeds: Record<string, boolean>;
   size: Record<string, boolean>;
-  date: Record<number, boolean>;
+}
+
+export interface DateFilterProps {
+  startDate: Date;
+  endDate: Date | null;
 }
 
 export interface FilterCategoryProps {
   title: string;
   categories: Record<string, boolean>;
-  onChange: (string: string) => void;
+  onChange: (value: string) => void;
+  children?: ReactNode;
 }
 
 // -----> Navigation Menu
@@ -106,20 +117,29 @@ export interface NavMenuProps {
   onClick: (value: boolean) => void;
 }
 
-// -----> Input
+// -----> Dots Menu
 
+export interface DotsMenuProps {
+  children: ReactNode;
+  className: string;
+}
+
+// -----> Input
 export interface InputProps {
-  label: string;
-  placeholder: string;
+  label?: string;
   name: string;
-  value: string;
-  onChange: (
+  placeholder?: string;
+  value?: string;
+  onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  className?: string; // Permite pasar clases adicionales
+  onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  className?: string;
   disabled?: boolean;
   error?: string;
   type?: string;
+  helpText?: string;
+  charLimit?: number;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
@@ -131,32 +151,57 @@ export interface ForgotPasswordModalProps {
   onClose: () => void;
 }
 
+// -----> Warning Modal
+export type WarningModalProps = {
+  onClose: () => void;
+  modalText: string;
+  buttonText?: string;
+  children?: ReactNode;
+  className?: string;
+  onConfirm?: () => void;
+};
+
 // -----> Accordion
 export interface AccordionProps {
   text: string;
-  eventTypes:
-    | "upcoming events"
-    | "hosted events"
-    | "favourite events"
-    | "past events";
-  profileId: string;
-  likedEvents: string[];
+  profileId?: string;
+  url?: string;
+  eventsData: EventData[];
   isOpen?: boolean;
   defaultOpen?: boolean;
 }
 
 // -----> Event Page & Profile Page
-export interface EventCategoryProps {
-  img: string;
+interface dbProfileCategory {
   title: string;
-  info: string;
+  dbCategory: string;
+}
+
+export interface EventSignupProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+}
+
+export interface EventUnregisterProps {
+  eventData: EventData | null;
+  profiles: ProfileData[];
+}
+
+export interface InfoCategoryProps {
+  img?: string;
+  reference: dbProfileCategory;
+  info?: string;
   editable: "string" | "select" | "";
   selectData?: SelectDataType;
 }
 
+export interface UpdateInfoCategoryProps extends InfoCategoryProps {
+  updateFunction: (referenceId: string) => void;
+}
+
 export interface EventCategoryBigProps {
   img: string;
-  title: string;
+  reference: dbProfileCategory;
   info: string;
   editable: boolean;
 }
@@ -168,8 +213,28 @@ export interface FormLayoutProps {
   title: string;
   fields: InputProps[];
   formData: { [key: string]: string };
+}
 
-  // onSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+export interface CreateEventProps
+  extends Omit<
+    EventData,
+    | "id"
+    | "userUid"
+    | "profileIdCreator"
+    | "profileIdAsisstant"
+    | "eventPhoto"
+    | "places"
+    | "dateTime"
+  > {
+  eventPhoto: File;
+  places: string;
+  day: string;
+  time: string;
+}
+
+export interface CreateProfileProps
+  extends Omit<ProfileData, "userUid" | "id" | "likedEvents" | "profilePhoto"> {
+  profilePhoto: File;
 }
 
 export interface Field {
@@ -192,7 +257,8 @@ type SelectDataType =
   | typeof dogAgeType
   | typeof dogBreedsType
   | typeof typeOfActivity
-  | typeof maximumPlaces;
+  | typeof maximumPlaces
+  | typeof eventTime;
 
 // TypeOfActivity
 export const typeOfActivity = [
@@ -200,6 +266,7 @@ export const typeOfActivity = [
   "Outdoors",
   "Walks",
   "Private property",
+  "Any",
 ];
 
 // MaximumPlaces
@@ -217,13 +284,21 @@ export const maximumPlaces = [
   "10",
   "11",
   "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
 ];
 
 // Sizes
 export const dogSizesType = ["Small", "Medium", "Big", "Any"];
 
 // Gender
-export const dogGenderType = ["Male", "Female", "Other"];
+export const dogGenderType = ["Male", "Female", "Not specify"];
 
 // Age
 export const dogAgeType = [
@@ -232,7 +307,7 @@ export const dogAgeType = [
 
 // Breeds
 export const dogBreedsType = [
-  "Other",
+  "Any",
   "Akita",
   "Alaskan Malamute",
   "American Eskimo Dog",
@@ -291,3 +366,56 @@ export const dogBreedsType = [
   "Whippet",
   "Yorkshire Terrier",
 ];
+
+export const eventTime = [
+  "00:00",
+  "00:30",
+  "01:00",
+  "01:30",
+  "02:00",
+  "02:30",
+  "03:00",
+  "03:30",
+  "04:00",
+  "04:30",
+  "05:00",
+  "05:30",
+  "06:00",
+  "06:30",
+  "07:00",
+  "07:30",
+  "08:00",
+  "08:30",
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
+  "23:00",
+  "23:30",
+];
+
+export const imageAllowedTypes = ["image/webp", "image/jpeg", "image/png"];

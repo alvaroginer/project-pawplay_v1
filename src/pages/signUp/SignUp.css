@@ -1,0 +1,34 @@
+.color-brown-light {
+  background-color: var(--color-brown-light);
+}
+
+.signin__footer-text {
+  margin: 0;
+  font-size: var(--font-14);
+}
+
+.signin__footer {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.signin__footer-text {
+  font-size: var(--font-12);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.signin__footer-link {
+  text-decoration: underline;
+  font-size: var(--font-12);
+}
+
+.signin__login {
+  color: var(--color-gray);
+  margin: auto;
+}
+
+.signin__login-link {
+  font-size: var(--font-14);
+  color: var(--color-gray);
+}

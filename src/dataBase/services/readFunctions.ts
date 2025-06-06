@@ -7,52 +7,104 @@ import {
   where,
   limit,
 } from "firebase/firestore";
-import { db } from "../../dataBase/firebase";
-import { EventData } from "../../types";
+import { db } from "../firebase";
+import {
+  EventData,
+  ProfileData,
+  UserData,
+  completeProfileRating,
+} from "../../types";
 
 /* -----> Users */
-// Get users from database
+// Get all users from database
 export const getUsers = async () => {
   const usersCol = collection(db, "users");
   const userSnaphot = await getDocs(usersCol);
-  const userList = userSnaphot.docs.map((doc) => doc.data());
-  return userList;
+  const usersList = userSnaphot.docs.map((doc) => doc.data());
+
+  const typedUsers: UserData[] = usersList.map((doc) => doc as UserData);
+  return typedUsers;
 };
 
 // Get a single user
 export const getOneUser = async (userId: string) => {
   const userSnap = await getDoc(doc(db, "users", userId));
-  return userSnap;
+
+  if (!userSnap.exists()) {
+    console.warn(`Perfil con ID ${userId} no encontrado.`);
+    return null;
+  }
+
+  const typedUserSnap: UserData = userSnap.data() as UserData;
+  return typedUserSnap;
 };
 
 /* -----> Profiles */
-// Get profiles from database
+// Get all profiles from database
 export const getProfiles = async () => {
   const profilesCol = collection(db, "profiles");
   const profilesSnaphot = await getDocs(profilesCol);
+
+  //Typing profiles list
   const profilesList = profilesSnaphot.docs.map((doc) => doc.data());
-  return profilesList;
+  const typedProfiles: ProfileData[] = profilesList.map(
+    (doc) => doc as ProfileData
+  );
+  return typedProfiles;
 };
 
 // Get a single profile
 export const getOneProfile = async (profileId: string) => {
   const profileSnap = await getDoc(doc(db, "profiles", profileId));
-  return profileSnap;
+
+  if (!profileSnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedProfileSnap: ProfileData = profileSnap.data() as ProfileData;
+  return typedProfileSnap;
+};
+
+// Get all profiles from one user
+export const getProfilesFromUser = async (userUid: string) => {
+  const ref = collection(db, "profiles");
+  const q = query(ref, where("userUid", "==", userUid));
+  const querySnap = await getDocs(q);
+  if (!querySnap) {
+    console.error(`No profiles with userUid ${userUid}`);
+    return null;
+  }
+
+  const typedQuerySnap: ProfileData[] = querySnap.docs.map(
+    (doc) => doc.data() as ProfileData
+  );
+  return typedQuerySnap;
 };
 
 /* -----> Events */
-// Get events from database
+// Get all events from database
 export const getEvents = async () => {
   const eventsCol = collection(db, "events");
   const eventSnaphot = await getDocs(eventsCol);
+
+  //Typing event list
   const eventList = eventSnaphot.docs.map((doc) => doc.data());
-  return eventList;
+  const typedEvents: EventData[] = eventList.map((doc) => doc as EventData);
+  return typedEvents;
 };
 
 // Get a single event
 export const getOneEvent = async (eventId: string) => {
   const eventSnap = await getDoc(doc(db, "events", eventId));
-  return eventSnap;
+
+  if (!eventSnap.exists()) {
+    console.warn(`Perfil con ID ${eventId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: EventData = eventSnap.data() as EventData;
+  return typedEventSnap;
 };
 
 /* -----> Event Querys */
@@ -164,4 +216,35 @@ export const getPastEventsLimited = async (profileId: string) => {
     (doc) => doc.data() as EventData
   );
   return typedQuerySnap;
+};
+
+// Get 5 Similar Events
+export const getSimilarEventsLimited = async (eventActivity: string) => {
+  const ref = collection(db, "events");
+  const q = query(ref, where("activity", "==", eventActivity), limit(5));
+  const querySnap = await getDocs(q);
+
+  if (!querySnap) {
+    console.error("No similar events found ");
+    return null;
+  }
+  const typedQuerySnap: EventData[] = querySnap.docs.map(
+    (doc) => doc.data() as EventData
+  );
+  return typedQuerySnap;
+};
+/* -----> Rating */
+// Get a single rating
+export const getOneProfileRating = async (profileId: string) => {
+  const querySnap = await getDoc(doc(db, "ratings", profileId));
+
+  if (!querySnap.exists()) {
+    console.warn(`Perfil con ID ${profileId} no encontrado.`);
+    return null;
+  }
+
+  const typedEventSnap: completeProfileRating =
+    querySnap.data() as completeProfileRating;
+
+  return typedEventSnap;
 };
