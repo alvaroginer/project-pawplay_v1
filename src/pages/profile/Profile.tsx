@@ -47,6 +47,8 @@ export const Profile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      //Comprobamos si ya hay un perfil guardado para no volver a hacer la llamada a la base de datos
+      if (profileInfo) return;
       if (!loggedProfile) return;
 
       //Comprobamos si el perfil loggeado es el dueño para no tener que cargar desde BBDD
@@ -57,17 +59,13 @@ export const Profile = () => {
 
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      if (profileSnap === null) {
-        return;
-      }
+      if (profileSnap === null) return;
 
       setProfileInfo(profileSnap);
     };
 
     fetchProfile();
-  }, [profileIdParamsStr, loggedProfile]);
 
-  useEffect(() => {
     if (!profileInfo || !loggedProfile) return;
 
     if (loggedProfile.id !== profileInfo.id) return;
@@ -75,15 +73,13 @@ export const Profile = () => {
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (userSnap === null) {
-        return;
-      }
+      if (userSnap === null) return;
 
       setUserInfo(userSnap);
     };
 
     fetchUser();
-  }, [loggedProfile, profileInfo]);
+  }, [profileIdParamsStr, loggedProfile, profileInfo]);
 
   const toggleDeleteModal = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
