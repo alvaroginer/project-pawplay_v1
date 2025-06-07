@@ -47,8 +47,7 @@ export const Profile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      //Comprobamos si ya hay un perfil guardado para no volver a hacer la llamada a la base de datos
-      if (profileInfo) return;
+      //if (profileInfo) return;
       if (!loggedProfile) return;
 
       //Comprobamos si el perfil loggeado es el dueño para no tener que cargar desde BBDD
@@ -85,8 +84,6 @@ export const Profile = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  console.log(profileInfo);
-
   if (!loggedProfile || !user) return;
 
   if (!profileInfo) {
@@ -115,9 +112,7 @@ export const Profile = () => {
       <div className='profile-page'>
         <div className='profile-page__image-container'>
           <img
-            src={
-              loggedProfile.profilePhoto ? loggedProfile.profilePhoto : dogUser
-            }
+            src={profileInfo.profilePhoto ? profileInfo.profilePhoto : dogUser}
             alt='Profile picture of the dog'
             className='profile-page__image'
           />
