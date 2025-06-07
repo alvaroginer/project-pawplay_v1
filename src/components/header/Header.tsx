@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import { useState, useContext } from "react";
 import { NavigationMenu } from "../navigationMenu/NavigationMenu";
 import { Button } from "../button/Button";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import "../../index.css";
 import "./Header.css";
 import logo from "../../imgs/Logo-black.svg";

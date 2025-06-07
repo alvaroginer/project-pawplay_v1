@@ -13,7 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState, useContext } from "react";
 import { transformFileToDataUrl } from "../../functions/Functions";
 import { useNavigate } from "react-router";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { updateUserProfiles } from "../../dataBase/services/updateFunctions";
 import { toast } from "react-toastify";
 import imageCompression from "browser-image-compression";

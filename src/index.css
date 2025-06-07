@@ -159,10 +159,13 @@
 body {
   font-family: var(--font-family);
   margin: 0;
-  padding-inline: 16px;
   position: relative;
   right: auto;
   left: auto;
+}
+
+.outlet-container {
+  padding-inline: 16px;
 }
 
 /* Width */
@@ -358,12 +361,7 @@ body {
 .filter-container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 }
-
-/* .filter-container--buttons::-webkit-scrollbar {
-  display: none; 
-} */
 
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
@@ -432,7 +430,7 @@ body {
 
 /* Media Queries */
 @media screen and (width>= 500px) {
-  body {
+  .outlet-container {
     padding-inline: var(--space-24);
   }
 }

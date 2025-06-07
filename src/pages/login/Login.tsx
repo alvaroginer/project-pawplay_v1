@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Input } from "../../components/input/Input";
 import { Button } from "../../components/button/Button";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../dataBase/firebase";

@@ -13,7 +13,7 @@ import {
 } from "../../functions/Functions";
 import { ProfileData } from "../../types";
 import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
 import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
 import "./Event.css";
@@ -31,17 +31,14 @@ import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
-  //const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
-
-  // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
-
   const { user, loggedProfile } = useContext(AuthContext);
 
   //Params para la url
   const { eventId } = useParams();
   const paramsStr: string = eventId ?? "";
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -53,83 +50,72 @@ export const Event = () => {
       setEventData(eventSnap);
     };
     fetchEvent();
-  }, [paramsStr]);
-
-  const navigate = useNavigate();
-
-  //Efecto que se ejecuta para encontrar los perfiles del user
-  useEffect(() => {
-    if (!user) {
-      // Si no hay usuario logueado, salimos del efecto
-      console.error("No user is logged in");
-      return;
-    }
 
     // Función asíncrona para obtener los perfiles del usuario logueado
     const fetchProfiles = async () => {
+      if (!user) {
+        console.error("No user is logged in");
+        return;
+      }
       const profilesFromDb = await getProfilesFromUser(user.uid);
 
       if (!profilesFromDb) return;
 
-      setProfiles(profilesFromDb); // Guardamos los perfiles en el estado
+      setProfiles(profilesFromDb);
     };
-
-    // Llamamos a la función para obtener los perfiles
     fetchProfiles();
-  }, [user]);
+  }, [paramsStr, user]);
 
   useEffect(() => {
     const fetchSimilarEvents = async () => {
       if (!eventData) return;
+      if (!loggedProfile) return;
 
-      const similarEventsDb = await getSimilarEventsLimited(eventData.activity);
+      const similarEventsDb = await getSimilarEventsLimited(
+        eventData.activity,
+        loggedProfile?.id
+      );
 
       if (!similarEventsDb) return;
 
       setSimilarEvents(similarEventsDb);
     };
-
     fetchSimilarEvents();
-  }, [eventData]);
+  }, [eventData, loggedProfile]);
 
   // Falta comprobar que el perfil está completo para poder apuntarse
-  console.log(eventData);
-  console.log(loggedProfile);
 
   if (!eventData || !loggedProfile) {
     return null;
   }
 
-
   const hasJoined = eventData.profileIdAsisstant?.includes(loggedProfile.id);
-
-
 
   return (
     <>
-      <div className="event--header">
-        <div className="btn--icon">
-          <img src={arrow} alt="Return Icon" onClick={() => navigate(-1)} />
+      <div className='event--header'>
+        <div className='btn--icon'>
+          <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
         </div>
-        <div className="event--header__buttons">
-          <button className="btn--icon margin--right__10">
-            <img src={share} alt="Share Icon" />
+        <div className='event--header__buttons'>
+          <button className='btn--icon margin--right__10'>
+            <img src={share} alt='Share Icon' />
           </button>
-          <button className="btn--icon">
-            <img src={footprintBlack} alt="Paw-Like Icon" />
+          <button className='btn--icon'>
+            <img src={footprintBlack} alt='Paw-Like Icon' />
           </button>
         </div>
       </div>
-      <div className="event--img-container">
+      <div className='event--img-container'>
         <img
           src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-          alt=""
+          alt=''
         />
       </div>
-      <div className="event--container">
-        <div className="event--info">
-          <h3 className="event--title">{eventData.eventTitle}</h3>
-          <main className="event--container__categories">
+      <div className='event--container'>
+        <div className='event--info'>
+          <h3 className='event--title'>{eventData.eventTitle}</h3>
+          <main className='event--container__categories'>
             <InfoCategoryEvent
               img={calendar}
               reference={{
@@ -137,7 +123,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeDate(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={time}
@@ -146,7 +132,7 @@ export const Event = () => {
                 dbCategory: "dateTime",
               }}
               info={normalizeTime(eventData.dateTime.toDate())}
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={location}
@@ -155,7 +141,7 @@ export const Event = () => {
                 dbCategory: "location",
               }}
               info={eventData.location}
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={tag}
@@ -164,7 +150,7 @@ export const Event = () => {
                 dbCategory: "activity",
               }}
               info={eventData.activity}
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={dog}
@@ -172,10 +158,8 @@ export const Event = () => {
                 title: "Allowed breeds",
                 dbCategory: "breeds",
               }}
-
               info={eventData.breeds}
-
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={availability}
@@ -184,7 +168,7 @@ export const Event = () => {
                 dbCategory: "profileIdAsisstant",
               }}
               info={normalizePlaces(eventData.places)}
-              editable=""
+              editable=''
             />
             <InfoCategoryEvent
               img={description}
@@ -193,16 +177,16 @@ export const Event = () => {
                 dbCategory: "eventDescription",
               }}
               info={eventData.eventDescription}
-              editable=""
+              editable=''
             />
           </main>
         </div>
-        <aside className="event--container__sidebar">
-          <h3 className="event--profile-title">Know your organisator</h3>
-          <div className="profile-card">
+        <aside className='event--container__sidebar'>
+          <h3 className='event--profile-title'>Know your organisator</h3>
+          <div className='profile-card'>
             <ProfileCard eventId={eventData.profileIdCreator} />
           </div>
-          <div className="event--modal">
+          <div className='event--modal'>
             {hasJoined ? (
               <EventUnregister eventData={eventData} profiles={profiles} />
             ) : (
@@ -212,10 +196,10 @@ export const Event = () => {
         </aside>
       </div>
 
-      <div className="event--events-container">
+      <div className='event--events-container'>
         <Accordion
           text={"Similar Events"}
-          profileId=""
+          profileId=''
           defaultOpen={true}
           eventsData={similarEvents}
         />
