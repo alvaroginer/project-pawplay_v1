@@ -12,6 +12,7 @@ interface useFilterProps {
   filteredEventList: EventData[];
   sidebarDisplay: boolean;
   exitAnimation: boolean;
+  isLoading: boolean;
   setDateFilterParams: React.Dispatch<React.SetStateAction<DateFilterProps>>;
   handleSidebarDisplay: (sidebarDisplay: boolean) => void;
   handleFilterParams: (category: string | Date) => void;
@@ -30,6 +31,7 @@ export const useFilter = (): useFilterProps => {
   });
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { loggedProfile } = useContext(AuthContext);
 
   // Llamada a la base de datos
@@ -46,6 +48,7 @@ export const useFilter = (): useFilterProps => {
           const allEventsSnap: EventData[] = await getEvents();
           setEventsList(allEventsSnap);
         }
+        setIsLoading(false);
       } catch {
         console.error("Error while uploading events form DB");
       }
@@ -215,6 +218,7 @@ export const useFilter = (): useFilterProps => {
     filteredEventList,
     sidebarDisplay,
     exitAnimation,
+    isLoading,
     setDateFilterParams,
     handleSidebarDisplay,
     handleFilterParams,
