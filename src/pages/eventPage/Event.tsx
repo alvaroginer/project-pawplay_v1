@@ -31,17 +31,14 @@ import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
-  //const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
-
-  // Estado para guardar los perfiles encontrados
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
-
   const { user, loggedProfile } = useContext(AuthContext);
 
   //Params para la url
   const { eventId } = useParams();
   const paramsStr: string = eventId ?? "";
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -53,44 +50,38 @@ export const Event = () => {
       setEventData(eventSnap);
     };
     fetchEvent();
-  }, [paramsStr]);
-
-  const navigate = useNavigate();
-
-  //Efecto que se ejecuta para encontrar los perfiles del user
-  useEffect(() => {
-    if (!user) {
-      // Si no hay usuario logueado, salimos del efecto
-      console.error("No user is logged in");
-      return;
-    }
 
     // Función asíncrona para obtener los perfiles del usuario logueado
     const fetchProfiles = async () => {
+      if (!user) {
+        console.error("No user is logged in");
+        return;
+      }
       const profilesFromDb = await getProfilesFromUser(user.uid);
 
       if (!profilesFromDb) return;
 
-      setProfiles(profilesFromDb); // Guardamos los perfiles en el estado
+      setProfiles(profilesFromDb);
     };
-
-    // Llamamos a la función para obtener los perfiles
     fetchProfiles();
-  }, [user]);
+  }, [paramsStr, user]);
 
   useEffect(() => {
     const fetchSimilarEvents = async () => {
       if (!eventData) return;
+      if (!loggedProfile) return;
 
-      const similarEventsDb = await getSimilarEventsLimited(eventData.activity);
+      const similarEventsDb = await getSimilarEventsLimited(
+        eventData.activity,
+        loggedProfile?.id
+      );
 
       if (!similarEventsDb) return;
 
       setSimilarEvents(similarEventsDb);
     };
-
     fetchSimilarEvents();
-  }, [eventData]);
+  }, [eventData, loggedProfile]);
 
   // Falta comprobar que el perfil está completo para poder apuntarse
 

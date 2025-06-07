@@ -249,9 +249,18 @@ export const getPastEventsLimited = async (profileId: string) => {
 };
 
 // Get 5 Similar Events
-export const getSimilarEventsLimited = async (eventActivity: string) => {
+export const getSimilarEventsLimited = async (
+  eventActivity: string,
+  profileId: string
+) => {
   const ref = collection(db, "events");
-  const q = query(ref, where("activity", "==", eventActivity), limit(5));
+  const q = query(
+    ref,
+    where("activity", "==", eventActivity),
+    where("profileIdCreator", "!=", profileId),
+    where("dateTime", "<=", new Date()),
+    limit(5)
+  );
   const querySnap = await getDocs(q);
 
   if (!querySnap) {
