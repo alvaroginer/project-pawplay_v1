@@ -28,7 +28,6 @@ export interface ProfileData {
   profileBio: string;
   age?: number;
   breed: string;
-
   size?: "Small" | "Medium" | "Big" | "Any";
   gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];

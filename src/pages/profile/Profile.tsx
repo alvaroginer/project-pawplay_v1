@@ -22,7 +22,6 @@ import {
   getOneUser,
 } from "../../dataBase/services/readFunctions";
 import { useNavigate } from "react-router";
-
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -50,11 +49,12 @@ export const Profile = () => {
     const fetchProfile = async () => {
       if (!loggedProfile) return;
 
-      //Comprobas si el perfil loggeado es el dueño para no tener que cargar desde BBDD
+      //Comprobamos si el perfil loggeado es el dueño para no tener que cargar desde BBDD
       if (profileIdParamsStr === loggedProfile.id) {
         setProfileInfo(loggedProfile);
         return;
       }
+
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
       if (profileSnap === null) {
