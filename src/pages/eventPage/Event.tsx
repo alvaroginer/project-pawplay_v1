@@ -1,38 +1,29 @@
 import { useNavigate, useParams } from "react-router";
 import { EventSignup } from "./EventSignup";
 import { EventUnregister } from "./EventUnregister";
-import { InfoCategoryEvent } from "../../components/infoCategoryEvent/InfoCategoryEvent";
 import { ProfileCard } from "../../components/profileCard/ProfileCard";
 import { Accordion } from "../../components/accordion/Accordion";
 import { getOneEvent } from "../../dataBase/services/readFunctions";
 import { EventData } from "../../types";
-import {
-  normalizeDate,
-  normalizeTime,
-  normalizePlaces,
-} from "../../functions/Functions";
 import { ProfileData } from "../../types";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../hooks/auth/AuthContext";
 import { getProfilesFromUser } from "../../dataBase/services/readFunctions";
 import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
+import { InfoCategorySkeleton } from "../../components/skeletons/infoCategorySkeleton/InfoCategorySkeleton";
+import { EventCategories } from "./EventCategories";
+import { EventImageSkeleton } from "../../components/skeletons/imageSkeletons/EventImageSkeleton";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
 import footprintBlack from "../../imgs/eventPage/footprint-dog.svg";
 import parkImg from "../../imgs/centralPark.jpg";
-import location from "../../imgs/eventPage/location.svg";
-import tag from "../../imgs/eventPage/tag.svg";
-import description from "../../imgs/profilePage/description.svg";
-import time from "../../imgs/eventPage/time.svg";
-import calendar from "../../imgs/eventPage/calendar.svg";
-import dog from "../../imgs/eventPage/dog-side.svg";
-import availability from "../../imgs/eventPage/availability.svg";
 
 export const Event = () => {
   const [eventData, setEventData] = useState<EventData | null>(null);
   const [similarEvents, setSimilarEvents] = useState<EventData[]>([]);
   const [profiles, setProfiles] = useState<ProfileData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { user, loggedProfile } = useContext(AuthContext);
 
   //Params para la url
@@ -48,6 +39,7 @@ export const Event = () => {
         return;
       }
       setEventData(eventSnap);
+      setIsLoading(false);
     };
     fetchEvent();
 
@@ -85,11 +77,11 @@ export const Event = () => {
 
   // Falta comprobar que el perfil está completo para poder apuntarse
 
-  if (!eventData || !loggedProfile) {
+  if (!loggedProfile) {
     return null;
   }
 
-  const hasJoined = eventData.profileIdAsisstant?.includes(loggedProfile.id);
+  const hasJoined = eventData?.profileIdAsisstant?.includes(loggedProfile.id);
 
   return (
     <>
@@ -106,85 +98,42 @@ export const Event = () => {
           </button>
         </div>
       </div>
-      <div className='event--img-container'>
-        <img
-          src={eventData.eventPhoto ? eventData.eventPhoto : parkImg}
-          alt=''
-        />
-      </div>
+      {isLoading ? (
+        <EventImageSkeleton />
+      ) : (
+        <div className='event--img-container'>
+          <img
+            src={eventData?.eventPhoto ? eventData.eventPhoto : parkImg}
+            alt=''
+          />
+        </div>
+      )}
       <div className='event--container'>
         <div className='event--info'>
-          <h3 className='event--title'>{eventData.eventTitle}</h3>
+          <h3 className='event--title'>{eventData?.eventTitle}</h3>
           <main className='event--container__categories'>
-            <InfoCategoryEvent
-              img={calendar}
-              reference={{
-                title: "Day",
-                dbCategory: "dateTime",
-              }}
-              info={normalizeDate(eventData.dateTime.toDate())}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={time}
-              reference={{
-                title: "Start time",
-                dbCategory: "dateTime",
-              }}
-              info={normalizeTime(eventData.dateTime.toDate())}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={location}
-              reference={{
-                title: "Location",
-                dbCategory: "location",
-              }}
-              info={eventData.location}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={tag}
-              reference={{
-                title: "Activity",
-                dbCategory: "activity",
-              }}
-              info={eventData.activity}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={dog}
-              reference={{
-                title: "Allowed breeds",
-                dbCategory: "breeds",
-              }}
-              info={eventData.breeds}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={availability}
-              reference={{
-                title: "Availability",
-                dbCategory: "profileIdAsisstant",
-              }}
-              info={normalizePlaces(eventData.places)}
-              editable=''
-            />
-            <InfoCategoryEvent
-              img={description}
-              reference={{
-                title: "Description",
-                dbCategory: "eventDescription",
-              }}
-              info={eventData.eventDescription}
-              editable=''
-            />
+            {isLoading &&
+              !eventData &&
+              Array.from({ length: 7 }).map((_, i) => (
+                <InfoCategorySkeleton key={i} />
+              ))}
+
+            {!isLoading && eventData && (
+              <EventCategories
+                dateTime={eventData.dateTime}
+                location={eventData.location}
+                activity={eventData.activity}
+                breeds={eventData.breeds}
+                places={eventData.places}
+                eventDescription={eventData.eventDescription}
+              />
+            )}
           </main>
         </div>
         <aside className='event--container__sidebar'>
           <h3 className='event--profile-title'>Know your organisator</h3>
           <div className='profile-card'>
-            <ProfileCard eventId={eventData.profileIdCreator} />
+            {eventData && <ProfileCard eventId={eventData.profileIdCreator} />}
           </div>
           <div className='event--modal'>
             {hasJoined ? (
@@ -204,7 +153,6 @@ export const Event = () => {
           eventsData={similarEvents}
         />
       </div>
-
       {/* Falta el mapa */}
     </>
   );
