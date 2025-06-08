@@ -1,6 +1,6 @@
 .event-card {
-  min-width: var(--space-292);
   max-width: var(--space-292);
+  min-width: var(--space-292);
   /* padding: var(--space-12); */
   background-color: var(--color-white);
   border-radius: var(--space-12);
@@ -9,8 +9,6 @@
 .event-card:hover {
   cursor: pointer;
 }
-
-/* Posible error con el width de las cards */
 
 .event-card--image {
   height: var(--space-268);

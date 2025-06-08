@@ -3,6 +3,7 @@ import { useFilter } from "../hooks/useFilter";
 import { Button } from "../components/button/Button";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { EventData } from "../types";
+import { EventCardSkeleton } from "../components/skeletons/eventCardSkeletons/EventCardSkeleton";
 import filter from "../imgs/filter.svg";
 
 export const EventsMainPage = () => {
@@ -12,6 +13,7 @@ export const EventsMainPage = () => {
     filteredEventList,
     sidebarDisplay,
     exitAnimation,
+    isLoading,
     setDateFilterParams,
     handleSidebarDisplay,
     handleFilterParams,
@@ -38,9 +40,13 @@ export const EventsMainPage = () => {
             </div>
           </div>
           <div className='grid'>
-            {filteredEventList.map((event: EventData) => {
-              return <EventCard key={event.id} event={event} />;
-            })}
+            {isLoading
+              ? Array.from({ length: 15 }).map((_, i) => (
+                  <EventCardSkeleton key={i} />
+                ))
+              : filteredEventList.map((event: EventData) => {
+                  return <EventCard key={event.id} event={event} />;
+                })}
           </div>
         </main>
         {sidebarDisplay && (
