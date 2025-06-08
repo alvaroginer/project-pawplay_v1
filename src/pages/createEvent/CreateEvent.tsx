@@ -96,7 +96,7 @@ export const CreateEvent = () => {
           type: "manual",
           message: "You must upload an image.",
         });
-        toast(`It's necessary to upload an image`);
+        toast.error(`It's necessary to upload an image`);
         setIsLoading(false);
         return;
       }
@@ -209,12 +209,12 @@ export const CreateEvent = () => {
             rules={{
               required: "Title is necessary",
               pattern: {
-                value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,20}$/,
-                message: "Only letters (2–20 characters)",
+                value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,70}$/,
+                message: "Only letters (2–70 characters)",
               },
             }}
             errors={errors.eventTitle?.message}
-            charLimit={20}
+            charLimit={70}
             name="eventTitle"
           />
           <FormField
