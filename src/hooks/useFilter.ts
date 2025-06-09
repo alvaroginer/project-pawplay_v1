@@ -57,6 +57,7 @@ export const useFilter = (): useFilterProps => {
   }, [loggedProfile]);
 
   //Creamos el filterParams
+  // Revisar para que sea una fucnión y llamarla en el primer useEffect
   useEffect(() => {
     const createFilterParams = () => {
       let activityList: Record<string, boolean> = {};
@@ -87,6 +88,7 @@ export const useFilter = (): useFilterProps => {
     createFilterParams();
   }, [eventsList]);
 
+  //Transformar condición de filtro en una variable
   const filteredEventList = useMemo(() => {
     if (
       Object.values(filterParams.activities).includes(true) ||
@@ -178,6 +180,8 @@ export const useFilter = (): useFilterProps => {
     }
   };
 
+  // hacer mejor un return para cuando category no sea string
+  // incluir retunrs
   const handleFilterParams = (category: string | Date) => {
     const categoryIsString = typeof category === "string";
 
