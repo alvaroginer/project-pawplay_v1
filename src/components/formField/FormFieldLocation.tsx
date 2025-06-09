@@ -19,19 +19,6 @@ export const FormFieldLocation = ({
   required,
   errors,
 }: FormFieldLocationProps) => {
-  // const handleRetrieve = (e: any) => {
-  //   const feature = e.features?.[0];
-  //   if (!feature) return;
-
-  //   const address = feature.place_name;
-  //   const [lng, lat] = feature.geometry.coordinates;
-
-  //   onChange({
-  //     address,
-  //     coordinates: new GeoPoint(lat, lng),
-  //   });
-  // };
-
   return (
     <div className='profile-field'>
       <div className='profile-field__img'>
@@ -44,21 +31,25 @@ export const FormFieldLocation = ({
       <div className='profile-field__content'>
         <h4 className='profile-field__label'>Location</h4>
         <div className='profile-field__input-container'>
-          <AddressAutofill accessToken='pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw'>
-            <input
-              id='location'
-              type='text'
-              placeholder='Put the address of the event'
-              autoComplete='shipping address-line1'
-              className={`input ${errors ? "input--error" : ""}`}
-              {...register(label, { required })}
-            />
-          </AddressAutofill>
-
+          <div style={{ width: "100%" }}>
+            <AddressAutofill
+              style={{ display: "block", width: "100%" }}
+              accessToken='pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw'
+            >
+              <input
+                id='location'
+                type='text'
+                placeholder='Put the address of the event'
+                autoComplete='shipping address-line1'
+                className={`input width-100 ${errors ? "input--error" : ""}`}
+                {...register(label, { required })}
+              />
+            </AddressAutofill>
+          </div>
           {errors && (
             <div className='input--help-text__container'>
               <p className='input--help-text input--help-text__error'>
-                This field is required
+                This field is necessary
               </p>
             </div>
           )}

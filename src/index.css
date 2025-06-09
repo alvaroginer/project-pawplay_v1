@@ -196,6 +196,10 @@ body {
   display: inline-block;
 }
 
+.display__block {
+  display: block;
+}
+
 /* Display-Flex */
 .display--flex {
   display: flex;
