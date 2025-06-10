@@ -154,7 +154,7 @@ export const CreateEvent = () => {
 
       navigate(`/event/${eventId}`);
     } catch (error: any) {
-      console.log(`Firebase error (${error.code}): ${error.message}`);
+      console.error(`Firebase error (${error.code}): ${error.message}`);
     }
   };
 
