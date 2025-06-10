@@ -40,6 +40,7 @@ export const CreateEvent = () => {
     handleSubmit,
     setError,
     register,
+    setValue,
     formState: { errors },
   } = useForm<CreateEventProps>();
   const navigate = useNavigate();
@@ -254,6 +255,7 @@ export const CreateEvent = () => {
             label='location'
             required
             errors={errors.location && errors.location}
+            setValue={setValue}
           />
           {/* <FormField
             control={control}
@@ -342,7 +344,7 @@ export const CreateEvent = () => {
             name='eventDescription'
           />
           <div className='create-event__button-container'>
-            <Button className='primary'>
+            <Button className='primary' disabled={isLoading}>
               Publish event
               {isLoading && (
                 <div className='spinner'>

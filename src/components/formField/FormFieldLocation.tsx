@@ -1,14 +1,18 @@
 import { AddressAutofill } from "@mapbox/search-js-react";
-import { FieldErrors, Path, UseFormRegister } from "react-hook-form";
-
-// import { useFormContext, useController } from "react-hook-form";
-// import { GeoPoint } from "firebase/firestore";
-import locationIcon from "../../imgs/eventPage/location.svg";
+import {
+  FieldErrors,
+  Path,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { CreateEventProps } from "../../types";
+import { GeoPoint } from "firebase/firestore";
+import locationIcon from "../../imgs/eventPage/location.svg";
 
 type FormFieldLocationProps = {
   label: Path<CreateEventProps>;
   register: UseFormRegister<CreateEventProps>;
+  setValue: UseFormSetValue<CreateEventProps>;
   required: boolean;
   errors: FieldErrors<CreateEventProps> | undefined;
 };
@@ -18,6 +22,7 @@ export const FormFieldLocation = ({
   register,
   required,
   errors,
+  setValue,
 }: FormFieldLocationProps) => {
   return (
     <div className='profile-field'>
@@ -35,6 +40,20 @@ export const FormFieldLocation = ({
             <AddressAutofill
               style={{ display: "block", width: "100%" }}
               accessToken='pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw'
+              onRetrieve={(e) => {
+                const feature = e.features?.[0];
+                console.log("comprobamos feature", feature);
+                if (!feature) return;
+
+                const address = feature.properties.full_address;
+                const [lon, lat] = feature.geometry.coordinates;
+                const coordinates = new GeoPoint(lat, lon);
+
+                setValue(label, {
+                  address: address,
+                  coordinates: coordinates,
+                });
+              }}
             >
               <input
                 id='location'
