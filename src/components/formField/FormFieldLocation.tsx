@@ -39,22 +39,38 @@ export const FormFieldLocation = ({
           <div style={{ width: "100%" }}>
             <AddressAutofill
               style={{ display: "block", width: "100%" }}
-              accessToken="pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw"
+              accessToken="pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
               onRetrieve={async (e) => {
                 try {
-                  console.log("se ejecuta el onretrieve");
+                  console.log("se ejecuta el onretrieve", e);
                   const feature = e.features?.[0];
                   console.log("comprobamos feature", feature);
-                  if (!feature) return;
 
-                  const address = feature.properties.full_address;
-                  const [lon, lat] = feature.geometry.coordinates;
-                  const coordinates = new GeoPoint(lat, lon);
+                  if (!feature) {
+                    console.log("No feature found");
+                    return;
+                  }
+
+                  const address = feature.properties?.full_address;
+                  const coordinates = feature.geometry?.coordinates;
+
+                  if (!address || !coordinates) {
+                    console.log("Missing address or coordinates");
+                    return;
+                  }
+
+                  const [lon, lat] = coordinates;
+                  const geoPoint = new GeoPoint(lat, lon);
 
                   setValue("location.address", address);
-                  setValue("location.coordinates", coordinates);
-                } catch {
-                  console.error("on retrieve did not work");
+                  setValue("location.coordinates", geoPoint);
+
+                  console.log("Successfully set values:", {
+                    address,
+                    coordinates: geoPoint,
+                  });
+                } catch (error) {
+                  console.error("Error in onRetrieve:", error);
                 }
               }}
             >
