@@ -25,49 +25,52 @@ export const FormFieldLocation = ({
   setValue,
 }: FormFieldLocationProps) => {
   return (
-    <div className='profile-field'>
-      <div className='profile-field__img'>
+    <div className="profile-field">
+      <div className="profile-field__img">
         <img
-          className='profile-field__icon'
+          className="profile-field__icon"
           src={locationIcon}
-          alt='Location Icon'
+          alt="Location Icon"
         />
       </div>
-      <div className='profile-field__content'>
-        <h4 className='profile-field__label'>Location</h4>
-        <div className='profile-field__input-container'>
+      <div className="profile-field__content">
+        <h4 className="profile-field__label">Location</h4>
+        <div className="profile-field__input-container">
           <div style={{ width: "100%" }}>
             <AddressAutofill
               style={{ display: "block", width: "100%" }}
-              accessToken='pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw'
-              onRetrieve={(e) => {
-                const feature = e.features?.[0];
-                console.log("comprobamos feature", feature);
-                if (!feature) return;
+              accessToken="pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw"
+              onRetrieve={async (e) => {
+                try {
+                  console.log("se ejecuta el onretrieve");
+                  const feature = e.features?.[0];
+                  console.log("comprobamos feature", feature);
+                  if (!feature) return;
 
-                const address = feature.properties.full_address;
-                const [lon, lat] = feature.geometry.coordinates;
-                const coordinates = new GeoPoint(lat, lon);
+                  const address = feature.properties.full_address;
+                  const [lon, lat] = feature.geometry.coordinates;
+                  const coordinates = new GeoPoint(lat, lon);
 
-                setValue(label, {
-                  address: address,
-                  coordinates: coordinates,
-                });
+                  setValue("location.address", address);
+                  setValue("location.coordinates", coordinates);
+                } catch {
+                  console.error("on retrieve did not work");
+                }
               }}
             >
               <input
-                id='location'
-                type='text'
-                placeholder='Put the address of the event'
-                autoComplete='shipping address-line1'
+                id="location"
+                type="text"
+                placeholder="Put the address of the event"
+                autoComplete="address-line1"
                 className={`input width-100 ${errors ? "input--error" : ""}`}
                 {...register(label, { required })}
               />
             </AddressAutofill>
           </div>
           {errors && (
-            <div className='input--help-text__container'>
-              <p className='input--help-text input--help-text__error'>
+            <div className="input--help-text__container">
+              <p className="input--help-text input--help-text__error">
                 This field is necessary
               </p>
             </div>
