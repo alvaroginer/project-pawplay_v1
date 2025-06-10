@@ -91,7 +91,7 @@ export const EventCard = ({ event }: { event: EventData }) => {
               </p>
             </div>
             <h3 className='event-card--text__title'>{eventTitle}</h3>
-            <p className='event-card--text__p--gray'>{location}</p>
+            <p className='event-card--text__p--gray'>{location.address}</p>
           </div>
           <div className='event-card--footer'>
             <p className='event-card--text__tag'>

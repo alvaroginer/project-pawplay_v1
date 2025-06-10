@@ -10,6 +10,7 @@ import {
 import {
   transformToTimeStampDate,
   transformFileToDataUrl,
+  transformToCoordinates,
 } from "../../functions/Functions";
 import { Button } from "../../components/button/Button";
 import { FormField } from "../../components/formField/FormField";
@@ -30,6 +31,7 @@ import availability from "../../imgs/eventPage/availability.svg";
 import description from "../../imgs/profilePage/description.svg";
 import ruler from "../../imgs/profilePage/ruler.svg";
 import "./CreateEvent.css";
+import { GeoPoint } from "firebase/firestore";
 
 export const CreateEvent = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -40,7 +42,6 @@ export const CreateEvent = () => {
     handleSubmit,
     setError,
     register,
-    setValue,
     formState: { errors },
   } = useForm<CreateEventProps>();
   const navigate = useNavigate();
@@ -120,6 +121,19 @@ export const CreateEvent = () => {
         return;
       }
 
+      //Comprobación de ubicación
+      const coordinates = await transformToCoordinates(
+        formData.location.address
+      );
+      if (!coordinates) {
+        setError("location", {
+          type: "manual",
+          message: "Incorrect location, try again",
+        });
+        return;
+      }
+      const { latitud, longitud, fullAddress } = coordinates;
+
       //Creamos objeto de evento combinando los datos
       const newEventData: EventData = {
         id: "",
@@ -131,8 +145,8 @@ export const CreateEvent = () => {
         eventDescription: formData.eventDescription,
         dateTime: validDate,
         location: {
-          address: formData.location.address,
-          coordinates: formData.location.coordinates,
+          address: fullAddress,
+          coordinates: new GeoPoint(latitud, longitud),
         },
         places: Number(formData.places),
         size: formData.size,
@@ -159,58 +173,58 @@ export const CreateEvent = () => {
   };
 
   return (
-    <div className="create-event">
+    <div className='create-event'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="create-event__image-section">
-          <div className="create-event__image-wrapper">
+        <div className='create-event__image-section'>
+          <div className='create-event__image-wrapper'>
             {!selectedImage && (
-              <div className="create-event__upload-instructions">
+              <div className='create-event__upload-instructions'>
                 <p>{"Upload an image of the event"}</p>
                 <label
-                  htmlFor="file-input"
-                  className="create-profile__upload-button"
+                  htmlFor='file-input'
+                  className='create-profile__upload-button'
                 >
                   Choose a file
                 </label>
               </div>
             )}
             <input
-              id="file-input"
-              type="file"
-              accept="image/webp,image/jpeg,image/png"
-              className="create-profile__file-input"
+              id='file-input'
+              type='file'
+              accept='image/webp,image/jpeg,image/png'
+              className='create-profile__file-input'
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.files && e.target.files[0]) {
                   setSelectedImage(e.target.files[0]);
                 }
               }}
-              name="eventPhoto"
+              name='eventPhoto'
             />
             {selectedImage && (
               <label
-                htmlFor="file-input"
-                className="create-profile__image-label"
+                htmlFor='file-input'
+                className='create-profile__image-label'
               >
                 <img
                   src={URL.createObjectURL(selectedImage)}
-                  alt="Preview"
-                  className="create-event__image-preview"
+                  alt='Preview'
+                  className='create-event__image-preview'
                 />
               </label>
             )}
           </div>
         </div>
-        <p className="create-event__error-text">
+        <p className='create-event__error-text'>
           {errors.eventPhoto && errors.eventPhoto.message}
         </p>
-        <div className="create-event__form">
+        <div className='create-event__form'>
           <FormField
             control={control}
             iconSrc={title}
-            iconAlt="Event title icon"
-            label="Title"
-            placeholder="Title of the event"
-            editable="string"
+            iconAlt='Event title icon'
+            label='Title'
+            placeholder='Title of the event'
+            editable='string'
             rules={{
               required: "Title is necessary",
               pattern: {
@@ -220,15 +234,15 @@ export const CreateEvent = () => {
             }}
             errors={errors.eventTitle?.message}
             charLimit={50}
-            name="eventTitle"
+            name='eventTitle'
           />
           <FormField
             control={control}
             iconSrc={calendar}
-            iconAlt="Event day icon"
-            label="Day"
-            placeholder="Day / Month / Year"
-            editable="string"
+            iconAlt='Event day icon'
+            label='Day'
+            placeholder='Day / Month / Year'
+            editable='string'
             rules={{
               required: "Day date is necessary",
               pattern: {
@@ -237,105 +251,91 @@ export const CreateEvent = () => {
               },
             }}
             errors={errors.day && errors.day.message}
-            name="day"
+            name='day'
           />
           <FormField
             control={control}
             iconSrc={time}
-            iconAlt="Event start icon"
-            label="Start time"
-            placeholder="Start time"
-            editable="select"
+            iconAlt='Event start icon'
+            label='Start time'
+            placeholder='Start time'
+            editable='select'
             selectData={eventTime}
             rules={{
               required: "This field is necessary",
             }}
             errors={errors.time && errors.time.message}
-            name="time"
+            name='time'
           />
           <FormFieldLocation
             register={register}
-            label="location.address"
+            label='location.address'
             required
             errors={errors.location && errors.location}
-            setValue={setValue}
           />
-          {/* <FormField
-            control={control}
-            iconSrc={location}
-            iconAlt="Event location icon"
-            label="Location"
-            placeholder="Put the address of the event"
-            editable="string"
-            rules={{
-              required: "This field is necessary",
-            }}
-            errors={errors.location && errors.location.message}
-            name="location"
-          /> */}
           <FormField
             control={control}
             iconSrc={tag}
-            iconAlt="Event activity icon"
-            label="Type of activity"
-            placeholder="Select the type of activity"
-            editable="select"
+            iconAlt='Event activity icon'
+            label='Type of activity'
+            placeholder='Select the type of activity'
+            editable='select'
             selectData={typeOfActivity}
             rules={{
               required: "This field is necessary",
             }}
             errors={errors.activity && errors.activity.message}
-            name="activity"
+            name='activity'
           />
           <FormField
             control={control}
             iconSrc={allowedBreeds}
-            iconAlt="Event allowed breeds icon"
-            label="Allowed breeds"
-            placeholder="Select allowed breed"
-            editable="select"
+            iconAlt='Event allowed breeds icon'
+            label='Allowed breeds'
+            placeholder='Select allowed breed'
+            editable='select'
             selectData={dogBreedsType}
             rules={{
               required: "This field is necessary",
             }}
             errors={errors.breeds && errors.breeds.message}
-            name="breeds"
+            name='breeds'
           />
           <FormField
             control={control}
             iconSrc={ruler}
-            iconAlt="Dog size icon"
-            label="Allowed size"
-            placeholder="Select allowed size"
-            editable="select"
+            iconAlt='Dog size icon'
+            label='Allowed size'
+            placeholder='Select allowed size'
+            editable='select'
             selectData={dogSizesType}
             rules={{
               required: "This field is necessary",
             }}
             errors={errors.size && errors.size.message}
-            name="size"
+            name='size'
           />
           <FormField
             control={control}
             iconSrc={availability}
-            iconAlt="Event availability icon"
-            label="Availability"
-            placeholder="Select the maxium places for the event"
-            editable="select"
+            iconAlt='Event availability icon'
+            label='Availability'
+            placeholder='Select the maxium places for the event'
+            editable='select'
             selectData={maximumPlaces}
             rules={{
               required: "This field is necessary",
             }}
             errors={errors.places && errors.places.message}
-            name="places"
+            name='places'
           />
           <FormField
             control={control}
             iconSrc={description}
-            iconAlt="Event description icon"
-            label="Description"
-            placeholder="Description of the event"
-            editable="string"
+            iconAlt='Event description icon'
+            label='Description'
+            placeholder='Description of the event'
+            editable='string'
             rules={{
               required: "Description is necessary",
               pattern: {
@@ -344,14 +344,14 @@ export const CreateEvent = () => {
               },
             }}
             errors={errors.eventDescription && errors.eventDescription.message}
-            name="eventDescription"
+            name='eventDescription'
           />
-          <div className="create-event__button-container">
-            <Button className="primary" disabled={isLoading}>
+          <div className='create-event__button-container'>
+            <Button className='primary' disabled={isLoading}>
               Publish event
               {isLoading && (
-                <div className="spinner">
-                  <div className="spinner__circle"></div>
+                <div className='spinner'>
+                  <div className='spinner__circle'></div>
                 </div>
               )}
             </Button>

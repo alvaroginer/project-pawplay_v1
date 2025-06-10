@@ -13,6 +13,7 @@ import { getSimilarEventsLimited } from "../../dataBase/services/readFunctions";
 import { InfoCategorySkeleton } from "../../components/skeletons/infoCategorySkeleton/InfoCategorySkeleton";
 import { EventCategories } from "./EventCategories";
 import { EventImageSkeleton } from "../../components/skeletons/imageSkeletons/EventImageSkeleton";
+import { MapComponent } from "../../components/mapComponent/MapComponent";
 import "./Event.css";
 import arrow from "../../imgs/eventPage/arrow-left.svg";
 import share from "../../imgs/eventPage/share.svg";
@@ -121,7 +122,7 @@ export const Event = () => {
             {!isLoading && eventData && (
               <EventCategories
                 dateTime={eventData.dateTime}
-                location={eventData.location}
+                location={eventData.location.address}
                 activity={eventData.activity}
                 breeds={eventData.breeds}
                 places={eventData.places}
@@ -144,7 +145,9 @@ export const Event = () => {
           </div>
         </aside>
       </div>
-
+      {eventData?.location.coordinates && (
+        <MapComponent eventLocation={eventData.location.coordinates} />
+      )}
       <div className='event--events-container'>
         <Accordion
           text={"Similar Events"}
