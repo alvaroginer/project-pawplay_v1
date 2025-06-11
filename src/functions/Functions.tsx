@@ -115,3 +115,36 @@ export const transformFileToDataUrl = async (
 export const randomRating = (): number => {
   return Math.floor(Math.random() * 5) + 1;
 };
+
+// -----> Location
+
+export const transformToCoordinates = async (address: string) => {
+  const encodedQuery = encodeURIComponent(address);
+  const token =
+    "pk.eyJ1IjoiYWdpbmVyIiwiYSI6ImNtYm5mcjVuZTFnb3YyanBqaTZkcTUwNW0ifQ.8Xfzx_-MoX4V_uvM_Hhtkw";
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedQuery}.json?access_token=${token}&language=es&country=us&proximity=-74.0060,40.7128&limit=1`;
+
+  try {
+    const mapBoxResponse = await fetch(url);
+
+    if (!mapBoxResponse.ok) {
+      throw new Error(`Error HTTP: ${mapBoxResponse.status}`);
+    }
+
+    const dataJson = await mapBoxResponse.json();
+
+    if (dataJson.features && dataJson.features.length > 0) {
+      const [longitud, latitud] = dataJson.features[0].center;
+      const fullAddress = dataJson.features[0].place_name;
+      console.log("Latitud:", latitud);
+      console.log("Longitud:", longitud);
+
+      return { latitud, longitud, fullAddress };
+    } else {
+      throw new Error("No se encontraron resultados geográficos.");
+    }
+  } catch {
+    console.error("Ocurrió un error al obtener coordenadas:");
+    return null;
+  }
+};

@@ -159,10 +159,13 @@
 body {
   font-family: var(--font-family);
   margin: 0;
-  padding-inline: 16px;
   position: relative;
   right: auto;
   left: auto;
+}
+
+.outlet-container {
+  padding-inline: 16px;
 }
 
 /* Width */
@@ -180,6 +183,10 @@ body {
   position: relative;
 }
 
+.position-auto {
+  position: absolute;
+}
+
 .position-relative--right {
   right: 0;
 }
@@ -191,6 +198,10 @@ body {
 /* -----> Displays */
 .inline-block {
   display: inline-block;
+}
+
+.display__block {
+  display: block;
 }
 
 /* Display-Flex */
@@ -358,12 +369,8 @@ body {
 .filter-container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
 }
-
-/* .filter-container--buttons::-webkit-scrollbar {
-  display: none; 
-} */
 
 .searchbar {
   width: clamp(var(--space-292), 50vw, calc(var(--space-8) * 100));
@@ -430,9 +437,36 @@ body {
   color: hsl(355, 100%, 80%);
 }
 
+.truncate {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Media Queries */
 @media screen and (width>= 500px) {
-  body {
+  .outlet-container {
     padding-inline: var(--space-24);
   }
 }

@@ -16,13 +16,12 @@ import { WarningModal } from "../../components/modals/warningModal/WarningModal"
 import { DotsMenu } from "../../components/dotsMenu/DotsMenu";
 import { useParams } from "react-router";
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import {
   getOneProfile,
   getOneUser,
 } from "../../dataBase/services/readFunctions";
 import { useNavigate } from "react-router";
-
 import arrow from "../../imgs/profilePage/arrow-left.svg";
 import account from "../../imgs/profilePage/account-outline.svg";
 import gender from "../../imgs/profilePage/gender-transgender.svg";
@@ -48,26 +47,24 @@ export const Profile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      //if (profileInfo) return;
       if (!loggedProfile) return;
 
-      //Comprobas si el perfil loggeado es el dueño para no tener que cargar desde BBDD
+      //Comprobamos si el perfil loggeado es el dueño para no tener que cargar desde BBDD
       if (profileIdParamsStr === loggedProfile.id) {
         setProfileInfo(loggedProfile);
         return;
       }
+
       const profileSnap = await getOneProfile(profileIdParamsStr);
 
-      if (profileSnap === null) {
-        return;
-      }
+      if (profileSnap === null) return;
 
       setProfileInfo(profileSnap);
     };
 
     fetchProfile();
-  }, [profileIdParamsStr, loggedProfile]);
 
-  useEffect(() => {
     if (!profileInfo || !loggedProfile) return;
 
     if (loggedProfile.id !== profileInfo.id) return;
@@ -75,21 +72,17 @@ export const Profile = () => {
     const fetchUser = async () => {
       const userSnap = await getOneUser(profileInfo.userUid);
 
-      if (userSnap === null) {
-        return;
-      }
+      if (userSnap === null) return;
 
       setUserInfo(userSnap);
     };
 
     fetchUser();
-  }, [loggedProfile, profileInfo]);
+  }, [profileIdParamsStr, loggedProfile, profileInfo]);
 
   const toggleDeleteModal = () => {
     setisDeleteModalOpen(!isDeleteModalOpen);
   };
-
-  console.log(profileInfo);
 
   if (!loggedProfile || !user) return;
 
@@ -119,9 +112,7 @@ export const Profile = () => {
       <div className='profile-page'>
         <div className='profile-page__image-container'>
           <img
-            src={
-              loggedProfile.profilePhoto ? loggedProfile.profilePhoto : dogUser
-            }
+            src={profileInfo.profilePhoto ? profileInfo.profilePhoto : dogUser}
             alt='Profile picture of the dog'
             className='profile-page__image'
           />

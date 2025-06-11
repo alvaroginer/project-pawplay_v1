@@ -12,7 +12,9 @@ export const App = () => {
     <>
       <Header />
       <ToastContainer transition={Slide} />
-      <Outlet />
+      <div className="outlet-container">
+        <Outlet />
+      </div>
       <Footer />
     </>
   );

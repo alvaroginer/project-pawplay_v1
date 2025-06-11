@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { Input } from "../../components/input/Input";
 import { SignInData, ProfileData, UserData } from "../../types";
 import { Link, useNavigate } from "react-router";
@@ -99,34 +99,34 @@ export const SignUp = () => {
   console.log("Form errors:", errors);
 
   return (
-    <div className="login color-brown-light">
-      <div className="login__arrow-container">
+    <div className='login color-brown-light'>
+      <div className='login__arrow-container'>
         <img
-          className="login__arow"
+          className='login__arow'
           src={arrow}
-          alt="Icon to return"
+          alt='Icon to return'
           onClick={() => navigate(-1)}
         />
       </div>
-      <div className="login__modal">
-        <div className="login__image-container">
+      <div className='login__modal'>
+        <div className='login__image-container'>
           <img
             src={dogImage || "/placeholder.svg"}
-            alt="Dog with glasses using a laptop"
-            className="login__image"
+            alt='Dog with glasses using a laptop'
+            className='login__image'
           />
         </div>
-        <div className="login__content">
-          <h1 className="login__title">PawPlay</h1>
-          <h2 className="login__subtitle">Become a PawPlayer</h2>
+        <div className='login__content'>
+          <h1 className='login__title'>PawPlay</h1>
+          <h2 className='login__subtitle'>Become a PawPlayer</h2>
 
-          <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="login__form-group">
+          <form className='login__form' onSubmit={handleSubmit(onSubmit)}>
+            <div className='login__form-group'>
               <Input
-                label="Your name"
-                placeholder="Put your name"
+                label='Your name'
+                placeholder='Put your name'
                 className={errors.name ? "input--error" : ""}
-                editable="string"
+                editable='string'
                 charLimit={20}
                 {...register("name", {
                   required: "Name is required",
@@ -138,9 +138,9 @@ export const SignUp = () => {
                 helpText={errors.name && errors.name.message}
               />
               <Input
-                label="Your last name"
-                placeholder="Put your last name"
-                editable="string"
+                label='Your last name'
+                placeholder='Put your last name'
+                editable='string'
                 className={errors.lastName ? "input--error" : ""}
                 {...register("lastName", {
                   required: "Last name is required",
@@ -153,10 +153,10 @@ export const SignUp = () => {
                 charLimit={20}
               />
               <Input
-                label="Email"
-                type="email"
-                placeholder="Put your email"
-                editable="string"
+                label='Email'
+                type='email'
+                placeholder='Put your email'
+                editable='string'
                 className={errors.email ? "input--error" : ""}
                 {...register("email", {
                   required: "Email is required",
@@ -168,10 +168,10 @@ export const SignUp = () => {
                 helpText={errors.email && errors.email.message}
               />
               <Input
-                label="Password"
-                type="password"
-                placeholder="Put a strong password"
-                editable="string"
+                label='Password'
+                type='password'
+                placeholder='Put a strong password'
+                editable='string'
                 className={errors.password ? "input--error" : ""}
                 {...register("password", {
                   required: "Password is required",
@@ -184,35 +184,29 @@ export const SignUp = () => {
                 helpText={errors.password && errors.password.message}
               />
             </div>
-            <footer className="signin__footer">
-              <p className="signin__footer-text">
+            <footer className='signin__footer'>
+              <p className='signin__footer-text'>
                 by become a paw player you agree to our{" "}
-                <Link to="service" className="signin__footer-link">
+                <Link to='service' className='signin__footer-link'>
                   Terms of Services
                 </Link>{" "}
                 and{" "}
-                <Link to="privacy" className="signin__footer-link">
+                <Link to='privacy' className='signin__footer-link'>
                   Privacy Policy
                 </Link>
               </p>
             </footer>
 
-            <div className="login__secondary-info">
-              <div className="login__button-wrapper">
-                <Button className="auth" disabled={isSubmitting}>
-                  {" "}
-                  {isSubmitting ? (
-                    <div className="spinner">
-                      <div className="spinner__circle"></div>
-                    </div>
-                  ) : (
-                    "Sign Up"
-                  )}
+            <div className='login__secondary-info'>
+              <div className='login__button-wrapper'>
+                <Button className='auth' disabled={isSubmitting}>
+                  Sign up
+                  {isSubmitting && <span className='loader'></span>}
                 </Button>
               </div>
-              <div className="signin__login">
+              <div className='signin__login'>
                 <span>or</span>{" "}
-                <Link to="/login" className="signin__login-link">
+                <Link to='/login' className='signin__login-link'>
                   Log in
                 </Link>
               </div>

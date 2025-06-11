@@ -1,0 +1,5 @@
+.legal-container {
+  padding-top: var(--space-113);
+  max-width: 1000px;
+  margin: auto;
+}

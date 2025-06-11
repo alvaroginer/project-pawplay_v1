@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router";
 import { CheckListProfile } from "../checkListProfile/CheckListProfile";
-import { AuthContext } from "../../auth/AuthContext";
+import { AuthContext } from "../../hooks/auth/AuthContext";
 import { useContext } from "react";
 import instagram from "../../imgs/instagram.svg";
 import xLogo from "../../imgs/twitter.svg";
@@ -74,10 +74,10 @@ export const Footer = () => {
       <div className="footer__legal">
         <div className="footer__legal-container">
           <div className="footer__legal-links">
-            <NavLink className="footer__legal-link" to="/privacy">
+            <NavLink className="footer__legal-link" to="/privacy-policy">
               Privacy policy
             </NavLink>
-            <NavLink className="footer__legal-link" to="/service">
+            <NavLink className="footer__legal-link" to="/terms-of-service">
               Terms of service
             </NavLink>
             <NavLink className="footer__legal-link" to="/cookies">

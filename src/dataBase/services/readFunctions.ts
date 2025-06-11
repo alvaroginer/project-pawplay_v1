@@ -108,6 +108,36 @@ export const getOneEvent = async (eventId: string) => {
 };
 
 /* -----> Event Querys */
+// Get Events in Home Page
+//No creado por perfil
+//No apuntado
+//Sin like
+//Fecha actualizada
+export const getHomePageEvents = async (
+  profileId: string,
+  profileLikedEvents: string[]
+) => {
+  const ref = collection(db, "events");
+  const q = query(
+    ref,
+    where("dateTime", ">=", new Date()),
+    where("profileIdCreator", "!=", profileId)
+  );
+  const querySnap = await getDocs(q);
+  const typedQuerySnap: EventData[] = querySnap.docs.map(
+    (doc) => doc.data() as EventData
+  );
+
+  const filteredTypedEvents = typedQuerySnap.filter((event) => {
+    if (event.profileIdAsisstant?.includes(profileId)) return false;
+
+    if (profileLikedEvents.includes(event.id)) return false;
+
+    return true;
+  });
+  return filteredTypedEvents;
+};
+
 // Get Upcoming Events
 export const getUpcomingEvents = async (profileId: string) => {
   const ref = collection(db, "events");
@@ -219,9 +249,18 @@ export const getPastEventsLimited = async (profileId: string) => {
 };
 
 // Get 5 Similar Events
-export const getSimilarEventsLimited = async (eventActivity: string) => {
+export const getSimilarEventsLimited = async (
+  eventActivity: string,
+  profileId: string
+) => {
   const ref = collection(db, "events");
-  const q = query(ref, where("activity", "==", eventActivity), limit(5));
+  const q = query(
+    ref,
+    where("activity", "==", eventActivity),
+    where("profileIdCreator", "!=", profileId),
+    where("dateTime", "<=", new Date()),
+    limit(5)
+  );
   const querySnap = await getDocs(q);
 
   if (!querySnap) {
