@@ -125,25 +125,25 @@ export const CreateProfile = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="create-profile">
-          <div className="create-profile__image-section">
-            <div className="create-profile__image-wrapper">
+        <div className='create-profile'>
+          <div className='create-profile__image-section'>
+            <div className='create-profile__image-wrapper'>
               {!selectedImage && (
-                <div className="create-profile__upload-instructions">
+                <div className='create-profile__upload-instructions'>
                   <p>{"Upload an image of your dog"}</p>
                   <label
-                    htmlFor="file-input"
-                    className="create-profile__upload-button"
+                    htmlFor='file-input'
+                    className='create-profile__upload-button'
                   >
                     Choose a file
                   </label>
                 </div>
               )}
               <input
-                id="file-input"
-                type="file"
-                accept="image/webp,image/jpeg,image/png"
-                className="create-profile__file-input"
+                id='file-input'
+                type='file'
+                accept='image/webp,image/jpeg,image/png'
+                className='create-profile__file-input'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   if (e.target.files && e.target.files[0]) {
                     setSelectedImage(e.target.files[0]);
@@ -152,30 +152,30 @@ export const CreateProfile = () => {
               />
               {selectedImage && (
                 <label
-                  htmlFor="file-input"
-                  className="create-profile__image-label"
+                  htmlFor='file-input'
+                  className='create-profile__image-label'
                 >
                   <img
                     src={URL.createObjectURL(selectedImage)}
-                    alt="Preview"
-                    className="create-profile__image-preview"
+                    alt='Preview'
+                    className='create-profile__image-preview'
                   />
                 </label>
               )}
             </div>
-            <p className="create-profile__image--text-error">
+            <p className='create-profile__image--text-error'>
               {errors.profilePhoto && errors.profilePhoto.message}
             </p>
           </div>
-          <div className="create-profile__form">
-            <div className="create-profile__field-group no-padding-top">
+          <div className='create-profile__form'>
+            <div className='create-profile__field-group no-padding-top'>
               <FormField
                 control={control}
                 iconSrc={dog}
-                iconAlt="Dog name icon"
+                iconAlt='Dog name icon'
                 label="Dog's name"
-                placeholder="Write the name of your dog"
-                editable="string"
+                placeholder='Write the name of your dog'
+                editable='string'
                 rules={{
                   required: "Dog name is necessary",
                   pattern: {
@@ -184,78 +184,78 @@ export const CreateProfile = () => {
                   },
                 }}
                 errors={errors.profileName && errors.profileName.message}
-                name="profileName"
+                name='profileName'
                 charLimit={30}
               />
             </div>
-            <div className="create-profile__field-group">
+            <div className='create-profile__field-group'>
               <FormField
                 control={control}
                 iconSrc={medal}
-                iconAlt="Dog breed icon"
-                label="Breed"
-                placeholder="Select the breed of your dog"
-                editable="select"
+                iconAlt='Dog breed icon'
+                label='Breed'
+                placeholder='Select the breed of your dog'
+                editable='select'
                 selectData={dogBreedsType}
                 rules={{
                   required: "The breed of your dog is required",
                 }}
                 errors={errors.breed && errors.breed.message}
-                name="breed"
+                name='breed'
               />
             </div>
-            <div className="create-profile__field-group">
+            <div className='create-profile__field-group'>
               <FormField
                 control={control}
                 iconSrc={timer}
-                iconAlt="Dog age icon"
-                label="Age"
-                placeholder="Select the age of your dog"
-                editable="select"
+                iconAlt='Dog age icon'
+                label='Age'
+                placeholder='Select the age of your dog'
+                editable='select'
                 selectData={dogAgeType}
                 rules={{
                   required: "The age of your dog is required",
                 }}
                 errors={errors.age && errors.age.message}
-                name="age"
+                name='age'
               />
               <FormField
                 control={control}
                 iconSrc={gender}
-                iconAlt="Dog gender icon"
-                label="Gender"
+                iconAlt='Dog gender icon'
+                label='Gender'
                 placeholder="Select your dog's gender"
-                editable="select"
+                editable='select'
                 selectData={dogGenderType}
                 rules={{
                   required: "The gender of your dog is required",
                 }}
                 errors={errors.gender && errors.gender.message}
-                name="gender"
+                name='gender'
               />
               <FormField
                 control={control}
                 iconSrc={ruler}
-                iconAlt="Dog size icon"
-                label="Size"
-                placeholder="Select the size of your dog"
-                editable="select"
+                iconAlt='Dog size icon'
+                label='Size'
+                placeholder='Select the size of your dog'
+                editable='select'
                 selectData={dogSizesType}
                 rules={{
                   required: "The size of your dog is required",
                 }}
                 errors={errors.size && errors.size.message}
-                name="size"
+                name='size'
               />
             </div>
-            <div className="create-profile__field-group">
+            <div className='create-profile__field-group'>
               <FormField
                 control={control}
                 iconSrc={description}
-                iconAlt="Dog description icon"
-                label="Description"
-                placeholder="Description of your dog"
-                editable="string"
+                iconAlt='Dog description icon'
+                label='Description'
+                placeholder='Description of your dog'
+                editable='string'
                 rules={{
                   required: "Description is necessary",
                   pattern: {
@@ -264,17 +264,13 @@ export const CreateProfile = () => {
                   },
                 }}
                 errors={errors.profileBio && errors.profileBio.message}
-                name="profileBio"
+                name='profileBio'
               />
             </div>
-            <div className="create-profile__button-container">
-              <Button className="primary" onClick={handleSubmit}>
+            <div className='create-profile__button-container'>
+              <Button className='primary' onClick={handleSubmit}>
                 Publish profile
-                {isLoading && (
-                  <div className="spinner">
-                    <div className="spinner__circle"></div>
-                  </div>
-                )}
+                {isLoading && <span className='loader'></span>}
               </Button>
             </div>
           </div>

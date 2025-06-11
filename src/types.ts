@@ -1,8 +1,14 @@
 import React from "react";
 import { Timestamp } from "firebase/firestore";
 import { ReactNode } from "react";
+import { GeoPoint } from "firebase/firestore";
 
 // -----> Data of a created Event
+export interface locationData {
+  address: string;
+  coordinates: GeoPoint;
+}
+
 export interface EventData {
   id: string;
   userUid: string;
@@ -12,7 +18,7 @@ export interface EventData {
   eventPhoto?: string;
   eventDescription: string;
   dateTime: Timestamp;
-  location: string;
+  location: locationData;
   places: number;
   size: "Small" | "Medium" | "Big" | "Any";
   activity: "Social events" | "Outdoors" | "Walks" | "Private property" | "Any";

@@ -1,0 +1,13 @@
+.map-container {
+  max-width: 1400px;
+  height: clamp(178px, 40vw, 781px);
+  margin-top: var(--space-40);
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 1036px) {
+  /* Estilos aplicados solo si el viewport tiene 1036px o más */
+  .map-container {
+    margin-top: var(--space-80);
+  }
+}
