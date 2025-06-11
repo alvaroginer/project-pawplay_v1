@@ -228,12 +228,12 @@ export const CreateEvent = () => {
             rules={{
               required: "Title is necessary",
               pattern: {
-                value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,70}$/,
+                value: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]{2,30}$/,
                 message: "Only letters (2–70 characters)",
               },
             }}
             errors={errors.eventTitle?.message}
-            charLimit={50}
+            charLimit={30}
             name='eventTitle'
           />
           <FormField
