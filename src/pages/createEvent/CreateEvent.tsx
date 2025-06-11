@@ -349,11 +349,7 @@ export const CreateEvent = () => {
           <div className='create-event__button-container'>
             <Button className='primary' disabled={isLoading}>
               Publish event
-              {isLoading && (
-                <div className='spinner'>
-                  <div className='spinner__circle'></div>
-                </div>
-              )}
+              {isLoading && <span className='loader'></span>}
             </Button>
           </div>
         </div>

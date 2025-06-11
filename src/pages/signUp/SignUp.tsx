@@ -200,14 +200,8 @@ export const SignUp = () => {
             <div className='login__secondary-info'>
               <div className='login__button-wrapper'>
                 <Button className='auth' disabled={isSubmitting}>
-                  {" "}
-                  {isSubmitting ? (
-                    <div className='spinner'>
-                      <div className='spinner__circle'></div>
-                    </div>
-                  ) : (
-                    "Sign Up"
-                  )}
+                  Sign up
+                  {isSubmitting && <span className='loader'></span>}
                 </Button>
               </div>
               <div className='signin__login'>

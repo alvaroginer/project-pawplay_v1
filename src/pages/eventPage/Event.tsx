@@ -146,7 +146,9 @@ export const Event = () => {
         </aside>
       </div>
       {eventData?.location.coordinates && (
-        <MapComponent eventLocation={eventData.location.coordinates} />
+        <MapComponent
+          eventLocation={eventData.location.coordinates}
+        ></MapComponent>
       )}
       <div className='event--events-container'>
         <Accordion
