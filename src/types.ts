@@ -29,11 +29,11 @@ export interface EventData {
 export interface ProfileData {
   userUid: string;
   id: string;
-  profileName: string;
-  profilePhoto: string;
-  profileBio: string;
+  profileName?: string;
+  profilePhoto?: string;
+  profileBio?: string;
   age?: number;
-  breed: string;
+  breed?: string;
   size?: "Small" | "Medium" | "Big" | "Any";
   gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];
@@ -44,7 +44,7 @@ export interface UserData {
   uid: string;
   mail: string;
   name: string;
-  lastName: string;
+  lastName?: string;
   profiles: string[];
 }
 

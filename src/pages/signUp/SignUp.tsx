@@ -63,10 +63,6 @@ export const SignUp = () => {
       const profileData: ProfileData = {
         userUid: uidKey,
         id: newProfileRef.id,
-        profileName: "",
-        profilePhoto: "",
-        profileBio: "",
-        breed: "",
         likedEvents: [],
       };
 
