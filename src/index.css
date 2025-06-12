@@ -165,7 +165,7 @@ body {
 }
 
 .outlet-container {
-  padding-inline: 16px;
+  margin-inline: 16px;
 }
 
 /* Width */
@@ -467,7 +467,7 @@ body {
 /* Media Queries */
 @media screen and (width>= 500px) {
   .outlet-container {
-    padding-inline: var(--space-24);
+    margin-inline: var(--space-24);
   }
 }
 

@@ -33,7 +33,7 @@ export const ContactUs = () => {
   };
 
   return (
-    <div className="login color-brown-dark">
+    <div className="login color-brown-dark margin--inline">
       <div className="login__modal margin-top">
         <div className="login__image-container">
           <img
