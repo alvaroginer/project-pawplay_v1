@@ -148,3 +148,15 @@ export const transformToCoordinates = async (address: string) => {
     return null;
   }
 };
+
+export const blockScroll = () => {
+  if (window.innerWidth < 995) {
+    document.body.style.overflow = "hidden";
+  }
+};
+
+export const allowScroll = () => {
+  if (window.innerWidth < 995) {
+    document.body.style.overflow = " ";
+  }
+};

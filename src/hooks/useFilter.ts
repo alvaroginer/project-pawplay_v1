@@ -5,6 +5,7 @@ import {
   getEvents,
   getHomePageEvents,
 } from "../dataBase/services/readFunctions";
+import { blockScroll, allowScroll } from "../functions/Functions";
 
 interface useFilterProps {
   filterParams: FilterProps;
@@ -174,9 +175,11 @@ export const useFilter = (): useFilterProps => {
       setTimeout(() => {
         setExitAnimation(false);
         setSidebarDisplay(false);
+        allowScroll();
       }, 400);
     } else {
       setSidebarDisplay(true);
+      blockScroll();
     }
   };
 
