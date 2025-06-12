@@ -1,4 +1,5 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { authKey } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProfileData, UserData } from "../../types";
@@ -26,10 +27,9 @@ export const loginAuthContext = async (userUid: string) => {
 
 export const authGoogle = async () => {
   try {
-    const auth = getAuth();
     const provider = new GoogleAuthProvider();
 
-    const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(authKey, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
     const user = result.user;
