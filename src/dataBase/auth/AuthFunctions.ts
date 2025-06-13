@@ -4,6 +4,7 @@ import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { ProfileData, UserData } from "../../types";
 import { getOneProfile, getOneUser } from "../services/readFunctions";
+import { toast } from "react-toastify";
 
 export const loginAuthContext = async (userUid: string) => {
   const userSnap = await getDoc(doc(db, "users", userUid));
@@ -28,7 +29,6 @@ export const loginAuthContext = async (userUid: string) => {
 export const authGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
-
     const result = await signInWithPopup(authKey, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
@@ -64,6 +64,7 @@ export const authGoogle = async () => {
       };
 
       await setDoc(newProfileRef, newProfileData);
+      toast(`Hi ${user.displayName}, welcome to PawPlay!`);
 
       return { userData: newUserData, profileData: newProfileData };
     }
@@ -82,6 +83,7 @@ export const authGoogle = async () => {
     console.log("Usuario autenticado:", user);
     console.log("Token de acceso:", token);
 
+    toast(`Hi ${firstProfileSnap.profileName}, welcome back!`);
     return {
       userData: firstUserSnap,
       profileData: firstProfileSnap,

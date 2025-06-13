@@ -268,7 +268,12 @@ export const CreateProfile = () => {
               />
             </div>
             <div className='create-profile__button-container'>
-              <Button className='primary' onClick={handleSubmit}>
+              <Button
+                className='primary'
+                onClick={handleSubmit}
+                type='submit'
+                disabled={isLoading}
+              >
                 Publish profile
                 {isLoading && <span className='loader'></span>}
               </Button>

@@ -7,6 +7,7 @@ export const Button = ({
   onClick,
   children,
   disabled,
+  type = "button",
 }: ButtonProps) => {
   let buttonType: string;
   switch (className) {
@@ -50,6 +51,7 @@ export const Button = ({
       onClick={onClick}
       className={`btn ${buttonType}`}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>

@@ -347,7 +347,7 @@ export const CreateEvent = () => {
             name='eventDescription'
           />
           <div className='create-event__button-container'>
-            <Button className='primary' disabled={isLoading}>
+            <Button className='primary' type='submit' disabled={isLoading}>
               Publish event
               {isLoading && <span className='loader'></span>}
             </Button>

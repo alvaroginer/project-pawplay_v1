@@ -86,6 +86,7 @@ export interface ButtonProps {
   children: ReactNode;
   onClick?: (value: any) => void;
   disabled?: boolean;
+  type?: "submit" | "button" | "reset";
 }
 
 // -----> Sidebar
