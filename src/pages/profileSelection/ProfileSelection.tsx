@@ -10,7 +10,7 @@ import "./ProfileSelection.css";
 
 export const ProfileSelection = () => {
   const [userProfiles, setUserProfiles] = useState<ProfileData[]>();
-  const { user } = useContext(AuthContext);
+  const { user, loggedProfile, login } = useContext(AuthContext);
 
   useEffect(() => {
     if (!user) return;
@@ -32,21 +32,33 @@ export const ProfileSelection = () => {
     fetchUserProfiles();
   }, [user]);
 
+  const logInProfile = (profile: ProfileData) => {
+    if (!user) return;
+    login(user, profile);
+    toast(`You are now logged with this profile`);
+  };
+
   if (!userProfiles) return;
 
   return (
-    <div className="profile-selection">
-      <div className="profile-selection__info">
-        <p className="profile-selection__title">Select a profile</p>
-        <p className="profile-selection__text">
+    <div className='profile-selection'>
+      <div className='profile-selection__info'>
+        <p className='profile-selection__title'>Select a profile</p>
+        <p className='profile-selection__text'>
           Manage and select profiles for your dogs. Each one lets you join
           events, connect with others, and track their activity. Got a new dog?
           Just create a profile.
         </p>
       </div>
-      <div className="profile-selection__profiles-container">
+      <div className='profile-selection__profiles-container'>
         {userProfiles.map((profile, index) => (
-          <ProfileCard key={index} eventId={profile.id} />
+          <div onClick={() => logInProfile(profile)}>
+            <ProfileCard
+              key={index}
+              eventId={profile.id}
+              loggedIn={loggedProfile?.id === profile.id}
+            />
+          </div>
         ))}
         <AddDogButton />
       </div>
