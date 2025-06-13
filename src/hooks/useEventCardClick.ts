@@ -34,6 +34,7 @@ export const useEventCardClick = (): useEventCardClickProps => {
   };
 
   const handleLike = async (hasLike: boolean, id: string) => {
+    console.log("funcion handleLike");
     if (loggedProfile === null) return;
 
     if (!hasLike) {
