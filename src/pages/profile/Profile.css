@@ -84,6 +84,11 @@
   padding: 40px 0px;
 }
 
+.buttons--wrapper {
+  display: flex;
+  gap: var(--space-18);
+}
+
 @media screen and (width <= 1100px) {
   .profile-page {
     flex-direction: column;
