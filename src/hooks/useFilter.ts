@@ -5,7 +5,7 @@ import {
   getEvents,
   getHomePageEvents,
 } from "../dataBase/services/readFunctions";
-import { blockScroll, allowScroll } from "../functions/Functions";
+import { blockXOverflow, allowXOverflow } from "../functions/Functions";
 
 interface useFilterProps {
   filterParams: FilterProps;
@@ -41,8 +41,7 @@ export const useFilter = (): useFilterProps => {
       try {
         if (loggedProfile) {
           const specificEventsSnap: EventData[] = await getHomePageEvents(
-            loggedProfile.id,
-            loggedProfile.likedEvents
+            loggedProfile.id
           );
           setEventsList(specificEventsSnap);
         } else {
@@ -175,11 +174,11 @@ export const useFilter = (): useFilterProps => {
       setTimeout(() => {
         setExitAnimation(false);
         setSidebarDisplay(false);
-        allowScroll();
+        allowXOverflow();
       }, 400);
     } else {
+      blockXOverflow();
       setSidebarDisplay(true);
-      blockScroll();
     }
   };
 

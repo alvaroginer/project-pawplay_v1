@@ -113,16 +113,9 @@ export const getOneEvent = async (eventId: string) => {
 //No apuntado
 //Sin like
 //Fecha actualizada
-export const getHomePageEvents = async (
-  profileId: string,
-  profileLikedEvents: string[]
-) => {
+export const getHomePageEvents = async (profileId: string) => {
   const ref = collection(db, "events");
-  const q = query(
-    ref,
-    where("dateTime", ">=", new Date()),
-    where("profileIdCreator", "!=", profileId)
-  );
+  const q = query(ref, where("dateTime", ">=", new Date()));
   const querySnap = await getDocs(q);
   const typedQuerySnap: EventData[] = querySnap.docs.map(
     (doc) => doc.data() as EventData
@@ -131,11 +124,13 @@ export const getHomePageEvents = async (
   const filteredTypedEvents = typedQuerySnap.filter((event) => {
     if (event.profileIdAsisstant?.includes(profileId)) return false;
 
-    if (profileLikedEvents.includes(event.id)) return false;
-
     return true;
   });
-  return filteredTypedEvents;
+  const sortedTypedEvents = filteredTypedEvents.sort(
+    (a, b) => a.dateTime.toMillis() - b.dateTime.toMillis()
+  );
+
+  return sortedTypedEvents;
 };
 
 // Get Upcoming Events
