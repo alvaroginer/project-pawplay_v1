@@ -35,39 +35,39 @@ export const EventCard = ({ event }: { event: EventData }) => {
   const { loggedProfile, setIsWarningModal, isWarningModal } =
     useContext(AuthContext);
   const eventDateTime = dateTime.toDate();
-  const hasLike = loggedProfile && loggedProfile?.likedEvents.includes(id);
+  const hasLike = !!(loggedProfile && loggedProfile.likedEvents.includes(id));
 
   return (
     <>
       {isWarningModal.warningSignUp && (
         <WarningModal
-          modalText='Paws up! You need to log in before you can join the pack.'
-          buttonText='Sign or Log in'
+          modalText="Paws up! You need to log in before you can join the pack."
+          buttonText="Sign up or Log in"
           onClose={() => handleEventCardClick(id)}
         />
       )}
       {isWarningModal.warningDelete && <DeleteEventWarningModal id={id} />}
       <div
-        className='event-card grid-cell margin--bt__24'
+        className="event-card grid-cell margin--bt__24"
         onClick={() => handleEventCardClick(id)}
       >
-        <div className='event-card--image position-relative'>
-          <img src={eventPhoto !== null ? eventPhoto : park} alt='Park' />
-          <div className='fav-button--container'>
+        <div className="event-card--image position-relative">
+          <img src={eventPhoto !== null ? eventPhoto : park} alt="Park" />
+          <div className="fav-button--container">
             <button
-              className='fav-button'
-              onClick={
-                loggedProfile && hasLike
-                  ? (e) => {
-                      e.stopPropagation();
-                      handleLike(hasLike, id);
-                    }
-                  : () =>
-                      setIsWarningModal({
-                        ...isWarningModal,
-                        warningSignUp: true,
-                      })
-              }
+              className="fav-button"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!loggedProfile) {
+                  setIsWarningModal({
+                    ...isWarningModal,
+                    warningSignUp: true,
+                  });
+                  return;
+                }
+
+                handleLike(hasLike, id);
+              }}
             >
               <LikeIcon
                 className={
@@ -80,27 +80,27 @@ export const EventCard = ({ event }: { event: EventData }) => {
             )}
           </div>
         </div>
-        <div className='event-card--bottom-section'>
-          <div className='event-card--text'>
-            <div className='display--flex gap__4'>
-              <p className='event-card--text__date'>
+        <div className="event-card--bottom-section">
+          <div className="event-card--text">
+            <div className="display--flex gap__4">
+              <p className="event-card--text__date">
                 {normalizeDate(eventDateTime)}
               </p>
-              <p className='event-card--text__date'>
+              <p className="event-card--text__date">
                 {normalizeTime(eventDateTime)}
               </p>
             </div>
-            <h3 className='event-card--text__title'>{eventTitle}</h3>
-            <p className='event-card--text__p--gray truncate'>
+            <h3 className="event-card--text__title">{eventTitle}</h3>
+            <p className="event-card--text__p--gray truncate">
               {location.address}
             </p>
           </div>
-          <div className='event-card--footer'>
-            <p className='event-card--text__tag'>
+          <div className="event-card--footer">
+            <p className="event-card--text__tag">
               {capitalizeFirstLetter(activity)}
             </p>
-            <div className='event-card--rating'>
-              <img src={bone} alt='Bone Icon' />
+            <div className="event-card--rating">
+              <img src={bone} alt="Bone Icon" />
               <p>{randomRating()}</p>
             </div>
           </div>
