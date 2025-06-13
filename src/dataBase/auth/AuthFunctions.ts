@@ -73,7 +73,7 @@ export const authGoogle = async () => {
       return null;
     }
 
-    const firstProfileSnap = await getOneProfile(user.uid);
+    const firstProfileSnap = await getOneProfile(firstUserSnap.profiles[0]);
     if (!firstProfileSnap) {
       console.warn("Profile not found");
       return null;
