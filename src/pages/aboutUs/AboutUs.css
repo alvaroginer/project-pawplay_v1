@@ -108,6 +108,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-inline: -24px;
 }
 
 .team-section__wrapper {
