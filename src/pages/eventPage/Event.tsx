@@ -158,7 +158,6 @@ export const Event = () => {
           eventsData={similarEvents}
         />
       </div>
-      {/* Falta el mapa */}
     </>
   );
 };

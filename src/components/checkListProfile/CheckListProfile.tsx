@@ -125,9 +125,9 @@ export const CheckListProfile = () => {
             </div>
           </div>
           <div className="checklist__items-container">
-            {checklistItems.map((item) => {
+            {checklistItems.map((item, index) => {
               return (
-                <Link to={`/profile/${loggedProfile.id}`}>
+                <Link to={`/profile/${loggedProfile.id}`} key={index}>
                   <div className="checklist__item">
                     <div className="checklist__item-content">
                       <svg

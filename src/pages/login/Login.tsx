@@ -3,22 +3,21 @@ import { Input } from "../../components/input/Input";
 import { Button } from "../../components/button/Button";
 import { AuthContext } from "../../hooks/auth/AuthContext";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../dataBase/firebase";
+import { loginAuthContext } from "../../dataBase/auth/AuthFunctions";
 //import { ForgotPasswordModal } from "../../components/modals/forgotPassword/ForgotPasswordModal";
-import { LogInData, UserData } from "../../types";
+import { LogInData } from "../../types";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
+import { GoogleButton } from "./googleButton/GoogleButton";
+import { authGoogle } from "../../dataBase/auth/AuthFunctions";
 import "./Login.css";
 import dogImage from "../../imgs/dog-login.png";
 import arrow from "../../imgs/profilePage/arrow-left.svg";
-import { getOneProfile } from "../../dataBase/services/readFunctions";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -42,25 +41,13 @@ export const Login = () => {
       const user = userCredential.user;
       const uid = user.uid;
 
-      const userSnap = await getDoc(doc(db, "users", uid));
+      const logInData = await loginAuthContext(uid);
+      if (!logInData) return;
 
-      if (!userSnap.exists()) {
-        console.warn("User not found");
-        return;
-      }
+      const { userData, profileData } = logInData;
+      //Actualizamos useState/useContext de LogIn
+      login(userData, profileData);
 
-      const userData = userSnap.data() as UserData;
-
-      const firstProfileSnap = await getOneProfile(userData.uid);
-      if (!firstProfileSnap) {
-        console.warn("Profile not found");
-        return;
-      }
-
-      //Falta logear el perfil, habrá que seleccionar el último que se escogió
-      login(userData, firstProfileSnap);
-
-      //Actualizar useState/useContext de LogIn
       console.log("Login successful!");
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -77,6 +64,28 @@ export const Login = () => {
         });
         setIsLoading(false);
       }
+    }
+  };
+
+  const onGoogleSubmit = async () => {
+    try {
+      //Autenticación con Google
+      const logInData = await authGoogle();
+
+      setIsLoading(true);
+      if (!logInData) {
+        setIsLoading(false);
+        console.log("Error in Google register");
+        return;
+      }
+
+      const { userData, profileData } = logInData;
+      login(userData, profileData);
+
+      navigate("/");
+      setIsLoading(false);
+    } catch {
+      console.error("An error ocurred with the Google login");
     }
   };
 
@@ -150,9 +159,11 @@ export const Login = () => {
 
             <div className='login__secondary-info'>
               <div className='login__button-wrapper'>
-                <Button className='auth'>
+                <Button className='auth' type='submit'>
                   Login{isLoading && <span className='loader'></span>}
                 </Button>
+                <p>or</p>
+                <GoogleButton onClick={onGoogleSubmit} />
               </div>
               <Link to='/signup' className=' form__sign-in-link'>
                 <span className='login__or-text'>or</span> Sign Up
@@ -171,7 +182,6 @@ export const Login = () => {
           </form>
         </div>
       </div>
-
       {/* {showForgotPassword && (
         <ForgotPasswordModal
           email={email}
@@ -179,6 +189,7 @@ export const Login = () => {
           onClose={() => setShowForgotPassword(false)}
         />
       )} */}
+      <div></div>
     </div>
   );
 };

@@ -63,10 +63,6 @@ export const SignUp = () => {
       const profileData: ProfileData = {
         userUid: uidKey,
         id: newProfileRef.id,
-        profileName: "",
-        profilePhoto: "",
-        profileBio: "",
-        breed: "",
         likedEvents: [],
       };
 
@@ -199,7 +195,7 @@ export const SignUp = () => {
 
             <div className='login__secondary-info'>
               <div className='login__button-wrapper'>
-                <Button className='auth' disabled={isSubmitting}>
+                <Button type='submit' className='auth' disabled={isSubmitting}>
                   Sign up
                   {isSubmitting && <span className='loader'></span>}
                 </Button>
