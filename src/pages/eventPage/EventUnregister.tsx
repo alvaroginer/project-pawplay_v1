@@ -8,6 +8,7 @@ import { useState } from "react";
 export const EventUnregister = ({
   eventData,
   profiles,
+  handleEventSignUp,
 }: EventUnregisterProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,11 +27,14 @@ export const EventUnregister = ({
         eventData?.profileIdAsisstant?.includes(profile.id)
       );
 
-      await Promise.all(
-        joinedProfiles.map((profile) =>
-          eventUnregister(profile.id, eventData.id)
-        )
+      const unrolledProfiles = await Promise.all(
+        joinedProfiles.map(async (profile) => {
+          await eventUnregister(profile.id, eventData.id);
+          return profile.id;
+        })
       );
+
+      handleEventSignUp(false, unrolledProfiles);
       //Quitamos el spinner
       setIsLoading(false);
 
