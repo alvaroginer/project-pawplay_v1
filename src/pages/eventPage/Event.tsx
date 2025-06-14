@@ -96,9 +96,7 @@ export const Event = () => {
 
   // Falta comprobar que el perfil está completo para poder apuntarse
 
-  if (!loggedProfile) {
-    return null;
-  }
+  if (!loggedProfile) return null;
 
   const hasJoined = eventData?.profileIdAsisstant?.includes(loggedProfile.id);
 

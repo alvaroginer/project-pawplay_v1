@@ -32,6 +32,7 @@ export const EventSignup = ({
 
   //Función para apuntar varios perfiles seleccionados al evento
   const handleJoinMultipleProfiles = async () => {
+    console.log("entra aquí");
     if (!eventData) return;
     if (selectedProfiles.length === 0) return;
 
@@ -59,7 +60,10 @@ export const EventSignup = ({
 
   return (
     <>
-      <Button onClick={handleJoinMultipleProfiles} className='primary'>
+      <Button
+        onClick={() => setIsSelectProfileModalOpen(true)}
+        className='primary'
+      >
         Join Us
       </Button>
       {isSelectProfileModalOpen && (
@@ -79,7 +83,7 @@ export const EventSignup = ({
           ))}
           <div className='display--flex justify-content--center'>
             <Button className='primary' onClick={handleJoinMultipleProfiles}>
-              Join us
+              Join the event
             </Button>
           </div>
         </WarningModal>
