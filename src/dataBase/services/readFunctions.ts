@@ -6,6 +6,7 @@ import {
   query,
   where,
   limit,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import {
@@ -109,10 +110,6 @@ export const getOneEvent = async (eventId: string) => {
 
 /* -----> Event Querys */
 // Get Events in Home Page
-//No creado por perfil
-//No apuntado
-//Sin like
-//Fecha actualizada
 export const getHomePageEvents = async (profileId: string) => {
   const ref = collection(db, "events");
   const q = query(ref, where("dateTime", ">=", new Date()));
@@ -139,9 +136,11 @@ export const getUpcomingEvents = async (profileId: string) => {
   const q = query(
     ref,
     where("profileAssistant", "array-contains", profileId),
-    where("dateTime", ">=", new Date())
+    where("dateTime", ">=", new Date()),
+    orderBy("dateTime", "asc")
   );
   const querySnap = await getDocs(q);
+
   const typedQuerySnap: EventData[] = querySnap.docs.map(
     (doc) => doc.data() as EventData
   );
@@ -177,7 +176,8 @@ export const getPastEvents = async (profileId: string) => {
   const q = query(
     ref,
     where("profileAssistant", "array-contains", profileId),
-    where("dateTime", "<=", new Date())
+    where("dateTime", "<=", new Date()),
+    orderBy("dateTime", "asc")
   );
   const querySnap = await getDocs(q);
   const typedQuerySnap: EventData[] = querySnap.docs.map(
@@ -189,18 +189,26 @@ export const getPastEvents = async (profileId: string) => {
 /* -----> Limited Querys */
 // Get 4 Upcoming Events
 export const getUpcomingEventsLimited = async (profileId: string) => {
-  const ref = collection(db, "events");
-  const q = query(
-    ref,
-    where("profileAssistant", "array-contains", profileId),
-    where("dateTime", ">=", new Date()),
-    limit(4)
-  );
-  const querySnap = await getDocs(q);
-  const typedQuerySnap: EventData[] = querySnap.docs.map(
-    (doc) => doc.data() as EventData
-  );
-  return typedQuerySnap;
+  try {
+    const ref = collection(db, "events");
+
+    const q = query(
+      ref,
+      where("profileIdAsisstant", "array-contains", profileId),
+      where("dateTime", ">=", new Date()),
+      orderBy("dateTime", "asc"),
+      limit(4)
+    );
+    const querySnap = await getDocs(q);
+    const typedQuerySnap: EventData[] = querySnap.docs.map(
+      (doc) => doc.data() as EventData
+    );
+    console.log(typedQuerySnap);
+    return typedQuerySnap;
+  } catch (error) {
+    console.error("🔥 Error en getUpcomingEvents:", error);
+    throw error;
+  }
 };
 
 // Get 4 Hosted Events
@@ -229,18 +237,24 @@ export const getFavouriteEventsLimited = async (likedEvents: string[]) => {
 
 // Get 4 Past Events
 export const getPastEventsLimited = async (profileId: string) => {
-  const ref = collection(db, "events");
-  const q = query(
-    ref,
-    where("profileAssistant", "array-contains", profileId),
-    where("dateTime", "<=", new Date()),
-    limit(4)
-  );
-  const querySnap = await getDocs(q);
-  const typedQuerySnap: EventData[] = querySnap.docs.map(
-    (doc) => doc.data() as EventData
-  );
-  return typedQuerySnap;
+  try {
+    const ref = collection(db, "events");
+    const q = query(
+      ref,
+      where("profileAssistant", "array-contains", profileId),
+      where("dateTime", "<=", new Date()),
+      orderBy("dateTime", "asc"),
+      limit(4)
+    );
+    const querySnap = await getDocs(q);
+    const typedQuerySnap: EventData[] = querySnap.docs.map(
+      (doc) => doc.data() as EventData
+    );
+    return typedQuerySnap;
+  } catch (error) {
+    console.error("🔥 Error en getPastEvents:", error);
+    throw error;
+  }
 };
 
 // Get 5 Similar Events

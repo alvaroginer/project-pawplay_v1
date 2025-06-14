@@ -95,53 +95,54 @@ export const Profile = () => {
 
   return (
     <>
-      <div className="profile-page__actions1">
+      <div className='profile-page__actions1'>
         <img
           src={arrow}
-          alt="Icon arrow to go back"
-          className="profile-page__back-icon"
+          alt='Icon arrow to go back'
+          className='profile-page__back-icon'
           onClick={() => navigate(-1)}
         />
         {isProfileCreator && (
-          <DotsMenu className="">
-            <p className="profile-page__option" onClick={toggleDeleteModal}>
+          <DotsMenu className=''>
+            <p className='profile-page__option' onClick={toggleDeleteModal}>
               Delete profile
             </p>
           </DotsMenu>
         )}
       </div>
-      <div className="profile-page">
-        <div className="profile-page__image-container">
+      <div className='profile-page'>
+        <div className='profile-page__image-container'>
           <img
             src={profileInfo.profilePhoto ? profileInfo.profilePhoto : dogUser}
-            alt="Profile picture of the dog"
-            className="profile-page__image"
+            alt='Profile picture of the dog'
+            className='profile-page__image'
           />
         </div>
 
-        <div className="profile-page__details-container">
-          <div className="profile-page__actions2">
+        <div className='profile-page__details-container'>
+          <div className='profile-page__actions2'>
             <img
               src={arrow}
-              alt="Icon arrow to go back"
-              className="profile-page__back-icon"
+              alt='Icon arrow to go back'
+              className='profile-page__back-icon'
               onClick={() => navigate(-1)}
             />
             {isProfileCreator && (
-              <DotsMenu className="">
-                <p className="profile-page__option" onClick={toggleDeleteModal}>
+              <DotsMenu className=''>
+                <p className='profile-page__option' onClick={toggleDeleteModal}>
                   Delete profile
                 </p>
               </DotsMenu>
             )}
           </div>
-          <div className="profile-page__info">
-            <p className="profile-page__info-name">
+          <div className='profile-page__info'>
+            <p className='profile-page__info-name'>
               {isProfileCreator
                 ? `My profile`
-                : `${capitalizeFirstLetter(profileInfo.profileName)}'s profile`}
+                : profileInfo.profileName &&
+                  `${capitalizeFirstLetter(profileInfo.profileName)}'s profile`}
             </p>
-            <div className="profile-page__info_container">
+            <div className='profile-page__info_container'>
               {isProfileCreator && (
                 <InfoCategoryProfile
                   img={dogIcon}
@@ -175,7 +176,7 @@ export const Profile = () => {
                 selectData={dogBreedsType}
               />
             </div>
-            <div className="profile-page__info_container">
+            <div className='profile-page__info_container'>
               <InfoCategoryProfile
                 img={account}
                 reference={{
@@ -192,7 +193,7 @@ export const Profile = () => {
                 editable={isProfileCreator ? "string" : ""}
               />
             </div>
-            <div className="profile-page__info_container">
+            <div className='profile-page__info_container'>
               <InfoCategoryProfile
                 img={timer}
                 reference={{
@@ -224,7 +225,7 @@ export const Profile = () => {
                 selectData={dogSizesType}
               />
             </div>
-            <div className="profile-page__info_container margin--bt__200">
+            <div className='profile-page__info_container margin--bt__200'>
               <InfoCategoryProfile
                 img={description}
                 reference={{
@@ -235,7 +236,7 @@ export const Profile = () => {
                 editable={isProfileCreator ? "string" : ""}
               />
             </div>
-            <div className="accordion-container">
+            <div className='accordion-container'>
               {loggedProfile.id === profileInfo.id && (
                 <>
                   <UpcomingEventsAccordion profileId={profileInfo.id} />
@@ -253,13 +254,13 @@ export const Profile = () => {
 
       {isDeleteModalOpen && (
         <WarningModal
-          modalText="Are you sure you want to delete this lovely dog profile?"
-          buttonText="Yes, I am sure"
+          modalText='Are you sure you want to delete this lovely dog profile?'
+          buttonText='Yes, I am sure'
           onClose={() => setisDeleteModalOpen(false)}
         >
-          <div className="buttons--wrapper">
-            <Button className="primary">Yes</Button>
-            <Button className="secondary--outlined">No</Button>
+          <div className='buttons--wrapper'>
+            <Button className='primary'>Yes</Button>
+            <Button className='secondary--outlined'>No</Button>
           </div>
         </WarningModal>
       )}
