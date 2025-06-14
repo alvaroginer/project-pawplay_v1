@@ -1,6 +1,6 @@
 import { EventCard } from "../components/eventCard/EventCard";
 import { useFilter } from "../hooks/useFilter";
-import { Button } from "../components/button/Button";
+import { CreateEventButton } from "../components/button/CreateEventButton";
 import { Sidebar } from "../components/sidebar/Sidebar";
 import { EventData } from "../types";
 import { EventCardSkeleton } from "../components/skeletons/eventCardSkeletons/EventCardSkeleton";
@@ -17,6 +17,7 @@ export const EventsMainPage = () => {
     setDateFilterParams,
     handleSidebarDisplay,
     handleFilterParams,
+    setSearchbarContent,
   } = useFilter();
 
   return (
@@ -28,6 +29,14 @@ export const EventsMainPage = () => {
               type='text'
               className='searchbar'
               placeholder='Search the event you want to go'
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const value = event.target.value;
+                if (value.trim().toLocaleLowerCase()) {
+                  setSearchbarContent(value.trim());
+                } else {
+                  setSearchbarContent("");
+                }
+              }}
             />
             <div className='filter-button--container'>
               <div
@@ -61,7 +70,7 @@ export const EventsMainPage = () => {
         )}
       </div>
       <div className='create-event-modal'>
-        <Button className='primary'>Create an event</Button>
+        <CreateEventButton />
       </div>
     </>
   );
