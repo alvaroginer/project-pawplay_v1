@@ -76,6 +76,24 @@ export const Event = () => {
     fetchSimilarEvents();
   }, [eventData, loggedProfile]);
 
+  if (!eventData) return;
+  const handleEventSignUp = (signingIn: boolean, profilesData: string[]) => {
+    if (signingIn) {
+      setEventData({
+        ...eventData,
+        profileIdAsisstant: [
+          ...(eventData.profileIdAsisstant ?? []),
+          ...profilesData,
+        ],
+      });
+    } else {
+      const filteredAssistants = profilesData.filter(
+        (profile) => !user?.profiles.includes(profile)
+      );
+      setEventData({ ...eventData, profileIdAsisstant: filteredAssistants });
+    }
+  };
+
   // Falta comprobar que el perfil está completo para poder apuntarse
 
   if (!loggedProfile) {
@@ -138,9 +156,17 @@ export const Event = () => {
           </div>
           <div className='event--modal'>
             {hasJoined ? (
-              <EventUnregister eventData={eventData} profiles={profiles} />
+              <EventUnregister
+                eventData={eventData}
+                profiles={profiles}
+                handleEventSignUp={handleEventSignUp}
+              />
             ) : (
-              <EventSignup eventData={eventData} profiles={profiles} />
+              <EventSignup
+                eventData={eventData}
+                profiles={profiles}
+                handleEventSignUp={handleEventSignUp}
+              />
             )}
           </div>
         </aside>

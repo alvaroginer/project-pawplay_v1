@@ -186,11 +186,13 @@ interface dbProfileCategory {
 export interface EventSignupProps {
   eventData: EventData | null;
   profiles: ProfileData[];
+  handleEventSignUp: (signingIn: boolean, selectedProfiles: string[]) => void;
 }
 
 export interface EventUnregisterProps {
   eventData: EventData | null;
   profiles: ProfileData[];
+  handleEventSignUp: (signingIn: boolean, selectedProfiles: string[]) => void;
 }
 
 export interface InfoCategoryProps {

@@ -6,7 +6,11 @@ import { EventSignupProps } from "../../types";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
+export const EventSignup = ({
+  eventData,
+  profiles,
+  handleEventSignUp,
+}: EventSignupProps) => {
   const [isSelectProfileModalOpen, setIsSelectProfileModalOpen] =
     useState<boolean>(false);
   const [selectedProfiles, setSelectedProfiles] = useState<string[]>([]);
@@ -37,9 +41,14 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
           eventSignUp(profileId, eventData.id)
         )
       );
+      console.log("pasa el await");
+
+      handleEventSignUp(true, selectedProfiles);
 
       toast.success(
-        `You joined the event with ${selectedProfiles.length} profiles`
+        `You joined the event with ${selectedProfiles.length} ${
+          selectedProfiles.length > 1 ? "profiles" : "profile"
+        }`
       );
       setIsSelectProfileModalOpen(false);
     } catch (error) {
@@ -48,20 +57,9 @@ export const EventSignup = ({ eventData, profiles }: EventSignupProps) => {
     }
   };
 
-  // Funcion para saber si el user tiene un profile o más de uno
-  const handleJoinClick = async () => {
-    if (!eventData) return;
-    if (profiles.length === 1) {
-      await eventSignUp(profiles[0].id, eventData.id);
-      console.log(`Profile with id: ${profiles[0].id}`);
-
-      toast.success("Your pup has joined the event!");
-    } else setIsSelectProfileModalOpen(true);
-  };
-
   return (
     <>
-      <Button onClick={handleJoinClick} className='primary'>
+      <Button onClick={handleJoinMultipleProfiles} className='primary'>
         Join Us
       </Button>
       {isSelectProfileModalOpen && (
