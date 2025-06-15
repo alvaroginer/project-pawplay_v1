@@ -5,7 +5,12 @@ import {
   getEvents,
   getHomePageEvents,
 } from "../dataBase/services/readFunctions";
-import { blockXOverflow, allowXOverflow } from "../functions/Functions";
+import {
+  blockXOverflow,
+  allowXOverflow,
+  blockScroll,
+  allowScroll,
+} from "../functions/Functions";
 
 interface useFilterProps {
   filterParams: FilterProps;
@@ -184,10 +189,12 @@ export const useFilter = (): useFilterProps => {
         setExitAnimation(false);
         setSidebarDisplay(false);
         allowXOverflow();
+        allowScroll();
       }, 400);
     } else {
       blockXOverflow();
       setSidebarDisplay(true);
+      blockScroll();
     }
   };
 
