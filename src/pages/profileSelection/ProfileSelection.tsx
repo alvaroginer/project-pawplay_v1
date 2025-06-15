@@ -5,11 +5,13 @@ import { AuthContext } from "../../hooks/auth/AuthContext";
 import { AddDogButton } from "../../components/addDogButton/AddDogButton";
 import { ProfileData } from "../../types";
 import { toast } from "react-toastify";
+import { ProfileCardSkeleton } from "../../components/skeletons/profileCardSkeleton/ProfileCradSkeleton";
 
 import "./ProfileSelection.css";
 
 export const ProfileSelection = () => {
   const [userProfiles, setUserProfiles] = useState<ProfileData[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { user, loggedProfile, login } = useContext(AuthContext);
 
   useEffect(() => {
@@ -28,6 +30,7 @@ export const ProfileSelection = () => {
       }
 
       setUserProfiles(profilesQuery);
+      setIsLoading(false);
     };
     fetchUserProfiles();
   }, [user]);
@@ -37,8 +40,6 @@ export const ProfileSelection = () => {
     login(user, profile);
     toast(`You are now logged with this profile`);
   };
-
-  if (!userProfiles) return;
 
   return (
     <div className='profile-selection'>
@@ -51,15 +52,19 @@ export const ProfileSelection = () => {
         </p>
       </div>
       <div className='profile-selection__profiles-container'>
-        {userProfiles.map((profile, index) => (
-          <div onClick={() => logInProfile(profile)}>
-            <ProfileCard
-              key={index}
-              eventId={profile.id}
-              loggedIn={loggedProfile?.id === profile.id}
-            />
-          </div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 2 }).map((_, i) => (
+              <ProfileCardSkeleton key={i} />
+            ))
+          : userProfiles?.map((profile, index) => (
+              <div onClick={() => logInProfile(profile)}>
+                <ProfileCard
+                  key={index}
+                  eventId={profile.id}
+                  loggedIn={loggedProfile?.id === profile.id}
+                />
+              </div>
+            ))}
         <AddDogButton />
       </div>
     </div>
