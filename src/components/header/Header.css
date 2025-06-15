@@ -62,6 +62,10 @@ a {
   font-size: var(--font-16);
 }
 
+.overflow--extra-padding {
+  padding-right: 15px;
+}
+
 @media (max-width: 652px) {
   .header--nav-container .btn {
     display: none;
