@@ -32,14 +32,12 @@ export const Header = () => {
     } else {
       setNavigationMenuDisplay(false);
       allowScroll();
-      setAddMargin(false);
     }
   };
 
   const handleScroll = () => {
     if (window.innerWidth < 652) {
       blockScroll();
-      setAddMargin(true);
     }
   };
 
