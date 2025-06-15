@@ -15,7 +15,7 @@ import { Button } from "../../components/button/Button";
 
 export const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const { login } = useContext(AuthContext);
+  const { login, setIsWarningModal, isWarningModal } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -70,6 +70,7 @@ export const SignUp = () => {
 
       //Updating useContext
       login(userData, profileData);
+      setIsWarningModal({ ...isWarningModal, warningSignUp: false });
 
       console.log("User created with UID:", uidKey);
       console.log("Profile created with ID:", newProfileRef);

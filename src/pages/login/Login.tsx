@@ -16,7 +16,7 @@ import arrow from "../../imgs/profilePage/arrow-left.svg";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { login } = useContext(AuthContext);
+  const { login, setIsWarningModal, isWarningModal } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     register,
@@ -50,6 +50,7 @@ export const Login = () => {
 
       console.log("Login successful!");
       await new Promise((resolve) => setTimeout(resolve, 2000));
+      setIsWarningModal({ ...isWarningModal, warningSignUp: false });
 
       // Desactivar el spinner después de la carga
       setIsLoading(false);
@@ -81,9 +82,10 @@ export const Login = () => {
 
       const { userData, profileData } = logInData;
       login(userData, profileData);
+      setIsWarningModal({ ...isWarningModal, warningSignUp: false });
+      setIsLoading(false);
 
       navigate("/");
-      setIsLoading(false);
     } catch {
       console.error("An error ocurred with the Google login");
     }
