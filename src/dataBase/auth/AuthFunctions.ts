@@ -1,4 +1,4 @@
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { authKey } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -29,6 +29,8 @@ export const loginAuthContext = async (userUid: string) => {
 export const authGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+    await signOut(authKey);
     const result = await signInWithPopup(authKey, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
