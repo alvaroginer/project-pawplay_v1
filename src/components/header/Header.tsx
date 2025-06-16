@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { NavigationMenu } from "../navigationMenu/NavigationMenu";
 import { AuthContext } from "../../hooks/auth/AuthContext";
 import { CreateEventButton } from "../button/CreateEventButton";
+import { blockScroll, allowScroll } from "../../functions/Functions";
 import "../../index.css";
 import "./Header.css";
 import logo from "../../imgs/Logo-black.svg";
@@ -22,8 +23,22 @@ export const Header = () => {
         ...isWarningModal,
         warningSignUp: true,
       });
+      return;
     }
-    setNavigationMenuDisplay(!navigationMenuDisplay);
+
+    if (!navigationMenuDisplay) {
+      setNavigationMenuDisplay(true);
+      handleScroll();
+    } else {
+      setNavigationMenuDisplay(false);
+      allowScroll();
+    }
+  };
+
+  const handleScroll = () => {
+    if (window.innerWidth < 652) {
+      blockScroll();
+    }
   };
 
   console.log(navigationMenuDisplay);

@@ -157,9 +157,7 @@ export const blockScroll = () => {
 };
 
 export const allowScroll = () => {
-  if (window.innerWidth < 995) {
-    document.body.style.overflow = " ";
-  }
+  document.body.style.overflow = "";
 };
 
 export const blockXOverflow = () => {
