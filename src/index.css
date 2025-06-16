@@ -165,6 +165,7 @@ body {
 
 .outlet-container {
   margin-inline: 16px;
+  min-height: calc(100vh - 71px);
 }
 
 /* Width */

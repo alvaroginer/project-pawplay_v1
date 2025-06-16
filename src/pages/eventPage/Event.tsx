@@ -76,8 +76,8 @@ export const Event = () => {
     fetchSimilarEvents();
   }, [eventData, loggedProfile]);
 
-  if (!eventData) return;
   const handleEventSignUp = (signingIn: boolean, profilesData: string[]) => {
+    if (!eventData) return;
     if (signingIn) {
       setEventData({
         ...eventData,
@@ -102,33 +102,33 @@ export const Event = () => {
 
   return (
     <>
-      <div className='event--header'>
-        <div className='btn--icon'>
-          <img src={arrow} alt='Return Icon' onClick={() => navigate(-1)} />
+      <div className="event--header">
+        <div className="btn--icon">
+          <img src={arrow} alt="Return Icon" onClick={() => navigate(-1)} />
         </div>
-        <div className='event--header__buttons'>
-          <button className='btn--icon margin--right__10'>
-            <img src={share} alt='Share Icon' />
+        <div className="event--header__buttons">
+          <button className="btn--icon margin--right__10">
+            <img src={share} alt="Share Icon" />
           </button>
-          <button className='btn--icon'>
-            <img src={footprintBlack} alt='Paw-Like Icon' />
+          <button className="btn--icon">
+            <img src={footprintBlack} alt="Paw-Like Icon" />
           </button>
         </div>
       </div>
       {isLoading ? (
         <EventImageSkeleton />
       ) : (
-        <div className='event--img-container'>
+        <div className="event--img-container">
           <img
             src={eventData?.eventPhoto ? eventData.eventPhoto : parkImg}
-            alt=''
+            alt=""
           />
         </div>
       )}
-      <div className='event--container'>
-        <div className='event--info'>
-          <h3 className='event--title'>{eventData?.eventTitle}</h3>
-          <main className='event--container__categories'>
+      <div className="event--container">
+        <div className="event--info">
+          <h3 className="event--title">{eventData?.eventTitle}</h3>
+          <main className="event--container__categories">
             {isLoading &&
               !eventData &&
               Array.from({ length: 7 }).map((_, i) => (
@@ -147,12 +147,12 @@ export const Event = () => {
             )}
           </main>
         </div>
-        <aside className='event--container__sidebar'>
-          <h3 className='event--profile-title'>Know your organisator</h3>
-          <div className='profile-card'>
+        <aside className="event--container__sidebar">
+          <h3 className="event--profile-title">Know your organisator</h3>
+          <div className="profile-card">
             {eventData && <ProfileCard eventId={eventData.profileIdCreator} />}
           </div>
-          <div className='event--modal'>
+          <div className="event--modal">
             {hasJoined ? (
               <EventUnregister
                 eventData={eventData}
@@ -174,10 +174,10 @@ export const Event = () => {
           eventLocation={eventData.location.coordinates}
         ></MapComponent>
       )}
-      <div className='event--events-container'>
+      <div className="event--events-container">
         <Accordion
           text={"Similar Events"}
-          profileId=''
+          profileId=""
           defaultOpen={true}
           eventsData={similarEvents}
         />
