@@ -5,3 +5,13 @@
 .color-brown-dark {
   background-color: var(--color-brown-dark);
 }
+
+.margin--inline {
+  margin-inline: -16px;
+}
+
+@media screen and (width>= 500px) {
+  .margin--inline {
+    margin-inline: -24px;
+  }
+}

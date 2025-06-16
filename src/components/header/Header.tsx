@@ -1,8 +1,9 @@
 import { NavLink } from "react-router";
 import { useState, useContext } from "react";
 import { NavigationMenu } from "../navigationMenu/NavigationMenu";
-import { Button } from "../button/Button";
 import { AuthContext } from "../../hooks/auth/AuthContext";
+import { CreateEventButton } from "../button/CreateEventButton";
+import { blockScroll, allowScroll } from "../../functions/Functions";
 import "../../index.css";
 import "./Header.css";
 import logo from "../../imgs/Logo-black.svg";
@@ -13,11 +14,34 @@ export const Header = () => {
   const [navigationMenuDisplay, setNavigationMenuDisplay] =
     useState<boolean>(false);
 
-  const handleNavMenuDisplay = () => {
-    setNavigationMenuDisplay(!navigationMenuDisplay);
-  };
-  const { user, loggedProfile } = useContext(AuthContext);
+  const { user, loggedProfile, setIsWarningModal, isWarningModal } =
+    useContext(AuthContext);
 
+  const handleNavMenuDisplay = () => {
+    if (!loggedProfile) {
+      setIsWarningModal({
+        ...isWarningModal,
+        warningSignUp: true,
+      });
+      return;
+    }
+
+    if (!navigationMenuDisplay) {
+      setNavigationMenuDisplay(true);
+      handleScroll();
+    } else {
+      setNavigationMenuDisplay(false);
+      allowScroll();
+    }
+  };
+
+  const handleScroll = () => {
+    if (window.innerWidth < 652) {
+      blockScroll();
+    }
+  };
+
+  console.log(navigationMenuDisplay);
   return (
     <>
       <div className='headbar'>
@@ -25,9 +49,7 @@ export const Header = () => {
           <img src={logo} alt='PawPlay Logo' />
         </NavLink>
         <div className='header--nav-container'>
-          <NavLink to='/create-event'>
-            <Button className='primary'>Create event</Button>
-          </NavLink>
+          <CreateEventButton />
           {user && loggedProfile ? (
             <NavLink
               to={`/profile/${loggedProfile.id}`}
@@ -49,12 +71,14 @@ export const Header = () => {
               Sign Up
             </NavLink>
           )}
-          <button className='navigation-menu--button'>
-            <img src={menu} alt='Menu Icon' onClick={handleNavMenuDisplay} />
+          <button
+            className='navigation-menu--button'
+            onClick={handleNavMenuDisplay}
+          >
+            <img src={menu} alt='Menu Icon' />
           </button>
         </div>
       </div>
-
       {navigationMenuDisplay && (
         <NavigationMenu onClick={handleNavMenuDisplay} />
       )}

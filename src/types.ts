@@ -29,11 +29,11 @@ export interface EventData {
 export interface ProfileData {
   userUid: string;
   id: string;
-  profileName: string;
-  profilePhoto: string;
-  profileBio: string;
+  profileName?: string;
+  profilePhoto?: string;
+  profileBio?: string;
   age?: number;
-  breed: string;
+  breed?: string;
   size?: "Small" | "Medium" | "Big" | "Any";
   gender?: "Male" | "Female" | "Not specify";
   likedEvents: string[];
@@ -44,7 +44,7 @@ export interface UserData {
   uid: string;
   mail: string;
   name: string;
-  lastName: string;
+  lastName?: string;
   profiles: string[];
 }
 
@@ -86,6 +86,7 @@ export interface ButtonProps {
   children: ReactNode;
   onClick?: (value: any) => void;
   disabled?: boolean;
+  type?: "submit" | "button" | "reset";
 }
 
 // -----> Sidebar
@@ -185,11 +186,13 @@ interface dbProfileCategory {
 export interface EventSignupProps {
   eventData: EventData | null;
   profiles: ProfileData[];
+  handleEventSignUp: (signingIn: boolean, selectedProfiles: string[]) => void;
 }
 
 export interface EventUnregisterProps {
   eventData: EventData | null;
   profiles: ProfileData[];
+  handleEventSignUp: (signingIn: boolean, selectedProfiles: string[]) => void;
 }
 
 export interface InfoCategoryProps {

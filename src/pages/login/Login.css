@@ -6,11 +6,6 @@
   align-items: center;
   justify-content: center;
 
-  /* overflow-y: hidden;
-  overflow-x: hidden; */
-
-  margin-inline: -16px;
-
   background-color: var(--color-brown);
   padding: 0 var(--space-16);
 }
@@ -135,6 +130,8 @@
 .login__button-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: var(--space-10);
   margin: 0;
 }
 
@@ -200,11 +197,5 @@
 @media screen and (max-width: 480px) {
   .form__button {
     width: 100%;
-  }
-}
-
-@media screen and (width>= 500px) {
-  .login {
-    margin-inline: calc(var(--space-24) * -1);
   }
 }

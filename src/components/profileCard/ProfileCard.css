@@ -85,3 +85,8 @@
 .profile--card__label {
   font-size: var(--font-12);
 }
+
+.selected {
+  box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+  border-radius: var(--space-14);
+}

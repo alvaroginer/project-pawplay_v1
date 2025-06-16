@@ -33,6 +33,7 @@ import description from "../../imgs/profilePage/description.svg";
 import dogUser from "../../imgs/dogUser.jpg";
 import dogIcon from "../../imgs/profilePage/dog.svg";
 import "./Profile.css";
+import { Button } from "../../components/button/Button";
 
 export const Profile = () => {
   const [profileInfo, setProfileInfo] = useState<ProfileData>();
@@ -138,7 +139,8 @@ export const Profile = () => {
             <p className='profile-page__info-name'>
               {isProfileCreator
                 ? `My profile`
-                : `${capitalizeFirstLetter(profileInfo.profileName)}'s profile`}
+                : profileInfo.profileName &&
+                  `${capitalizeFirstLetter(profileInfo.profileName)}'s profile`}
             </p>
             <div className='profile-page__info_container'>
               {isProfileCreator && (
@@ -255,7 +257,12 @@ export const Profile = () => {
           modalText='Are you sure you want to delete this lovely dog profile?'
           buttonText='Yes, I am sure'
           onClose={() => setisDeleteModalOpen(false)}
-        />
+        >
+          <div className='buttons--wrapper'>
+            <Button className='primary'>Yes</Button>
+            <Button className='secondary--outlined'>No</Button>
+          </div>
+        </WarningModal>
       )}
     </>
   );

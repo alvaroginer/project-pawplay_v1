@@ -26,6 +26,7 @@
 
 .filter-category--display-button__image {
   transition: transform 0.4s ease;
+  cursor: pointer;
 }
 
 .display--button__image--rotation {

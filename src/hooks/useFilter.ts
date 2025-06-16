@@ -5,6 +5,12 @@ import {
   getEvents,
   getHomePageEvents,
 } from "../dataBase/services/readFunctions";
+import {
+  blockXOverflow,
+  allowXOverflow,
+  blockScroll,
+  allowScroll,
+} from "../functions/Functions";
 
 interface useFilterProps {
   filterParams: FilterProps;
@@ -14,6 +20,7 @@ interface useFilterProps {
   exitAnimation: boolean;
   isLoading: boolean;
   setDateFilterParams: React.Dispatch<React.SetStateAction<DateFilterProps>>;
+  setSearchbarContent: React.Dispatch<React.SetStateAction<string | undefined>>;
   handleSidebarDisplay: (sidebarDisplay: boolean) => void;
   handleFilterParams: (category: string | Date) => void;
 }
@@ -29,6 +36,7 @@ export const useFilter = (): useFilterProps => {
     startDate: new Date(),
     endDate: null,
   });
+  const [searchBarContent, setSearchbarContent] = useState<string>();
   const [sidebarDisplay, setSidebarDisplay] = useState<boolean>(false);
   const [exitAnimation, setExitAnimation] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -40,8 +48,7 @@ export const useFilter = (): useFilterProps => {
       try {
         if (loggedProfile) {
           const specificEventsSnap: EventData[] = await getHomePageEvents(
-            loggedProfile.id,
-            loggedProfile.likedEvents
+            loggedProfile.id
           );
           setEventsList(specificEventsSnap);
         } else {
@@ -90,83 +97,90 @@ export const useFilter = (): useFilterProps => {
 
   //Transformar condición de filtro en una variable
   const filteredEventList = useMemo(() => {
-    if (
+    const isFilterActive =
       Object.values(filterParams.activities).includes(true) ||
       Object.values(filterParams.breeds).includes(true) ||
       Object.values(filterParams.size).includes(true) ||
-      dateFilterParams.endDate
-    ) {
-      console.log("entra en la primera condción");
+      dateFilterParams.endDate ||
+      searchBarContent;
 
-      const activeSizes: string[] = Object.keys(filterParams.size).filter(
-        (dogSize) => filterParams.size[dogSize] === true
-      );
-      console.log("activeSizes", activeSizes);
-
-      const activeBreeds: string[] = Object.keys(filterParams.breeds).filter(
-        (dogBreed) => filterParams.breeds[dogBreed] === true
-      );
-      console.log("activeBreeds", activeBreeds);
-
-      const activeActivities: string[] = Object.keys(
-        filterParams.activities
-      ).filter((activity) => filterParams.activities[activity] === true);
-      console.log("activeActivities", activeActivities);
-
-      return eventsList.filter((event, index) => {
-        //Filtramos las fechas
-        const eventDate: number = event.dateTime.toDate().getTime();
-        const startDate: number = new Date(dateFilterParams.startDate).setHours(
-          0,
-          0,
-          0,
-          0
-        );
-
-        if (eventDate < startDate) {
-          console.log("desparece por el startDate");
-          return false;
-        }
-
-        if (dateFilterParams.endDate) {
-          const endDateTimestamp = new Date(dateFilterParams.endDate).setHours(
-            23,
-            59,
-            59,
-            999
-          );
-
-          if (eventDate > endDateTimestamp) {
-            console.log("desaparece por el endDate");
-            return false;
-          }
-        }
-
-        //Filtramso otras categorías
-        if (activeSizes.length > 0 && !activeSizes.includes(event.size)) {
-          console.log(event.size, index);
-          return false;
-        }
-
-        if (activeBreeds.length > 0 && !activeBreeds.includes(event.breeds)) {
-          console.log(event.breeds, index);
-          return false;
-        }
-
-        if (
-          activeActivities.length > 0 &&
-          !activeActivities.includes(event.activity)
-        ) {
-          console.log(event.activity, index);
-          return false;
-        }
-
-        return true;
-      });
-    } else {
+    if (!isFilterActive) {
       return eventsList;
     }
-  }, [filterParams, eventsList, dateFilterParams]);
+
+    const activeSizes: string[] = Object.keys(filterParams.size).filter(
+      (dogSize) => filterParams.size[dogSize] === true
+    );
+    console.log("activeSizes", activeSizes);
+
+    const activeBreeds: string[] = Object.keys(filterParams.breeds).filter(
+      (dogBreed) => filterParams.breeds[dogBreed] === true
+    );
+    console.log("activeBreeds", activeBreeds);
+
+    const activeActivities: string[] = Object.keys(
+      filterParams.activities
+    ).filter((activity) => filterParams.activities[activity] === true);
+    console.log("activeActivities", activeActivities);
+
+    return eventsList.filter((event, index) => {
+      //Filtramos las fechas
+      const eventDate: number = event.dateTime.toDate().getTime();
+      const startDate: number = new Date(dateFilterParams.startDate).setHours(
+        0,
+        0,
+        0,
+        0
+      );
+
+      if (eventDate < startDate) {
+        console.log("desparece por el startDate");
+        return false;
+      }
+
+      if (dateFilterParams.endDate) {
+        const endDateTimestamp = new Date(dateFilterParams.endDate).setHours(
+          23,
+          59,
+          59,
+          999
+        );
+
+        if (eventDate > endDateTimestamp) {
+          console.log("desaparece por el endDate");
+          return false;
+        }
+      }
+
+      //Filtramso otras categorías
+      if (activeSizes.length > 0 && !activeSizes.includes(event.size)) {
+        console.log(event.size, index);
+        return false;
+      }
+
+      if (activeBreeds.length > 0 && !activeBreeds.includes(event.breeds)) {
+        console.log(event.breeds, index);
+        return false;
+      }
+
+      if (
+        activeActivities.length > 0 &&
+        !activeActivities.includes(event.activity)
+      ) {
+        console.log(event.activity, index);
+        return false;
+      }
+
+      if (
+        searchBarContent &&
+        !event.eventTitle.toLocaleLowerCase().includes(searchBarContent)
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [filterParams, eventsList, dateFilterParams, searchBarContent]);
 
   const handleSidebarDisplay = (sidebarDisplay: boolean) => {
     if (sidebarDisplay === true) {
@@ -174,9 +188,13 @@ export const useFilter = (): useFilterProps => {
       setTimeout(() => {
         setExitAnimation(false);
         setSidebarDisplay(false);
+        allowXOverflow();
+        allowScroll();
       }, 400);
     } else {
+      blockXOverflow();
       setSidebarDisplay(true);
+      blockScroll();
     }
   };
 
@@ -223,6 +241,7 @@ export const useFilter = (): useFilterProps => {
     sidebarDisplay,
     exitAnimation,
     isLoading,
+    setSearchbarContent,
     setDateFilterParams,
     handleSidebarDisplay,
     handleFilterParams,

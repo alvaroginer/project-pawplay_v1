@@ -4,6 +4,8 @@
   flex-direction: row;
   justify-content: space-between;
   padding-top: var(--space-113);
+  max-width: 1400px;
+  margin-inline: auto;
 }
 
 .event--info {
