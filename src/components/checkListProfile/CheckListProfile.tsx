@@ -8,10 +8,12 @@ import {
   dogSizesType,
 } from "../../types";
 import { useState, useContext } from "react";
+import { useLocation } from "react-router";
 
 export const CheckListProfile = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { loggedProfile, user } = useContext(AuthContext);
+  const location = useLocation();
 
   const handleClick = () => {
     setIsOpen((prev) => !prev);
@@ -72,7 +74,12 @@ export const CheckListProfile = () => {
 
   return (
     <>
-      <div className="checklist" onClick={handleClick}>
+      <div
+        className={`checklist ${
+          location.pathname.startsWith("/profile") && "bottom--cero"
+        }`}
+        onClick={handleClick}
+      >
         <p className="checklist__title">Complete your profile</p>
         <svg
           className="checklist__chevron"

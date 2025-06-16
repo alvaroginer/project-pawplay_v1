@@ -454,6 +454,10 @@ body {
   animation: rotation 1s linear infinite;
 }
 
+.bottom--cero {
+  bottom: 0 !important;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
