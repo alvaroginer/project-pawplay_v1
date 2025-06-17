@@ -16,7 +16,6 @@ export const ProfileSelection = () => {
 
   useEffect(() => {
     if (!user) return;
-
     const fetchUserProfiles = async () => {
       const profilesQuery: ProfileData[] | null = await getProfilesFromUser(
         user.uid
@@ -42,16 +41,16 @@ export const ProfileSelection = () => {
   };
 
   return (
-    <div className='profile-selection'>
-      <div className='profile-selection__info'>
-        <p className='profile-selection__title'>Select a profile</p>
-        <p className='profile-selection__text'>
+    <div className="profile-selection">
+      <div className="profile-selection__info">
+        <p className="profile-selection__title">Select a profile</p>
+        <p className="profile-selection__text">
           Manage and select profiles for your dogs. Each one lets you join
           events, connect with others, and track their activity. Got a new dog?
           Just create a profile.
         </p>
       </div>
-      <div className='profile-selection__profiles-container'>
+      <div className="profile-selection__profiles-container">
         {isLoading
           ? Array.from({ length: 2 }).map((_, i) => (
               <ProfileCardSkeleton key={i} />

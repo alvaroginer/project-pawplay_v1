@@ -165,6 +165,7 @@ body {
 
 .outlet-container {
   margin-inline: 16px;
+  min-height: calc(100vh - 71px);
 }
 
 /* Width */
@@ -452,6 +453,10 @@ body {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+}
+
+.bottom--cero {
+  bottom: 0 !important;
 }
 
 @keyframes rotation {
