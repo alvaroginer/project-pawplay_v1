@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Footer } from "../../components/footer/Footer";
 import "./Landing.css";
 
 import webvideo from "./imgs/webvideo.mp4";
@@ -537,6 +538,7 @@ export const Landing = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
