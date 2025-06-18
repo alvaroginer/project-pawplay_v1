@@ -5,7 +5,7 @@ import { getOneProfile } from "../../dataBase/services/readFunctions";
 import { ProfileData, EventData } from "../../types";
 import { db } from "../../dataBase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
-
+import { ProfileCardSkeleton } from "../skeletons/profileCardSkeleton/ProfileCradSkeleton";
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/profileCard/bone.svg";
@@ -56,9 +56,9 @@ export const ProfileCard = ({ eventId, loggedIn }: ProfileCardProps) => {
     navigate(`/profile/${eventId}`);
   };
 
-  if (!profileData) return null;
-
-  return (
+  return !profileData ? (
+    <ProfileCardSkeleton />
+  ) : (
     <div
       className={`profile--card ${loggedIn && "selected"}`}
       onClick={handleCardClick}
@@ -89,7 +89,7 @@ export const ProfileCard = ({ eventId, loggedIn }: ProfileCardProps) => {
         </div>
         <div className='profile--card__block-events'>
           <p className='profile--card__value'>
-            {createdEventsByProfile && createdEventsByProfile.length}
+            {createdEventsByProfile?.length ?? 0}
           </p>
           <p className='profile--card__label'>Events created</p>
         </div>

@@ -335,8 +335,8 @@ body {
   margin-bottom: var(--space-24);
 }
 
-.margin--bt__200 {
-  margin-bottom: var(--space-200);
+.margin--bt__100 {
+  margin-bottom: var(--space-100);
 }
 
 /* -----> Border-radius */

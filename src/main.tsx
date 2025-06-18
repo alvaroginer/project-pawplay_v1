@@ -19,30 +19,32 @@ import { MyFavouriteEvents } from "./pages/myEvents/myFavouriteEvents/MyFavourit
 import { PrivacyPolicy } from "./pages/legalPages/PrivacyPolicy.tsx";
 import { Cookies } from "./pages/legalPages/Cookies.tsx";
 import { TermsOfService } from "./pages/legalPages/TermsOfService.tsx";
+import { Landing } from "./pages/landing/Landing.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
+        <Route path='/' element={<App />}>
           <Route index element={<EventsMainPage />} />
-          <Route path="/event/:eventId" element={<Event />} />
-          <Route path="/profile/:profileId" element={<Profile />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/profile-selection" element={<ProfileSelection />} />
-          <Route path="/create-profile" element={<CreateProfile />} />
-          <Route path="/my-events/hosted" element={<MyHostedEvents />} />
-          <Route path="/my-events/favourites" element={<MyFavouriteEvents />} />
-          <Route path="/my-events/upcoming" element={<MyUpcomingEvents />} />
-          <Route path="/my-events/past" element={<MyPastEvents />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path='/event/:eventId' element={<Event />} />
+          <Route path='/profile/:profileId' element={<Profile />} />
+          <Route path='/contact' element={<ContactUs />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/create-event' element={<CreateEvent />} />
+          <Route path='/profile-selection' element={<ProfileSelection />} />
+          <Route path='/create-profile' element={<CreateProfile />} />
+          <Route path='/my-events/hosted' element={<MyHostedEvents />} />
+          <Route path='/my-events/favourites' element={<MyFavouriteEvents />} />
+          <Route path='/my-events/upcoming' element={<MyUpcomingEvents />} />
+          <Route path='/my-events/past' element={<MyPastEvents />} />
+          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='/cookies' element={<Cookies />} />
+          <Route path='/terms-of-service' element={<TermsOfService />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/landing' element={<Landing />} />
       </Routes>
     </BrowserRouter>
   </AuthProvider>
