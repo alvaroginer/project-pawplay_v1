@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { Footer } from "../../components/footer/Footer";
-import { Header } from "../../components/header/Header";
 import "./Landing.css";
 
 import webvideo from "./imgs/webvideo.mp4";
