@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Footer } from "../../components/footer/Footer";
+import { NavLink } from "react-router";
+import { Button } from "../../components/button/Button";
 import "./Landing.css";
-
+import PawplayLogo from "../../imgs/Logo-black.svg";
 import webvideo from "./imgs/webvideo.mp4";
 import mockup from "./imgs/mockup.png";
 import mockup1 from "./imgs/mockup1.png";
@@ -124,6 +126,14 @@ export const Landing = () => {
 
   return (
     <div>
+      <div className='landing--header'>
+        <NavLink to='/'>
+          <img src={PawplayLogo} alt='PawPlay Icon' />
+        </NavLink>
+        <NavLink to='/'>
+          <Button className='primary'> Join now</Button>
+        </NavLink>
+      </div>
       <section className='hero'>
         <div className='hero__container'>
           <div className='hero__content'>
