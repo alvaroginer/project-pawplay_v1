@@ -6,6 +6,7 @@ import { ProfileData, EventData } from "../../types";
 import { db } from "../../dataBase/firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ProfileCardSkeleton } from "../skeletons/profileCardSkeleton/ProfileCradSkeleton";
+import { randomRating } from "../../functions/Functions";
 import "./ProfileCard.css";
 import dogUser from "../../imgs/dogUser.jpg";
 import bone from "../../imgs/profileCard/bone.svg";
@@ -83,7 +84,7 @@ export const ProfileCard = ({ eventId, loggedIn }: ProfileCardProps) => {
         <div className='profile--card__block-rating'>
           <div className='profile--card__rating'>
             <img className='profile--card__icon' src={bone} alt='' />
-            <p className='profile--card__value'>{0}</p>
+            <p className='profile--card__value'>{randomRating()}</p>
           </div>
           <p className='profile--card__label'>Rating</p>
         </div>

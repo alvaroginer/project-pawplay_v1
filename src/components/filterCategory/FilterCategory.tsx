@@ -14,7 +14,10 @@ export const FilterCategory = ({
 
   return (
     <div className='filter-category'>
-      <div className='filter-category--header'>
+      <div
+        className='filter-category--header'
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <p className='filter-category--title'>{capitalizeFirstLetter(title)}</p>
         <button
           className={`filter-category--display-button ${isOpen && ""}`}
