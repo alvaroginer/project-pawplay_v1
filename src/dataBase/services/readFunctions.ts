@@ -258,29 +258,26 @@ export const getPastEventsLimited = async (profileId: string) => {
 };
 
 // Get 5 Similar Events
-export const getSimilarEventsLimited = async (
-  eventActivity: string,
-  profileId: string
-) => {
-  const ref = collection(db, "events");
-  const q = query(
-    ref,
-    where("activity", "==", eventActivity),
-    where("profileIdCreator", "!=", profileId),
-    where("dateTime", "<=", new Date()),
-    limit(5)
-  );
-  const querySnap = await getDocs(q);
+export const getThreeEvents = async (): Promise<EventData[]> => {
+  try {
+    const ref = collection(db, "events");
+    const q = query(ref, limit(3));
+    const querySnap = await getDocs(q);
 
-  if (!querySnap) {
-    console.error("No similar events found ");
-    return null;
+    const events: EventData[] = querySnap.docs.map((doc) => {
+      const data = doc.data() as EventData;
+      console.log("📄 Evento encontrado:", data);
+      return data;
+    });
+
+    console.log("✅ Eventos obtenidos:", events);
+    return events;
+  } catch (error) {
+    console.error("❌ Error al obtener eventos:", error);
+    throw error;
   }
-  const typedQuerySnap: EventData[] = querySnap.docs.map(
-    (doc) => doc.data() as EventData
-  );
-  return typedQuerySnap;
 };
+
 /* -----> Rating */
 // Get a single rating
 export const getOneProfileRating = async (profileId: string) => {

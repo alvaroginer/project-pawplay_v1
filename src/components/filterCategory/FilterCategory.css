@@ -8,6 +8,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--space-12);
+  cursor: pointer;
 }
 
 .filter-category--title {
