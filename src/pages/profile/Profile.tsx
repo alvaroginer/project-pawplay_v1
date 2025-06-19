@@ -225,7 +225,7 @@ export const Profile = () => {
                 selectData={dogSizesType}
               />
             </div>
-            <div className='profile-page__info_container margin--bt__200'>
+            <div className='profile-page__info_container margin--bt__100'>
               <InfoCategoryProfile
                 img={description}
                 reference={{
